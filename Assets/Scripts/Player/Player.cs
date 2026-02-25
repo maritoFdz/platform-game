@@ -1,17 +1,19 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Controller))]
 public class Player : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Rigidbody2D rb;   
+    [SerializeField] private Controller controller;
 
     [Header("Movement Settings")]
-    [SerializeField] private float upForce;
+    [SerializeField] private float jumpForce;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float gravityScale;
 
     private PlayerInputActions PlayerInput;
-    private float direction;
+    private Vector2 velocity;
 
     private void Awake()
     {
@@ -32,17 +34,12 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        direction = PlayerInput.Player.Move.ReadValue<float>();
-        Move();
-    }
-
-    private void Move()
-    {
-        rb.AddForce(direction * moveSpeed * Vector2.right);
+        velocity.y -= gravityScale * Time.deltaTime;
+        velocity.x = PlayerInput.Player.Move.ReadValue<float>() * moveSpeed;
+        controller.Move(velocity * Time.deltaTime);
     }
 
     private void Jump(InputAction.CallbackContext callback)
     {
-        rb.AddForce(Vector3.up *  upForce);
     }
 }
