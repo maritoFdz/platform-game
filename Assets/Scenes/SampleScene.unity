@@ -723,7 +723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   controller: {fileID: 1752049367}
-  jumpForce: 0
+  jumpForce: 4
   moveSpeed: 2
   gravityScale: 2
 --- !u!114 &1752049367

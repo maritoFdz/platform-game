@@ -16,6 +16,7 @@ public class Controller : MonoBehaviour
     [SerializeField, Min(minRayAmount)] private int verticalRayAmount;
 
     private RaycastOrigins raycastOrigins;
+    public CollisionDetails colDetails;
     private float horRaySpacing;
     private float verRaySpacing;
 
@@ -47,21 +48,10 @@ public class Controller : MonoBehaviour
         verRaySpacing = corners.size.x / (verticalRayAmount - 1);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-
-        for (int i = 0; i < verticalRayAmount; i++)
-        {
-            Vector2 origin = raycastOrigins.bottomRight + i * verRaySpacing * Vector2.left;
-            Gizmos.DrawLine(origin, origin + Vector2.down);
-        }
-    }
-
     public void Move(Vector2 displacement)
     {
         UpdateRaycast();
-
+        colDetails.ResetCollisions();
         if (displacement.x != 0) CheckHorizontalCollision(ref  displacement);
         if (displacement.y != 0) CheckVerticalCollision(ref displacement);
         transform.Translate(displacement);
@@ -71,7 +61,7 @@ public class Controller : MonoBehaviour
     {
         float direction = Mathf.Sign(displacement.y);
         float rayLength = Mathf.Abs(displacement.y) + skinWidth;
-        Vector2 rayCorner = (direction >= 0) ? raycastOrigins.topLeft : raycastOrigins.bottomLeft;
+        Vector2 rayCorner = direction >= 0 ? raycastOrigins.topLeft : raycastOrigins.bottomLeft;
         for (int i = 0; i < verticalRayAmount; i++)
         {
             Vector2 rayOrigin = rayCorner + Vector2.right * (verRaySpacing * i + displacement.x); // consider the character can move while falling
@@ -79,10 +69,12 @@ public class Controller : MonoBehaviour
                 Vector2.up * direction,
                 rayLength,
                 collisionMask);
+            Debug.DrawRay(rayOrigin, direction * rayLength * Vector2.up, Color.red);
             if (hit)
             {   
                 displacement.y = (hit.distance - skinWidth) * direction;
                 rayLength = hit.distance; // for corners
+                colDetails.below = !(colDetails.above = direction >= 0);
             }
         }
     }
@@ -91,7 +83,7 @@ public class Controller : MonoBehaviour
     {
         float direction = Mathf.Sign(displacement.x);
         float rayLength = Mathf.Abs(displacement.x) + skinWidth;
-        Vector2 rayCorner = (direction >= 0) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
+        Vector2 rayCorner = direction >= 0 ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
         for (int i = 0; i < horizontalRayAmount; i++)
         {
             Vector2 rayOrigin = rayCorner + Vector2.up * (horRaySpacing * i);
@@ -99,10 +91,12 @@ public class Controller : MonoBehaviour
                 Vector2.right * direction,
                 rayLength,
                 collisionMask);
+            Debug.DrawRay(rayOrigin, direction * rayLength * Vector2.right, Color.red);
             if (hit)
             {
                 displacement.x = (hit.distance - skinWidth) * direction;
                 rayLength = hit.distance;
+                colDetails.left = !(colDetails.right = direction >= 0);
             }
         }
     }
@@ -110,6 +104,15 @@ public class Controller : MonoBehaviour
     private struct RaycastOrigins
     {
         public Vector2 topLeft, topRight, bottomLeft, bottomRight;
+    }
+
+    public struct CollisionDetails
+    {
+        public bool above, below, left, right;
+        public void ResetCollisions()
+        {
+            above = below = left = right = false;
+        }
     }
 }
 

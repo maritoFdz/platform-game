@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     private PlayerInputActions PlayerInput;
     private Vector2 velocity;
+    private bool jumpPressed;
 
     private void Awake()
     {
@@ -34,12 +35,24 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        velocity.y -= gravityScale * Time.deltaTime;
+        if (controller.colDetails.above || controller.colDetails.below)
+            velocity.y = 0;
+
+        if (jumpPressed && controller.colDetails.below)
+        {
+            velocity.y = jumpForce;
+            jumpPressed = false;
+        }
         velocity.x = PlayerInput.Player.Move.ReadValue<float>() * moveSpeed;
+        velocity.y -= gravityScale * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
 
     private void Jump(InputAction.CallbackContext callback)
     {
+        Debug.Log(callback);
+        if (controller.colDetails.below)
+            jumpPressed = true;
+        //    velocity.y += jumpForce;
     }
 }
