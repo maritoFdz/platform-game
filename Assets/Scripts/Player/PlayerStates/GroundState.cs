@@ -9,9 +9,9 @@ public class GroundState : IPlayerState
     {
         player.velocity.y = 0;
         player.Move();
-        if (player.jumpPressed)
+        if (player.JumpPressed)
         {
-            player.jumpPressed = false;
+            player.ConsumeJump();
             player.SwitchState(player.jumpingState);
         }
         else if (!player.GroundDetected())

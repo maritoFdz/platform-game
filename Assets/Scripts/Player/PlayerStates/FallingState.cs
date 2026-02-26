@@ -6,7 +6,7 @@ public class FallingState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        player.AddGravityForce();
+        player.AddGravityForce(player.gravityFallMultiplier);
         player.Move();
         if (player.GroundDetected())
             player.SwitchState(player.groundState);
