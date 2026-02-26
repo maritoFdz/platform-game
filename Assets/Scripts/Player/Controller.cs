@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -12,6 +11,7 @@ public class Controller : MonoBehaviour
     [Header("Parameters")]
     [SerializeField] private LayerMask collisionMask;
     [SerializeField] private float skinWidth;
+    [SerializeField] private float groundProbeDistance;
     [SerializeField, Min(minRayAmount)] private int horizontalRayAmount;
     [SerializeField, Min(minRayAmount)] private int verticalRayAmount;
 
@@ -52,15 +52,18 @@ public class Controller : MonoBehaviour
     {
         UpdateRaycast();
         colDetails.ResetCollisions();
-        if (displacement.x != 0) CheckHorizontalCollision(ref  displacement);
-        if (displacement.y != 0) CheckVerticalCollision(ref displacement);
+        if (displacement.x != 0) CheckHorizontalCollision(ref displacement);
+        CheckVerticalCollision(ref displacement);
         transform.Translate(displacement);
     }
 
     private void CheckVerticalCollision(ref Vector2 displacement)
     {
-        float direction = Mathf.Sign(displacement.y);
+        // diferent implementation respect to horizontal because rays need to go down if displacement.y = 0 which only occurs when character is on the ground or in jump's max height
+        float direction = displacement.y > 0f ? 1f : -1f;
         float rayLength = Mathf.Abs(displacement.y) + skinWidth;
+        if (rayLength < skinWidth + groundProbeDistance)
+            rayLength = skinWidth + groundProbeDistance;
         Vector2 rayCorner = direction >= 0 ? raycastOrigins.topLeft : raycastOrigins.bottomLeft;
         for (int i = 0; i < verticalRayAmount; i++)
         {
