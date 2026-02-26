@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class GroundState : IPlayerState
 {
     public void EnterState(Player player)
@@ -8,6 +10,7 @@ public class GroundState : IPlayerState
     public void UpdateState(Player player)
     {
         player.velocity.y = 0;
+        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround); // simulates aceleration
         player.Move();
         if (player.JumpPressed)
         {

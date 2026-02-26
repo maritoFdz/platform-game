@@ -1141,10 +1141,14 @@ MonoBehaviour:
   maxHeightTime: 0.5
   moveSpeed: 5
   jumpBufferTime: 0.15
+  accelerationTimeGround: 0.15
+  accelerationTimeAir: 0.2
   gravityFallMultiplier: 2.5
   gravityScale: 2
   jumpForce: 4
   velocity: {x: 0, y: 0}
+  velocityXSmoothing: 0
+  targetVelocity: 0
 --- !u!114 &1752049367
 MonoBehaviour:
   m_ObjectHideFlags: 0

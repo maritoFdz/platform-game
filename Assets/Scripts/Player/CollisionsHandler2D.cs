@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class Controller : MonoBehaviour
+public class CollisionsHandler2D : MonoBehaviour
 {
     private const int minRayAmount = 2;
 
