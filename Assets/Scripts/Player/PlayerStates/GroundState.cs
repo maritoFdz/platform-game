@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GroundState : IPlayerState
 {
+    private const float gravityMultiplier = 0f;
+
     public void EnterState(Player player)
     {
         player.velocity.y = 0;
@@ -9,9 +11,8 @@ public class GroundState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        player.velocity.y = 0;
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround); // simulates aceleration
-        player.Move();
+        player.Move(gravityMultiplier);
         if (player.JumpPressed)
         {
             player.ConsumeJump();

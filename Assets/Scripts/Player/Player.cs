@@ -72,14 +72,13 @@ public class Player : MonoBehaviour
         currentState.EnterState(this);
     }
 
-    public void AddGravityForce(float multiplier = 1f)
+    public void Move(float gravityMultiplier = 1f)
     {
-        velocity.y += gravityScale * multiplier * Time.deltaTime;
-    }
-
-    public void Move()
-    {
-        controller.Move(velocity * Time.deltaTime);
+        float dt = Time.deltaTime;
+        Vector2 acceleration = new(0, gravityScale * gravityMultiplier);
+        Vector2 deltaMove = velocity * dt + 0.5f * dt * dt * acceleration;
+        controller.Move(deltaMove);
+        velocity += acceleration * dt;
     }
 
     public bool GroundDetected()
