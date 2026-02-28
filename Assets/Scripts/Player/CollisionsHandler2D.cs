@@ -17,6 +17,8 @@ public class CollisionsHandler2D : MonoBehaviour
     [SerializeField, Min(minRayAmount)] private int horizontalRayAmount;
     [SerializeField, Min(minRayAmount)] private int verticalRayAmount;
     [SerializeField] private float maxClimbAngle;
+    [SerializeField] private float maxDescendAngle;
+    [SerializeField] private float slopeEpsilon;
 
     private RaycastOrigins raycastOrigins;
     public CollisionDetails colDetails;
@@ -55,6 +57,7 @@ public class CollisionsHandler2D : MonoBehaviour
     {
         UpdateRaycast();
         colDetails.ResetCollisions();
+        if (displacement.y <= 0) DescendSlope(ref displacement);
         if (displacement.x != 0) CheckHorizontalCollision(ref displacement);
         CheckVerticalCollision(ref displacement);
         transform.Translate(displacement);
@@ -140,6 +143,33 @@ public class CollisionsHandler2D : MonoBehaviour
         }
     }
 
+    private void DescendSlope(ref Vector2 displacement)
+    {
+        float direction = Mathf.Sign(displacement.x);
+        Vector2 rayOrigin = direction >= 0 ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, Mathf.Infinity, collisionMask);
+        if (hit)
+        {
+            float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+            float yDisplacement = Mathf.Tan(slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(displacement.x);
+            if (slopeAngle != 0 && slopeAngle <= maxDescendAngle)
+            {
+                if (Mathf.Sign(hit.normal.x) == direction)
+                    if (hit.distance - skinWidth - yDisplacement <= slopeEpsilon) // the distance between the hit distance
+                    {
+                        float slopeDisplacement = Mathf.Abs(displacement.x);
+                        float slopeAngleRad = slopeAngle * Mathf.Deg2Rad;
+                        displacement.x = slopeDisplacement * Mathf.Cos(slopeAngleRad) * Mathf.Sign(displacement.x);
+                        displacement.y -= slopeDisplacement * Mathf.Sin(slopeAngleRad);
+                        colDetails.below = true;
+                        colDetails.onSlopeDescent = true;
+                        colDetails.slopeAngle = slopeAngle;
+                    }
+
+            }
+        }
+    }
+
     private struct RaycastOrigins
     {
         public Vector2 topLeft, topRight, bottomLeft, bottomRight;
@@ -147,11 +177,12 @@ public class CollisionsHandler2D : MonoBehaviour
 
     public struct CollisionDetails
     {
-        public bool above, below, left, right, onSlope;
+        public bool above, below, left, right, onSlope, onSlopeDescent;
         public float slopeAngle, prevSlopeAngle;
+
         public void ResetCollisions()
         {
-            above = below = left = right = onSlope = false;
+            above = below = left = right = onSlope = onSlopeDescent = false;
             prevSlopeAngle = slopeAngle;
             slopeAngle = 0;
         }

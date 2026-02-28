@@ -41,8 +41,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         SwitchState(groundState);
-        gravityScale = - (2 * jumpHeight) / Mathf.Pow(maxHeightTime, 2);
-        jumpForce = Mathf.Abs(gravityScale *  maxHeightTime);
+        gravityScale = -(2 * jumpHeight) / Mathf.Pow(maxHeightTime, 2);
+        jumpForce = Mathf.Abs(gravityScale * maxHeightTime);
     }
 
     private void OnEnable()
@@ -88,7 +88,7 @@ public class Player : MonoBehaviour
 
     public bool OnSlope()
     {
-        return controller.colDetails.onSlope;
+        return controller.colDetails.onSlope || controller.colDetails.onSlopeDescent;
     }
 
     public void ConsumeJump()
