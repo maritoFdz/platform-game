@@ -86,6 +86,11 @@ public class Player : MonoBehaviour
         return controller.colDetails.below;
     }
 
+    public bool OnSlope()
+    {
+        return controller.colDetails.onSlope;
+    }
+
     public void ConsumeJump()
     {
         jumpBufferCounter = 0;

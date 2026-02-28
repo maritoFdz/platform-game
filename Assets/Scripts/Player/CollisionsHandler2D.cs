@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -14,6 +16,7 @@ public class CollisionsHandler2D : MonoBehaviour
     [SerializeField] private float groundProbeDistance;
     [SerializeField, Min(minRayAmount)] private int horizontalRayAmount;
     [SerializeField, Min(minRayAmount)] private int verticalRayAmount;
+    [SerializeField] private float maxClimbAngle;
 
     private RaycastOrigins raycastOrigins;
     public CollisionDetails colDetails;
@@ -77,6 +80,9 @@ public class CollisionsHandler2D : MonoBehaviour
             {   
                 displacement.y = (hit.distance - skinWidth) * direction;
                 rayLength = hit.distance; // for corners
+
+                if (colDetails.onSlope)
+                    displacement.x = displacement.y / Mathf.Tan(colDetails.slopeAngle * Mathf.Deg2Rad) * Mathf.Sign(displacement.x);
                 colDetails.below = !(colDetails.above = direction >= 0);
             }
         }
@@ -97,10 +103,40 @@ public class CollisionsHandler2D : MonoBehaviour
             Debug.DrawRay(rayOrigin, direction * rayLength * Vector2.right, Color.red);
             if (hit)
             {
-                displacement.x = (hit.distance - skinWidth) * direction;
-                rayLength = hit.distance;
-                colDetails.left = !(colDetails.right = direction >= 0);
+                float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                if (i == 0 && slopeAngle <= maxClimbAngle)
+                {
+                    float slopeStartDistance = slopeAngle != colDetails.prevSlopeAngle ? hit.distance - skinWidth : 0;
+                    displacement.x -= slopeStartDistance * direction; // avoids getting more displacement when reaching a slope because of previous slope displacement values
+                    ClimbSlope(ref displacement, slopeAngle);
+                    displacement.x += slopeStartDistance;
+                }
+
+                if (!colDetails.onSlope || slopeAngle > maxClimbAngle)
+                {
+                    displacement.x = Mathf.Min(Mathf.Abs(displacement.x),(hit.distance - skinWidth) * direction);
+                    rayLength = Mathf.Min(Mathf.Abs(displacement.x),hit.distance); // this prevents an error because a ray touching a slope with higher angle than current slope 
+                    
+                    if (colDetails.onSlope)
+                        displacement.y = Mathf.Tan(colDetails.slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(displacement.x);
+
+                    colDetails.left = !(colDetails.right = direction >= 0);
+                }
             }
+        }
+    }
+
+    private void ClimbSlope(ref Vector2 displacement, float slopeAngle)
+    {
+        float slopeDisplacement = Mathf.Abs(displacement.x);
+        float slopeAngleRad = slopeAngle * Mathf.Deg2Rad;
+        if (displacement.y < slopeDisplacement * Mathf.Sin(slopeAngleRad)) // checks that jumping is not overrided by slope behavior which can happen in steep slopes
+        {
+            displacement.x = slopeDisplacement * Mathf.Cos(slopeAngleRad) * Mathf.Sign(displacement.x);
+            displacement.y = slopeDisplacement * Mathf.Sin(slopeAngleRad);
+            colDetails.below = true;
+            colDetails.onSlope = true;
+            colDetails.slopeAngle = slopeAngle;
         }
     }
 
@@ -111,10 +147,13 @@ public class CollisionsHandler2D : MonoBehaviour
 
     public struct CollisionDetails
     {
-        public bool above, below, left, right;
+        public bool above, below, left, right, onSlope;
+        public float slopeAngle, prevSlopeAngle;
         public void ResetCollisions()
         {
-            above = below = left = right = false;
+            above = below = left = right = onSlope = false;
+            prevSlopeAngle = slopeAngle;
+            slopeAngle = 0;
         }
     }
 }

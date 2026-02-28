@@ -4,7 +4,6 @@ public class FallingState : IPlayerState
 {
     public void EnterState(Player player)
     {
-        Debug.Log(player.transform.position.y);
     }
 
     public void UpdateState(Player player)

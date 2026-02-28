@@ -18,7 +18,7 @@ public class GroundState : IPlayerState
             player.ConsumeJump();
             player.SwitchState(player.jumpingState);
         }
-        else if (!player.GroundDetected())
+        else if (!player.GroundDetected() && !player.OnSlope())
             player.SwitchState(player.fallingState);
     }
 }
