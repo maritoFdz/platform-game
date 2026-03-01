@@ -1,29 +1,67 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 public class PlatformCollisionsHandler2D : RaycastLayout
 {
+    [Header("Platform Parameters")]
     [SerializeField] private LayerMask platformPassengersMask;
-    [SerializeField] private Vector2 velocity;
+    [SerializeField] private Vector2[] relativeWaypoints;
+    [SerializeField] private float speed;
+    [SerializeField] private float waypointVisRadius;
     [SerializeField] private float upwardsDetectionEpsilon;
 
+    private Vector3[] waypoints;
+    private int currentWaypointIndex;
+    private float normalizedDistance;
     private List<PassengerDetails> passengers;
     private Dictionary<Transform, CollisionsHandler2D> knownPassengers; // to reduce GetComponent<CollisionsHandler2D>() calls 
 
     protected override void Awake()
     {
         knownPassengers = new Dictionary<Transform, CollisionsHandler2D>();
+        waypoints = new Vector3[relativeWaypoints.Length];
         base.Awake();
+    }
+
+    private void Start()
+    {
+        RelativeWaypoints2Global();
+    }
+
+    private void RelativeWaypoints2Global()
+    {
+        for (int i = 0; i < waypoints.Length; i++)
+        {
+            waypoints[i] = transform.position + (Vector3)(relativeWaypoints[i]);
+        }
     }
 
     private void Update()
     {
         UpdateRaycast();
-        Vector2 displacement = velocity * Time.deltaTime;
+        Vector2 displacement = GetPlatformVelocity();
         CalculatePassengersDisplacement(displacement);
         MovePassengers(true); // move passengers that need first
         transform.Translate(displacement);
         MovePassengers(false); // move the rest
+    }
+
+    private Vector2 GetPlatformVelocity()
+    {
+        Vector3 currentWaypoint = waypoints[currentWaypointIndex];
+        Vector3 nextWaypoint = waypoints[currentWaypointIndex + 1];
+        normalizedDistance += speed * Time.deltaTime / Vector3.Distance(currentWaypoint, nextWaypoint);
+        Vector3 nextPos = Vector3.Lerp(currentWaypoint, nextWaypoint, normalizedDistance); // makes movement smoother while 
+        if (normalizedDistance >= 1f)
+        {
+            currentWaypointIndex = (currentWaypointIndex + 1) % (waypoints.Length -1);
+            normalizedDistance = 0f;
+            if (currentWaypointIndex == 0) // if a full travel has been made
+                System.Array.Reverse(waypoints);
+        }
+        return nextPos - transform.position;
     }
 
     private void MovePassengers(bool movePassengerFirst)
@@ -72,7 +110,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
         }
 
         // horizontal pushing
-        if (velocity.x != 0)
+        if (displacement.x != 0)
         {
             float rayLength = Mathf.Abs(displacement.x) + skinWidth;
             Vector2 rayCorner = directionX >= 0 ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
@@ -120,6 +158,16 @@ public class PlatformCollisionsHandler2D : RaycastLayout
                     }
                 }
             }
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        if (relativeWaypoints != null)
+        {
+            for (int i = 0; i < relativeWaypoints.Length; i++)
+                Gizmos.DrawWireSphere(!Application.isPlaying ? transform.position + (Vector3)(relativeWaypoints[i]) : waypoints[i], waypointVisRadius);
         }
     }
 

@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class CollisionsHandler2D : RaycastLayout
 {
-    [Header("Parameters")]
+    [Header("Collisions Parameters")]
     [SerializeField] private float groundProbeDistance;
     [SerializeField] private float maxClimbAngle;
     [SerializeField] private float maxDescendAngle;
