@@ -1,56 +1,20 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class CollisionsHandler2D : MonoBehaviour
+public class CollisionsHandler2D : RaycastLayout
 {
-    private const int minRayAmount = 2;
-
-    [Header("References")]
-    [SerializeField] private BoxCollider2D col;
-
     [Header("Parameters")]
-    [SerializeField] private LayerMask collisionMask;
-    [SerializeField] private float skinWidth;
     [SerializeField] private float groundProbeDistance;
-    [SerializeField, Min(minRayAmount)] private int horizontalRayAmount;
-    [SerializeField, Min(minRayAmount)] private int verticalRayAmount;
     [SerializeField] private float maxClimbAngle;
     [SerializeField] private float maxDescendAngle;
     [SerializeField] private float slopeEpsilon;
 
-    private RaycastOrigins raycastOrigins;
     public CollisionDetails colDetails;
-    private float horRaySpacing;
-    private float verRaySpacing;
-
-    private void Awake()
-    {
-        SetRaySpacing();
-    }
 
     private void Update()
     {
         UpdateRaycast();
-    }
-
-    private void UpdateRaycast()
-    {
-        Bounds corners = col.bounds;
-        corners.Expand(skinWidth * -2);
-        raycastOrigins.topLeft = new Vector2(corners.min.x, corners.max.y);
-        raycastOrigins.topRight = new Vector2(corners.max.x, corners.max.y);
-        raycastOrigins.bottomLeft = new Vector2(corners.min.x, corners.min.y);
-        raycastOrigins.bottomRight = new Vector2(corners.max.x, corners.min.y);
-    }
-
-    private void SetRaySpacing()
-    {
-        Bounds corners = col.bounds;
-        corners.Expand(skinWidth * -2);
-        horRaySpacing = corners.size.y / (horizontalRayAmount - 1);
-        verRaySpacing = corners.size.x / (verticalRayAmount - 1);
     }
 
     public void Move(Vector2 displacement)
@@ -155,7 +119,7 @@ public class CollisionsHandler2D : MonoBehaviour
             if (slopeAngle != 0 && slopeAngle <= maxDescendAngle)
             {
                 if (Mathf.Sign(hit.normal.x) == direction)
-                    if (hit.distance - skinWidth - yDisplacement <= slopeEpsilon) // the distance between the hit distance
+                    if (hit.distance - skinWidth - yDisplacement <= slopeEpsilon) // when accelerating yDisplacement can be small enough to make the character walk away from the slope
                     {
                         float slopeDisplacement = Mathf.Abs(displacement.x);
                         float slopeAngleRad = slopeAngle * Mathf.Deg2Rad;
@@ -168,11 +132,6 @@ public class CollisionsHandler2D : MonoBehaviour
 
             }
         }
-    }
-
-    private struct RaycastOrigins
-    {
-        public Vector2 topLeft, topRight, bottomLeft, bottomRight;
     }
 
     public struct CollisionDetails
@@ -188,6 +147,3 @@ public class CollisionsHandler2D : MonoBehaviour
         }
     }
 }
-
-
-
