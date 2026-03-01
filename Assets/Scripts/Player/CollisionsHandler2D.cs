@@ -17,7 +17,7 @@ public class CollisionsHandler2D : RaycastLayout
         UpdateRaycast();
     }
 
-    public void Move(Vector2 displacement)
+    public void Move(Vector2 displacement, bool onMovingPlatform = false)
     {
         UpdateRaycast();
         colDetails.ResetCollisions();
@@ -25,6 +25,8 @@ public class CollisionsHandler2D : RaycastLayout
         if (displacement.x != 0) CheckHorizontalCollision(ref displacement);
         CheckVerticalCollision(ref displacement);
         transform.Translate(displacement);
+        if (onMovingPlatform)
+            colDetails.below = true;
     }
 
     private void CheckVerticalCollision(ref Vector2 displacement)
@@ -70,6 +72,7 @@ public class CollisionsHandler2D : RaycastLayout
             Debug.DrawRay(rayOrigin, direction * rayLength * Vector2.right, Color.red);
             if (hit)
             {
+                if (hit.distance == 0) continue;
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
                 if (i == 0 && slopeAngle <= maxClimbAngle)
                 {
