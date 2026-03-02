@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +16,7 @@ public class Player : MonoBehaviour
     public float accelerationTimeGround;
     public float accelerationTimeAir;
     public float gravityFallMultiplier;
+    public float runningVelocityMultiplier;
 
     [HideInInspector] public float gravityScale;
     [HideInInspector] public float jumpForce;
@@ -24,8 +24,11 @@ public class Player : MonoBehaviour
     [HideInInspector] public float velocityXSmoothing;
     [HideInInspector] public float targetVelocity;
 
-    private PlayerInputActions PlayerInput;
+    private PlayerInput PlayerInput;
     public bool JumpPressed => jumpBufferCounter > 0;
+
+    public bool IsRunning => PlayerInput.Player.Run.IsPressed();
+
     private IPlayerState currentState;
     private float jumpBufferCounter;
 
@@ -100,10 +103,5 @@ public class Player : MonoBehaviour
     private void Jump(InputAction.CallbackContext callback)
     {
         jumpBufferCounter = jumpBufferTime;
-    }
-
-    private void StartCoyote()
-    {
-
     }
 }

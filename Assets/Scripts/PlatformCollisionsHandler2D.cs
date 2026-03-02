@@ -89,7 +89,10 @@ public class PlatformCollisionsHandler2D : RaycastLayout
             if (!knownPassengers.ContainsKey(passenger.transform))
                 knownPassengers.Add(passenger.transform, passenger.transform.GetComponent<CollisionsHandler2D>());
             if (passenger.moveFirst == movePassengerFirst)
-                knownPassengers[passenger.transform].Move(passenger.displacement, passenger.onPlatform);
+            {
+                CollisionsHandler2D passengerValue = knownPassengers[passenger.transform];
+                passengerValue.Move(passenger.displacement, passenger.onPlatform);
+            }
         }
     }
 

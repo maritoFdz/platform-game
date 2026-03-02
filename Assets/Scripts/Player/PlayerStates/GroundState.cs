@@ -12,8 +12,8 @@ public class GroundState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        coyoteCount -= Time.deltaTime;
-        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround); // simulates aceleration
+        float targetVelocity = (player.IsRunning) ? player.targetVelocity * player.runningVelocityMultiplier : player.targetVelocity;
+        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround); // simulates aceleration
         player.Move(gravityMultiplier);
         if (player.JumpPressed)
         {
