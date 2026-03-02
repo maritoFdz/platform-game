@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxHeightTime;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpBufferTime;
+    public float coyoteTime;
     public float accelerationTimeGround;
     public float accelerationTimeAir;
     public float gravityFallMultiplier;
@@ -99,5 +100,10 @@ public class Player : MonoBehaviour
     private void Jump(InputAction.CallbackContext callback)
     {
         jumpBufferCounter = jumpBufferTime;
+    }
+
+    private void StartCoyote()
+    {
+
     }
 }
