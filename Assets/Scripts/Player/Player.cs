@@ -15,13 +15,16 @@ public class Player : MonoBehaviour
     public float coyoteTime;
     public float accelerationTimeGround;
     public float accelerationTimeAir;
+    public float accelerationTimeWall;
     public float gravityFallMultiplier;
     public float runningVelocityMultiplier;
+    public float wallSlideSpeed;
 
     [HideInInspector] public float gravityScale;
     [HideInInspector] public float jumpForce;
     [HideInInspector] public Vector2 velocity;
     [HideInInspector] public float velocityXSmoothing;
+    [HideInInspector] public float velocityYSmoothing;
     [HideInInspector] public float targetVelocity;
 
     private PlayerInput PlayerInput;
@@ -36,6 +39,7 @@ public class Player : MonoBehaviour
     public FallingState fallingState = new();
     public GroundState groundState = new();
     public JumpingState jumpingState = new();
+    public WallSlidingState wallSlidingState = new();
 
     private void Awake()
     {
@@ -93,6 +97,11 @@ public class Player : MonoBehaviour
     public bool OnSlope()
     {
         return controller.colDetails.onSlope || controller.colDetails.onSlopeDescent;
+    }
+
+    public bool NextToWall()
+    {
+        return controller.colDetails.left || controller.colDetails.right;
     }
 
     public void ConsumeJump()

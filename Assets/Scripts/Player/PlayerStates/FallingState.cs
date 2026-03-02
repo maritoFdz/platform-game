@@ -12,5 +12,9 @@ public class FallingState : IPlayerState
         player.Move(player.gravityFallMultiplier);
         if (player.GroundDetected())
             player.SwitchState(player.groundState);
+        else if (player.NextToWall())
+        {
+            player.SwitchState(player.wallSlidingState);
+        }
     }
 }
