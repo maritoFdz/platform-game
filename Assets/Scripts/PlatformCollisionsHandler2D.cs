@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System;
-using System.Linq;
 
 public class PlatformCollisionsHandler2D : RaycastLayout
 {
@@ -9,12 +7,15 @@ public class PlatformCollisionsHandler2D : RaycastLayout
     [SerializeField] private LayerMask platformPassengersMask;
     [SerializeField] private Vector2[] relativeWaypoints;
     [SerializeField] private float speed;
+    [SerializeField] private bool hasCyclicalPath;
+    [SerializeField] private float waypointDelay;
     [SerializeField] private float waypointVisRadius;
     [SerializeField] private float upwardsDetectionEpsilon;
 
     private Vector3[] waypoints;
     private int currentWaypointIndex;
     private float normalizedDistance;
+    private float delayCounter;
     private List<PassengerDetails> passengers;
     private Dictionary<Transform, CollisionsHandler2D> knownPassengers; // to reduce GetComponent<CollisionsHandler2D>() calls 
 
@@ -41,15 +42,20 @@ public class PlatformCollisionsHandler2D : RaycastLayout
     private void Update()
     {
         UpdateRaycast();
-        Vector2 displacement = GetPlatformVelocity();
+        Vector2 displacement = GetPlatformDisplacement();
         CalculatePassengersDisplacement(displacement);
         MovePassengers(true); // move passengers that need first
         transform.Translate(displacement);
         MovePassengers(false); // move the rest
     }
 
-    private Vector2 GetPlatformVelocity()
+    private Vector2 GetPlatformDisplacement()
     {
+        if (delayCounter > 0f)
+        {
+            delayCounter -= Time.deltaTime;
+            return Vector2.zero;
+        }
         Vector3 currentWaypoint = waypoints[currentWaypointIndex];
         Vector3 nextWaypoint = waypoints[currentWaypointIndex + 1];
         normalizedDistance += speed * Time.deltaTime / Vector3.Distance(currentWaypoint, nextWaypoint);
@@ -58,8 +64,12 @@ public class PlatformCollisionsHandler2D : RaycastLayout
         {
             currentWaypointIndex = (currentWaypointIndex + 1) % (waypoints.Length -1);
             normalizedDistance = 0f;
+            delayCounter = waypointDelay;
             if (currentWaypointIndex == 0) // if a full travel has been made
-                System.Array.Reverse(waypoints);
+            {
+                if (!hasCyclicalPath)
+                    System.Array.Reverse(waypoints);
+            }
         }
         return nextPos - transform.position;
     }

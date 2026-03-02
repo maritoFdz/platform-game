@@ -641,10 +641,13 @@ MonoBehaviour:
     m_Bits: 128
   relativeWaypoints:
   - {x: 0, y: 0}
-  - {x: -5, y: 0}
+  - {x: -10, y: 0}
+  - {x: -10, y: 5}
   - {x: 0, y: 5}
   - {x: 0, y: 0}
   speed: 2
+  hasCyclicalPath: 1
+  waypointDelay: 1
   waypointVisRadius: 0.2
   upwardsDetectionEpsilon: 1
 --- !u!1 &1752049363
