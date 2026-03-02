@@ -649,6 +649,7 @@ MonoBehaviour:
   hasCyclicalPath: 1
   waypointDelay: 1
   waypointVisRadius: 0.2
+  easingIntensity: 1.5
   upwardsDetectionEpsilon: 1
 --- !u!1 &1752049363
 GameObject:

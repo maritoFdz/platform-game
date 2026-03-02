@@ -10,6 +10,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
     [SerializeField] private bool hasCyclicalPath;
     [SerializeField] private float waypointDelay;
     [SerializeField] private float waypointVisRadius;
+    [SerializeField, Range(0, 3)] private float easingIntensity;
     [SerializeField] private float upwardsDetectionEpsilon;
 
     private Vector3[] waypoints;
@@ -59,7 +60,9 @@ public class PlatformCollisionsHandler2D : RaycastLayout
         Vector3 currentWaypoint = waypoints[currentWaypointIndex];
         Vector3 nextWaypoint = waypoints[currentWaypointIndex + 1];
         normalizedDistance += speed * Time.deltaTime / Vector3.Distance(currentWaypoint, nextWaypoint);
-        Vector3 nextPos = Vector3.Lerp(currentWaypoint, nextWaypoint, normalizedDistance); // makes movement smoother while 
+        normalizedDistance = Mathf.Clamp01(normalizedDistance);
+        float easedNormalizedDistance = Ease(normalizedDistance);  
+        Vector3 nextPos = Vector3.Lerp(currentWaypoint, nextWaypoint, easedNormalizedDistance); // makes movement smoother while 
         if (normalizedDistance >= 1f)
         {
             currentWaypointIndex = (currentWaypointIndex + 1) % (waypoints.Length -1);
@@ -72,6 +75,11 @@ public class PlatformCollisionsHandler2D : RaycastLayout
             }
         }
         return nextPos - transform.position;
+    }
+
+    private float Ease(float x)
+    {
+        return Mathf.Pow(x, easingIntensity) / (Mathf.Pow(x, easingIntensity) + Mathf.Pow(1 - x, easingIntensity));
     }
 
     private void MovePassengers(bool movePassengerFirst)
