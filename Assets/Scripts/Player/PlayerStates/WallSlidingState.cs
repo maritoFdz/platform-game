@@ -23,7 +23,7 @@ public class WallSlidingState : IPlayerState
         player.Move(gravityMultiplier);
         if (player.JumpPressed || player.wallStickTime != dirDecisionTimer) // if is jump pressed or countdown to chose direction has started
         {
-            if (dirDecisionTimer < 0 && player.inputX != 0f) ExecuteJump(player);
+            if (dirDecisionTimer < 0 || player.inputX != 0f) ExecuteJump(player);
             else dirDecisionTimer -= Time.deltaTime;
         }
         else if (player.OnSlope() || player.GroundBelow())
