@@ -13,7 +13,7 @@ public class JumpingState : IPlayerState
     {
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeAir);
         player.Move(gravityMultiplier);
-        if (player.velocity.y <= 0)
+        if (player.velocity.y <= 0 || player.CeilingAbove())
             player.SwitchState(player.fallingState);
         else if (player.WallLeft() && player.inputX == -1 || player.WallRight() && player.inputX == 1)
         {

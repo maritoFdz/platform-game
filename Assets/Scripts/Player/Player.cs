@@ -97,9 +97,25 @@ public class Player : MonoBehaviour
         velocity += acceleration * dt;
     }
 
-    public bool GroundDetected()
+    public void ConsumeJump()
+    {
+        jumpBufferCounter = 0;
+    }
+
+    private void Jump(InputAction.CallbackContext callback)
+    {
+        jumpBufferCounter = jumpBufferTime;
+    }
+
+    #region Collisions related methods called by states
+    public bool GroundBelow()
     {
         return controller.colDetails.below;
+    }
+
+    public bool CeilingAbove()
+    {
+        return controller.colDetails.above;
     }
 
     public bool OnSlope()
@@ -116,14 +132,5 @@ public class Player : MonoBehaviour
     {
         return controller.colDetails.right;
     }
-
-    public void ConsumeJump()
-    {
-        jumpBufferCounter = 0;
-    }
-
-    private void Jump(InputAction.CallbackContext callback)
-    {
-        jumpBufferCounter = jumpBufferTime;
-    }
+    #endregion
 }

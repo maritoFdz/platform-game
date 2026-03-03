@@ -21,7 +21,7 @@ public class GroundState : IPlayerState
             player.SwitchState(player.jumpingState);
             return;
         }
-        if (player.GroundDetected() || player.OnSlope())
+        if (player.GroundBelow() || player.OnSlope())
         {
             coyoteCount = player.coyoteTime;
         }

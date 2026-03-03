@@ -731,7 +731,7 @@ MonoBehaviour:
   accelerationTimeGround: 0.15
   accelerationTimeAir: 0.2
   accelerationTimeWall: 0.5
-  gravityFallMultiplier: 2.5
+  gravityFallMultiplier: 3
   runningVelocityMultiplier: 2.5
   wallSlideSpeed: 5
   frontDirectionJump: {x: 22, y: 17}

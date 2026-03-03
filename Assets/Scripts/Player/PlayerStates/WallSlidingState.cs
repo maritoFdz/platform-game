@@ -26,7 +26,7 @@ public class WallSlidingState : IPlayerState
             if (dirDecisionTimer < 0 && player.inputX != 0f) ExecuteJump(player);
             else dirDecisionTimer -= Time.deltaTime;
         }
-        else if (player.OnSlope() || player.GroundDetected())
+        else if (player.OnSlope() || player.GroundBelow())
         {
             player.SwitchState(player.groundState);
         }
