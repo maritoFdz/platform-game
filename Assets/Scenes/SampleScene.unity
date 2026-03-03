@@ -390,7 +390,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -6.03, y: 2.66, z: 0}
-  m_LocalScale: {x: 13.158841, y: 0.85391, z: 1}
+  m_LocalScale: {x: 34.990677, y: 0.85391, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -734,8 +734,13 @@ MonoBehaviour:
   gravityFallMultiplier: 2.5
   runningVelocityMultiplier: 2.5
   wallSlideSpeed: 5
+  frontDirectionJump: {x: 22, y: 17}
+  climbJump: {x: 7.5, y: 20}
+  fallOfJump: {x: 10, y: 5}
+  wallStickTime: 0.05
   gravityScale: 2
   jumpForce: 4
+  inputX: 0
   velocity: {x: 0, y: 0}
   velocityXSmoothing: 0
   velocityYSmoothing: 0
@@ -941,8 +946,8 @@ Transform:
   m_GameObject: {fileID: 1902554259}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.78, y: 2.66, z: 0}
-  m_LocalScale: {x: 13.158841, y: 0.85391, z: 1}
+  m_LocalPosition: {x: -0.8, y: 2.66, z: 0}
+  m_LocalScale: {x: 36.63816, y: 0.85391, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

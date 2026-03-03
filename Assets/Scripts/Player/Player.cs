@@ -20,8 +20,15 @@ public class Player : MonoBehaviour
     public float runningVelocityMultiplier;
     public float wallSlideSpeed;
 
+    [Header("Wall Movement Settings")]
+    public Vector2 frontDirectionJump;
+    public Vector2 climbJump;
+    public Vector2 fallOfJump;
+    public float wallStickTime;
+
     [HideInInspector] public float gravityScale;
     [HideInInspector] public float jumpForce;
+    [HideInInspector] public float inputX;
     [HideInInspector] public Vector2 velocity;
     [HideInInspector] public float velocityXSmoothing;
     [HideInInspector] public float velocityYSmoothing;
@@ -69,7 +76,8 @@ public class Player : MonoBehaviour
     {
         if (jumpBufferCounter > 0f)
             jumpBufferCounter -= Time.deltaTime;
-        targetVelocity = PlayerInput.Player.Move.ReadValue<float>() * moveSpeed;
+        inputX = PlayerInput.Player.Move.ReadValue<float>();
+        targetVelocity = inputX * moveSpeed;
         currentState.UpdateState(this);
     }
 
@@ -99,9 +107,14 @@ public class Player : MonoBehaviour
         return controller.colDetails.onSlope || controller.colDetails.onSlopeDescent;
     }
 
-    public bool NextToWall()
+    public bool WallLeft()
     {
-        return controller.colDetails.left || controller.colDetails.right;
+        return controller.colDetails.left;
+    }
+
+    public bool WallRight()
+    {
+        return controller.colDetails.right;
     }
 
     public void ConsumeJump()

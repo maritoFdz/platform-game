@@ -15,7 +15,7 @@ public class JumpingState : IPlayerState
         player.Move(gravityMultiplier);
         if (player.velocity.y <= 0)
             player.SwitchState(player.fallingState);
-        else if (player.NextToWall())
+        else if (player.WallLeft() && player.inputX == -1 || player.WallRight() && player.inputX == 1)
         {
             player.SwitchState(player.wallSlidingState);
         }
