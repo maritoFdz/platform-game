@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,8 @@ public class Player : MonoBehaviour
     [SerializeField] private CollisionsHandler2D controller;
 
     [Header("Movement Settings")]
-    [SerializeField] private float jumpHeight;
+    [SerializeField] private float maxJumpHeight;
+    [SerializeField] private float minJumpHeight;
     [SerializeField] private float maxHeightTime;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpBufferTime;
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour
 
     [HideInInspector] public float gravityScale;
     [HideInInspector] public float jumpForce;
+    [HideInInspector] public float minJumpForce;
     [HideInInspector] public float inputX;
     [HideInInspector] public Vector2 velocity;
     [HideInInspector] public float velocityXSmoothing;
@@ -36,12 +39,11 @@ public class Player : MonoBehaviour
 
     private PlayerInput PlayerInput;
     public bool JumpPressed => jumpBufferCounter > 0;
-
+    public bool JumpReleased => !PlayerInput.Player.Jump.IsPressed();
     public bool IsRunning => PlayerInput.Player.Run.IsPressed();
-
-    private IPlayerState currentState;
     private float jumpBufferCounter;
 
+    private IPlayerState currentState;
     // states instances
     public FallingState fallingState = new();
     public GroundState groundState = new();
@@ -56,8 +58,9 @@ public class Player : MonoBehaviour
     private void Start()
     {
         SwitchState(groundState);
-        gravityScale = -(2 * jumpHeight) / Mathf.Pow(maxHeightTime, 2);
+        gravityScale = -(2 * maxJumpHeight) / Mathf.Pow(maxHeightTime, 2);
         jumpForce = Mathf.Abs(gravityScale * maxHeightTime);
+        minJumpForce = Mathf.Sqrt(2 * Mathf.Abs(gravityScale) * minJumpHeight);
     }
 
     private void OnEnable()

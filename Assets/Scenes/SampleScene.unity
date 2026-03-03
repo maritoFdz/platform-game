@@ -723,7 +723,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   controller: {fileID: 1752049367}
-  jumpHeight: 3
+  maxJumpHeight: 5
+  minJumpHeight: 1
   maxHeightTime: 0.5
   moveSpeed: 8
   jumpBufferTime: 0.2
@@ -731,15 +732,16 @@ MonoBehaviour:
   accelerationTimeGround: 0.15
   accelerationTimeAir: 0.2
   accelerationTimeWall: 0.5
-  gravityFallMultiplier: 3
+  gravityFallMultiplier: 2.5
   runningVelocityMultiplier: 2.5
   wallSlideSpeed: 5
-  frontDirectionJump: {x: 22, y: 17}
-  climbJump: {x: 7.5, y: 20}
+  frontDirectionJump: {x: 22, y: 25}
+  climbJump: {x: 7.5, y: 30}
   fallOfJump: {x: 10, y: 5}
   wallStickTime: 0.05
   gravityScale: 2
   jumpForce: 4
+  minJumpForce: 0
   inputX: 0
   velocity: {x: 0, y: 0}
   velocityXSmoothing: 0

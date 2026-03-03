@@ -19,5 +19,11 @@ public class JumpingState : IPlayerState
         {
             player.SwitchState(player.wallSlidingState);
         }
+        else if (player.JumpReleased)
+        {
+            if (player.velocity.y > player.minJumpForce)
+                player.velocity.y = player.minJumpForce;
+            player.SwitchState(player.fallingState);
+        }
     }
 }

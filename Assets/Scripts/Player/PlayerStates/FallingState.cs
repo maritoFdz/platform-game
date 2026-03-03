@@ -4,7 +4,8 @@ public class FallingState : IPlayerState
 {
     public void EnterState(Player player)
     {
-        player.velocity.y = player.gravityScale * 0.1f;
+        if (player.CeilingAbove())
+            player.velocity.y = player.gravityScale * 0.1f; // arbitrary low value to avoid making a smooth transition when player should just fall
     }
 
     public void UpdateState(Player player)
