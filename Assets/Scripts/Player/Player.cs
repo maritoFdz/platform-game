@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private CollisionsHandler2D controller;
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
 
     [Header("Movement Settings")]
     [SerializeField] private float maxJumpHeight;
@@ -85,6 +87,7 @@ public class Player : MonoBehaviour
         if (jumpBufferCounter > 0f)
             jumpBufferCounter -= Time.deltaTime;
         inputX = PlayerInput.Player.Move.ReadValue<float>();
+        spriteRenderer.flipX = inputX < 0;
         targetVelocity = inputX * moveSpeed;
         currentState.UpdateState(this);
     }

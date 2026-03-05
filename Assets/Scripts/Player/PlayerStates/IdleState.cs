@@ -8,6 +8,7 @@ public class IdleState : IPlayerState
 
     public void EnterState(Player player)
     {
+        player.animator.SetBool("IsWalking", false);
         player.velocity.y = 0;
     }
 
