@@ -137,6 +137,34 @@ public class CollisionsHandler2D : RaycastLayout
         }
     }
 
+    public bool IsSlopeBelow()
+    {
+        float probeLength = skinWidth + groundProbeDistance * 2f;
+        RaycastHit2D leftHit = Physics2D.Raycast(
+            raycastOrigins.bottomLeft,
+            Vector2.down,
+            probeLength,
+            collisionMask);
+        RaycastHit2D rightHit = Physics2D.Raycast(
+            raycastOrigins.bottomRight,
+            Vector2.down,
+            probeLength,
+            collisionMask);
+        if (leftHit)
+        {
+            float angle = Vector2.Angle(leftHit.normal, Vector2.up);
+            if (angle > 0 && angle <= maxClimbAngle)
+                return true;
+        }
+        if (rightHit)
+        {
+            float angle = Vector2.Angle(rightHit.normal, Vector2.up);
+            if (angle > 0 && angle <= maxClimbAngle)
+                return true;
+        }
+        return false;
+    }
+
     public struct CollisionDetails
     {
         public bool above, below, left, right, onSlope, onSlopeDescent;

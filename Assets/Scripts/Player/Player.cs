@@ -140,5 +140,10 @@ public class Player : MonoBehaviour
     {
         return controller.colDetails.right;
     }
+
+    public bool HasSlopeNear()
+    {
+        return controller.IsSlopeBelow();
+    }
     #endregion
 }
