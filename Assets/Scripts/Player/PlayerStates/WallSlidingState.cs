@@ -28,7 +28,7 @@ public class WallSlidingState : IPlayerState
         }
         else if (player.OnSlope() || player.GroundBelow())
         {
-            player.SwitchState(player.groundState);
+            player.SwitchState(player.walkingState);
         }
         else if (-player.inputX == direction || player.wallStickTime != dropTimer)
         {

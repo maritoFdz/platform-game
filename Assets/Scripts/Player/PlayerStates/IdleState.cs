@@ -1,26 +1,31 @@
 using UnityEngine;
 
-public class GroundState : IPlayerState
+public class IdleState : IPlayerState
 {
-    private const float gravityMultiplier = 0f;
     private float coyoteCount;
+    private const float targetVelocity = 0f;
+    private const float gravityMultiplier = 0f;
 
     public void EnterState(Player player)
     {
-        player.velocity.y = 0;
     }
 
     public void UpdateState(Player player)
     {
-        float targetVelocity = (player.IsRunning) ? player.targetVelocity * player.runningVelocityMultiplier : player.targetVelocity;
-        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround); // simulates aceleration
         player.Move(gravityMultiplier);
+        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround);
         if (player.JumpPressed)
         {
             player.ConsumeJump();
             player.SwitchState(player.jumpingState);
             return;
         }
+        else if (player.inputX != 0)
+        {
+            player.SwitchState(player.walkingState);
+            return;
+        }
+
         if (player.GroundBelow() || player.OnSlope())
         {
             coyoteCount = player.coyoteTime;

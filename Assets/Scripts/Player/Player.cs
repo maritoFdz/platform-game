@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxHeightTime;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpBufferTime;
+    public float timeToIdle;
     public float coyoteTime;
     public float accelerationTimeGround;
     public float accelerationTimeAir;
@@ -41,12 +43,14 @@ public class Player : MonoBehaviour
     public bool JumpPressed => jumpBufferCounter > 0;
     public bool JumpReleased => !PlayerInput.Player.Jump.IsPressed();
     public bool IsRunning => PlayerInput.Player.Run.IsPressed();
+    public bool IsMoving => PlayerInput.Player.Move.IsPressed();
     private float jumpBufferCounter;
 
     private IPlayerState currentState;
     // states instances
+    public IdleState idleState = new();
     public FallingState fallingState = new();
-    public GroundState groundState = new();
+    public WalkingState walkingState = new();
     public JumpingState jumpingState = new();
     public WallSlidingState wallSlidingState = new();
 
@@ -57,7 +61,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        SwitchState(groundState);
+        SwitchState(idleState);
         gravityScale = -(2 * maxJumpHeight) / Mathf.Pow(maxHeightTime, 2);
         jumpForce = Mathf.Abs(gravityScale * maxHeightTime);
         minJumpForce = Mathf.Sqrt(2 * Mathf.Abs(gravityScale) * minJumpHeight);
