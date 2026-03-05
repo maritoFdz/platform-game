@@ -8,6 +8,7 @@ public class IdleState : IPlayerState
 
     public void EnterState(Player player)
     {
+        player.velocity.y = 0;
     }
 
     public void UpdateState(Player player)

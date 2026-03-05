@@ -1,19 +1,20 @@
 using UnityEngine;
 
-public class WalkingState : IPlayerState
+public class RunningState : IPlayerState
 {
     private const float gravityMultiplier = 0f;
+    private float targetVelocity;
     private float coyoteCount;
-    private float idleCount;
 
     public void EnterState(Player player)
     {
-        player.velocity.y = 0;
+
     }
 
     public void UpdateState(Player player)
     {
-        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround); // simulates aceleration
+        targetVelocity = player.targetVelocity * player.runningVelocityMultiplier;
+        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround);
         player.Move(gravityMultiplier);
         if (player.JumpPressed)
         {
@@ -21,20 +22,16 @@ public class WalkingState : IPlayerState
             player.SwitchState(player.jumpingState);
             return;
         }
-        else if (player.IsRunning)
-        {
-            player.SwitchState(player.runningState);
-        }
 
-        if (player.IsMoving)
+        if (!player.IsRunning && !player.IsMoving)
         {
-            idleCount = player.timeToIdle;
+            player.SwitchState(player.idleState);
+            return;
         }
-        else
+        else if (!player.IsRunning)
         {
-            idleCount -= Time.deltaTime;
-            if (idleCount <= 0)
-                player.SwitchState(player.idleState);
+            player.SwitchState(player.walkingState);
+            return;
         }
 
         if (player.GroundBelow() || player.OnSlope())
@@ -47,5 +44,6 @@ public class WalkingState : IPlayerState
             if (coyoteCount <= 0)
                 player.SwitchState(player.fallingState);
         }
+
     }
 }

@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
     public IdleState idleState = new();
     public FallingState fallingState = new();
     public WalkingState walkingState = new();
+    public RunningState runningState = new();
     public JumpingState jumpingState = new();
     public WallSlidingState wallSlidingState = new();
 
