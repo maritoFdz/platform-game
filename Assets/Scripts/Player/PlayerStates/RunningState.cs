@@ -8,7 +8,7 @@ public class RunningState : IPlayerState
 
     public void EnterState(Player player)
     {
-
+        player.PlayRunningAnimation();
     }
 
     public void UpdateState(Player player)
@@ -19,17 +19,20 @@ public class RunningState : IPlayerState
         if (player.JumpPressed)
         {
             player.ConsumeJump();
+            player.StopRunningAnimation();
             player.SwitchState(player.jumpingState);
             return;
         }
 
         if (!player.IsRunning && !player.IsMoving)
         {
+            player.StopRunningAnimation();
             player.SwitchState(player.idleState);
             return;
         }
         else if (!player.IsRunning)
         {
+            player.StopRunningAnimation();
             player.SwitchState(player.walkingState);
             return;
         }
@@ -42,7 +45,10 @@ public class RunningState : IPlayerState
         {
             coyoteCount -= Time.deltaTime;
             if (coyoteCount <= 0)
+            {
+                player.StopRunningAnimation();
                 player.SwitchState(player.fallingState);
+            }
         }
 
     }

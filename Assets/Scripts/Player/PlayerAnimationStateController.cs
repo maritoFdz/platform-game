@@ -56,6 +56,16 @@ public class PlayerAnimationStateController : MonoBehaviour
         animator.SetBool(isWalkingHash, false);
     }
 
+    public void PlayRunning()
+    {
+        animator.SetBool(isRunningHash, true);
+    }
+
+    public void StopRunning()
+    {
+        animator.SetBool(isRunningHash, false);
+    }
+
 
     #region Animation Clips Events
     public void StartIdleCountdown()

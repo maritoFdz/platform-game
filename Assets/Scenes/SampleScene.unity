@@ -942,7 +942,7 @@ MonoBehaviour:
   jumpBufferTime: 0.2
   timeToIdle: 0.1
   coyoteTime: 0.05
-  accelerationTimeGround: 0.15
+  accelerationTimeGround: 0.2
   accelerationTimeAir: 0.2
   accelerationTimeWall: 0.5
   gravityFallMultiplier: 2.5

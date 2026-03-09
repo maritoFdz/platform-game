@@ -26,7 +26,10 @@ public class IdleState : IPlayerState
         else if (player.inputX != 0)
         {
             player.StopIdleAnimation();
-            player.SwitchState(player.walkingState);
+            if (player.IsRunning)
+                player.SwitchState(player.runningState);
+            else
+                player.SwitchState(player.walkingState);
             return;
         }
 

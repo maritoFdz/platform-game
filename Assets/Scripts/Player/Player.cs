@@ -169,5 +169,15 @@ public class Player : MonoBehaviour
     {
         animationController.StopWalking();
     }
+
+    public void PlayRunningAnimation()
+    {
+        animationController.PlayRunning();
+    }
+
+    public void StopRunningAnimation()
+    {
+        animationController.StopRunning();
+    }
     #endregion
 }
