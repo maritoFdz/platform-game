@@ -8,7 +8,7 @@ public class WalkingState : IPlayerState
 
     public void EnterState(Player player)
     {
-        player.animator.SetBool("IsWalking", true);
+        player.PlayWalkingAnimation();
         player.velocity.y = 0;
     }
 
@@ -20,10 +20,12 @@ public class WalkingState : IPlayerState
         {
             player.ConsumeJump();
             player.SwitchState(player.jumpingState);
+            player.StopWalkingAnimation();
             return;
         }
         else if (player.IsRunning)
         {
+            player.StopWalkingAnimation();
             player.SwitchState(player.runningState);
         }
 
@@ -35,7 +37,10 @@ public class WalkingState : IPlayerState
         {
             idleCount -= Time.deltaTime;
             if (idleCount <= 0)
+            {
+                player.StopWalkingAnimation();
                 player.SwitchState(player.idleState);
+            }
         }
 
         if (player.GroundBelow() || player.OnSlope())
@@ -46,7 +51,10 @@ public class WalkingState : IPlayerState
         {
             coyoteCount -= Time.deltaTime;
             if (coyoteCount <= 0)
+            {
+                player.StopWalkingAnimation();
                 player.SwitchState(player.fallingState);
+            }
         }
     }
 }

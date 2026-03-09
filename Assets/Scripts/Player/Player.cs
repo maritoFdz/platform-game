@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,8 +7,7 @@ public class Player : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private CollisionsHandler2D controller;
-    public Animator animator;
-    public SpriteRenderer spriteRenderer;
+    [SerializeField] private PlayerAnimationStateController animationController;
 
     [Header("Movement Settings")]
     [SerializeField] private float maxJumpHeight;
@@ -87,7 +85,8 @@ public class Player : MonoBehaviour
         if (jumpBufferCounter > 0f)
             jumpBufferCounter -= Time.deltaTime;
         inputX = PlayerInput.Player.Move.ReadValue<float>();
-        spriteRenderer.flipX = inputX < 0;
+        if (inputX != 0)
+            animationController.FlipX(inputX < 0);
         targetVelocity = inputX * moveSpeed;
         currentState.UpdateState(this);
     }
@@ -147,6 +146,28 @@ public class Player : MonoBehaviour
     public bool HasSlopeNear()
     {
         return controller.IsSlopeBelow();
+    }
+    #endregion
+
+    #region Animations related methods called by states
+    public void PlayIdleAnimation()
+    {
+        animationController.PlayIdle();
+    }
+
+    public void StopIdleAnimation()
+    {
+        animationController.StopIdle();
+    }
+
+    public void PlayWalkingAnimation()
+    {
+        animationController.PlayWalking();
+    }
+
+    public void StopWalkingAnimation()
+    {
+        animationController.StopWalking();
     }
     #endregion
 }

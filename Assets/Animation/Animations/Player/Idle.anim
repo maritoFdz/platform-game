@@ -33,11 +33,11 @@ AnimationClip:
     - time: 0.5
       value: {fileID: -2327266042211786159, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
     - time: 0.6
-      value: {fileID: 1842437915, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
+      value: {fileID: 246921058, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
     - time: 0.7
-      value: {fileID: 371420481, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
+      value: {fileID: -850357849, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
     - time: 0.8
-      value: {fileID: -1270447361, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
+      value: {fileID: 2063794245, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -66,20 +66,20 @@ AnimationClip:
     - {fileID: 5078832844186053437, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
     - {fileID: -7215349037938101137, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
     - {fileID: -2327266042211786159, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
-    - {fileID: 1842437915, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
-    - {fileID: 371420481, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
-    - {fileID: -1270447361, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
+    - {fileID: 246921058, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
+    - {fileID: -850357849, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
+    - {fileID: 2063794245, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.9
+    m_StopTime: 0.90000004
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -93,4 +93,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.8
+    functionName: StartIdleCountdown
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

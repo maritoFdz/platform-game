@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 13235028}
   - component: {fileID: 13235029}
   - component: {fileID: 13235030}
+  - component: {fileID: 13235031}
   m_Layer: 7
   m_Name: Animator
   m_TagString: Untagged
@@ -199,14 +200,14 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: -6137007217024267201, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.16, y: 0.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -233,6 +234,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &13235031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13235027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 422aca9da009b574a84d9519c964d7cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationController
+  animator: {fileID: 13235030}
+  spriteRenderer: {fileID: 13235029}
+  idleWaitTime: 0.5
 --- !u!1 &460645073
 GameObject:
   m_ObjectHideFlags: 0
@@ -918,8 +934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   controller: {fileID: 1752049367}
-  animator: {fileID: 13235030}
-  spriteRenderer: {fileID: 13235029}
+  animationController: {fileID: 13235031}
   maxJumpHeight: 5
   minJumpHeight: 1
   maxHeightTime: 0.5
@@ -1002,7 +1017,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.05}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1012,7 +1027,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
 --- !u!1 &1902554259
 GameObject:
