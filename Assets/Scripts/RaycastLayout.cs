@@ -11,11 +11,12 @@ public class RaycastLayout : MonoBehaviour
     [Header("Parameters")]
     [SerializeField] protected LayerMask collisionMask;
     [SerializeField] protected float skinWidth;
-    [SerializeField, Min(minRayAmount)] protected int horizontalRayAmount;
-    [SerializeField, Min(minRayAmount)] protected int verticalRayAmount;
-    protected RaycastOrigins raycastOrigins;
+    [SerializeField] protected float raySpacing;
+    protected int horizontalRayAmount;
+    protected int verticalRayAmount;
     protected float horRaySpacing;
     protected float verRaySpacing;
+    protected RaycastOrigins raycastOrigins;
 
     protected virtual void Awake()
     {
@@ -36,6 +37,8 @@ public class RaycastLayout : MonoBehaviour
     {
         Bounds corners = col.bounds;
         corners.Expand(skinWidth * -2);
+        horizontalRayAmount = Mathf.RoundToInt(corners.size.y / raySpacing);
+        verticalRayAmount = Mathf.RoundToInt(corners.size.x / raySpacing);
         horRaySpacing = corners.size.y / (horizontalRayAmount - 1);
         verRaySpacing = corners.size.x / (verticalRayAmount - 1);
     }

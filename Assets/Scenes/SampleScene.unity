@@ -978,8 +978,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   skinWidth: 0.015
-  horizontalRayAmount: 4
-  verticalRayAmount: 4
+  raySpacing: 0.25
   groundProbeDistance: 0.015
   maxClimbAngle: 45
   maxDescendAngle: 45
