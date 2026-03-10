@@ -27,8 +27,6 @@ public class JumpingState : IPlayerState
         {
             if (player.velocity.y > player.minJumpForce)
                 player.velocity.y = player.minJumpForce;
-            player.StopJumpingAnimation();
-            player.SwitchState(player.fallingState);
         }
     }
 }
