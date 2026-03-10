@@ -14,13 +14,13 @@ public class WalkingState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround); // simulates aceleration
+        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround); // simulates acceleration
         player.Move(gravityMultiplier);
         if (player.JumpPressed)
         {
             player.ConsumeJump();
-            player.SwitchState(player.jumpingState);
             player.StopWalkingAnimation();
+            player.HandleJumpingStateTransition();
             return;
         }
         else if (player.IsRunning)

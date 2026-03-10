@@ -1,18 +1,23 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerAnimationStateController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] Animator animator;
-    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Player player;
 
     [Header("Parameters")]
     [SerializeField] private float idleWaitTime;
 
     private int isWalkingHash;
     private int isRunningHash;
+    private int isFallingHash;
     private int playIdleHash;
+    private int startJumpHash;
+    private int endJumpHash;
 
     private bool idleCancelled;
 
@@ -20,7 +25,10 @@ public class PlayerAnimationStateController : MonoBehaviour
     {
         isWalkingHash = Animator.StringToHash("IsWalking");
         isRunningHash = Animator.StringToHash("IsRunning");
+        isFallingHash = Animator.StringToHash("IsFalling");
         playIdleHash = Animator.StringToHash("PlayIdle");
+        startJumpHash = Animator.StringToHash("StartJump");
+        endJumpHash = Animator.StringToHash("EndJump");
     }
 
     private IEnumerator IdleLoop()
@@ -66,12 +74,42 @@ public class PlayerAnimationStateController : MonoBehaviour
         animator.SetBool(isRunningHash, false);
     }
 
+    public void PlayFalling()
+    {
+        animator.SetBool(isFallingHash, true);
+    }
+
+    public void StopFalling()
+    {
+        animator.SetBool(isFallingHash, false);
+    }
+
+    public void PlayJumping()
+    {
+        animator.SetTrigger(startJumpHash);
+    }
+
+    public void StopJumping()
+    {
+        animator.SetTrigger(endJumpHash);
+    }
+
 
     #region Animation Clips Events
     public void StartIdleCountdown()
     {
         if (!idleCancelled)
             StartCoroutine(IdleLoop());
+    }
+    
+    public void ExecuteJump()
+    {
+        player.SwitchState(player.jumpingState);
+    }
+
+    public void StartFallingAnimation()
+    {
+        animator.SetTrigger(endJumpHash);
     }
     #endregion
 }

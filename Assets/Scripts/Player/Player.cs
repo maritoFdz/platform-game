@@ -179,5 +179,31 @@ public class Player : MonoBehaviour
     {
         animationController.StopRunning();
     }
+
+    public void PlayFallingAnimation()
+    {
+        animationController.PlayFalling();
+    }
+
+    public void StopFallingAnimation()
+    {
+        animationController.StopFalling();
+    }
+
+    public void PlayJumpingAnimation()
+    {
+        animationController.PlayJumping();
+    }
+    public void StopJumpingAnimation()
+    {
+        animationController.StopJumping();
+    }
+    #endregion
+
+    #region Events called by animations
+    public void HandleJumpingStateTransition()
+    {
+        PlayJumpingAnimation();
+    }
     #endregion
 }

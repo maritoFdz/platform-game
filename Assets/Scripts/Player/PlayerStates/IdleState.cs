@@ -20,7 +20,7 @@ public class IdleState : IPlayerState
         {
             player.ConsumeJump();
             player.StopIdleAnimation();
-            player.SwitchState(player.jumpingState);
+            player.HandleJumpingStateTransition();
             return;
         }
         else if (player.inputX != 0)

@@ -14,15 +14,20 @@ public class JumpingState : IPlayerState
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeAir);
         player.Move(gravityMultiplier);
         if (player.velocity.y <= 0 || player.CeilingAbove())
+        {
+            player.StopJumpingAnimation();
             player.SwitchState(player.fallingState);
+        }
         else if ((player.WallLeft() && player.inputX == -1 || player.WallRight() && player.inputX == 1) && !player.OnSlope() && !player.HasSlopeNear())
         {
+            player.StopJumpingAnimation();
             player.SwitchState(player.wallSlidingState);
         }
         else if (player.JumpReleased)
         {
             if (player.velocity.y > player.minJumpForce)
                 player.velocity.y = player.minJumpForce;
+            player.StopJumpingAnimation();
             player.SwitchState(player.fallingState);
         }
     }

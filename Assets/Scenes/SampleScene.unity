@@ -207,7 +207,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.12}
+  m_Size: {x: 1.6, y: 1.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -248,6 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationController
   animator: {fileID: 13235030}
   spriteRenderer: {fileID: 13235029}
+  player: {fileID: 1752049366}
   idleWaitTime: 0.5
 --- !u!1 &460645073
 GameObject:
@@ -628,11 +629,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 70.4
   orthographic: 1
-  orthographic size: 6.34
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -657,7 +658,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.28, y: -3.16, z: -10}
+  m_LocalPosition: {x: -4.2799993, y: 0.0400002, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -822,8 +823,8 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 70.4
-    OrthographicSize: 6.34
-    NearClipPlane: 0
+    OrthographicSize: 8
+    NearClipPlane: 0.01
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
@@ -849,7 +850,7 @@ Transform:
   m_GameObject: {fileID: 1491907416}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.28, y: -3.16, z: -10}
+  m_LocalPosition: {x: -4.2799993, y: 0.0400002, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -870,21 +871,21 @@ MonoBehaviour:
   CameraDistance: 10
   DeadZoneDepth: 0
   Composition:
-    ScreenPosition: {x: 0, y: 0}
+    ScreenPosition: {x: 0, y: 0.2}
     DeadZone:
-      Enabled: 0
-      Size: {x: 0.2, y: 0.2}
+      Enabled: 1
+      Size: {x: 0.1, y: 0.8}
     HardLimits:
       Enabled: 0
-      Size: {x: 0.8, y: 0.8}
+      Size: {x: 0.8, y: 1.03}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
   Damping: {x: 1, y: 1, z: 1}
   Lookahead:
-    Enabled: 0
-    Time: 0
-    Smoothing: 0
+    Enabled: 1
+    Time: 0.3
+    Smoothing: 1
     IgnoreY: 0
 --- !u!1 &1752049363
 GameObject:
@@ -935,8 +936,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   controller: {fileID: 1752049367}
   animationController: {fileID: 13235031}
-  maxJumpHeight: 5
-  minJumpHeight: 1
+  maxJumpHeight: 6
+  minJumpHeight: 3
   maxHeightTime: 0.5
   moveSpeed: 8
   jumpBufferTime: 0.2

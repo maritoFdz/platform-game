@@ -20,7 +20,7 @@ public class RunningState : IPlayerState
         {
             player.ConsumeJump();
             player.StopRunningAnimation();
-            player.SwitchState(player.jumpingState);
+            player.HandleJumpingStateTransition();
             return;
         }
 
