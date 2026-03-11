@@ -29,6 +29,12 @@ public class WalkingState : IPlayerState
             player.SwitchState(player.runningState);
         }
 
+        if (player.IsSliding())
+        {
+            player.SwitchState(player.slopeSlidingState);
+            return;
+        }
+
         if (player.IsMoving)
         {
             idleCount = player.timeToIdle;

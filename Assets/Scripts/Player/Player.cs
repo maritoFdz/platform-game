@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     public float gravityFallMultiplier;
     public float runningVelocityMultiplier;
     public float wallSlideSpeed;
+    public float endSlopeBoostX;
+    public Vector2 slopeSlidingJump; 
 
     [Header("Wall Movement Settings")]
     public Vector2 frontDirectionJump;
@@ -54,6 +56,7 @@ public class Player : MonoBehaviour
     public RunningState runningState = new();
     public JumpingState jumpingState = new();
     public WallSlidingState wallSlidingState = new();
+    public SlopeSlidingState slopeSlidingState = new();
 
     private void Awake()
     {
@@ -146,6 +149,11 @@ public class Player : MonoBehaviour
     public bool HasSlopeNear()
     {
         return controller.IsSlopeBelow();
+    }
+
+    public bool IsSliding()
+    {
+        return controller.colDetails.onSlopeSlide;
     }
     #endregion
 

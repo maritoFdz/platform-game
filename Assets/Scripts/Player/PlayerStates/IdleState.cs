@@ -33,6 +33,12 @@ public class IdleState : IPlayerState
             return;
         }
 
+        if (player.IsSliding())
+        {
+            player.SwitchState(player.slopeSlidingState);
+            return;
+        }
+
         if (player.GroundBelow() || player.OnSlope())
         {
             coyoteCount = player.coyoteTime;
