@@ -10,6 +10,8 @@ public class WallSlidingState : IPlayerState
     public void EnterState(Player player)
     {
         direction = player.WallLeft() ? -1 : 1;
+        if (player.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
+            player.Splash(90f * direction);
         player.velocity = Vector2.zero; // cancel all movement
         player.velocityXSmoothing = 0f;
         player.velocityYSmoothing = 0f;

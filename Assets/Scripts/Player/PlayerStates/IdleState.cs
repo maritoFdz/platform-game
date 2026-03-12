@@ -8,6 +8,8 @@ public class IdleState : IPlayerState
 
     public void EnterState(Player player)
     {
+        if (player.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
+            player.Splash(0f);
         player.PlayIdleAnimation();
         player.velocity.y = 0;
     }

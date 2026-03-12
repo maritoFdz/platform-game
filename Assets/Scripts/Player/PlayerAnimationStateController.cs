@@ -12,6 +12,9 @@ public class PlayerAnimationStateController : MonoBehaviour
     [Header("Parameters")]
     [SerializeField] private float idleWaitTime;
 
+    [Header("VFX Settings")]
+    public GameObject splashVFXPrefab;
+
     private int isWalkingHash;
     private int isRunningHash;
     private int isFallingHash;
@@ -94,6 +97,10 @@ public class PlayerAnimationStateController : MonoBehaviour
         animator.SetTrigger(endJumpHash);
     }
 
+    public void Splash(float angle)
+    {
+        Instantiate(splashVFXPrefab, player.transform.position, Quaternion.Euler(0, 0, angle));
+    }
 
     #region Animation Clips Events
     public void StartIdleCountdown()

@@ -24,7 +24,9 @@ public class Player : MonoBehaviour
     public float runningVelocityMultiplier;
     public float wallSlideSpeed;
     public float endSlopeBoostX;
-    public Vector2 slopeSlidingJump; 
+    public Vector2 slopeSlidingJump;
+    public float splashFallMinVelocity;
+    public float splashWallMinVelocity;
 
     [Header("Wall Movement Settings")]
     public Vector2 frontDirectionJump;
@@ -118,6 +120,11 @@ public class Player : MonoBehaviour
     private void Jump(InputAction.CallbackContext callback)
     {
         jumpBufferCounter = jumpBufferTime;
+    }
+
+    public void Splash(float rotation)
+    {
+        animationController.Splash(rotation);
     }
 
     #region Collisions related methods called by states
