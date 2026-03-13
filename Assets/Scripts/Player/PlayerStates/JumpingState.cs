@@ -6,6 +6,7 @@ public class JumpingState : IPlayerState
 
     public void EnterState(Player player)
     {
+        player.MakeSplash(0f);
         player.velocity.y = player.jumpForce;
     }
 

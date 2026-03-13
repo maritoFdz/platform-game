@@ -38,6 +38,7 @@ public class WalkingState : IPlayerState
         if (player.IsMoving)
         {
             idleCount = player.timeToIdle;
+            player.PaintTrail();
         }
         else
         {

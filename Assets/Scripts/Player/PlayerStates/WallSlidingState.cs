@@ -11,7 +11,7 @@ public class WallSlidingState : IPlayerState
     {
         direction = player.WallLeft() ? -1 : 1;
         if (player.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
-            player.Splash(90f * direction);
+            player.MakeSplash(90f * direction);
         player.velocity = Vector2.zero; // cancel all movement
         player.velocityXSmoothing = 0f;
         player.velocityYSmoothing = 0f;
@@ -23,6 +23,7 @@ public class WallSlidingState : IPlayerState
     {
         player.velocity.y = Mathf.SmoothDamp(player.velocity.y, -player.wallSlideSpeed, ref player.velocityYSmoothing, player.accelerationTimeWall);
         player.Move(gravityMultiplier);
+        player.PaintTrail();
         if (player.JumpPressed || player.wallStickTime != dirDecisionTimer) // if is jump pressed or countdown to chose direction has started
         {
             if (dirDecisionTimer < 0 || player.inputX != 0f) ExecuteJump(player);
@@ -62,6 +63,7 @@ public class WallSlidingState : IPlayerState
             player.velocity.x = player.fallOfJump.x * -direction;
             player.velocity.y = player.fallOfJump.y;
         }
+        player.MakeSplash(90f * direction);
         player.SwitchState(player.fallingState);
     }
 }

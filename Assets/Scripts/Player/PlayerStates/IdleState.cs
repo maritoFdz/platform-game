@@ -9,13 +9,15 @@ public class IdleState : IPlayerState
     public void EnterState(Player player)
     {
         if (player.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
-            player.Splash(0f);
+            player.MakeSplash(0f);
         player.PlayIdleAnimation();
         player.velocity.y = 0;
     }
 
     public void UpdateState(Player player)
     {
+        if (player.velocity.x > 0.1f)
+            player.PaintTrail();
         player.Move(gravityMultiplier);
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround);
         if (player.JumpPressed)

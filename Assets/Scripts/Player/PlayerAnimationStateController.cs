@@ -97,7 +97,7 @@ public class PlayerAnimationStateController : MonoBehaviour
         animator.SetTrigger(endJumpHash);
     }
 
-    public void Splash(float angle)
+    public void MakeSplash(float angle)
     {
         Instantiate(splashVFXPrefab, player.transform.position, Quaternion.Euler(0, 0, angle));
     }

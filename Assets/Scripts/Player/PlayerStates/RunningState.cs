@@ -16,6 +16,7 @@ public class RunningState : IPlayerState
         targetVelocity = player.targetVelocity * player.runningVelocityMultiplier;
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround);
         player.Move(gravityMultiplier);
+        player.PaintTrail();
         if (player.JumpPressed)
         {
             player.ConsumeJump();

@@ -6,7 +6,10 @@ public class FallingState : IPlayerState
     public void EnterState(Player player)
     {
         if (player.CeilingAbove())
+        {
             player.velocity.y = player.gravityScale * 0.1f; // arbitrary low value to avoid making a smooth transition when player should just fall
+            player.MakeSplash(180f);
+        }
         player.PlayFallingAnimation();
     }
 

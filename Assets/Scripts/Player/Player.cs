@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [Header("References")]
     [SerializeField] private CollisionsHandler2D controller;
     [SerializeField] private PlayerAnimationStateController animationController;
+    [SerializeField] private TrailPainter trailPainter;
 
     [Header("Movement Settings")]
     [SerializeField] private float maxJumpHeight;
@@ -122,9 +123,15 @@ public class Player : MonoBehaviour
         jumpBufferCounter = jumpBufferTime;
     }
 
-    public void Splash(float rotation)
+    public void MakeSplash(float rotation)
     {
-        animationController.Splash(rotation);
+        trailPainter.PaintSplash(transform.position, rotation);
+        animationController.MakeSplash(rotation);
+    }
+
+    public void PaintTrail()
+    {
+        trailPainter.PaintTrail();
     }
 
     #region Collisions related methods called by states
@@ -209,6 +216,7 @@ public class Player : MonoBehaviour
     {
         animationController.PlayJumping();
     }
+
     public void StopJumpingAnimation()
     {
         animationController.StopJumping();
