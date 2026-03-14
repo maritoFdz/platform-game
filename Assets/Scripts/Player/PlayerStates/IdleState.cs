@@ -18,7 +18,7 @@ public class IdleState : IPlayerState
     {
         if (player.velocity.x > 0.1f)
             player.PaintTrail();
-        player.Move(gravityMultiplier);
+        player.Move(true, false, gravityMultiplier);
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround);
         if (player.JumpPressed)
         {

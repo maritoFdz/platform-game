@@ -106,7 +106,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
         // vertical movement
         if (displacement.y != 0)
         {
-            float rayLength = Mathf.Abs(displacement.y) + skinWidth;
+            float rayLength = Mathf.Abs(displacement.y) + scaledSkinWidth;
             Vector2 rayCorner = directionY >= 0 ? raycastOrigins.topLeft : raycastOrigins.bottomLeft;
             for (int i = 0; i < verticalRayAmount; i++)
             {
@@ -121,7 +121,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
                     if (!detectedPassengers.Contains(hit.transform))
                     {
                         detectedPassengers.Add(hit.transform);
-                        float pushY = displacement.y - (hit.distance - skinWidth) * directionY;
+                        float pushY = displacement.y - (hit.distance - scaledSkinWidth) * directionY;
                         float pushX = (directionY >= 0) ? displacement.x : 0f;
                         PassengerDetails passenger = new(hit.transform, new Vector2(pushX, pushY), directionY >= 0, true); // platform should move after passenger if passenger is in front of platform's displacement
                         passengers.Add(passenger);
@@ -133,7 +133,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
         // horizontal pushing
         if (displacement.x != 0)
         {
-            float rayLength = Mathf.Abs(displacement.x) + skinWidth;
+            float rayLength = Mathf.Abs(displacement.x) + scaledSkinWidth;
             Vector2 rayCorner = directionX >= 0 ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
             for (int i = 0; i < horizontalRayAmount; i++)
             {
@@ -148,7 +148,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
                     {
                         detectedPassengers.Add(hit.transform);
                         float pushY = 0f;
-                        float pushX = displacement.x - (hit.distance - skinWidth) * directionX;
+                        float pushX = displacement.x - (hit.distance - scaledSkinWidth) * directionX;
                         PassengerDetails passenger = new(hit.transform, new Vector2(pushX, pushY), false, true); // platform should push passenger whenever direction is heading
                         passengers.Add(passenger);
                     }
@@ -159,7 +159,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
         // if it is going downwards or is moving just horizontal
         if (directionY < 0 || displacement.y == 0 && displacement.x != 0)
         {
-            float rayLength = skinWidth + upwardsDetectionEpsilon;
+            float rayLength = scaledSkinWidth + upwardsDetectionEpsilon;
             for (int i = 0; i < verticalRayAmount; i++)
             {
                 Vector2 rayOrigin = raycastOrigins.topLeft + Vector2.right * (verRaySpacing * i);

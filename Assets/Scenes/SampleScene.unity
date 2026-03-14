@@ -3367,6 +3367,8 @@ MonoBehaviour:
   slopeSlidingJump: {x: 22, y: 20}
   splashFallMinVelocity: 35
   splashWallMinVelocity: 15
+  scaleReductionPerUnit: 0.001
+  minNormalizedScale: 0.1
   frontDirectionJump: {x: 20, y: 30}
   climbJump: {x: 7.5, y: 35}
   fallOfJump: {x: 10, y: 5}

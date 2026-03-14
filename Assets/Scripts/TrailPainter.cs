@@ -32,6 +32,12 @@ public class TrailPainter : RaycastLayout
         base.Awake();
     }
 
+    public void UpdateCollisionsDescale(float normalizedScale)
+    {
+        SetRaySpacing(normalizedScale);
+        UpdateRaycast();
+    }
+
     public void PaintSplash(Vector3 worldPos, float rotation)
     {
         UpdateRaycast();
@@ -77,7 +83,7 @@ public class TrailPainter : RaycastLayout
     public void PaintTrail()
     {
         UpdateRaycast();
-        float rayLength = this.rayLength + skinWidth;
+        float rayLength = this.rayLength + scaledSkinWidth;
 
         for (int i = 0; i < verticalRayAmount; i++)
         {

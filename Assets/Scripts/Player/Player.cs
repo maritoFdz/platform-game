@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
     public Vector2 slopeSlidingJump;
     public float splashFallMinVelocity;
     public float splashWallMinVelocity;
+    [SerializeField, Range(0f, 1f)] private float scaleReductionPerUnit;
+    [SerializeField, Range(0.1f, 1f)] private float minNormalizedScale;
 
     [Header("Wall Movement Settings")]
     public Vector2 frontDirectionJump;
@@ -50,6 +52,9 @@ public class Player : MonoBehaviour
     public bool IsRunning => PlayerInput.Player.Run.IsPressed();
     public bool IsMoving => PlayerInput.Player.Move.IsPressed();
     private float jumpBufferCounter;
+    private Vector3 initialScale;
+    private float normalizedScale;
+    private float moveAmount;
 
     private IPlayerState currentState;
     // states instances
@@ -63,6 +68,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        initialScale = transform.localScale;
         PlayerInput = new();
     }
 
@@ -76,6 +82,8 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
+        normalizedScale = 1f;
+        transform.localScale = initialScale * normalizedScale;
         PlayerInput.Player.Enable();
         PlayerInput.Player.Jump.performed += Jump;
     }
@@ -104,12 +112,15 @@ public class Player : MonoBehaviour
         currentState.EnterState(this);
     }
 
-    public void Move(float gravityMultiplier = 1f)
+    public void Move(bool storeHorMovement, bool storeVerMovement, float gravityMultiplier = 1f)
     {
         float dt = Time.deltaTime;
         Vector2 acceleration = new(0, gravityScale * gravityMultiplier);
         Vector2 deltaMove = velocity * dt + 0.5f * dt * dt * acceleration;
         controller.Move(deltaMove);
+        if (storeHorMovement) moveAmount += Mathf.Abs(deltaMove.x);
+        if (storeVerMovement) moveAmount += Mathf.Abs(deltaMove.y);
+        DeScalePlayer();
         velocity += acceleration * dt;
     }
 
@@ -127,11 +138,29 @@ public class Player : MonoBehaviour
     {
         trailPainter.PaintSplash(transform.position, rotation);
         animationController.MakeSplash(rotation);
+        DeScalePlayer(true, 2);
     }
 
     public void PaintTrail()
     {
         trailPainter.PaintTrail();
+    }
+
+    public void DeScalePlayer(bool forcedScaleLoss = false, int scaleLossUnits = 1)
+    {
+        if (moveAmount < 1 && !forcedScaleLoss) return;
+        if (!forcedScaleLoss) moveAmount--;
+        normalizedScale = Mathf.Max(transform.localScale.x / initialScale.x - scaleReductionPerUnit * scaleLossUnits, minNormalizedScale);
+        transform.localScale = initialScale * normalizedScale;
+        controller.UpdateCollisionsDescale(normalizedScale);
+        trailPainter.UpdateCollisionsDescale(normalizedScale);
+
+        if (normalizedScale == minNormalizedScale)
+            KillPlayer();
+    }
+
+    private void KillPlayer()
+    {
     }
 
     #region Collisions related methods called by states

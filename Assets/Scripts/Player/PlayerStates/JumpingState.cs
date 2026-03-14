@@ -3,6 +3,7 @@ using UnityEngine;
 public class JumpingState : IPlayerState
 {
     private const float gravityMultiplier = 1f;
+    private const int amountOfScaleUnits = 2;
 
     public void EnterState(Player player)
     {
@@ -13,7 +14,7 @@ public class JumpingState : IPlayerState
     public void UpdateState(Player player)
     {
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeAir);
-        player.Move(gravityMultiplier);
+        player.Move(false, false, gravityMultiplier);
         if (player.velocity.y <= 0 || player.CeilingAbove())
         {
             player.StopJumpingAnimation();

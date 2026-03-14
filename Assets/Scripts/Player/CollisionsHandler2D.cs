@@ -16,6 +16,12 @@ public class CollisionsHandler2D : RaycastLayout
         UpdateRaycast();
     }
 
+    public void UpdateCollisionsDescale(float normalizedScale)
+    {
+        SetRaySpacing(normalizedScale);
+        UpdateRaycast();
+    }
+
     public void Move(Vector2 displacement, bool onMovingPlatform = false)
     {
         UpdateRaycast();
@@ -32,9 +38,9 @@ public class CollisionsHandler2D : RaycastLayout
     {
         // diferent implementation respect to horizontal because rays need to go down if displacement.y = 0 which only occurs when character is on the ground or in jump's max height
         float direction = displacement.y > 0f ? 1f : -1f;
-        float rayLength = Mathf.Abs(displacement.y) + skinWidth;
-        if (rayLength < skinWidth + groundProbeDistance)
-            rayLength = skinWidth + groundProbeDistance;
+        float rayLength = Mathf.Abs(displacement.y) + scaledSkinWidth;
+        if (rayLength < scaledSkinWidth + groundProbeDistance)
+            rayLength = scaledSkinWidth + groundProbeDistance;
         Vector2 rayCorner = direction >= 0 ? raycastOrigins.topLeft : raycastOrigins.bottomLeft;
         for (int i = 0; i < verticalRayAmount; i++)
         {
@@ -46,7 +52,7 @@ public class CollisionsHandler2D : RaycastLayout
             Debug.DrawRay(rayOrigin, direction * rayLength * Vector2.up, Color.red);
             if (hit)
             {   
-                displacement.y = (hit.distance - skinWidth) * direction;
+                displacement.y = (hit.distance - scaledSkinWidth) * direction;
                 rayLength = hit.distance; // for corners
 
                 if (colDetails.onSlope)
@@ -59,7 +65,7 @@ public class CollisionsHandler2D : RaycastLayout
     private void CheckHorizontalCollision(ref Vector2 displacement)
     {
         float direction = Mathf.Sign(displacement.x);
-        float rayLength = Mathf.Abs(displacement.x) + skinWidth;
+        float rayLength = Mathf.Abs(displacement.x) + scaledSkinWidth;
         Vector2 rayCorner = direction >= 0 ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
         for (int i = 0; i < horizontalRayAmount; i++)
         {
@@ -75,7 +81,7 @@ public class CollisionsHandler2D : RaycastLayout
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
                 if (i == 0 && slopeAngle <= maxSlopeAngle)
                 {
-                    float slopeStartDistance = slopeAngle != colDetails.prevSlopeAngle ? hit.distance - skinWidth : 0;
+                    float slopeStartDistance = slopeAngle != colDetails.prevSlopeAngle ? hit.distance - scaledSkinWidth : 0;
                     displacement.x -= slopeStartDistance * direction; // avoids getting more displacement when reaching a slope because of previous slope displacement values
                     ClimbSlope(ref displacement, slopeAngle);
                     displacement.x += slopeStartDistance;
@@ -83,7 +89,7 @@ public class CollisionsHandler2D : RaycastLayout
 
                 if (!colDetails.onSlope || slopeAngle > maxSlopeAngle)
                 {
-                    displacement.x = Mathf.Min(Mathf.Abs(displacement.x),(hit.distance - skinWidth)) * direction;
+                    displacement.x = Mathf.Min(Mathf.Abs(displacement.x),(hit.distance - scaledSkinWidth)) * direction;
                     rayLength = Mathf.Min(Mathf.Abs(displacement.x), hit.distance); // this prevents an error because a ray touching a slope with higher angle than current slope 
                     
                     if (colDetails.onSlope)
@@ -111,8 +117,8 @@ public class CollisionsHandler2D : RaycastLayout
 
     private void DescendSlope(ref Vector2 displacement)
     {
-        RaycastHit2D hitLeft = Physics2D.Raycast(raycastOrigins.bottomLeft, Vector2.down, Mathf.Abs(displacement.y) + skinWidth, collisionMask);
-        RaycastHit2D hitRight = Physics2D.Raycast(raycastOrigins.bottomRight, Vector2.down, Mathf.Abs(displacement.y) + skinWidth, collisionMask);
+        RaycastHit2D hitLeft = Physics2D.Raycast(raycastOrigins.bottomLeft, Vector2.down, Mathf.Abs(displacement.y) + scaledSkinWidth, collisionMask);
+        RaycastHit2D hitRight = Physics2D.Raycast(raycastOrigins.bottomRight, Vector2.down, Mathf.Abs(displacement.y) + scaledSkinWidth, collisionMask);
         SlideSlope(hitLeft, ref displacement);
         SlideSlope(hitRight, ref displacement);
         if (colDetails.onSlopeSlide) return;
@@ -127,7 +133,7 @@ public class CollisionsHandler2D : RaycastLayout
             if (slopeAngle != 0 && slopeAngle <= maxSlopeAngle)
             {
                 if (Mathf.Sign(hit.normal.x) == direction)
-                    if (hit.distance - skinWidth - yDisplacement <= slopeEpsilon) // when accelerating yDisplacement can be small enough to make the character walk away from the slope
+                    if (hit.distance - scaledSkinWidth - yDisplacement <= slopeEpsilon) // when accelerating yDisplacement can be small enough to make the character walk away from the slope
                     {
                         float slopeDisplacement = Mathf.Abs(displacement.x);
                         float slopeAngleRad = slopeAngle * Mathf.Deg2Rad;
@@ -158,7 +164,7 @@ public class CollisionsHandler2D : RaycastLayout
 
     public bool IsSlopeBelow()
     {
-        float probeLength = skinWidth + groundProbeDistance * 2f;
+        float probeLength = scaledSkinWidth + groundProbeDistance * 2f;
         RaycastHit2D leftHit = Physics2D.Raycast(
             raycastOrigins.bottomLeft,
             Vector2.down,

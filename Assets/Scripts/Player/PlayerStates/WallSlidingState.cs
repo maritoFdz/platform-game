@@ -22,7 +22,7 @@ public class WallSlidingState : IPlayerState
     public void UpdateState(Player player)
     {
         player.velocity.y = Mathf.SmoothDamp(player.velocity.y, -player.wallSlideSpeed, ref player.velocityYSmoothing, player.accelerationTimeWall);
-        player.Move(gravityMultiplier);
+        player.Move(false, true, gravityMultiplier);
         player.PaintTrail();
         if (player.JumpPressed || player.wallStickTime != dirDecisionTimer) // if is jump pressed or countdown to chose direction has started
         {

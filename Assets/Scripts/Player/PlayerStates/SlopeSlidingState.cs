@@ -10,7 +10,7 @@ public class SlopeSlidingState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        player.Move();
+        player.Move(true, false);
         if (player.JumpPressed)
         {
             player.velocity.x = player.slopeSlidingJump.x * -direction;
