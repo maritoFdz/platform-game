@@ -93,7 +93,7 @@ public class TrailPainter : RaycastLayout
                 Vector2.down,
                 rayLength,
                 collisionMask);
-            if (hitDown) PaintTile(hitDown.point, raycastOrigins.bottomLeft + Vector2.right * (verRaySpacing * i) == raycastOrigins.bottomRight);
+            if (hitDown) PaintTile(hitDown.point - hitDown.normal * 0.01f, raycastOrigins.bottomLeft + Vector2.right * (verRaySpacing * i) == raycastOrigins.bottomRight);
         }
 
         for (int i = 0; i < horizontalRayAmount; i++)
@@ -104,7 +104,7 @@ public class TrailPainter : RaycastLayout
                 Vector2.right,
                 rayLength,
                 collisionMask);
-            if (hitRight) PaintTile(hitRight.point, false);
+            if (hitRight) PaintTile(hitRight.point - hitRight.normal * 0.01f, false);
 
             // paints left
             origin = raycastOrigins.bottomLeft + Vector2.up * (verRaySpacing * i);
@@ -112,13 +112,16 @@ public class TrailPainter : RaycastLayout
                 Vector2.left,
                 rayLength,
                 collisionMask);
-            if (hitLeft) PaintTile(hitLeft.point, true);
+            if (hitLeft) PaintTile(hitLeft.point - hitLeft.normal * 0.01f, true);
         }
     }
 
     private void PaintTile(Vector3 worldPos, bool isFacingLeft)
     {
         Vector3Int tileToPaint = trailTilemap.WorldToCell(worldPos);
+        Vector3Int worldTile = worldTilemap.WorldToCell(worldPos);
+        PaintableTile tile = worldTilemap.GetTile(worldTile) as PaintableTile;
+        if (tile == null) return;
         if (neighborTilesColdown.ContainsKey(tileToPaint))
         {
             float lastTime = neighborTilesColdown[tileToPaint];
