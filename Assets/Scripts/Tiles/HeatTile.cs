@@ -2,18 +2,17 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEngine.Tilemaps.Tile;
 
-public enum SurfaceType { Floor, Wall, Slope }
-
-[CreateAssetMenu(menuName = "Tiles/PaintableTile")]
-public class PaintableTile : TileBase
+[CreateAssetMenu(fileName = "Shrink Tile", menuName = "Scriptable Objects/Shrink Tile")]
+public class HeatTile : TileBase, IInteractiveTile
 {
     [SerializeField] private Sprite sprite;
-    [SerializeField] private SurfaceType surfaceType;
-    public bool isPainted;
-    public SurfaceType GetSurfaceType()
+    [SerializeField] private int shrinksPerSecond;
+
+    public void OnPlayerEnter(Player player)
     {
-        return surfaceType;
+        player.Shrink(true, shrinksPerSecond);
     }
+
     public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
     {
         tileData.sprite = sprite;

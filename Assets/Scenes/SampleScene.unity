@@ -3534,12 +3534,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c53fbb80ccfafe4db4df71f96b32b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  col: {fileID: 1897415616}
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 64
-  skinWidth: 0.015
-  raySpacing: 0.25
   trailTilemap: {fileID: 748383026}
   worldTilemap: {fileID: 435947504}
   splashTilemap: {fileID: 807508566}
@@ -3553,6 +3547,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a8a5e5ee026b8af4191a3648397d0e12, type: 2}
   - {fileID: 11400000, guid: 305bc73721d45984eaa099607021b15a, type: 2}
   - {fileID: 11400000, guid: 18078b4a2b0a0494691196c275f49986, type: 2}
+  player: {fileID: 1752049366}
+  playerController: {fileID: 1752049367}
   trailTile: {fileID: 11400000, guid: 88b4019adb8531b49b8271dd394efc40, type: 2}
   rayLength: 0.05
   maxSpread: 3

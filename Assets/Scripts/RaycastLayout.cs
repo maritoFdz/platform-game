@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using static RaycastLayout;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class RaycastLayout : MonoBehaviour
@@ -20,6 +22,7 @@ public class RaycastLayout : MonoBehaviour
     protected float horRaySpacing;
     protected float verRaySpacing;
     protected RaycastOrigins raycastOrigins;
+    protected RaycastLayoutDetails raycastLayoutDetails;
 
     protected virtual void Awake()
     {
@@ -49,10 +52,38 @@ public class RaycastLayout : MonoBehaviour
         verticalRayAmount = Mathf.Max(minRayAmount, verticalRayAmount);
         horRaySpacing = corners.size.y / (horizontalRayAmount - 1);
         verRaySpacing = corners.size.x / (verticalRayAmount - 1);
+        UpdateRaycastDetails();
     }
 
-    protected struct RaycastOrigins
+    private void UpdateRaycastDetails()
+    {
+        raycastLayoutDetails.skinWidth = scaledSkinWidth;
+        raycastLayoutDetails.verRaySpacing = verRaySpacing;
+        raycastLayoutDetails.horRaySpacing = horRaySpacing;
+        raycastLayoutDetails.verticalRayAmount = verticalRayAmount;
+        raycastLayoutDetails.horizontalRayAmount = horizontalRayAmount;
+        raycastLayoutDetails.collisionMask = collisionMask;
+    }
+
+    public RaycastOrigins GetRaycastOrigins()
+    {
+        return raycastOrigins;
+    }
+
+    public RaycastLayoutDetails GetRaycastLayoutDetails()
+    {
+        return raycastLayoutDetails;
+    }
+
+    public struct RaycastOrigins
     {
         public Vector2 topLeft, topRight, bottomLeft, bottomRight;
+    }
+
+    public struct RaycastLayoutDetails
+    {
+        public int verticalRayAmount, horizontalRayAmount;
+        public float horRaySpacing, verRaySpacing, skinWidth;
+        public LayerMask collisionMask;
     }
 }

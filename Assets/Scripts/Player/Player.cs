@@ -120,7 +120,7 @@ public class Player : MonoBehaviour
         controller.Move(deltaMove);
         if (storeHorMovement) moveAmount += Mathf.Abs(deltaMove.x);
         if (storeVerMovement) moveAmount += Mathf.Abs(deltaMove.y);
-        DeScalePlayer();
+        Shrink();
         velocity += acceleration * dt;
     }
 
@@ -138,7 +138,7 @@ public class Player : MonoBehaviour
     {
         trailPainter.PaintSplash(transform.position, rotation);
         animationController.MakeSplash(rotation);
-        DeScalePlayer(true, 2);
+        Shrink(true, 2);
     }
 
     public void PaintTrail()
@@ -146,14 +146,13 @@ public class Player : MonoBehaviour
         trailPainter.PaintTrail();
     }
 
-    public void DeScalePlayer(bool forcedScaleLoss = false, int scaleLossUnits = 1)
+    public void Shrink(bool forcedScaleLoss = false, int scaleLossUnits = 1)
     {
         if (moveAmount < 1 && !forcedScaleLoss) return;
         if (!forcedScaleLoss) moveAmount--;
         normalizedScale = Mathf.Max(transform.localScale.x / initialScale.x - scaleReductionPerUnit * scaleLossUnits, minNormalizedScale);
         transform.localScale = initialScale * normalizedScale;
         controller.UpdateCollisionsDescale(normalizedScale);
-        trailPainter.UpdateCollisionsDescale(normalizedScale);
 
         if (normalizedScale == minNormalizedScale)
             KillPlayer();
