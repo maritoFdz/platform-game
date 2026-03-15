@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [Header("References")]
     [SerializeField] private CollisionsHandler2D controller;
     [SerializeField] private PlayerAnimationStateController animationController;
-    [SerializeField] private TrailPainter trailPainter;
+    [SerializeField] private TilesInteractionHandler trailPainter;
 
     [Header("Movement Settings")]
     [SerializeField] private float maxJumpHeight;

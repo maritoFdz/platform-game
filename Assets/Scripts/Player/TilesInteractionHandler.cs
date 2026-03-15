@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static RaycastLayout;
 
-public class TrailPainter : MonoBehaviour
+public class TilesInteractionHandler : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Tilemap trailTilemap;
@@ -86,6 +86,30 @@ public class TrailPainter : MonoBehaviour
 
             if (hitRight) hitsRight.Add(hitRight);
             if (hitLeft) hitsLeft.Add(hitLeft);
+        }
+        ApplyTilesEffects();
+    }
+
+    private void ApplyTilesEffects()
+    {
+        HashSet<IInteractiveTile> interactiveTiles = new(); // avoids picking the same tile over and over
+
+        PickTiles(hitsBelow, interactiveTiles);
+        PickTiles(hitsAbove, interactiveTiles);
+        PickTiles(hitsLeft, interactiveTiles);
+        PickTiles(hitsRight, interactiveTiles);
+
+        foreach (var interactiveTile in interactiveTiles)
+                interactiveTile.OnPlayerEnter(player);
+    }
+
+    private void PickTiles(List<RaycastHit2D> hits, HashSet<IInteractiveTile> tiles)
+    {
+        foreach (var hit in hits)
+        {
+            Vector3Int tilePos = worldTilemap.WorldToCell(hit.point - hit.normal * 0.01f);
+            if (worldTilemap.GetTile(tilePos) is IInteractiveTile interactiveTile)
+                tiles.Add(interactiveTile);
         }
     }
 

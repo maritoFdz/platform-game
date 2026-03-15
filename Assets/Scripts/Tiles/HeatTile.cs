@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEngine.Tilemaps.Tile;
 
-[CreateAssetMenu(fileName = "Shrink Tile", menuName = "Scriptable Objects/Shrink Tile")]
+[CreateAssetMenu(fileName = "Heat Tile", menuName = "Scriptable Objects/Heat Tile")]
 public class HeatTile : TileBase, IInteractiveTile
 {
     [SerializeField] private Sprite sprite;
