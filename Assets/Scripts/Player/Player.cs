@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
             KillPlayer();
     }
 
-    private void KillPlayer()
+    public void KillPlayer()
     {
         // todo animation death event
         RoomManager.instance.KillPlayer();

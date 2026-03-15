@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1fef419c00fb4d4ea6e9f7836cf527c, type: 3}
+  m_Name: Sewer Tile
+  m_EditorClassIdentifier: Assembly-CSharp::SewerTile
+  sprite: {fileID: 21300000, guid: 3f577e7653aeb2a4c9422e9302336734, type: 3}

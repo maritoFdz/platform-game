@@ -115,6 +115,8 @@ public class TilesInteractionHandler : MonoBehaviour
                 interactiveTile.OnPlayerEnter(player);
                 effectsApplied[effect] = Time.time;
             }
+            else if (worldTilemap.GetTile(tilePos) is SewerTile sewer)
+                sewer.KillPlayer(player);
         }
     }
 

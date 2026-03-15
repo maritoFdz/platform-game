@@ -30,7 +30,6 @@ public class RoomManager : MonoBehaviour
 
     private IEnumerator PlayerDiesCo()
     {
-        Debug.Log("oye se murio");
         player.gameObject.SetActive(false);
         yield return new WaitForSeconds(respawnWait);
         player.transform.position = SpawnPoint.position;
