@@ -16,7 +16,7 @@ public class CollisionsHandler2D : RaycastLayout
         UpdateRaycast();
     }
 
-    public void UpdateCollisionsDescale(float normalizedScale)
+    public void UpdateCollisions(float normalizedScale)
     {
         SetRaySpacing(normalizedScale);
         UpdateRaycast();

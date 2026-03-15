@@ -84,6 +84,7 @@ public class Player : MonoBehaviour
     {
         normalizedScale = 1f;
         transform.localScale = initialScale * normalizedScale;
+        controller.UpdateCollisions(normalizedScale);
         PlayerInput.Player.Enable();
         PlayerInput.Player.Jump.performed += Jump;
     }
@@ -153,7 +154,7 @@ public class Player : MonoBehaviour
         if (!forcedScaleLoss) moveAmount--;
         normalizedScale = Mathf.Max(transform.localScale.x / initialScale.x - scaleReductionPerUnit * scaleLossUnits, minNormalizedScale);
         transform.localScale = initialScale * normalizedScale;
-        controller.UpdateCollisionsDescale(normalizedScale);
+        controller.UpdateCollisions(normalizedScale);
 
         if (normalizedScale == minNormalizedScale)
             KillPlayer();
@@ -161,6 +162,8 @@ public class Player : MonoBehaviour
 
     private void KillPlayer()
     {
+        // todo animation death event
+        RoomManager.instance.KillPlayer();
     }
 
     #region Collisions related methods called by states
