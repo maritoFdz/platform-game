@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Heat Tile
   m_EditorClassIdentifier: Assembly-CSharp::HeatTile
   sprite: {fileID: 6074903659321076009, guid: b7c7c82ca5339a64ab686b370067713c, type: 3}
-  shrinksPerSecond: 1
+  shrinksPerTime: 10
+  applyTime: 0.5

@@ -6,11 +6,17 @@ using static UnityEngine.Tilemaps.Tile;
 public class HeatTile : TileBase, IInteractiveTile
 {
     [SerializeField] private Sprite sprite;
-    [SerializeField] private int shrinksPerSecond;
+
+    [Header("Effect Parameters")]
+    [SerializeField] private int shrinksPerTime;
+    [SerializeField] private float applyTime;
+
+    public TileEffectType EffectType => TileEffectType.Heat;
+    public float Cooldown => applyTime;
 
     public void OnPlayerEnter(Player player)
     {
-        player.Shrink(true, shrinksPerSecond);
+        player.Shrink(true, shrinksPerTime);
     }
 
     public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)

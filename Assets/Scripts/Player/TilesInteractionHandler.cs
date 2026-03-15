@@ -27,6 +27,7 @@ public class TilesInteractionHandler : MonoBehaviour
 
     // gives a less uniform effect by not allowing to paint all tiles at once
     private Dictionary<Vector3Int, float> neighborTilesColdown;
+    private Dictionary<TileEffectType, float> effectsApplied; // makes effects unique and frame independent
     private List<RaycastHit2D> hitsAbove;
     private List<RaycastHit2D> hitsBelow;
     private List<RaycastHit2D> hitsLeft;
@@ -39,6 +40,7 @@ public class TilesInteractionHandler : MonoBehaviour
         hitsLeft = new List<RaycastHit2D>();
         hitsRight = new List<RaycastHit2D>();
         neighborTilesColdown = new Dictionary<Vector3Int, float>();
+        effectsApplied = new Dictionary<TileEffectType, float>();
     }
 
     public void HandleTilesCollision()
@@ -92,24 +94,27 @@ public class TilesInteractionHandler : MonoBehaviour
 
     private void ApplyTilesEffects()
     {
-        HashSet<IInteractiveTile> interactiveTiles = new(); // avoids picking the same tile over and over
-
-        PickTiles(hitsBelow, interactiveTiles);
-        PickTiles(hitsAbove, interactiveTiles);
-        PickTiles(hitsLeft, interactiveTiles);
-        PickTiles(hitsRight, interactiveTiles);
-
-        foreach (var interactiveTile in interactiveTiles)
-                interactiveTile.OnPlayerEnter(player);
+        PickTiles(hitsBelow);
+        PickTiles(hitsAbove);
+        PickTiles(hitsLeft);
+        PickTiles(hitsRight);
     }
 
-    private void PickTiles(List<RaycastHit2D> hits, HashSet<IInteractiveTile> tiles)
+    private void PickTiles(List<RaycastHit2D> hits)
     {
         foreach (var hit in hits)
         {
             Vector3Int tilePos = worldTilemap.WorldToCell(hit.point - hit.normal * 0.01f);
             if (worldTilemap.GetTile(tilePos) is IInteractiveTile interactiveTile)
-                tiles.Add(interactiveTile);
+            {
+                TileEffectType effect = interactiveTile.EffectType;
+                // checks if effect can be applied
+                if (effectsApplied.ContainsKey(effect))
+                    if (Time.time - effectsApplied[effect] < interactiveTile.Cooldown)
+                        continue;
+                interactiveTile.OnPlayerEnter(player);
+                effectsApplied[effect] = Time.time;
+            }
         }
     }
 
