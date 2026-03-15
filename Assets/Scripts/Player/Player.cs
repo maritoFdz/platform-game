@@ -103,6 +103,7 @@ public class Player : MonoBehaviour
             animationController.FlipX(inputX < 0);
         targetVelocity = inputX * moveSpeed;
         currentState.UpdateState(this);
+        trailPainter.HandleTilesCollision();
     }
 
     public void SwitchState(IPlayerState nextState)

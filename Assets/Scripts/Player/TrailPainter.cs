@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 using static RaycastLayout;
 
@@ -28,10 +27,78 @@ public class TrailPainter : MonoBehaviour
 
     // gives a less uniform effect by not allowing to paint all tiles at once
     private Dictionary<Vector3Int, float> neighborTilesColdown;
+    private List<RaycastHit2D> hitsAbove;
+    private List<RaycastHit2D> hitsBelow;
+    private List<RaycastHit2D> hitsLeft;
+    private List<RaycastHit2D> hitsRight;
 
     private void Awake()
     {
+        hitsAbove = new List<RaycastHit2D>();
+        hitsBelow = new List<RaycastHit2D>();
+        hitsLeft = new List<RaycastHit2D>();
+        hitsRight = new List<RaycastHit2D>();
         neighborTilesColdown = new Dictionary<Vector3Int, float>();
+    }
+
+    public void HandleTilesCollision()
+    {
+        // restarts tiles stored
+        hitsBelow.Clear();
+        hitsAbove.Clear();
+        hitsLeft.Clear();
+        hitsRight.Clear();
+
+        RaycastLayoutDetails layoutInfo = playerController.GetRaycastLayoutDetails();
+        RaycastOrigins raycastOrigins = playerController.GetRaycastOrigins();
+        float rayLength = this.rayLength + layoutInfo.skinWidth;
+
+        // store tiles that player is touching above and below
+        for (int i = 0; i < layoutInfo.verticalRayAmount; i++)
+        {
+            Vector2 originBelow = raycastOrigins.bottomLeft + Vector2.right * (layoutInfo.verRaySpacing * i);
+            RaycastHit2D hitBelow = Physics2D.Raycast(originBelow,
+                Vector2.down,
+                rayLength,
+                layoutInfo.collisionMask);
+            Vector2 originAbove = raycastOrigins.topLeft + Vector2.right * (layoutInfo.verRaySpacing * i);
+            RaycastHit2D hitAbove = Physics2D.Raycast(originAbove,
+                Vector2.down,
+                rayLength,
+                layoutInfo.collisionMask);
+            if (hitBelow) hitsBelow.Add(hitBelow);
+            if (hitAbove) hitsAbove.Add(hitAbove);
+        }
+
+        // same but left/right
+        for (int i = 0; i < layoutInfo.horizontalRayAmount; i++)
+        {
+            Vector2 originRight = raycastOrigins.bottomRight + Vector2.up * (layoutInfo.horRaySpacing * i);
+            RaycastHit2D hitRight = Physics2D.Raycast(originRight,
+                Vector2.right,
+                rayLength,
+                layoutInfo.collisionMask);
+            Vector2 originLeft = raycastOrigins.bottomLeft + Vector2.up * (layoutInfo.horRaySpacing * i);
+            RaycastHit2D hitLeft = Physics2D.Raycast(originLeft,
+                Vector2.left,
+                rayLength,
+                layoutInfo.collisionMask);
+
+            if (hitRight) hitsRight.Add(hitRight);
+            if (hitLeft) hitsLeft.Add(hitLeft);
+        }
+    }
+
+    public void PaintTrail()
+    {
+        foreach (var hit in hitsBelow)
+            PaintTile(hit.point - hit.normal * 0.01f, false);
+
+        foreach (var hit in hitsRight)
+            PaintTile(hit.point - hit.normal * 0.01f, false);
+
+        foreach (var hit in hitsLeft)
+            PaintTile(hit.point - hit.normal * 0.01f, true);
     }
 
     public void PaintSplash(Vector3 worldPos, float rotation)
@@ -73,43 +140,6 @@ public class TrailPainter : MonoBehaviour
                     splashTilemap.SetTransformMatrix(tilePos, rotationMatrix);
                     break;
             }
-        }
-    }
-
-    public void PaintTrail()
-    {
-        RaycastLayoutDetails layoutInfo = playerController.GetRaycastLayoutDetails();
-        RaycastOrigins raycastOrigins = playerController.GetRaycastOrigins();
-        float rayLength = this.rayLength + layoutInfo.skinWidth;
-
-        for (int i = 0; i < layoutInfo.verticalRayAmount; i++)
-        {
-            // paints below
-            Vector2 origin = raycastOrigins.bottomLeft + Vector2.right * (layoutInfo.verRaySpacing * i);
-            RaycastHit2D hitDown = Physics2D.Raycast(origin, 
-                Vector2.down,
-                rayLength,
-                layoutInfo.collisionMask);
-            if (hitDown) PaintTile(hitDown.point - hitDown.normal * 0.01f, raycastOrigins.bottomLeft + Vector2.right * (layoutInfo.verRaySpacing * i) == raycastOrigins.bottomRight);
-        }
-
-        for (int i = 0; i < layoutInfo.horizontalRayAmount; i++)
-        {
-            // paints right
-            Vector2 origin = raycastOrigins.bottomRight + Vector2.up * (layoutInfo.verRaySpacing * i);
-            RaycastHit2D hitRight = Physics2D.Raycast(origin,
-                Vector2.right,
-                rayLength,
-                layoutInfo.collisionMask);
-            if (hitRight) PaintTile(hitRight.point - hitRight.normal * 0.01f, false);
-
-            // paints left
-            origin = raycastOrigins.bottomLeft + Vector2.up * (layoutInfo.verRaySpacing * i);
-            RaycastHit2D hitLeft = Physics2D.Raycast(origin,
-                Vector2.left,
-                rayLength,
-                layoutInfo.collisionMask);
-            if (hitLeft) PaintTile(hitLeft.point - hitLeft.normal * 0.01f, true);
         }
     }
 
