@@ -16,7 +16,7 @@ public class HeatTile : TileBase, IInteractiveTile
 
     public void OnPlayerEnter(Player player)
     {
-        player.DeFreeze();
+        player.UnFreeze();
         player.Shrink(true, shrinksPerTime);
     }
 

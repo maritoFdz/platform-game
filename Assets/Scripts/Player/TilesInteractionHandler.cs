@@ -94,6 +94,7 @@ public class TilesInteractionHandler : MonoBehaviour
 
     private void ApplyTilesEffects()
     {
+        player.onFreezeTile = false;
         PickTiles(hitsBelow);
         PickTiles(hitsAbove);
         PickTiles(hitsLeft);
@@ -107,6 +108,7 @@ public class TilesInteractionHandler : MonoBehaviour
             Vector3Int tilePos = worldTilemap.WorldToCell(hit.point - hit.normal * 0.01f);
             if (worldTilemap.GetTile(tilePos) is IInteractiveTile interactiveTile)
             {
+                if (interactiveTile is FreezeTile) player.onFreezeTile = true;
                 TileEffectType effect = interactiveTile.EffectType;
                 // checks if effect can be applied
                 if (effectsApplied.ContainsKey(effect))

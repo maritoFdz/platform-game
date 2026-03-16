@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [Header("References")]
     [SerializeField] private CollisionsHandler2D controller;
     [SerializeField] private PlayerAnimationStateController animationController;
-    [SerializeField] private TilesInteractionHandler trailPainter;
+    [SerializeField] private TilesInteractionHandler tilesController;
 
     [Header("Movement Settings")]
     [SerializeField] private float maxJumpHeight;
@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public float velocityXSmoothing;
     [HideInInspector] public float velocityYSmoothing;
     [HideInInspector] public float targetVelocity;
+    [HideInInspector] public bool onFreezeTile;
 
     private PlayerInput PlayerInput;
     public bool JumpPressed => jumpBufferCounter > 0;
@@ -94,7 +95,6 @@ public class Player : MonoBehaviour
 
     private void OnDisable()
     {
-        DeFreeze();
         PlayerInput.Player.Jump.performed -= Jump;
         PlayerInput.Disable();
     }
@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
             animationController.FlipX(inputX < 0);
         targetVelocity = inputX * moveSpeed;
         currentState.UpdateState(this);
-        trailPainter.HandleTilesCollision();
+        tilesController.HandleTilesCollision();
     }
 
     public void SwitchState(IPlayerState nextState)
@@ -143,7 +143,7 @@ public class Player : MonoBehaviour
     public void MakeSplash(float rotation)
     {
         if (IsFrozen) return;
-        trailPainter.PaintSplash(transform.position, rotation);
+        tilesController.PaintSplash(transform.position, rotation);
         animationController.MakeSplash(rotation);
         Shrink(true, 2);
     }
@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
     public void PaintTrail()
     {
         if (!IsFrozen)
-            trailPainter.PaintTrail();
+            tilesController.PaintTrail();
     }
 
     public void Shrink(bool forcedScaleLoss = false, int scaleLossUnits = 1)
@@ -170,17 +170,20 @@ public class Player : MonoBehaviour
     public void KillPlayer()
     {
         // todo animation death event
+        animationController.ResetFreezeColor();
         RoomManager.instance.KillPlayer();
     }
 
     public void Freeze(float time)
     {
         freezeTime = Time.time + time;
+        animationController.StartFreezeEffect(time);
     }
 
-    public void DeFreeze()
+    public void UnFreeze()
     {
         freezeTime = 0;
+        animationController.StopFreezeEffect();
     }
 
     #region Collisions related methods called by states

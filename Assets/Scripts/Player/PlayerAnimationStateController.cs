@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAnimationStateController : MonoBehaviour
@@ -14,6 +15,11 @@ public class PlayerAnimationStateController : MonoBehaviour
 
     [Header("VFX Settings")]
     public GameObject splashVFXPrefab;
+
+    [Header("Other")]
+    [SerializeField] private Color frozenColor;
+    [SerializeField] private float colorSpeed;
+    public Coroutine colorRoutine;
 
     private int isWalkingHash;
     private int isRunningHash;
@@ -44,6 +50,69 @@ public class PlayerAnimationStateController : MonoBehaviour
     public void FlipX(bool isFacingLeft)
     {
         spriteRenderer.flipX = isFacingLeft;
+    }
+
+    public void StartFreezeEffect(float freezeTime)
+    {
+        colorRoutine ??= StartCoroutine(FreezeColorCo(freezeTime));
+    }
+
+    public void StopFreezeEffect()
+    {
+        if (colorRoutine != null)
+            StopCoroutine(colorRoutine); // stops current color effect
+
+        colorRoutine = StartCoroutine(UnFreezeColorCo());
+    }
+
+    private IEnumerator FreezeColorCo(float duration)
+    {
+        Color startColor = spriteRenderer.color;
+        float timer = 0f;
+        while (true)
+        {
+            if (player.onFreezeTile) // changes player color and actualizes counter so staying on an ice tile doesnt count as time frozen
+            {
+                spriteRenderer.color = Color.Lerp(spriteRenderer.color, frozenColor, Time.deltaTime * colorSpeed);
+                startColor = frozenColor;
+                timer = 0f;
+            }
+            else
+            {
+                timer += Time.deltaTime;
+                float changeRatio = Mathf.Clamp01(timer / duration); // normalizes time to exit frozen state
+                spriteRenderer.color = Color.Lerp(startColor, Color.white, changeRatio);
+            }
+
+            if (!player.onFreezeTile && spriteRenderer.color == Color.white)
+            {
+                spriteRenderer.color = Color.white;
+                colorRoutine = null;
+                yield break;
+            }
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator UnFreezeColorCo()
+    {
+        while (spriteRenderer.color != Color.white)
+        {
+            spriteRenderer.color = Color.Lerp(spriteRenderer.color, Color.white, Time.deltaTime * colorSpeed * 10);
+            yield return null;
+        }
+        spriteRenderer.color = Color.white;
+        colorRoutine = null;
+    }
+
+    public void ResetFreezeColor()
+    {
+        if (colorRoutine != null)
+            StopCoroutine(colorRoutine);
+
+        colorRoutine = null;
+        spriteRenderer.color = Color.white;
     }
 
     public void PlayIdle()

@@ -251,6 +251,8 @@ MonoBehaviour:
   player: {fileID: 1752049366}
   idleWaitTime: 0.5
   splashVFXPrefab: {fileID: 6640021389163789217, guid: f822bfca91021b543b4d9217411043b1, type: 3}
+  frozenColor: {r: 0, g: 0.969697, b: 1, a: 1}
+  colorSpeed: 1
 --- !u!1 &435947500
 GameObject:
   m_ObjectHideFlags: 0
@@ -3463,7 +3465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   controller: {fileID: 1752049367}
   animationController: {fileID: 13235031}
-  trailPainter: {fileID: 1752049369}
+  tilesController: {fileID: 1752049369}
   maxJumpHeight: 6
   minJumpHeight: 3
   maxHeightTime: 0.5
@@ -3495,6 +3497,7 @@ MonoBehaviour:
   velocityXSmoothing: 0
   velocityYSmoothing: 0
   targetVelocity: 0
+  onFreezeTile: 0
 --- !u!114 &1752049367
 MonoBehaviour:
   m_ObjectHideFlags: 0
