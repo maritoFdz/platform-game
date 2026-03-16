@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -51,6 +52,8 @@ public class Player : MonoBehaviour
     public bool JumpReleased => !PlayerInput.Player.Jump.IsPressed();
     public bool IsRunning => PlayerInput.Player.Run.IsPressed();
     public bool IsMoving => PlayerInput.Player.Move.IsPressed();
+    public bool IsFrozen => Time.time < freezeTime;
+    private float freezeTime;
     private float jumpBufferCounter;
     private Vector3 initialScale;
     private float normalizedScale;
@@ -120,8 +123,8 @@ public class Player : MonoBehaviour
         Vector2 acceleration = new(0, gravityScale * gravityMultiplier);
         Vector2 deltaMove = velocity * dt + 0.5f * dt * dt * acceleration;
         controller.Move(deltaMove);
-        if (storeHorMovement) moveAmount += Mathf.Abs(deltaMove.x);
-        if (storeVerMovement) moveAmount += Mathf.Abs(deltaMove.y);
+        if (storeHorMovement && !IsFrozen) moveAmount += Mathf.Abs(deltaMove.x);
+        if (storeVerMovement && !IsFrozen) moveAmount += Mathf.Abs(deltaMove.y);
         Shrink();
         velocity += acceleration * dt;
     }
@@ -145,11 +148,13 @@ public class Player : MonoBehaviour
 
     public void PaintTrail()
     {
-        trailPainter.PaintTrail();
+        if (!IsFrozen)
+            trailPainter.PaintTrail();
     }
 
     public void Shrink(bool forcedScaleLoss = false, int scaleLossUnits = 1)
     {
+        if (IsFrozen) return;
         if (moveAmount < 1 && !forcedScaleLoss) return;
         if (!forcedScaleLoss) moveAmount--;
         normalizedScale = Mathf.Max(transform.localScale.x / initialScale.x - scaleReductionPerUnit * scaleLossUnits, minNormalizedScale);
@@ -164,6 +169,16 @@ public class Player : MonoBehaviour
     {
         // todo animation death event
         RoomManager.instance.KillPlayer();
+    }
+
+    public void Freeze(float time)
+    {
+        freezeTime = Time.time + time;
+    }
+
+    public void DeFreeze()
+    {
+        freezeTime = 0;
     }
 
     #region Collisions related methods called by states

@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEngine.Tilemaps.Tile;
 
-[CreateAssetMenu(fileName = "Heat Tile", menuName = "Scriptable Objects/Heat Tile")]
-public class HeatTile : TileBase, IInteractiveTile
+[CreateAssetMenu(fileName = "Freeze Tile", menuName = "Scriptable Objects/Freeze Tile")]
+public class FreezeTile : TileBase, IInteractiveTile
 {
     [SerializeField] private Sprite sprite;
 
     [Header("Effect Parameters")]
-    [SerializeField] private int shrinksPerTime;
+    [SerializeField] private float freezeTime;
     [SerializeField] private float applyTime;
 
     public TileEffectType EffectType => TileEffectType.Heat;
@@ -16,8 +16,7 @@ public class HeatTile : TileBase, IInteractiveTile
 
     public void OnPlayerEnter(Player player)
     {
-        player.DeFreeze();
-        player.Shrink(true, shrinksPerTime);
+        player.Freeze(freezeTime);
     }
 
     public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
