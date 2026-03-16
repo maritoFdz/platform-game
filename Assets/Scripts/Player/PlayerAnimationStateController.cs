@@ -20,6 +20,8 @@ public class PlayerAnimationStateController : MonoBehaviour
     [SerializeField] private Color frozenColor;
     [SerializeField] private float colorSpeed;
     public Coroutine colorRoutine;
+    private Material material;
+    private float normalFreezeAmount;
 
     private int isWalkingHash;
     private int isRunningHash;
@@ -27,8 +29,14 @@ public class PlayerAnimationStateController : MonoBehaviour
     private int playIdleHash;
     private int startJumpHash;
     private int endJumpHash;
+    private int freezeAmountHash;
 
     private bool idleCancelled;
+
+    private void Awake()
+    {
+        material = spriteRenderer.material;
+    }
 
     private void Start()
     {
@@ -38,6 +46,7 @@ public class PlayerAnimationStateController : MonoBehaviour
         playIdleHash = Animator.StringToHash("PlayIdle");
         startJumpHash = Animator.StringToHash("StartJump");
         endJumpHash = Animator.StringToHash("EndJump");
+        freezeAmountHash = Shader.PropertyToID("_Freeze_Amount");
     }
 
     private IEnumerator IdleLoop()
@@ -67,26 +76,29 @@ public class PlayerAnimationStateController : MonoBehaviour
 
     private IEnumerator FreezeColorCo(float duration)
     {
-        Color startColor = spriteRenderer.color;
+        float currentFreeze = normalFreezeAmount;
         float timer = 0f;
         while (true)
         {
             if (player.onFreezeTile) // changes player color and actualizes counter so staying on an ice tile doesnt count as time frozen
             {
-                spriteRenderer.color = Color.Lerp(spriteRenderer.color, frozenColor, Time.deltaTime * colorSpeed);
-                startColor = frozenColor;
+                normalFreezeAmount = Mathf.Lerp(normalFreezeAmount, 1f, Time.deltaTime * colorSpeed);
+                currentFreeze = normalFreezeAmount;
                 timer = 0f;
             }
             else
             {
                 timer += Time.deltaTime;
                 float changeRatio = Mathf.Clamp01(timer / duration); // normalizes time to exit frozen state
-                spriteRenderer.color = Color.Lerp(startColor, Color.white, changeRatio);
+                normalFreezeAmount = Mathf.Lerp(currentFreeze, 0f, changeRatio);
             }
 
-            if (!player.onFreezeTile && spriteRenderer.color == Color.white)
+            material.SetFloat(freezeAmountHash, normalFreezeAmount);
+
+            if (!player.onFreezeTile && normalFreezeAmount <= 0.001f)
             {
-                spriteRenderer.color = Color.white;
+                normalFreezeAmount = 0;
+                material.SetFloat(freezeAmountHash, normalFreezeAmount);
                 colorRoutine = null;
                 yield break;
             }
@@ -97,12 +109,14 @@ public class PlayerAnimationStateController : MonoBehaviour
 
     private IEnumerator UnFreezeColorCo()
     {
-        while (spriteRenderer.color != Color.white)
+        while (normalFreezeAmount >= 0.001f)
         {
-            spriteRenderer.color = Color.Lerp(spriteRenderer.color, Color.white, Time.deltaTime * colorSpeed * 10);
+            normalFreezeAmount = Mathf.Lerp(normalFreezeAmount, 0f, Time.deltaTime * colorSpeed * 10);
+            material.SetFloat(freezeAmountHash, normalFreezeAmount);
             yield return null;
         }
-        spriteRenderer.color = Color.white;
+        normalFreezeAmount = 0f;
+        material.SetFloat(freezeAmountHash, normalFreezeAmount);
         colorRoutine = null;
     }
 
@@ -112,7 +126,8 @@ public class PlayerAnimationStateController : MonoBehaviour
             StopCoroutine(colorRoutine);
 
         colorRoutine = null;
-        spriteRenderer.color = Color.white;
+        normalFreezeAmount = 0f;
+        material.SetFloat(freezeAmountHash, normalFreezeAmount);
     }
 
     public void PlayIdle()
