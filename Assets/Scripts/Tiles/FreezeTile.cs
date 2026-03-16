@@ -11,7 +11,7 @@ public class FreezeTile : TileBase, IInteractiveTile
     [SerializeField] private float freezeTime;
     [SerializeField] private float applyTime;
 
-    public TileEffectType EffectType => TileEffectType.Heat;
+    public TileEffectType EffectType => TileEffectType.Freeze;
     public float Cooldown => applyTime;
 
     public void OnPlayerEnter(Player player)

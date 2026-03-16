@@ -94,6 +94,7 @@ public class Player : MonoBehaviour
 
     private void OnDisable()
     {
+        DeFreeze();
         PlayerInput.Player.Jump.performed -= Jump;
         PlayerInput.Disable();
     }
@@ -141,6 +142,7 @@ public class Player : MonoBehaviour
 
     public void MakeSplash(float rotation)
     {
+        if (IsFrozen) return;
         trailPainter.PaintSplash(transform.position, rotation);
         animationController.MakeSplash(rotation);
         Shrink(true, 2);
