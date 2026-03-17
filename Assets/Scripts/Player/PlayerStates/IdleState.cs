@@ -20,6 +20,14 @@ public class IdleState : IPlayerState
             player.PaintTrail();
         player.Move(true, false, gravityMultiplier);
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround);
+
+        if (player.OnWater())
+        {
+            player.StopFallingAnimation();
+            player.SwitchState(player.swimingState);
+            return;
+        }
+
         if (player.JumpPressed)
         {
             player.ConsumeJump();

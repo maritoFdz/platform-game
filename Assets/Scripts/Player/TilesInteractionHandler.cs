@@ -13,6 +13,7 @@ public class TilesInteractionHandler : MonoBehaviour
     [SerializeField] private Tile[] splashTilesSlope;
     [SerializeField] private Player player;
     [SerializeField] private CollisionsHandler2D playerController;
+    [SerializeField] private LayerMask waterLayer;
 
     [Header("Trail Parameters")]
     [SerializeField] private Tile trailTile;
@@ -41,6 +42,15 @@ public class TilesInteractionHandler : MonoBehaviour
         hitsRight = new List<RaycastHit2D>();
         neighborTilesColdown = new Dictionary<Vector3Int, float>();
         effectsApplied = new Dictionary<TileEffectType, float>();
+    }
+
+    public bool CheckWater()
+    {
+        RaycastOrigins origins = playerController.GetRaycastOrigins();
+        Vector2 center = (origins.bottomLeft + origins.topRight) / 2;
+        float width = Vector2.Distance(origins.bottomLeft, origins.bottomRight);
+        float height = Vector2.Distance(origins.bottomLeft, origins.topLeft);
+        return Physics2D.OverlapBox(center, new Vector2(width, height), 0f, waterLayer);
     }
 
     public void HandleTilesCollision()

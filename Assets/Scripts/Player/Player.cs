@@ -38,6 +38,9 @@ public class Player : MonoBehaviour
     public Vector2 fallOfJump;
     public float wallStickTime;
 
+    [Header("Others")]
+    [SerializeField] private float upscaleFactor;
+
     [HideInInspector] public float gravityScale;
     [HideInInspector] public float jumpForce;
     [HideInInspector] public float minJumpForce;
@@ -69,6 +72,7 @@ public class Player : MonoBehaviour
     public JumpingState jumpingState = new();
     public WallSlidingState wallSlidingState = new();
     public SlopeSlidingState slopeSlidingState = new();
+    public SwimingState swimingState = new();
 
     private void Awake()
     {
@@ -167,6 +171,14 @@ public class Player : MonoBehaviour
             KillPlayer();
     }
 
+    public void Upscale()
+    {
+        if (IsFrozen) return;
+        normalizedScale = Mathf.Min(transform.localScale.x / initialScale.x + scaleReductionPerUnit * upscaleFactor, 1f);
+        transform.localScale = initialScale * normalizedScale;
+        controller.UpdateCollisions(normalizedScale);
+    }
+
     public void KillPlayer()
     {
         // todo animation death event
@@ -221,6 +233,12 @@ public class Player : MonoBehaviour
     {
         return controller.colDetails.onSlopeSlide;
     }
+
+    public bool OnWater()
+    {
+        return tilesController.CheckWater();
+    }
+
     #endregion
 
     #region Animations related methods called by states

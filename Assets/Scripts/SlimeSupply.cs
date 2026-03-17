@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent (typeof(MeshFilter), typeof(MeshRenderer), typeof(EdgeCollider2D))]
+[RequireComponent (typeof(MeshFilter), typeof(MeshRenderer), typeof(BoxCollider2D))]
 public class SlimeSupply : MonoBehaviour
 {
     [Header("Water mesh")]
@@ -8,13 +8,28 @@ public class SlimeSupply : MonoBehaviour
     [SerializeField] private float width;
     [SerializeField] private float height;
     [SerializeField] private Material material;
-    [SerializeField] private EdgeCollider2D edgeCollider;
+    [SerializeField] private BoxCollider2D edgeCollider;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private MeshFilter meshFilter;
+    [SerializeField] private SpriteRenderer placeholder;
 
     private Mesh mesh;
     private Vector3[] vertices;
     private int[] topVerticesIndex;
+
+    private void Awake()
+    {
+        if (Application.isPlaying)
+        {
+            if (placeholder != null)
+                placeholder.enabled = false;
+        }
+        else
+        {
+            if (placeholder != null)
+                placeholder.enabled = true;
+        }
+    }
 
     private void Start()
     {

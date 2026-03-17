@@ -17,12 +17,18 @@ public class FallingState : IPlayerState
     public void UpdateState(Player player)
     {
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeAir);
+        if (player.OnWater())
+        {
+            player.StopFallingAnimation();
+            player.SwitchState(player.swimingState);
+            return;
+        }
         player.Move(false, false, player.gravityFallMultiplier);
         if (player.GroundBelow())
         {
             player.StopFallingAnimation();
             player.SwitchState(player.idleState);
-        }
+        }    
         else if (player.WallLeft() || player.WallRight())
         {
             player.SwitchState(player.wallSlidingState);
