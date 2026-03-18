@@ -31,6 +31,7 @@ public class SwimingState : IPlayerState
         {
             player.StopIdleAnimation();
             player.MakeSplash(0f);
+            player.ForceJumpingAnimation();
             player.SwitchState(player.jumpingState);
         }
     }

@@ -30,6 +30,7 @@ public class PlayerAnimationStateController : MonoBehaviour
     private int startJumpHash;
     private int endJumpHash;
     private int freezeAmountHash;
+    private int instantJumpHash;
 
     private bool idleCancelled;
 
@@ -46,6 +47,7 @@ public class PlayerAnimationStateController : MonoBehaviour
         playIdleHash = Animator.StringToHash("PlayIdle");
         startJumpHash = Animator.StringToHash("StartJump");
         endJumpHash = Animator.StringToHash("EndJump");
+        instantJumpHash = Animator.StringToHash("InstantJump");
         freezeAmountHash = Shader.PropertyToID("_Freeze_Amount");
     }
 
@@ -179,6 +181,11 @@ public class PlayerAnimationStateController : MonoBehaviour
     public void StopJumping()
     {
         animator.SetTrigger(endJumpHash);
+    }
+
+    public void ForceInstantJump()
+    {
+        animator.SetTrigger(instantJumpHash);
     }
 
     public void MakeSplash(float angle)

@@ -293,6 +293,11 @@ public class Player : MonoBehaviour
         animationController.PlayJumping();
     }
 
+    public void ForceJumpingAnimation()
+    {
+        animationController.ForceInstantJump();
+    }
+
     public void StopJumpingAnimation()
     {
         animationController.StopJumping();
