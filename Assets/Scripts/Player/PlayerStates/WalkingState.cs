@@ -63,5 +63,10 @@ public class WalkingState : IPlayerState
                 player.SwitchState(player.fallingState);
             }
         }
+
+        if (player.IsPushing())
+        {
+            player.SwitchState(player.pushingObjectState);
+        }
     }
 }

@@ -8,8 +8,14 @@ public class CollisionsHandler2D : RaycastLayout
     [SerializeField] private float groundProbeDistance;
     [SerializeField] private float maxSlopeAngle;
     [SerializeField] private float slopeEpsilon;
+    [SerializeField] private string pushableLayerName;
 
     public CollisionDetails colDetails;
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     private void Update()
     {
@@ -77,6 +83,10 @@ public class CollisionsHandler2D : RaycastLayout
             Debug.DrawRay(rayOrigin, direction * rayLength * Vector2.right, Color.red);
             if (hit)
             {
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer(pushableLayerName))
+                {
+                    colDetails.nextPushable = true;
+                }
                 if (hit.distance == 0) continue;
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
                 if (i == 0 && slopeAngle <= maxSlopeAngle)
@@ -192,12 +202,12 @@ public class CollisionsHandler2D : RaycastLayout
 
     public struct CollisionDetails
     {
-        public bool above, below, left, right, onSlope, onSlopeDescent, onSlopeSlide;
+        public bool above, below, left, right, onSlope, onSlopeDescent, onSlopeSlide, nextPushable;
         public float slopeAngle, prevSlopeAngle;
 
         public void ResetCollisions()
         {
-            above = below = left = right = onSlope = onSlopeDescent = onSlopeSlide = false;
+            above = below = left = right = onSlope = onSlopeDescent = onSlopeSlide = nextPushable = false;
             prevSlopeAngle = slopeAngle;
             slopeAngle = 0;
         }

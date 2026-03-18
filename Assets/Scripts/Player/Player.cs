@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
     public JumpingState jumpingState = new();
     public WallSlidingState wallSlidingState = new();
     public SlopeSlidingState slopeSlidingState = new();
+    public PushingObjectState pushingObjectState = new();
     public SwimingState swimingState = new();
 
     private void Awake()
@@ -232,6 +233,11 @@ public class Player : MonoBehaviour
     public bool IsSliding()
     {
         return controller.colDetails.onSlopeSlide;
+    }
+
+    public bool IsPushing()
+    {
+        return controller.colDetails.nextPushable;
     }
 
     public bool OnWater()

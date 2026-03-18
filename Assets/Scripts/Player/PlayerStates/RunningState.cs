@@ -58,5 +58,9 @@ public class RunningState : IPlayerState
             }
         }
 
+        if (player.IsPushing())
+        {
+            player.SwitchState(player.pushingObjectState);
+        }
     }
 }
