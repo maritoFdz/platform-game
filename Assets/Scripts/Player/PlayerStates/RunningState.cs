@@ -40,6 +40,7 @@ public class RunningState : IPlayerState
 
         if (player.IsSliding())
         {
+            player.StopRunningAnimation();
             player.SwitchState(player.slopeSlidingState);
             return;
         }
@@ -60,6 +61,7 @@ public class RunningState : IPlayerState
 
         if (player.IsPushing())
         {
+            player.StopRunningAnimation();
             player.SwitchState(player.pushingObjectState);
         }
     }

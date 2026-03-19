@@ -1,13 +1,47 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public class PushableObject : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private CollisionsHandler2D controller;
 
-    public void Push(Vector2 moveAmount)
+    [Header("Parameters")]
+    [SerializeField] private float pushSpeed;
+    [SerializeField] private float timeAccelerate;
+    [SerializeField] private float gravityScale;
+
+    private float direction;
+    private Vector2 velocity;
+    private float velocityXSmoothing;
+
+    private void Update()
     {
-        rb.MovePosition(transform.position +  (Vector3) moveAmount);
+        float dt = Time.deltaTime;
+
+        Vector2 acceleration = new(0, -gravityScale);
+
+        // Aplicar SmoothDamp a la velocidad horizontal
+        float targetVelX = pushSpeed * direction;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelX, ref velocityXSmoothing, timeAccelerate);
+
+        // Integración tipo Verlet
+        Vector2 deltaMove = velocity * dt + 0.5f * dt * dt * acceleration;
+
+        // Aplicar colisiones
+        controller.ClampDisplacement(ref deltaMove);
+
+        // Actualizar posición
+        transform.position += (Vector3)deltaMove;
+
+        // Integrar velocidad vertical
+        velocity += acceleration * dt;
+
+        if (controller.colDetails.below)
+            velocity.y = 0f;
+    }
+
+    public void SetDirection(float input)
+    {
+        direction = input;
     }
 }

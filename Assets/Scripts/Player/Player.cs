@@ -206,6 +206,13 @@ public class Player : MonoBehaviour
         animationController.StopFreezeEffect();
     }
 
+    public void ApplyExternalDisplacement(float deltaX, float deltaY)
+    {
+        Vector2 moveAmount = new(deltaX, deltaY);
+        controller.ClampDisplacement(ref moveAmount);
+        transform.Translate(moveAmount);
+    }
+
     #region Collisions related methods called by states
     public bool GroundBelow()
     {
@@ -256,12 +263,8 @@ public class Player : MonoBehaviour
     {
         Vector2 raycastOrigin = transform.position;
         RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, Vector2.right * direction, Mathf.Infinity, controller.GetPushableLayer());
-        Debug.DrawRay(raycastOrigin, 10 * direction * Vector2.right, Color.blue, 1f);
         if (!hit)
-        {
-            Debug.Log("No veo nada");
             return null;
-        }
         return hit.transform.GetComponent<PushableObject>();
     }
 

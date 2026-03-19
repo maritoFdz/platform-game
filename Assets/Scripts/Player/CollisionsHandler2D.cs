@@ -88,6 +88,7 @@ public class CollisionsHandler2D : RaycastLayout
                 }
                 if (hit.distance == 0) continue;
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+
                 if (i == 0 && slopeAngle <= maxSlopeAngle)
                 {
                     float slopeStartDistance = slopeAngle != colDetails.prevSlopeAngle ? hit.distance - scaledSkinWidth : 0;
@@ -98,12 +99,10 @@ public class CollisionsHandler2D : RaycastLayout
 
                 if (!colDetails.onSlope || slopeAngle > maxSlopeAngle)
                 {
-                    displacement.x = Mathf.Min(Mathf.Abs(displacement.x),(hit.distance - scaledSkinWidth)) * direction;
+                    displacement.x = Mathf.Min(Mathf.Abs(displacement.x), (hit.distance - scaledSkinWidth)) * direction;
                     rayLength = Mathf.Min(Mathf.Abs(displacement.x), hit.distance); // this prevents an error because a ray touching a slope with higher angle than current slope 
-                    
                     if (colDetails.onSlope)
                         displacement.y = Mathf.Tan(colDetails.slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(displacement.x);
-
                     colDetails.left = !(colDetails.right = direction >= 0);
                 }
             }
@@ -126,12 +125,11 @@ public class CollisionsHandler2D : RaycastLayout
 
     private void DescendSlope(ref Vector2 displacement)
     {
-        RaycastHit2D hitLeft = Physics2D.Raycast(raycastOrigins.bottomLeft, Vector2.down, Mathf.Abs(displacement.y) + scaledSkinWidth, collisionMask);
-        RaycastHit2D hitRight = Physics2D.Raycast(raycastOrigins.bottomRight, Vector2.down, Mathf.Abs(displacement.y) + scaledSkinWidth, collisionMask);
+        RaycastHit2D hitLeft = Physics2D.Raycast(raycastOrigins.bottomLeft, Vector2.down, groundProbeDistance + scaledSkinWidth, collisionMask);
+        RaycastHit2D hitRight = Physics2D.Raycast(raycastOrigins.bottomRight, Vector2.down, groundProbeDistance + scaledSkinWidth, collisionMask);
         SlideSlope(hitLeft, ref displacement);
         SlideSlope(hitRight, ref displacement);
         if (colDetails.onSlopeSlide) return;
-
         float direction = Mathf.Sign(displacement.x);
         Vector2 rayOrigin = direction >= 0 ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, Mathf.Infinity, collisionMask);
@@ -152,7 +150,6 @@ public class CollisionsHandler2D : RaycastLayout
                         colDetails.onSlopeDescent = true;
                         colDetails.slopeAngle = slopeAngle;
                     }
-
             }
         }
     }
@@ -174,13 +171,11 @@ public class CollisionsHandler2D : RaycastLayout
     public bool IsSlopeBelow()
     {
         float probeLength = scaledSkinWidth + groundProbeDistance * 2f;
-        RaycastHit2D leftHit = Physics2D.Raycast(
-            raycastOrigins.bottomLeft,
+        RaycastHit2D leftHit = Physics2D.Raycast(raycastOrigins.bottomLeft,
             Vector2.down,
             probeLength,
             collisionMask);
-        RaycastHit2D rightHit = Physics2D.Raycast(
-            raycastOrigins.bottomRight,
+        RaycastHit2D rightHit = Physics2D.Raycast(raycastOrigins.bottomRight,
             Vector2.down,
             probeLength,
             collisionMask);
@@ -215,5 +210,27 @@ public class CollisionsHandler2D : RaycastLayout
             prevSlopeAngle = slopeAngle;
             slopeAngle = 0;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        float probeLength = scaledSkinWidth + groundProbeDistance;
+        if (!Application.isPlaying) return;
+        Gizmos.color = Color.red;
+        RaycastHit2D leftHit = Physics2D.Raycast(raycastOrigins.bottomLeft,
+            Vector2.down,
+            probeLength,
+            collisionMask);
+        RaycastHit2D rightHit = Physics2D.Raycast(raycastOrigins.bottomRight,
+            Vector2.down,
+            probeLength,
+            collisionMask);
+        Gizmos.DrawLine(raycastOrigins.bottomLeft, raycastOrigins.bottomLeft + new Vector2(0, probeLength));
+        Gizmos.DrawLine(raycastOrigins.bottomRight, raycastOrigins.bottomRight + new Vector2(0, probeLength));
+        Gizmos.color = Color.blue;
+        if (leftHit)
+            Gizmos.DrawLine(leftHit.point, leftHit.point + leftHit.normal * 0.1f);
+        if (rightHit)
+            Gizmos.DrawLine(rightHit.point, rightHit.point + rightHit.normal * 0.1f);
     }
 }

@@ -2862,6 +2862,24 @@ Tilemap:
       e31: 0
       e32: 0
       e33: 1
+  - m_RefCount: 0
+    m_Data:
+      e00: -2.1684168e-19
+      e01: 0
+      e02: 0.000000096268195
+      e03: -2.1684085e-19
+      e10: 6.64e-43
+      e11: 0
+      e12: 2.93e-43
+      e13: 6.64e-43
+      e20: -4.4852435e-23
+      e21: 0
+      e22: 3.8650314e+19
+      e23: 2.4271878e-18
+      e30: 4.5916e-41
+      e31: 0
+      e32: 6.68e-43
+      e33: 6.66e-43
   m_TileColorArray:
   - m_RefCount: 240
     m_Data: {r: 1, g: 1, b: 1, a: 1}
@@ -2873,7 +2891,7 @@ Tilemap:
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -9, y: -1, z: 0}
-  m_Size: {x: 62, y: 13, z: 1}
+  m_Size: {x: 62, y: 14, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -3438,8 +3456,8 @@ GameObject:
   - component: {fileID: 650412979}
   - component: {fileID: 650412978}
   - component: {fileID: 650412980}
-  - component: {fileID: 650412981}
   - component: {fileID: 650412982}
+  - component: {fileID: 650412983}
   m_Layer: 8
   m_Name: Pushable
   m_TagString: Untagged
@@ -3567,33 +3585,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &650412981
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650412974}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &650412982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3606,7 +3597,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5660b3d2028a1704ab26687142743a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushableObject
-  rb: {fileID: 650412981}
+  controller: {fileID: 650412983}
+  pushSpeed: 3
+  timeAccelerate: 0.2
+  gravityScale: 5
+--- !u!114 &650412983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650412974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b3a5be761fae7d40816e6603bc977dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CollisionsHandler2D
+  col: {fileID: 650412980}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 64
+  skinWidth: 0.015
+  raySpacing: 0.25
+  groundProbeDistance: 0.015
+  maxSlopeAngle: 0
+  slopeEpsilon: 0.1
+  pushableLayerName: Pushable
 --- !u!1 &740611700
 GameObject:
   m_ObjectHideFlags: 0
