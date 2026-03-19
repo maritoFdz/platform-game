@@ -10,20 +10,23 @@ public class PushingObjectState : IPlayerState
         player.velocity.x = 0f;
         player.velocityXSmoothing = 0f;
         target = player.GetPushableObject(pushDirection);
+        if (target)
+            target.SetAsTargetOf(player);
+        else
+            player.SwitchState(player.idleState);
     }
 
     public void UpdateState(Player player)
     {
-        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity * 0.5f, ref player.velocityXSmoothing, player.accelerationTimeGround);
-        if (Mathf.Sign(player.inputX) != pushDirection || !player.IsPushing())
+        if (Mathf.Sign(player.inputX) != pushDirection)
         {
-            target.SetDirection(0);
+            target.SetAsTargetOf(null);
             target = null;
             player.SwitchState(player.walkingState);
         }
         else if (player.JumpPressed)
         {
-            target.SetDirection(0);
+            target.SetAsTargetOf(null);
             target = null;
             player.SwitchState(player.jumpingState);
         }

@@ -72,6 +72,7 @@ public class CollisionsHandler2D : RaycastLayout
         float direction = Mathf.Sign(displacement.x);
         float rayLength = Mathf.Abs(displacement.x) + scaledSkinWidth;
         Vector2 rayCorner = direction >= 0 ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
+        int raysPushable = 0;
         for (int i = 0; i < horizontalRayAmount; i++)
         {
             Vector2 rayOrigin = rayCorner + Vector2.up * (horRaySpacing * i);
@@ -80,12 +81,19 @@ public class CollisionsHandler2D : RaycastLayout
                 rayLength,
                 collisionMask);
             Debug.DrawRay(rayOrigin, direction * rayLength * Vector2.right, Color.red);
+            RaycastHit2D hitPushable = Physics2D.Raycast(rayOrigin,
+                Vector2.right * direction,
+                groundProbeDistance,
+                collisionMask);
+            if (hitPushable)
+            {
+                if (hitPushable.collider.gameObject.layer == LayerMask.NameToLayer(pushableLayerName) && transform.gameObject.layer != LayerMask.NameToLayer(pushableLayerName))
+                {
+                    raysPushable++;
+                }
+            }
             if (hit)
             {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer(pushableLayerName))
-                {
-                    colDetails.nextPushable = true;
-                }
                 if (hit.distance == 0) continue;
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
@@ -106,6 +114,7 @@ public class CollisionsHandler2D : RaycastLayout
                     colDetails.left = !(colDetails.right = direction >= 0);
                 }
             }
+            colDetails.nextPushable = raysPushable >= horizontalRayAmount / 2; // count as pushable only if most of the rays hited the pushable
         }
     }
 
@@ -206,7 +215,7 @@ public class CollisionsHandler2D : RaycastLayout
 
         public void ResetCollisions()
         {
-            above = below = left = right = onSlope = onSlopeDescent = onSlopeSlide = nextPushable = false;
+            above = below = left = right = onSlope = onSlopeDescent = onSlopeSlide = false;
             prevSlopeAngle = slopeAngle;
             slopeAngle = 0;
         }

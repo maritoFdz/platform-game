@@ -206,9 +206,9 @@ public class Player : MonoBehaviour
         animationController.StopFreezeEffect();
     }
 
-    public void ApplyExternalDisplacement(float deltaX, float deltaY)
+    public void ApplyExternalDisplacement(Vector2 deltaMove)
     {
-        Vector2 moveAmount = new(deltaX, deltaY);
+        Vector2 moveAmount = new(deltaMove.x, deltaMove.y);
         controller.ClampDisplacement(ref moveAmount);
         transform.Translate(moveAmount);
     }
