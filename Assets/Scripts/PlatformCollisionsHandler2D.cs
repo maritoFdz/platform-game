@@ -84,14 +84,20 @@ public class PlatformCollisionsHandler2D : RaycastLayout
 
     private void MovePassengers(bool movePassengerFirst)
     {
-        foreach (var passenger in passengers)
+        for (int i = 0; i < passengers.Count; i++)
         {
+            var passenger = passengers[i];
             if (!knownPassengers.ContainsKey(passenger.transform))
                 knownPassengers.Add(passenger.transform, passenger.transform.GetComponent<CollisionsHandler2D>());
+
             if (passenger.moveFirst == movePassengerFirst)
             {
                 CollisionsHandler2D passengerValue = knownPassengers[passenger.transform];
-                passengerValue.Move(passenger.displacement, passenger.onPlatform);
+                Vector2 passengerDis = passenger.displacement;
+                passengerValue.ClampDisplacement(ref passengerDis, passenger.onPlatform);
+                passenger.displacement = passengerDis;
+                passengers[i] = passenger;
+                passengers[i].transform.Translate(passengers[i].displacement);
             }
         }
     }

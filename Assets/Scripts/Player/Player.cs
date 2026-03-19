@@ -127,12 +127,19 @@ public class Player : MonoBehaviour
     {
         float dt = Time.deltaTime;
         Vector2 acceleration = new(0, gravityScale * gravityMultiplier);
-        Vector2 deltaMove = velocity * dt + 0.5f * dt * dt * acceleration;
-        controller.Move(deltaMove);
+        Vector2 deltaMove = GetDisplacement(dt, acceleration);
+        transform.Translate(deltaMove);
         if (storeHorMovement && !IsFrozen) moveAmount += Mathf.Abs(deltaMove.x);
         if (storeVerMovement && !IsFrozen) moveAmount += Mathf.Abs(deltaMove.y);
         Shrink();
         velocity += acceleration * dt;
+    }
+
+    public Vector2 GetDisplacement(float dt, Vector2 acceleration)
+    {
+        Vector2 deltaMove = velocity * dt + 0.5f * dt * dt * acceleration;
+        controller.ClampDisplacement(ref deltaMove);
+        return deltaMove;
     }
 
     public void ConsumeJump()
@@ -243,6 +250,19 @@ public class Player : MonoBehaviour
     public bool OnWater()
     {
         return tilesController.CheckWater();
+    }
+
+    public PushableObject GetPushableObject(int direction)
+    {
+        Vector2 raycastOrigin = transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, Vector2.right * direction, Mathf.Infinity, controller.GetPushableLayer());
+        Debug.DrawRay(raycastOrigin, 10 * direction * Vector2.right, Color.blue, 1f);
+        if (!hit)
+        {
+            Debug.Log("No veo nada");
+            return null;
+        }
+        return hit.transform.GetComponent<PushableObject>();
     }
 
     #endregion

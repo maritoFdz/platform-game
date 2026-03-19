@@ -28,14 +28,13 @@ public class CollisionsHandler2D : RaycastLayout
         UpdateRaycast();
     }
 
-    public void Move(Vector2 displacement, bool onMovingPlatform = false)
+    public void ClampDisplacement(ref Vector2 displacement, bool onMovingPlatform = false)
     {
         UpdateRaycast();
         colDetails.ResetCollisions();
         if (displacement.y <= 0) DescendSlope(ref displacement);
         if (displacement.x != 0) CheckHorizontalCollision(ref displacement);
         CheckVerticalCollision(ref displacement);
-        transform.Translate(displacement);
         if (onMovingPlatform)
             colDetails.below = true;
     }
@@ -198,6 +197,11 @@ public class CollisionsHandler2D : RaycastLayout
                 return true;
         }
         return false;
+    }
+
+    public LayerMask GetPushableLayer()
+    {
+        return 1 << LayerMask.NameToLayer(pushableLayerName);
     }
 
     public struct CollisionDetails
