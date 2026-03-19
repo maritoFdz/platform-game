@@ -259,7 +259,7 @@ public class Player : MonoBehaviour
         return tilesController.CheckWater();
     }
 
-    public PushableObject GetPushableObject(int direction)
+    public PushableObject GetPushableObject(float direction)
     {
         Vector2 raycastOrigin = transform.position;
         RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, Vector2.right * direction, Mathf.Infinity, controller.GetPushableLayer());

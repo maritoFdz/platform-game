@@ -83,7 +83,7 @@ public class CollisionsHandler2D : RaycastLayout
             Debug.DrawRay(rayOrigin, direction * rayLength * Vector2.right, Color.red);
             RaycastHit2D hitPushable = Physics2D.Raycast(rayOrigin,
                 Vector2.right * direction,
-                groundProbeDistance,
+                groundProbeDistance * 5,
                 collisionMask);
             if (hitPushable)
             {
@@ -215,7 +215,7 @@ public class CollisionsHandler2D : RaycastLayout
 
         public void ResetCollisions()
         {
-            above = below = left = right = onSlope = onSlopeDescent = onSlopeSlide = false;
+            above = below = left = right = onSlope = onSlopeDescent = onSlopeSlide = nextPushable = false;
             prevSlopeAngle = slopeAngle;
             slopeAngle = 0;
         }

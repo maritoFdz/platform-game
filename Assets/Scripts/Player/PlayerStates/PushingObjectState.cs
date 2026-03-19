@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class PushingObjectState : IPlayerState
 {
-    private int pushDirection;
+    private float pushDirection;
     private PushableObject target;
+
     public void EnterState(Player player)
     {
-        pushDirection = player.velocity.x >= 0 ? 1 : -1;
+        pushDirection = Mathf.Sign(player.inputX);
         player.velocity.x = 0f;
         player.velocityXSmoothing = 0f;
         target = player.GetPushableObject(pushDirection);
@@ -18,22 +19,30 @@ public class PushingObjectState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        if (Mathf.Sign(player.inputX) != pushDirection)
+        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround);
+        if (Mathf.Sign(player.inputX) != pushDirection || player.inputX == 0)
         {
-            target.SetAsTargetOf(null);
-            target = null;
+            if (target != null)
+            {
+                target.SetAsTargetOf(null);
+                target = null;
+            }
             player.SwitchState(player.walkingState);
+            return;
         }
-        else if (player.JumpPressed)
+
+        if (player.JumpPressed)
         {
-            target.SetAsTargetOf(null);
-            target = null;
+            if (target != null)
+            {
+                target.SetAsTargetOf(null);
+                target = null;
+            }
             player.SwitchState(player.jumpingState);
+            return;
         }
-        else
-        {
+        if (target != null)
             target.SetDirection(player.inputX);
-            player.Move(true, false, 0f);
-        }
+        player.Move(true, false, 0f);
     }
 }
