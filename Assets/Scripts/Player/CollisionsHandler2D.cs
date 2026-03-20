@@ -1,4 +1,6 @@
+using NUnit.Framework.Constraints;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -177,9 +179,9 @@ public class CollisionsHandler2D : RaycastLayout
         }
     }
 
-    public bool IsSlopeBelow()
+    public bool IsSlopeBelow(int tolerance = 1, bool ignoreMaxAngle = false)
     {
-        float probeLength = scaledSkinWidth + groundProbeDistance * 2f;
+        float probeLength = scaledSkinWidth + groundProbeDistance * 2f * tolerance;
         RaycastHit2D leftHit = Physics2D.Raycast(raycastOrigins.bottomLeft,
             Vector2.down,
             probeLength,
@@ -190,14 +192,30 @@ public class CollisionsHandler2D : RaycastLayout
             collisionMask);
         if (leftHit)
         {
+            Debug.DrawLine(raycastOrigins.bottomLeft, leftHit.point, Color.azure, 3);
             float angle = Vector2.Angle(leftHit.normal, Vector2.up);
-            if (angle > 0 && angle <= maxSlopeAngle)
+            if (angle > 0 && (angle <= maxSlopeAngle || ignoreMaxAngle))
                 return true;
         }
         if (rightHit)
         {
+            Debug.DrawLine(raycastOrigins.bottomLeft, rightHit.point, Color.azure, 3);
             float angle = Vector2.Angle(rightHit.normal, Vector2.up);
-            if (angle > 0 && angle <= maxSlopeAngle)
+            if (angle > 0 && (angle <= maxSlopeAngle || ignoreMaxAngle))
+                return true;
+        }
+        return false;
+    }
+
+    public bool IsNextToSlope(int direction, int tolerance = 1)
+    {
+        float probeLength = scaledSkinWidth + groundProbeDistance * 2f * tolerance;
+        Vector2 rayOrigin = direction >= 0 ? raycastOrigins.topRight : raycastOrigins.topLeft;
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * direction, probeLength, collisionMask);
+        if (hit)
+        {
+            Debug.Log(Vector2.Angle(hit.normal, Vector2.up));
+            if (Mathf.Abs(Vector2.Angle(hit.normal, Vector2.up) - 90) > 5)
                 return true;
         }
         return false;

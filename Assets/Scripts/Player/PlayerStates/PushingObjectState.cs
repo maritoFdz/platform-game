@@ -4,9 +4,11 @@ public class PushingObjectState : IPlayerState
 {
     private float pushDirection;
     private PushableObject target;
+    public bool drop;
 
     public void EnterState(Player player)
     {
+        drop = false;
         pushDirection = Mathf.Sign(player.inputX);
         player.velocity.x = 0f;
         player.velocityXSmoothing = 0f;
@@ -19,15 +21,14 @@ public class PushingObjectState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround);
-        if (Mathf.Sign(player.inputX) != pushDirection || player.inputX == 0)
+        if (Mathf.Sign(player.inputX) != pushDirection || player.inputX == 0 || drop)
         {
             if (target != null)
             {
                 target.SetAsTargetOf(null);
                 target = null;
             }
-            player.SwitchState(player.walkingState);
+            player.SwitchState(player.idleState);
             return;
         }
 
@@ -44,5 +45,6 @@ public class PushingObjectState : IPlayerState
         if (target != null)
             target.SetDirection(player.inputX);
         player.Move(true, false, 0f);
+        player.PaintTrail();
     }
 }

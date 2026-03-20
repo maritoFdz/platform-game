@@ -211,6 +211,7 @@ public class Player : MonoBehaviour
         Vector2 moveAmount = new(deltaMove.x, deltaMove.y);
         controller.ClampDisplacement(ref moveAmount);
         transform.Translate(moveAmount);
+        this.moveAmount += moveAmount.x;
     }
 
     #region Collisions related methods called by states
