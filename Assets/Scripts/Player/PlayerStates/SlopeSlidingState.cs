@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class SlopeSlidingState : IPlayerState
 {
     private int direction;

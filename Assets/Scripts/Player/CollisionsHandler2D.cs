@@ -1,6 +1,3 @@
-using NUnit.Framework.Constraints;
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -192,14 +189,12 @@ public class CollisionsHandler2D : RaycastLayout
             collisionMask);
         if (leftHit)
         {
-            Debug.DrawLine(raycastOrigins.bottomLeft, leftHit.point, Color.azure, 3);
             float angle = Vector2.Angle(leftHit.normal, Vector2.up);
             if (angle > 0 && (angle <= maxSlopeAngle || ignoreMaxAngle))
                 return true;
         }
         if (rightHit)
         {
-            Debug.DrawLine(raycastOrigins.bottomLeft, rightHit.point, Color.azure, 3);
             float angle = Vector2.Angle(rightHit.normal, Vector2.up);
             if (angle > 0 && (angle <= maxSlopeAngle || ignoreMaxAngle))
                 return true;
@@ -214,12 +209,21 @@ public class CollisionsHandler2D : RaycastLayout
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * direction, probeLength, collisionMask);
         if (hit)
         {
-            Debug.Log(Vector2.Angle(hit.normal, Vector2.up));
             if (Mathf.Abs(Vector2.Angle(hit.normal, Vector2.up) - 90) > 5)
                 return true;
         }
         return false;
     }
+
+    public bool FallInFront(float direction, int tolerance = 1)
+    {
+        float probeLength = scaledSkinWidth + groundProbeDistance * tolerance;
+        Vector2 rayOrigin = direction >= 0 ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, probeLength, collisionMask);
+        if (hit) return false;
+        return true;
+    }
+
 
     public LayerMask GetPushableLayer()
     {

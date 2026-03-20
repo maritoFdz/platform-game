@@ -12,37 +12,37 @@ public class PushableObject : MonoBehaviour
     [SerializeField] private float accelerationTime;
     [SerializeField] private float slopeSlideMultiplier;
     [SerializeField] private float gravity;
-    [SerializeField] private float maxTilt = 30f;
+    [SerializeField] private float rotationVelocity;
+    [SerializeField] private float maxRotationAngle;
     [SerializeField] private int groundSlopeFrontTol;
     [SerializeField] private int slopeBelowTol;
     [SerializeField] private int slideSlopeBeneathTol;
+    [SerializeField] private float maxVisualDrop = 0.1f;
 
-    private float tilt;
+    private float rotationAngle;
     private float push;
     private Vector2 velocity;
     private float velocityXSmoothing;
     private Player playerPushing;
     private State currentState;
+    private RaycastHit2D hitNormal;
+    private bool hasStoredNormal = false;
 
     private void Start()
     {
         currentState = State.Falling;
-        visual.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
     }
 
     private void Update()
     {
         float dt = Time.deltaTime;
-
         RaycastLayoutDetails info = controller.GetRaycastLayoutDetails();
         RaycastOrigins origins = controller.GetRaycastOrigins();
-
         float rayLength = info.skinWidth + 0.2f;
-
         int supportRays = 0;
         int leftHits = 0;
         int rightHits = 0;
-
+        hasStoredNormal = false;
         for (int i = 0; i < info.horizontalRayAmount; i++)
         {
             Vector2 origin = origins.bottomLeft + Vector2.right * (info.horRaySpacing * i);
@@ -50,123 +50,154 @@ public class PushableObject : MonoBehaviour
 
             if (hit)
             {
+                if (!hasStoredNormal)
+                {
+                    hitNormal = hit;
+                    hasStoredNormal = true;
+                }
                 supportRays++;
-                if (i < info.horizontalRayAmount / 2)
-                    leftHits++;
-                else
-                    rightHits++;
+                if (i < info.horizontalRayAmount / 2) leftHits++;
+                else rightHits++;
             }
         }
-
-        float supportRatio = (float)supportRays / info.horizontalRayAmount;
+        float supportRatio = (float) supportRays / info.horizontalRayAmount;
 
         switch (currentState)
         {
-            case State.Falling:
-                {
-                    Debug.Log("Falling");
-                    velocity.y += gravity * dt;
-                    velocity.x = 0.5f * velocity.x;
-                    velocityXSmoothing = 0;
-                    Vector2 displacement = velocity * dt;
-                    controller.ClampDisplacement(ref displacement);
-                    transform.Translate(displacement);
-                    visual.localRotation = Quaternion.Lerp(visual.localRotation, Quaternion.identity, dt * 5f);
-                    if (controller.colDetails.below)
-                    {
-                        velocity.y = 0f;
-                        currentState = State.Ground;
-                    }
-                    else if (controller.colDetails.onSlopeSlide)
-                        currentState = State.SlidingSlope;
-                    break;
-                }
-
             case State.Ground:
-                {
-                    velocity.y = 0f;
-                    Debug.Log("Ground");
-                    Vector2 displacement = velocity * dt;
-                    controller.ClampDisplacement(ref displacement);
-                    float target;
-                    if (playerPushing != null)
-                        target = push * pushSpeed;
-                    else
-                        target = 0f;
-                    velocity.x = Mathf.SmoothDamp(velocity.x, target, ref velocityXSmoothing, accelerationTime);
-                    if (playerPushing != null)
-                        playerPushing.ApplyExternalDisplacement(displacement);
+            {
+                GroundUpdate(dt, leftHits, rightHits, supportRatio);
+                break;
+            }
 
-                    transform.Translate(displacement);
-
-                    float targetTilt = 0f;
-
-                    if (supportRatio < 1f)
-                    {
-                        float dir = (leftHits > rightHits) ? -1f : 1f;
-                        float lack = 1f - supportRatio;
-
-                        targetTilt = dir * maxTilt * lack;
-                    }
-
-                    tilt = Mathf.Lerp(tilt, targetTilt, dt * 10f);
-
-                    if (visual != null)
-                        visual.localRotation = Quaternion.Euler(0f, 0f, tilt);
-
-                    float playerPush = controller.IsNextToSlope(-1, groundSlopeFrontTol) ? -1 : 1;
-
-                    if (supportRatio <= 0.05f)
-                    {
-                        currentState = State.Falling;
-
-                        if (playerPushing != null)
-                        {
-                            playerPushing.pushingObjectState.drop = true;
-                            playerPushing = null;
-                        }
-                    }
-                    else if (controller.colDetails.onSlopeSlide || controller.colDetails.onSlope || controller.colDetails.onSlopeDescent || controller.IsNextToSlope(-1, groundSlopeFrontTol) || controller.IsNextToSlope(1, groundSlopeFrontTol))
-                    {
-                        if (playerPushing != null)
-                            playerPushing.velocity.x = -playerPush * slopeSlideMultiplier * 1.5f;
-                        currentState = State.SlidingSlope;
-                    }
-
-                    break;
-                }
+            case State.Falling:
+            {
+                FallingUpdate(dt);
+                break;
+            }
 
             case State.SlidingSlope:
             {
-                Debug.Log("SlidingSlope");
-                velocity.y += gravity * dt;
-                Vector2 move = velocity * dt;
-                controller.ClampDisplacement(ref move);
-                transform.Translate(move);
-
-                if (visual != null)
-                    visual.localRotation = Quaternion.Lerp(visual.localRotation, Quaternion.identity, dt * 5f);
-
-                if (playerPushing != null)
-                {
-                    playerPushing.pushingObjectState.drop = true;
-                    playerPushing = null;
-                }
-
-                if (!controller.colDetails.onSlopeSlide && !controller.colDetails.onSlope && !controller.colDetails.onSlopeDescent && !controller.IsSlopeBelow(slopeBelowTol, true))
-                {
-                        if (controller.colDetails.below)
-                        {
-                            float dir = controller.IsNextToSlope(-1, slideSlopeBeneathTol) ? -1 : 1;
-                            velocity.x = -dir * slopeSlideMultiplier;
-                            Debug.Log(velocity.x);
-                            currentState = State.Ground;
-                        }
-                        else
-                            currentState = State.Falling;
-                }
+                SlidingUpdate(dt);
                 break;
             }
+        }
+    }
+
+    private void GroundUpdate(float dt, int leftHits, int rightHits, float supportRatio)
+    {
+        velocity.y = 0f;
+        Vector2 displacement = velocity * dt;
+        controller.ClampDisplacement(ref displacement);
+        float target;
+        if (playerPushing != null)
+            target = push * pushSpeed;
+        else
+            target = 0f;
+        velocity.x = Mathf.SmoothDamp(velocity.x, target, ref velocityXSmoothing, accelerationTime);
+        if (playerPushing != null)
+            playerPushing.ApplyExternalDisplacement(displacement);
+        transform.Translate(displacement);
+        float rotation = 0f;
+
+        if (supportRatio < 1f)
+        {
+            float dir = (leftHits > rightHits) ? -1f : 1f;
+            float targetRotation = 1f - supportRatio;
+            rotation = dir * maxRotationAngle * targetRotation;
+        }
+
+        rotationAngle = Mathf.MoveTowards(rotationAngle, rotation, rotationVelocity * dt);
+
+        if (visual != null)
+        {
+            visual.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
+            float tiltPercent = Mathf.Abs(rotationAngle) / maxRotationAngle;
+            float yOffset = -tiltPercent * maxVisualDrop;
+            visual.localPosition = new Vector3(0f, yOffset, 0f);
+        }
+
+        float playerPush = controller.IsNextToSlope(-1, groundSlopeFrontTol) ? -1 : 1;
+        if (supportRatio <= 0f)
+        {
+            currentState = State.Falling;
+
+            if (playerPushing != null)
+            {
+                visual.localPosition = new Vector3(0f, 0f, 0f);
+                playerPushing.pushingObjectState.drop = true;
+                playerPushing = null;
+            }
+        }
+        else if (controller.colDetails.onSlopeSlide || controller.colDetails.onSlope || controller.colDetails.onSlopeDescent || controller.IsNextToSlope(-1, groundSlopeFrontTol) || controller.IsNextToSlope(1, groundSlopeFrontTol))
+        {
+            if (playerPushing != null && (controller.IsNextToSlope(-1, groundSlopeFrontTol) || controller.IsNextToSlope(1, groundSlopeFrontTol)))
+                playerPushing.velocity.x = -playerPush * slopeSlideMultiplier * 1.5f;
+            currentState = State.SlidingSlope;
+        }
+    }
+
+    private void FallingUpdate(float dt)
+    {
+        velocity.y += gravity * dt;
+        velocity.x = 0.5f * velocity.x;
+        velocityXSmoothing = 0;
+        Vector2 displacement = velocity * dt;
+        controller.ClampDisplacement(ref displacement);
+        transform.Translate(displacement);
+        float rotationTarget = (Mathf.Approximately(Mathf.Abs(rotationAngle), 90)) ? rotationAngle : -Mathf.Sign(velocity.x) * 90;
+        rotationAngle = Mathf.MoveTowards(rotationAngle, rotationTarget, rotationVelocity * dt);
+        visual.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
+        if (controller.colDetails.below)
+        {
+            rotationAngle = 0f;
+            velocity.y = 0f;
+            currentState = State.Ground;
+        }
+        else if (controller.colDetails.onSlopeSlide)
+            currentState = State.SlidingSlope;
+    }
+
+    private void SlidingUpdate(float dt)
+    {
+        velocity.y += gravity * dt;
+        Vector2 move = velocity * dt;
+        controller.ClampDisplacement(ref move);
+        transform.Translate(move);
+
+        if (visual != null && hasStoredNormal)
+        {
+            float slopeAngle = Vector2.Angle(hitNormal.normal, Vector2.up);
+
+            float targetRot = slopeAngle;
+            rotationAngle = Mathf.MoveTowards(rotationAngle, targetRot, rotationVelocity * dt);
+
+            visual.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
+            float xOffset = -hitNormal.normal.x * maxVisualDrop * 2;
+            float yOffset = -Mathf.Abs(hitNormal.normal.x) * maxVisualDrop * 2;
+
+            visual.localPosition = new Vector3(xOffset, yOffset, 0f);
+        }
+
+        if (playerPushing != null)
+        {
+            playerPushing.pushingObjectState.drop = true;
+            playerPushing = null;
+        }
+
+        float dir = controller.IsNextToSlope(-1, slideSlopeBeneathTol) ? -1 : 1;
+        if (!controller.colDetails.onSlopeSlide && !controller.colDetails.onSlope && !controller.colDetails.onSlopeDescent)
+        {
+            if (controller.colDetails.below && (controller.IsNextToSlope(-1, groundSlopeFrontTol) || controller.IsNextToSlope(1, groundSlopeFrontTol)) && !controller.FallInFront(dir, 10))
+            {
+                velocity.x = -dir * slopeSlideMultiplier;
+                float rotationTarget = (Mathf.Approximately(Mathf.Abs(rotationAngle), 90)) ? rotationAngle : Mathf.Sign(velocity.x) * 90;
+                rotationAngle = Mathf.MoveTowards(rotationAngle, rotationTarget, rotationVelocity * 2 * dt);
+                visual.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
+                currentState = State.Ground;
+            }
+            else if (controller.colDetails.below)
+                currentState = State.Falling;
         }
     }
 
