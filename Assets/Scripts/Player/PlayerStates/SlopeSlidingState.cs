@@ -4,6 +4,7 @@ public class SlopeSlidingState : IPlayerState
     public void EnterState(Player player)
     {
         direction = player.WallLeft() ? -1 : 1;
+        player.FlipSprite(-direction);
     }
 
     public void UpdateState(Player player)

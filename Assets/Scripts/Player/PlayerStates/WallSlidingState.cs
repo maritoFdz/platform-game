@@ -6,9 +6,11 @@ public class WallSlidingState : IPlayerState
     private float dirDecisionTimer;
     private float dropTimer;
     private const float gravityMultiplier = 0f;
+    private bool freezeBehaviour;
 
     public void EnterState(Player player)
     {
+        freezeBehaviour = false;
         direction = player.WallLeft() ? -1 : 1;
         if (player.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
             player.MakeSplash(90f * direction);
@@ -17,10 +19,12 @@ public class WallSlidingState : IPlayerState
         player.velocityYSmoothing = 0f;
         dirDecisionTimer = player.wallStickTime;
         dropTimer = player.wallStickTime;
+        player.FlipSprite(direction);
     }
 
     public void UpdateState(Player player)
     {
+        if (freezeBehaviour) return;
         player.velocity.y = Mathf.SmoothDamp(player.velocity.y, -player.wallSlideSpeed, ref player.velocityYSmoothing, player.accelerationTimeWall);
         player.Move(false, true, gravityMultiplier);
         player.PaintTrail();
@@ -31,7 +35,6 @@ public class WallSlidingState : IPlayerState
         }
         else if (player.OnSlope() || player.GroundBelow())
         {
-            player.StopFallingAnimation();
             player.SwitchState(player.walkingState);
         }
         else if (-player.inputX == direction || player.wallStickTime != dropTimer)
@@ -65,6 +68,7 @@ public class WallSlidingState : IPlayerState
             player.velocity.y = player.fallOfJump.y;
         }
         player.MakeSplash(90f * direction);
-        player.SwitchState(player.fallingState);
+        player.HandleJumpingStateTransition();
+        freezeBehaviour = true;
     }
 }

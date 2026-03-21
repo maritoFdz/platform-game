@@ -16,6 +16,8 @@ public class IdleState : IPlayerState
 
     public void UpdateState(Player player)
     {
+        if (player.inputX != 0)
+            player.FlipSprite(player.inputX);
         if (player.velocity.x > 0.1f)
             player.PaintTrail();
         player.Move(true, false, gravityMultiplier);

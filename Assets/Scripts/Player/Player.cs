@@ -109,8 +109,6 @@ public class Player : MonoBehaviour
         if (jumpBufferCounter > 0f)
             jumpBufferCounter -= Time.deltaTime;
         inputX = PlayerInput.Player.Move.ReadValue<float>();
-        if (inputX != 0)
-            animationController.FlipX(inputX < 0);
         targetVelocity = inputX * moveSpeed;
         currentState.UpdateState(this);
         tilesController.HandleTilesCollision();
@@ -240,9 +238,9 @@ public class Player : MonoBehaviour
         return controller.colDetails.right;
     }
 
-    public bool HasSlopeNear()
+    public bool HasSlopeNear(int direction, int tolerance = 1)
     {
-        return controller.IsSlopeBelow();
+        return controller.IsNextToSlope(direction, tolerance) || controller.IsSlopeBelow(tolerance);
     }
 
     public bool IsSliding()
@@ -272,6 +270,11 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Animations related methods called by states
+    public void FlipSprite(float direction)
+    {
+        animationController.FlipX(direction < 0);
+    }
+
     public void PlayIdleAnimation()
     {
         animationController.PlayIdle();
@@ -326,12 +329,19 @@ public class Player : MonoBehaviour
     {
         animationController.StopJumping();
     }
-    #endregion
 
-    #region Events called by animations
     public void HandleJumpingStateTransition()
     {
         PlayJumpingAnimation();
     }
+
+    public void HandleWallSlidingStateTransition()
+    {
+        animationController.PlayWallSliding();
+    }
+
+    #endregion
+
+    #region Events called by animations
     #endregion
 }

@@ -31,6 +31,8 @@ public class PlayerAnimationStateController : MonoBehaviour
     private int endJumpHash;
     private int freezeAmountHash;
     private int instantJumpHash;
+    private int stickWallHash;
+    private int isSlidingWallHash;
 
     private bool idleCancelled;
 
@@ -44,9 +46,11 @@ public class PlayerAnimationStateController : MonoBehaviour
         isWalkingHash = Animator.StringToHash("IsWalking");
         isRunningHash = Animator.StringToHash("IsRunning");
         isFallingHash = Animator.StringToHash("IsFalling");
+        isSlidingWallHash = Animator.StringToHash("IsSlidingWall");
         playIdleHash = Animator.StringToHash("PlayIdle");
         startJumpHash = Animator.StringToHash("StartJump");
         endJumpHash = Animator.StringToHash("EndJump");
+        stickWallHash = Animator.StringToHash("StickWall");
         instantJumpHash = Animator.StringToHash("InstantJump");
         freezeAmountHash = Shader.PropertyToID("_Freeze_Amount");
     }
@@ -188,6 +192,17 @@ public class PlayerAnimationStateController : MonoBehaviour
         animator.SetTrigger(instantJumpHash);
     }
 
+    public void PlayWallSliding()
+    {
+        animator.SetTrigger(stickWallHash);
+        animator.SetBool(isSlidingWallHash, true);
+    }
+
+    public void StopWallSliding()
+    {
+        animator.SetBool(isSlidingWallHash, false);
+    }
+
     public void MakeSplash(float angle)
     {
         Instantiate(splashVFXPrefab, player.transform.position, Quaternion.Euler(0, 0, angle));
@@ -203,6 +218,11 @@ public class PlayerAnimationStateController : MonoBehaviour
     public void ExecuteJump()
     {
         player.SwitchState(player.jumpingState);
+    }
+
+    public void StickWall()
+    {
+        player.SwitchState(player.wallSlidingState);
     }
 
     public void StartFallingAnimation()

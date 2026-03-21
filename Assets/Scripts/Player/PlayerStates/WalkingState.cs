@@ -14,6 +14,8 @@ public class WalkingState : IPlayerState
 
     public void UpdateState(Player player)
     {
+        if (player.inputX != 0)
+            player.FlipSprite(player.inputX);
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround); // simulates acceleration
         player.Move(true, false, gravityMultiplier);
         if (player.JumpPressed)

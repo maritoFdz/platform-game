@@ -16,6 +16,8 @@ public class SwimingState : IPlayerState
 
     public void UpdateState(Player player)
     {
+        if (player.inputX != 0)
+            player.FlipSprite(player.inputX);
         upscaleTimer += Time.deltaTime;
         if (upscaleTimer >= 0.1f)
         {
