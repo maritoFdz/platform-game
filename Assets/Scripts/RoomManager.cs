@@ -5,7 +5,7 @@ public class RoomManager : MonoBehaviour
 {
     public static RoomManager instance;
 
-    [SerializeField] private Player player;
+    [SerializeField] private Player initialPlayer;
     [SerializeField] private Transform SpawnPoint;
     [SerializeField] private float respawnWait;
 
@@ -19,16 +19,22 @@ public class RoomManager : MonoBehaviour
 
     private void Start()
     {
-        player.transform.position = SpawnPoint.position;
-        player.gameObject.SetActive(true);
+        initialPlayer.transform.position = SpawnPoint.position;
+        initialPlayer.gameObject.SetActive(true);
     }
 
-    public void KillPlayer()
+    public void KillPlayer(Player player, bool isLast)
     {
-        StartCoroutine(PlayerDiesCo());
+        if (isLast)
+            StartCoroutine(PlayerDiesCo(player));
+        else
+        {
+            player.gameObject.SetActive(false);
+            Destroy(player);
+        }
     }
 
-    private IEnumerator PlayerDiesCo()
+    private IEnumerator PlayerDiesCo(Player player)
     {
         player.gameObject.SetActive(false);
         yield return new WaitForSeconds(respawnWait);

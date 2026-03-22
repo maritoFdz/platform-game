@@ -253,6 +253,50 @@ MonoBehaviour:
   splashVFXPrefab: {fileID: 6640021389163789217, guid: f822bfca91021b543b4d9217411043b1, type: 3}
   frozenColor: {r: 0, g: 0.969697, b: 1, a: 1}
   colorSpeed: 1
+--- !u!1 &36666981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 36666982}
+  - component: {fileID: 36666983}
+  m_Layer: 0
+  m_Name: Player Switch Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &36666982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36666981}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &36666983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36666981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e99dc37b32bbd40b88078280e4efd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSwitchManager
 --- !u!1 &435947500
 GameObject:
   m_ObjectHideFlags: 0
@@ -5498,7 +5542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a27a8d431daaeed4f9898c03ed07725e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomManager
-  player: {fileID: 1752049366}
+  initialPlayer: {fileID: 1752049366}
   SpawnPoint: {fileID: 1473438692}
   respawnWait: 1
 --- !u!1 &740611700
@@ -6224,7 +6268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752049363}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.15, y: 1.86, z: 0}
   m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
   m_ConstrainProportionsScale: 1
@@ -6485,11 +6529,12 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 619394802}
   - {fileID: 519420032}
   - {fileID: 1491907419}
-  - {fileID: 619394802}
+  - {fileID: 622179155}
+  - {fileID: 36666982}
+  - {fileID: 1473438692}
   - {fileID: 1752049365}
   - {fileID: 1837090739}
-  - {fileID: 622179155}
-  - {fileID: 1473438692}
   - {fileID: 5575688276682160971}

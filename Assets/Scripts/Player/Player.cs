@@ -74,11 +74,11 @@ public class Player : MonoBehaviour
     public SlopeSlidingState slopeSlidingState = new();
     public PushingObjectState pushingObjectState = new();
     public SwimingState swimingState = new();
+    public WaitingState waitingState = new();
 
     private void Awake()
     {
         initialScale = transform.localScale;
-        PlayerInput = new();
     }
 
     private void Start()
@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
         gravityScale = -(2 * maxJumpHeight) / Mathf.Pow(maxHeightTime, 2);
         jumpForce = Mathf.Abs(gravityScale * maxHeightTime);
         minJumpForce = Mathf.Sqrt(2 * Mathf.Abs(gravityScale) * minJumpHeight);
+        PlayerSwitchManager.instance.Add(this);
     }
 
     private void OnEnable()
@@ -94,14 +95,12 @@ public class Player : MonoBehaviour
         normalizedScale = 1f;
         transform.localScale = initialScale * normalizedScale;
         controller.UpdateCollisions(normalizedScale);
-        PlayerInput.Player.Enable();
-        PlayerInput.Player.Jump.performed += Jump;
     }
 
     private void OnDisable()
     {
         PlayerInput.Player.Jump.performed -= Jump;
-        PlayerInput.Disable();
+        PlayerInput.Player.Split.performed -= Split;
     }
 
     private void Update()
@@ -150,6 +149,17 @@ public class Player : MonoBehaviour
         jumpBufferCounter = jumpBufferTime;
     }
 
+    private void Split(InputAction.CallbackContext callback)
+    {
+        if (IsFrozen || currentState is WaitingState) return;
+        if (normalizedScale / 2 > minNormalizedScale)
+        {
+            normalizedScale /= 2;
+            transform.localScale = initialScale * normalizedScale;
+            Instantiate(gameObject, transform.position + new Vector3(0.1f, 0, 0), Quaternion.identity);
+        }
+    }
+
     public void MakeSplash(float rotation)
     {
         if (IsFrozen) return;
@@ -189,7 +199,7 @@ public class Player : MonoBehaviour
     {
         // todo animation death event
         animationController.ResetFreezeColor();
-        RoomManager.instance.KillPlayer();
+        PlayerSwitchManager.instance.Erase(this);
     }
 
     public void Freeze(float time)
@@ -210,6 +220,15 @@ public class Player : MonoBehaviour
         controller.ClampDisplacement(ref moveAmount);
         transform.Translate(moveAmount);
         this.moveAmount += moveAmount.x;
+    }
+
+    public void SetInput(PlayerInput input)
+    {
+        PlayerInput = input;
+
+        PlayerInput.Player.Enable();
+        PlayerInput.Player.Jump.performed += Jump;
+        PlayerInput.Player.Split.performed += Split;
     }
 
     #region Collisions related methods called by states
@@ -340,8 +359,5 @@ public class Player : MonoBehaviour
         animationController.PlayWallSliding();
     }
 
-    #endregion
-
-    #region Events called by animations
     #endregion
 }

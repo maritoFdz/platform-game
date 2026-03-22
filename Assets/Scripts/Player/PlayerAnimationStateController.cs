@@ -39,10 +39,6 @@ public class PlayerAnimationStateController : MonoBehaviour
     private void Awake()
     {
         material = spriteRenderer.material;
-    }
-
-    private void Start()
-    {
         isWalkingHash = Animator.StringToHash("IsWalking");
         isRunningHash = Animator.StringToHash("IsRunning");
         isFallingHash = Animator.StringToHash("IsFalling");
