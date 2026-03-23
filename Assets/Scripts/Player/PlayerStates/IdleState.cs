@@ -8,7 +8,7 @@ public class IdleState : IPlayerState
 
     public void EnterState(Player player)
     {
-        if (player.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
+        if (player.playerParameters.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
             player.MakeSplash(0f);
         player.PlayIdleAnimation();
         player.velocity.y = 0;
@@ -21,7 +21,7 @@ public class IdleState : IPlayerState
         if (player.velocity.x > 0.1f)
             player.PaintTrail();
         player.Move(true, false, gravityMultiplier);
-        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround);
+        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeGround);
 
         if (player.OnWater())
         {
@@ -55,7 +55,7 @@ public class IdleState : IPlayerState
 
         if (player.GroundBelow() || player.OnSlope())
         {
-            coyoteCount = player.coyoteTime;
+            coyoteCount = player.playerParameters.coyoteTime;
         }
         else
         {

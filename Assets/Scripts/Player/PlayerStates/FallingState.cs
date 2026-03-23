@@ -20,14 +20,14 @@ public class FallingState : IPlayerState
         if (player.inputX != 0)
             player.FlipSprite(player.inputX);
         if (freezeBehaviour) return;
-        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeAir);
+        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeAir);
         if (player.OnWater())
         {
             player.StopFallingAnimation();
             player.SwitchState(player.swimingState);
             return;
         }
-        player.Move(false, false, player.gravityFallMultiplier);
+        player.Move(false, false, player.playerParameters.gravityFallMultiplier);
         if (player.WallLeft() || player.WallRight())
         {
             if (!player.HasSlopeNear((int)Mathf.Sign(player.inputX), 30))

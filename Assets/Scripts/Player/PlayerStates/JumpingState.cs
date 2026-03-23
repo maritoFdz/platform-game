@@ -19,7 +19,7 @@ public class JumpingState : IPlayerState
         if (freezeBehaviour) return;
         if (player.inputX != 0)
             player.FlipSprite(player.inputX);
-        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeAir);
+        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeAir);
         player.Move(false, false, gravityMultiplier);
 
         if (player.velocity.y <= 0 || player.CeilingAbove())

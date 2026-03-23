@@ -1,4 +1,3 @@
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class WaitingState : IPlayerState
@@ -20,12 +19,12 @@ public class WaitingState : IPlayerState
     {
         if (!onGround)
         {
-            player.Move(false, false, player.gravityFallMultiplier);
+            player.Move(false, false, player.playerParameters.gravityFallMultiplier);
             onGround = player.GroundBelow();
         }
         else if (player.IsSliding())
         {
-            if (player.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
+            if (player.playerParameters.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
                 player.MakeSplash(0f);
             needsPush = true;
             slopeDir = player.WallLeft() ? -1 : 1;
@@ -34,11 +33,11 @@ public class WaitingState : IPlayerState
         }
         else
         {
-            if (player.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
+            if (player.playerParameters.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
                 player.MakeSplash(0f);
             player.velocity.y = 0f;
             if (needsPush)
-                player.velocity.x = Mathf.MoveTowards(-slopeDir * player.endSlopeBoostX, 0f, 1f * Time.deltaTime);
+                player.velocity.x = Mathf.MoveTowards(-slopeDir * player.playerParameters.endSlopeBoostX, 0f, 1f * Time.deltaTime);
             player.Move(false, false, 0);
         }
     }

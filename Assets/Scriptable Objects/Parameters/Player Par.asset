@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c40cd01139683c43a9aca0bc9d78889, type: 3}
+  m_Name: Player Par
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerParameters
+  moveSpeed: 8
+  accelerationTimeGround: 0.2
+  runningVelocityMultiplier: 2.5
+  timeToIdle: 0.1
+  coyoteTime: 0.05
+  maxJumpHeight: 6
+  minJumpHeight: 3
+  maxHeightTime: 0.5
+  jumpBufferTime: 0.2
+  accelerationTimeAir: 0.25
+  gravityFallMultiplier: 2.5
+  wallSlideSpeed: 5
+  accelerationTimeWall: 0.5
+  wallStickTime: 0.1
+  frontDirectionJump: {x: 20, y: 30}
+  climbJump: {x: 7.5, y: 35}
+  fallOfJump: {x: 10, y: 5}
+  endSlopeBoostX: 3
+  slopeSlidingJump: {x: 22, y: 20}
+  maxScale: 1.4
+  upscalePerUnit: 10
+  splashFallMinVelocity: 35
+  splashWallMinVelocity: 15
+  scaleReductionPerUnit: 0.001
+  minNormalizedScale: 0.1

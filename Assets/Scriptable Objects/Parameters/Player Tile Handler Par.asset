@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8ad9295e290374cae6419c1f67842d, type: 3}
+  m_Name: Player Tile Handler Par
+  m_EditorClassIdentifier: Assembly-CSharp::TilesInteractionParameters
+  trailTile: {fileID: 11400000, guid: 88b4019adb8531b49b8271dd394efc40, type: 2}
+  splashTiles:
+  - {fileID: 11400000, guid: f0547531302e3434fbf8f05c3c99f7ee, type: 2}
+  - {fileID: 11400000, guid: a750d44680e2a954da0ce9998fe54457, type: 2}
+  - {fileID: 11400000, guid: 9fd3affeb2c3d4949ae89d87e46d7d4b, type: 2}
+  - {fileID: 11400000, guid: 41727746eccd8fd40af82248679b6b1f, type: 2}
+  splashTilesSlope:
+  - {fileID: 11400000, guid: 6bba69cb503c522459112457742355b3, type: 2}
+  - {fileID: 11400000, guid: a8a5e5ee026b8af4191a3648397d0e12, type: 2}
+  - {fileID: 11400000, guid: 305bc73721d45984eaa099607021b15a, type: 2}
+  - {fileID: 11400000, guid: 18078b4a2b0a0494691196c275f49986, type: 2}
+  rayLength: 0.05
+  maxSpread: 3
+  tileCooldown: 0.1
+  outsideFloorThickness: 1
+  insideFloorThickness: 2
+  outsideWallThickness: 0
+  insideWallThickness: 2
+  outsideToInsideDistribution: 0.3

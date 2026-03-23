@@ -6291,30 +6291,7 @@ MonoBehaviour:
   controller: {fileID: 1752049367}
   animationController: {fileID: 13235031}
   tilesController: {fileID: 1752049369}
-  maxJumpHeight: 6
-  minJumpHeight: 3
-  maxHeightTime: 0.5
-  moveSpeed: 8
-  jumpBufferTime: 0.2
-  timeToIdle: 0.1
-  coyoteTime: 0.05
-  accelerationTimeGround: 0.2
-  accelerationTimeAir: 0.2
-  accelerationTimeWall: 0.5
-  gravityFallMultiplier: 2.5
-  runningVelocityMultiplier: 2.5
-  wallSlideSpeed: 5
-  endSlopeBoostX: 3
-  slopeSlidingJump: {x: 22, y: 20}
-  splashFallMinVelocity: 35
-  splashWallMinVelocity: 15
-  scaleReductionPerUnit: 0.001
-  minNormalizedScale: 0.1
-  frontDirectionJump: {x: 20, y: 30}
-  climbJump: {x: 7.5, y: 35}
-  fallOfJump: {x: 10, y: 5}
-  wallStickTime: 0.1
-  upscaleFactor: 10
+  playerParameters: {fileID: 11400000, guid: 0ff9800078ffff54eb73c5d261422404, type: 2}
   gravityScale: 2
   jumpForce: 4
   minJumpForce: 0
@@ -6340,11 +6317,7 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 320
-  skinWidth: 0.015
-  raySpacing: 0.25
-  groundProbeDistance: 0.015
-  maxSlopeAngle: 50
-  slopeEpsilon: 0.1
+  collisionParameters: {fileID: 11400000, guid: 948a2d749f6f3ce4f848a33cc5c31d02, type: 2}
   pushableLayerName: Pushable
 --- !u!61 &1752049368
 BoxCollider2D:
@@ -6407,30 +6380,12 @@ MonoBehaviour:
   trailTilemap: {fileID: 748383026}
   worldTilemap: {fileID: 435947504}
   splashTilemap: {fileID: 807508566}
-  splashTiles:
-  - {fileID: 11400000, guid: f0547531302e3434fbf8f05c3c99f7ee, type: 2}
-  - {fileID: 11400000, guid: a750d44680e2a954da0ce9998fe54457, type: 2}
-  - {fileID: 11400000, guid: 9fd3affeb2c3d4949ae89d87e46d7d4b, type: 2}
-  - {fileID: 11400000, guid: 41727746eccd8fd40af82248679b6b1f, type: 2}
-  splashTilesSlope:
-  - {fileID: 11400000, guid: 6bba69cb503c522459112457742355b3, type: 2}
-  - {fileID: 11400000, guid: a8a5e5ee026b8af4191a3648397d0e12, type: 2}
-  - {fileID: 11400000, guid: 305bc73721d45984eaa099607021b15a, type: 2}
-  - {fileID: 11400000, guid: 18078b4a2b0a0494691196c275f49986, type: 2}
   player: {fileID: 1752049366}
   playerController: {fileID: 1752049367}
   waterLayer:
     serializedVersion: 2
     m_Bits: 16
-  trailTile: {fileID: 11400000, guid: 88b4019adb8531b49b8271dd394efc40, type: 2}
-  rayLength: 0.05
-  maxSpread: 3
-  tileCooldown: 0.1
-  outsideFloorThickness: 1
-  insideFloorThickness: 2
-  outsideWallThickness: 0
-  insideWallThickness: 2
-  outsideToInsideDistribution: 0.3
+  tilesInteractionParameters: {fileID: 11400000, guid: b4d05e1c236bda340aa37958f5010dad, type: 2}
 --- !u!1 &1837090738
 GameObject:
   m_ObjectHideFlags: 0

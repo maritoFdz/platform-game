@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using static RaycastLayout;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class RaycastLayout : MonoBehaviour
@@ -10,11 +8,9 @@ public class RaycastLayout : MonoBehaviour
 
     [Header("References")]
     [SerializeField] protected BoxCollider2D col;
-
-    [Header("Parameters")]
     [SerializeField] protected LayerMask collisionMask;
-    [SerializeField] protected float skinWidth;
-    [SerializeField] protected float raySpacing;
+    [SerializeField] protected CollisionParameters collisionParameters;
+
     protected float scaledSkinWidth;
     protected float scaledRaySpacing;
     protected int horizontalRayAmount;
@@ -26,7 +22,7 @@ public class RaycastLayout : MonoBehaviour
 
     protected virtual void Awake()
     {
-        scaledSkinWidth = skinWidth;
+        scaledSkinWidth = collisionParameters.skinWidth;
         SetRaySpacing();
     }
 
@@ -43,9 +39,9 @@ public class RaycastLayout : MonoBehaviour
     protected void SetRaySpacing(float reductionFactor = 1)
     {
         Bounds corners = col.bounds;
-        scaledSkinWidth = Mathf.Max(skinWidth * reductionFactor, minSkinWitdh);
+        scaledSkinWidth = Mathf.Max(collisionParameters.skinWidth * reductionFactor, minSkinWitdh);
         corners.Expand(scaledSkinWidth * -2);
-        scaledRaySpacing = raySpacing * reductionFactor;
+        scaledRaySpacing = collisionParameters.raySpacing * reductionFactor;
         horizontalRayAmount = Mathf.RoundToInt(corners.size.y / scaledRaySpacing);
         verticalRayAmount = Mathf.RoundToInt(corners.size.x / scaledRaySpacing);
         horizontalRayAmount = Mathf.Max(minRayAmount, horizontalRayAmount);

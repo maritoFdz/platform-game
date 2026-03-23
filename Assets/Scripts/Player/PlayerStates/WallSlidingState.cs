@@ -12,23 +12,23 @@ public class WallSlidingState : IPlayerState
     {
         freezeBehaviour = false;
         direction = player.WallLeft() ? -1 : 1;
-        if (player.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
+        if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
             player.MakeSplash(90f * direction);
         player.velocity = Vector2.zero; // cancel all movement
         player.velocityXSmoothing = 0f;
         player.velocityYSmoothing = 0f;
-        dirDecisionTimer = player.wallStickTime;
-        dropTimer = player.wallStickTime;
+        dirDecisionTimer = player.playerParameters.wallStickTime;
+        dropTimer = player.playerParameters.wallStickTime;
         player.FlipSprite(direction);
     }
 
     public void UpdateState(Player player)
     {
         if (freezeBehaviour) return;
-        player.velocity.y = Mathf.SmoothDamp(player.velocity.y, -player.wallSlideSpeed, ref player.velocityYSmoothing, player.accelerationTimeWall);
+        player.velocity.y = Mathf.SmoothDamp(player.velocity.y, -player.playerParameters.wallSlideSpeed, ref player.velocityYSmoothing, player.playerParameters.accelerationTimeWall);
         player.Move(false, true, gravityMultiplier);
         player.PaintTrail();
-        if (player.JumpPressed || player.wallStickTime != dirDecisionTimer) // if is jump pressed or countdown to chose direction has started
+        if (player.JumpPressed || player.playerParameters.wallStickTime != dirDecisionTimer) // if is jump pressed or countdown to chose direction has started
         {
             if (dirDecisionTimer < 0 || player.inputX != 0f) ExecuteJump(player);
             else dirDecisionTimer -= Time.deltaTime;
@@ -37,14 +37,14 @@ public class WallSlidingState : IPlayerState
         {
             player.SwitchState(player.walkingState);
         }
-        else if (-player.inputX == direction || player.wallStickTime != dropTimer)
+        else if (-player.inputX == direction || player.playerParameters.wallStickTime != dropTimer)
         {
             dropTimer -= Time.deltaTime;
 
             if (dropTimer <= 0f)
             {
-                player.velocity.x = player.fallOfJump.x * -direction;
-                player.velocity.y = player.fallOfJump.y;
+                player.velocity.x = player.playerParameters.fallOfJump.x * -direction;
+                player.velocity.y = player.playerParameters.fallOfJump.y;
                 player.SwitchState(player.fallingState);
             }
         }
@@ -54,18 +54,18 @@ public class WallSlidingState : IPlayerState
     {
         if (direction == player.inputX)
         {
-            player.velocity.x = player.climbJump.x * -direction;
-            player.velocity.y = player.climbJump.y;
+            player.velocity.x = player.playerParameters.climbJump.x * -direction;
+            player.velocity.y = player.playerParameters.climbJump.y;
         }
         else if (direction == -player.inputX)
         {
-            player.velocity.x = player.frontDirectionJump.x * -direction;
-            player.velocity.y = player.frontDirectionJump.y;
+            player.velocity.x = player.playerParameters.frontDirectionJump.x * -direction;
+            player.velocity.y = player.playerParameters.frontDirectionJump.y;
         }
         else
         {
-            player.velocity.x = player.fallOfJump.x * -direction;
-            player.velocity.y = player.fallOfJump.y;
+            player.velocity.x = player.playerParameters.fallOfJump.x * -direction;
+            player.velocity.y = player.playerParameters.fallOfJump.y;
         }
         player.MakeSplash(90f * direction);
         player.HandleJumpingStateTransition();

@@ -6,18 +6,7 @@ public class PushableObject : MonoBehaviour
     [Header("References")]
     [SerializeField] private CollisionsHandler2D controller;
     [SerializeField] private Transform visual;
-
-    [Header("Parameters")]
-    [SerializeField] private float pushSpeed;
-    [SerializeField] private float accelerationTime;
-    [SerializeField] private float slopeSlideMultiplier;
-    [SerializeField] private float gravity;
-    [SerializeField] private float rotationVelocity;
-    [SerializeField] private float maxRotationAngle;
-    [SerializeField] private int groundSlopeFrontTol;
-    [SerializeField] private int slopeBelowTol;
-    [SerializeField] private int slideSlopeBeneathTol;
-    [SerializeField] private float maxVisualDrop = 0.1f;
+    [SerializeField] private PushableObjectParameters parameters;
 
     private float rotationAngle;
     private float push;
@@ -91,10 +80,10 @@ public class PushableObject : MonoBehaviour
         controller.ClampDisplacement(ref displacement);
         float target;
         if (playerPushing != null)
-            target = push * pushSpeed;
+            target = push * parameters.pushSpeed;
         else
             target = 0f;
-        velocity.x = Mathf.SmoothDamp(velocity.x, target, ref velocityXSmoothing, accelerationTime);
+        velocity.x = Mathf.SmoothDamp(velocity.x, target, ref velocityXSmoothing, parameters.accelerationTime);
         if (playerPushing != null)
             playerPushing.ApplyExternalDisplacement(displacement);
         transform.Translate(displacement);
@@ -104,20 +93,20 @@ public class PushableObject : MonoBehaviour
         {
             float dir = (leftHits > rightHits) ? -1f : 1f;
             float targetRotation = 1f - supportRatio;
-            rotation = dir * maxRotationAngle * targetRotation;
+            rotation = dir * parameters.maxRotationAngle * targetRotation;
         }
 
-        rotationAngle = Mathf.MoveTowards(rotationAngle, rotation, rotationVelocity * dt);
+        rotationAngle = Mathf.MoveTowards(rotationAngle, rotation, parameters.rotationVelocity * dt);
 
         if (visual != null)
         {
             visual.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
-            float tiltPercent = Mathf.Abs(rotationAngle) / maxRotationAngle;
-            float yOffset = -tiltPercent * maxVisualDrop;
+            float tiltPercent = Mathf.Abs(rotationAngle) / parameters.maxRotationAngle;
+            float yOffset = -tiltPercent * parameters.maxVisualOffset;
             visual.localPosition = new Vector3(0f, yOffset, 0f);
         }
 
-        float playerPush = controller.IsNextToSlope(-1, groundSlopeFrontTol) ? -1 : 1;
+        float playerPush = controller.IsNextToSlope(-1, parameters.groundSlopeFrontTol) ? -1 : 1;
         if (supportRatio <= 0f)
         {
             currentState = State.Falling;
@@ -129,24 +118,24 @@ public class PushableObject : MonoBehaviour
                 playerPushing = null;
             }
         }
-        else if (controller.colDetails.onSlopeSlide || controller.colDetails.onSlope || controller.colDetails.onSlopeDescent || controller.IsNextToSlope(-1, groundSlopeFrontTol) || controller.IsNextToSlope(1, groundSlopeFrontTol))
+        else if (controller.colDetails.onSlopeSlide || controller.colDetails.onSlope || controller.colDetails.onSlopeDescent || controller.IsNextToSlope(-1, parameters.groundSlopeFrontTol) || controller.IsNextToSlope(1, parameters.groundSlopeFrontTol))
         {
-            if (playerPushing != null && (controller.IsNextToSlope(-1, groundSlopeFrontTol) || controller.IsNextToSlope(1, groundSlopeFrontTol)))
-                playerPushing.velocity.x = -playerPush * slopeSlideMultiplier * 1.5f;
+            if (playerPushing != null && (controller.IsNextToSlope(-1, parameters.groundSlopeFrontTol) || controller.IsNextToSlope(1, parameters.groundSlopeFrontTol)))
+                playerPushing.velocity.x = -playerPush * parameters.slopeSlideMultiplier * 1.5f;
             currentState = State.SlidingSlope;
         }
     }
 
     private void FallingUpdate(float dt)
     {
-        velocity.y += gravity * dt;
+        velocity.y += parameters.gravity * dt;
         velocity.x = 0.5f * velocity.x;
         velocityXSmoothing = 0;
         Vector2 displacement = velocity * dt;
         controller.ClampDisplacement(ref displacement);
         transform.Translate(displacement);
         float rotationTarget = (Mathf.Approximately(Mathf.Abs(rotationAngle), 90)) ? rotationAngle : -Mathf.Sign(velocity.x) * 90;
-        rotationAngle = Mathf.MoveTowards(rotationAngle, rotationTarget, rotationVelocity * dt);
+        rotationAngle = Mathf.MoveTowards(rotationAngle, rotationTarget, parameters.rotationVelocity * dt);
         visual.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
         if (controller.colDetails.below)
         {
@@ -160,7 +149,7 @@ public class PushableObject : MonoBehaviour
 
     private void SlidingUpdate(float dt)
     {
-        velocity.y += gravity * dt;
+        velocity.y += parameters.gravity * dt;
         Vector2 move = velocity * dt;
         controller.ClampDisplacement(ref move);
         transform.Translate(move);
@@ -170,11 +159,11 @@ public class PushableObject : MonoBehaviour
             float slopeAngle = Vector2.Angle(hitNormal.normal, Vector2.up);
 
             float targetRot = slopeAngle;
-            rotationAngle = Mathf.MoveTowards(rotationAngle, targetRot, rotationVelocity * dt);
+            rotationAngle = Mathf.MoveTowards(rotationAngle, targetRot, parameters.rotationVelocity * dt);
 
             visual.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
-            float xOffset = -hitNormal.normal.x * maxVisualDrop * 2;
-            float yOffset = -Mathf.Abs(hitNormal.normal.x) * maxVisualDrop * 2;
+            float xOffset = -hitNormal.normal.x * parameters.maxVisualOffset * 2;
+            float yOffset = -Mathf.Abs(hitNormal.normal.x) * parameters.maxVisualOffset * 2;
 
             visual.localPosition = new Vector3(xOffset, yOffset, 0f);
         }
@@ -185,14 +174,14 @@ public class PushableObject : MonoBehaviour
             playerPushing = null;
         }
 
-        float dir = controller.IsNextToSlope(-1, slideSlopeBeneathTol) ? -1 : 1;
+        float dir = controller.IsNextToSlope(-1, parameters.slideSlopeBeneathTol) ? -1 : 1;
         if (!controller.colDetails.onSlopeSlide && !controller.colDetails.onSlope && !controller.colDetails.onSlopeDescent)
         {
-            if (controller.colDetails.below && (controller.IsNextToSlope(-1, groundSlopeFrontTol) || controller.IsNextToSlope(1, groundSlopeFrontTol)) && !controller.FallInFront(dir, 10))
+            if (controller.colDetails.below && (controller.IsNextToSlope(-1, parameters.groundSlopeFrontTol) || controller.IsNextToSlope(1, parameters.groundSlopeFrontTol)) && !controller.FallInFront(dir, 10))
             {
-                velocity.x = -dir * slopeSlideMultiplier;
+                velocity.x = -dir * parameters.slopeSlideMultiplier;
                 float rotationTarget = (Mathf.Approximately(Mathf.Abs(rotationAngle), 90)) ? rotationAngle : Mathf.Sign(velocity.x) * 90;
-                rotationAngle = Mathf.MoveTowards(rotationAngle, rotationTarget, rotationVelocity * 2 * dt);
+                rotationAngle = Mathf.MoveTowards(rotationAngle, rotationTarget, parameters.rotationVelocity * 2 * dt);
                 visual.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
                 currentState = State.Ground;
             }

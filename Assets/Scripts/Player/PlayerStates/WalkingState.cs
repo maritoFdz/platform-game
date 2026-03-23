@@ -16,7 +16,7 @@ public class WalkingState : IPlayerState
     {
         if (player.inputX != 0)
             player.FlipSprite(player.inputX);
-        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround); // simulates acceleration
+        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeGround); // simulates acceleration
         player.Move(true, false, gravityMultiplier);
         if (player.JumpPressed)
         {
@@ -39,7 +39,7 @@ public class WalkingState : IPlayerState
 
         if (player.IsMoving)
         {
-            idleCount = player.timeToIdle;
+            idleCount = player.playerParameters.timeToIdle;
             player.PaintTrail();
         }
         else
@@ -54,7 +54,7 @@ public class WalkingState : IPlayerState
 
         if (player.GroundBelow() || player.OnSlope())
         {
-            coyoteCount = player.coyoteTime;
+            coyoteCount = player.playerParameters.coyoteTime;
         }
         else
         {

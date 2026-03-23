@@ -95,16 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PushableObject
   controller: {fileID: 4519556003513909041}
   visual: {fileID: 3593771343611036994}
-  pushSpeed: 7
-  accelerationTime: 0.1
-  slopeSlideMultiplier: 10
-  gravity: -20
-  rotationVelocity: 150
-  maxRotationAngle: 45
-  groundSlopeFrontTol: 35
-  slopeBelowTol: 15
-  slideSlopeBeneathTol: 45
-  maxVisualDrop: 0.1
+  parameters: {fileID: 11400000, guid: 6f2dcb0d0cda05345be7ea98f0d83fe8, type: 2}
 --- !u!114 &4519556003513909041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,11 +112,7 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 64
-  skinWidth: 0.015
-  raySpacing: 0.1
-  groundProbeDistance: 0.015
-  maxSlopeAngle: 0
-  slopeEpsilon: 0.1
+  collisionParameters: {fileID: 11400000, guid: e324faa776d02ed4c9b0b49a25028967, type: 2}
   pushableLayerName: Pushable
 --- !u!1 &5137650691159739337
 GameObject:

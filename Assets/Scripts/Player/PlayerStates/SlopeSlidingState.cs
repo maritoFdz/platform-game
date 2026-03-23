@@ -12,13 +12,13 @@ public class SlopeSlidingState : IPlayerState
         player.Move(true, false);
         if (player.JumpPressed)
         {
-            player.velocity.x = player.slopeSlidingJump.x * -direction;
-            player.velocity.y = player.slopeSlidingJump.y;
+            player.velocity.x = player.playerParameters.slopeSlidingJump.x * -direction;
+            player.velocity.y = player.playerParameters.slopeSlidingJump.y;
             player.SwitchState(player.fallingState);
         }
         else if (!player.IsSliding())
         {
-            player.velocity.x = player.endSlopeBoostX * -direction;
+            player.velocity.x = player.playerParameters.endSlopeBoostX * -direction;
             player.SwitchState(player.idleState);
         }
     }

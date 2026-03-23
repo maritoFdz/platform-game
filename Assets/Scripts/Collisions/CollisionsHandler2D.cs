@@ -3,13 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class CollisionsHandler2D : RaycastLayout
 {
-    [Header("Collisions Parameters")]
-    [SerializeField] private float groundProbeDistance;
-    [SerializeField] private float maxSlopeAngle;
-    [SerializeField] private float slopeEpsilon;
+    [Header("Others")]
     [SerializeField] private string pushableLayerName;
-
-    public CollisionDetails colDetails;
+    
+    [HideInInspector] public CollisionDetails colDetails;
 
     protected override void Awake()
     {
@@ -43,8 +40,8 @@ public class CollisionsHandler2D : RaycastLayout
         // diferent implementation respect to horizontal because rays need to go down if displacement.y = 0 which only occurs when character is on the ground or in jump's max height
         float direction = displacement.y > 0f ? 1f : -1f;
         float rayLength = Mathf.Abs(displacement.y) + scaledSkinWidth;
-        if (rayLength < scaledSkinWidth + groundProbeDistance)
-            rayLength = scaledSkinWidth + groundProbeDistance;
+        if (rayLength < scaledSkinWidth + collisionParameters.groundProbeDistance)
+            rayLength = scaledSkinWidth + collisionParameters.groundProbeDistance;
         Vector2 rayCorner = direction >= 0 ? raycastOrigins.topLeft : raycastOrigins.bottomLeft;
         for (int i = 0; i < verticalRayAmount; i++)
         {
@@ -82,7 +79,7 @@ public class CollisionsHandler2D : RaycastLayout
             Debug.DrawRay(rayOrigin, direction * rayLength * Vector2.right, Color.red);
             RaycastHit2D hitPushable = Physics2D.Raycast(rayOrigin,
                 Vector2.right * direction,
-                groundProbeDistance * 5,
+                collisionParameters.groundProbeDistance * 5,
                 collisionMask);
             if (hitPushable)
             {
@@ -96,7 +93,7 @@ public class CollisionsHandler2D : RaycastLayout
                 if (hit.distance == 0) continue;
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-                if (i == 0 && slopeAngle <= maxSlopeAngle)
+                if (i == 0 && slopeAngle <= collisionParameters.maxSlopeAngle)
                 {
                     float slopeStartDistance = slopeAngle != colDetails.prevSlopeAngle ? hit.distance - scaledSkinWidth : 0;
                     displacement.x -= slopeStartDistance * direction; // avoids getting more displacement when reaching a slope because of previous slope displacement values
@@ -104,7 +101,7 @@ public class CollisionsHandler2D : RaycastLayout
                     displacement.x += slopeStartDistance;
                 }
 
-                if (!colDetails.onSlope || slopeAngle > maxSlopeAngle)
+                if (!colDetails.onSlope || slopeAngle > collisionParameters.maxSlopeAngle)
                 {
                     displacement.x = Mathf.Min(Mathf.Abs(displacement.x), (hit.distance - scaledSkinWidth)) * direction;
                     rayLength = Mathf.Min(Mathf.Abs(displacement.x), hit.distance); // this prevents an error because a ray touching a slope with higher angle than current slope 
@@ -133,8 +130,8 @@ public class CollisionsHandler2D : RaycastLayout
 
     private void DescendSlope(ref Vector2 displacement)
     {
-        RaycastHit2D hitLeft = Physics2D.Raycast(raycastOrigins.bottomLeft, Vector2.down, groundProbeDistance + scaledSkinWidth, collisionMask);
-        RaycastHit2D hitRight = Physics2D.Raycast(raycastOrigins.bottomRight, Vector2.down, groundProbeDistance + scaledSkinWidth, collisionMask);
+        RaycastHit2D hitLeft = Physics2D.Raycast(raycastOrigins.bottomLeft, Vector2.down, collisionParameters.groundProbeDistance + scaledSkinWidth, collisionMask);
+        RaycastHit2D hitRight = Physics2D.Raycast(raycastOrigins.bottomRight, Vector2.down, collisionParameters.groundProbeDistance + scaledSkinWidth, collisionMask);
         SlideSlope(hitLeft, ref displacement);
         SlideSlope(hitRight, ref displacement);
         if (colDetails.onSlopeSlide) return;
@@ -145,10 +142,10 @@ public class CollisionsHandler2D : RaycastLayout
         {
             float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
             float yDisplacement = Mathf.Tan(slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(displacement.x);
-            if (slopeAngle != 0 && slopeAngle <= maxSlopeAngle)
+            if (slopeAngle != 0 && slopeAngle <= collisionParameters.maxSlopeAngle)
             {
                 if (Mathf.Sign(hit.normal.x) == direction)
-                    if (hit.distance - scaledSkinWidth - yDisplacement <= slopeEpsilon) // when accelerating yDisplacement can be small enough to make the character walk away from the slope
+                    if (hit.distance - scaledSkinWidth - yDisplacement <= collisionParameters.slopeEpsilon) // when accelerating yDisplacement can be small enough to make the character walk away from the slope
                     {
                         float slopeDisplacement = Mathf.Abs(displacement.x);
                         float slopeAngleRad = slopeAngle * Mathf.Deg2Rad;
@@ -167,7 +164,7 @@ public class CollisionsHandler2D : RaycastLayout
         if (hit)
         {
             float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
-            if (slopeAngle > maxSlopeAngle)
+            if (slopeAngle > collisionParameters.maxSlopeAngle)
             {
                 displacement.x = (Mathf.Abs(displacement.y) - hit.distance) / Mathf.Tan(slopeAngle * Mathf.Deg2Rad) * hit.normal.x;
                 colDetails.slopeAngle = slopeAngle;
@@ -178,7 +175,7 @@ public class CollisionsHandler2D : RaycastLayout
 
     public bool IsSlopeBelow(int tolerance = 1, bool ignoreMaxAngle = false)
     {
-        float probeLength = scaledSkinWidth + groundProbeDistance * 2f * tolerance;
+        float probeLength = scaledSkinWidth + collisionParameters.groundProbeDistance * 2f * tolerance;
         RaycastHit2D leftHit = Physics2D.Raycast(raycastOrigins.bottomLeft,
             Vector2.down,
             probeLength,
@@ -190,13 +187,13 @@ public class CollisionsHandler2D : RaycastLayout
         if (leftHit)
         {
             float angle = Vector2.Angle(leftHit.normal, Vector2.up);
-            if (angle > 0 && (angle <= maxSlopeAngle || ignoreMaxAngle))
+            if (angle > 0 && (angle <= collisionParameters.maxSlopeAngle || ignoreMaxAngle))
                 return true;
         }
         if (rightHit)
         {
             float angle = Vector2.Angle(rightHit.normal, Vector2.up);
-            if (angle > 0 && (angle <= maxSlopeAngle || ignoreMaxAngle))
+            if (angle > 0 && (angle <= collisionParameters.maxSlopeAngle || ignoreMaxAngle))
                 return true;
         }
         return false;
@@ -204,7 +201,7 @@ public class CollisionsHandler2D : RaycastLayout
 
     public bool IsNextToSlope(int direction, int tolerance = 1)
     {
-        float probeLength = scaledSkinWidth + groundProbeDistance * 2f * tolerance;
+        float probeLength = scaledSkinWidth + collisionParameters.groundProbeDistance * 2f * tolerance;
         Vector2 rayOrigin = direction >= 0 ? raycastOrigins.topRight : raycastOrigins.topLeft;
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * direction, probeLength, collisionMask);
         if (hit)
@@ -217,7 +214,7 @@ public class CollisionsHandler2D : RaycastLayout
 
     public bool FallInFront(float direction, int tolerance = 1)
     {
-        float probeLength = scaledSkinWidth + groundProbeDistance * tolerance;
+        float probeLength = scaledSkinWidth + collisionParameters.groundProbeDistance * tolerance;
         Vector2 rayOrigin = direction >= 0 ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, probeLength, collisionMask);
         if (hit) return false;
@@ -245,8 +242,8 @@ public class CollisionsHandler2D : RaycastLayout
 
     private void OnDrawGizmos()
     {
-        float probeLength = scaledSkinWidth + groundProbeDistance;
         if (!Application.isPlaying) return;
+        float probeLength = scaledSkinWidth + collisionParameters.groundProbeDistance;
         Gizmos.color = Color.red;
         RaycastHit2D leftHit = Physics2D.Raycast(raycastOrigins.bottomLeft,
             Vector2.down,

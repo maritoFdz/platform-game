@@ -10,36 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private CollisionsHandler2D controller;
     [SerializeField] private PlayerAnimationStateController animationController;
     [SerializeField] private TilesInteractionHandler tilesController;
-
-    [Header("Movement Settings")]
-    [SerializeField] private float maxJumpHeight;
-    [SerializeField] private float minJumpHeight;
-    [SerializeField] private float maxHeightTime;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float jumpBufferTime;
-    public float timeToIdle;
-    public float coyoteTime;
-    public float accelerationTimeGround;
-    public float accelerationTimeAir;
-    public float accelerationTimeWall;
-    public float gravityFallMultiplier;
-    public float runningVelocityMultiplier;
-    public float wallSlideSpeed;
-    public float endSlopeBoostX;
-    public Vector2 slopeSlidingJump;
-    public float splashFallMinVelocity;
-    public float splashWallMinVelocity;
-    [SerializeField, Range(0f, 1f)] private float scaleReductionPerUnit;
-    [SerializeField, Range(0.1f, 1f)] private float minNormalizedScale;
-
-    [Header("Wall Movement Settings")]
-    public Vector2 frontDirectionJump;
-    public Vector2 climbJump;
-    public Vector2 fallOfJump;
-    public float wallStickTime;
-
-    [Header("Others")]
-    [SerializeField] private float upscaleFactor;
+    public PlayerParameters playerParameters;
 
     [HideInInspector] public float gravityScale;
     [HideInInspector] public float jumpForce;
@@ -84,9 +55,9 @@ public class Player : MonoBehaviour
     private void Start()
     {
         SwitchState(idleState);
-        gravityScale = -(2 * maxJumpHeight) / Mathf.Pow(maxHeightTime, 2);
-        jumpForce = Mathf.Abs(gravityScale * maxHeightTime);
-        minJumpForce = Mathf.Sqrt(2 * Mathf.Abs(gravityScale) * minJumpHeight);
+        gravityScale = -(2 * playerParameters.maxJumpHeight) / Mathf.Pow(playerParameters.maxHeightTime, 2);
+        jumpForce = Mathf.Abs(gravityScale * playerParameters.maxHeightTime);
+        minJumpForce = Mathf.Sqrt(2 * Mathf.Abs(gravityScale) * playerParameters.minJumpHeight);
         PlayerSwitchManager.instance.Add(this);
     }
 
@@ -108,7 +79,7 @@ public class Player : MonoBehaviour
         if (jumpBufferCounter > 0f)
             jumpBufferCounter -= Time.deltaTime;
         inputX = PlayerInput.Player.Move.ReadValue<float>();
-        targetVelocity = inputX * moveSpeed;
+        targetVelocity = inputX * playerParameters.moveSpeed;
         currentState.UpdateState(this);
         tilesController.HandleTilesCollision();
     }
@@ -146,13 +117,13 @@ public class Player : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext callback)
     {
-        jumpBufferCounter = jumpBufferTime;
+        jumpBufferCounter = playerParameters.jumpBufferTime;
     }
 
     private void Split(InputAction.CallbackContext callback)
     {
         if (IsFrozen || currentState is WaitingState) return;
-        if (normalizedScale / 2 > minNormalizedScale)
+        if (normalizedScale / 2 > playerParameters.minNormalizedScale)
         {
             normalizedScale /= 2;
             transform.localScale = initialScale * normalizedScale;
@@ -179,18 +150,18 @@ public class Player : MonoBehaviour
         if (IsFrozen) return;
         if (moveAmount < 1 && !forcedScaleLoss) return;
         if (!forcedScaleLoss) moveAmount--;
-        normalizedScale = Mathf.Max(transform.localScale.x / initialScale.x - scaleReductionPerUnit * scaleLossUnits, minNormalizedScale);
+        normalizedScale = Mathf.Max(transform.localScale.x / initialScale.x - playerParameters.scaleReductionPerUnit * scaleLossUnits, playerParameters.minNormalizedScale);
         transform.localScale = initialScale * normalizedScale;
         controller.UpdateCollisions(normalizedScale);
 
-        if (normalizedScale == minNormalizedScale)
+        if (normalizedScale == playerParameters.minNormalizedScale)
             KillPlayer();
     }
 
     public void Upscale()
     {
         if (IsFrozen) return;
-        normalizedScale = Mathf.Min(transform.localScale.x / initialScale.x + scaleReductionPerUnit * upscaleFactor, 1f);
+        normalizedScale = Mathf.Min(transform.localScale.x / initialScale.x + playerParameters.scaleReductionPerUnit * playerParameters.upscalePerUnit, 1f);
         transform.localScale = initialScale * normalizedScale;
         controller.UpdateCollisions(normalizedScale);
     }

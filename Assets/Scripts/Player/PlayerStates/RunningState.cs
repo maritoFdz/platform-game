@@ -15,8 +15,8 @@ public class RunningState : IPlayerState
     {
         if (player.inputX != 0)
             player.FlipSprite(player.inputX);
-        targetVelocity = player.targetVelocity * player.runningVelocityMultiplier;
-        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.accelerationTimeGround);
+        targetVelocity = player.targetVelocity * player.playerParameters.runningVelocityMultiplier;
+        player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeGround);
         player.Move(true, false, gravityMultiplier);
         player.PaintTrail();
         if (player.JumpPressed)
@@ -49,7 +49,7 @@ public class RunningState : IPlayerState
 
         if (player.GroundBelow() || player.OnSlope())
         {
-            coyoteCount = player.coyoteTime;
+            coyoteCount = player.playerParameters.coyoteTime;
         }
         else
         {

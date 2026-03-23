@@ -9,22 +9,10 @@ public class TilesInteractionHandler : MonoBehaviour
     [SerializeField] private Tilemap trailTilemap;
     [SerializeField] private Tilemap worldTilemap;
     [SerializeField] private Tilemap splashTilemap;
-    [SerializeField] private Tile[] splashTiles;
-    [SerializeField] private Tile[] splashTilesSlope;
     [SerializeField] private Player player;
     [SerializeField] private CollisionsHandler2D playerController;
     [SerializeField] private LayerMask waterLayer;
-
-    [Header("Trail Parameters")]
-    [SerializeField] private Tile trailTile;
-    [SerializeField] private float rayLength;
-    [SerializeField] private int maxSpread;
-    [SerializeField] private float tileCooldown;
-    [SerializeField] private int outsideFloorThickness;
-    [SerializeField] private int insideFloorThickness;
-    [SerializeField] private int outsideWallThickness;
-    [SerializeField] private int insideWallThickness;
-    [SerializeField, Range(0, 1)] private float outsideToInsideDistribution;
+    [SerializeField] private TilesInteractionParameters tilesInteractionParameters;
 
     // gives a less uniform effect by not allowing to paint all tiles at once
     private Dictionary<Vector3Int, float> neighborTilesColdown;
@@ -63,7 +51,7 @@ public class TilesInteractionHandler : MonoBehaviour
 
         RaycastLayoutDetails layoutInfo = playerController.GetRaycastLayoutDetails();
         RaycastOrigins raycastOrigins = playerController.GetRaycastOrigins();
-        float rayLength = this.rayLength + layoutInfo.skinWidth;
+        float rayLength = tilesInteractionParameters.rayLength + layoutInfo.skinWidth;
 
         // store tiles that player is touching above and below
         for (int i = 0; i < layoutInfo.verticalRayAmount; i++)
@@ -163,19 +151,19 @@ public class TilesInteractionHandler : MonoBehaviour
             switch (surface)
             {
                 case SurfaceType.Floor:
-                    splashTilemap.SetTile(tilePos, splashTiles[Random.Range(0, splashTiles.Length)]);
+                    splashTilemap.SetTile(tilePos, tilesInteractionParameters.splashTiles[Random.Range(0, tilesInteractionParameters.splashTiles.Length)]);
                     splashTilemap.SetTileFlags(tilePos, TileFlags.None);
                     rotationMatrix = Matrix4x4.Rotate(Quaternion.Euler(0f, 0f, rotation));
                     splashTilemap.SetTransformMatrix(tilePos, rotationMatrix);
                     break;
                 case SurfaceType.Wall:
-                    splashTilemap.SetTile(tilePos, splashTiles[Random.Range(0, splashTiles.Length)]);
+                    splashTilemap.SetTile(tilePos, tilesInteractionParameters.splashTiles[Random.Range(0, tilesInteractionParameters.splashTiles.Length)]);
                     splashTilemap.SetTileFlags(tilePos, TileFlags.None);
                     rotationMatrix = Matrix4x4.Rotate(Quaternion.Euler(0f, 0f, rotation));
                     splashTilemap.SetTransformMatrix(tilePos, rotationMatrix);
                     break;
                 case SurfaceType.Slope:
-                    splashTilemap.SetTile(tilePos, splashTilesSlope[Random.Range(0, splashTilesSlope.Length)]);
+                    splashTilemap.SetTile(tilePos, tilesInteractionParameters.splashTilesSlope[Random.Range(0, tilesInteractionParameters.splashTilesSlope.Length)]);
                     splashTilemap.SetTileFlags(tilePos, TileFlags.None);
                     rotationMatrix = hit.normal.x > 0
                         ? Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(-1f, 1f, 1f))
@@ -195,28 +183,28 @@ public class TilesInteractionHandler : MonoBehaviour
         if (neighborTilesColdown.ContainsKey(tileToPaint))
         {
             float lastTime = neighborTilesColdown[tileToPaint];
-            if (Time.time - lastTime < tileCooldown)
+            if (Time.time - lastTime < tilesInteractionParameters.tileCooldown)
                 return;
         }
 
-        trailTilemap.SetTile(tileToPaint, trailTile);
+        trailTilemap.SetTile(tileToPaint, tilesInteractionParameters.trailTile);
         neighborTilesColdown[tileToPaint] = Time.time;
 
-        int neighbors = Random.Range(0, maxSpread); // takes a random amount of neighbors
+        int neighbors = Random.Range(0, tilesInteractionParameters.maxSpread); // takes a random amount of neighbors
         int direction = isFacingLeft ? -1 : 1;
         for (int i = 0; i < neighbors; i++)
         {
             // selects the neighbors
             int neighborX, neighborY;
-            if (Random.value <= outsideToInsideDistribution)
+            if (Random.value <= tilesInteractionParameters.outsideToInsideDistribution)
             {
-                neighborX = Random.Range(0, outsideWallThickness + 1) * -direction;
-                neighborY = Random.Range(0, outsideFloorThickness + 1);
+                neighborX = Random.Range(0, tilesInteractionParameters.outsideWallThickness + 1) * -direction;
+                neighborY = Random.Range(0, tilesInteractionParameters.outsideFloorThickness + 1);
             }
             else
             {
-                neighborX = Random.Range(0, insideWallThickness + 1) * direction;
-                neighborY = Random.Range(-insideFloorThickness, 1);
+                neighborX = Random.Range(0, tilesInteractionParameters.insideWallThickness + 1) * direction;
+                neighborY = Random.Range(- tilesInteractionParameters.insideFloorThickness, 1);
             }
 
 
@@ -228,13 +216,13 @@ public class TilesInteractionHandler : MonoBehaviour
             if (neighborTilesColdown.ContainsKey(neighborTile))
             {
                 float lastTime = neighborTilesColdown[neighborTile];
-                if (Time.time - lastTime < tileCooldown)
+                if (Time.time - lastTime < tilesInteractionParameters.tileCooldown)
                     continue;
             }
 
             if (trailTilemap.GetTile(neighborTile) == null)
             {
-                trailTilemap.SetTile(neighborTile, trailTile);
+                trailTilemap.SetTile(neighborTile, tilesInteractionParameters.trailTile);
                 neighborTilesColdown[neighborTile] = Time.time;
             }
         }
