@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerAnimationStateController animationController;
     [SerializeField] private TilesInteractionHandler tilesController;
     public PlayerParameters playerParameters;
+    [SerializeField] private Player playerPrefab;
 
     [HideInInspector] public float gravityScale;
     [HideInInspector] public float jumpForce;
@@ -30,7 +31,6 @@ public class Player : MonoBehaviour
     public bool IsFrozen => Time.time < freezeTime;
     private float freezeTime;
     private float jumpBufferCounter;
-    private Vector3 initialScale;
     private float normalizedScale;
     private float moveAmount;
 
@@ -47,11 +47,6 @@ public class Player : MonoBehaviour
     public SwimingState swimingState = new();
     public WaitingState waitingState = new();
 
-    private void Awake()
-    {
-        initialScale = transform.localScale;
-    }
-
     private void Start()
     {
         SwitchState(idleState);
@@ -63,9 +58,7 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        normalizedScale = 1f;
-        transform.localScale = initialScale * normalizedScale;
-        controller.UpdateCollisions(normalizedScale);
+        ApplyScale();
     }
 
     private void OnDisable()
@@ -120,17 +113,6 @@ public class Player : MonoBehaviour
         jumpBufferCounter = playerParameters.jumpBufferTime;
     }
 
-    private void Split(InputAction.CallbackContext callback)
-    {
-        if (IsFrozen || currentState is WaitingState) return;
-        if (normalizedScale / 2 > playerParameters.minNormalizedScale)
-        {
-            normalizedScale /= 2;
-            transform.localScale = initialScale * normalizedScale;
-            Instantiate(gameObject, transform.position + new Vector3(0.1f, 0, 0), Quaternion.identity);
-        }
-    }
-
     public void MakeSplash(float rotation)
     {
         if (IsFrozen) return;
@@ -145,15 +127,25 @@ public class Player : MonoBehaviour
             tilesController.PaintTrail();
     }
 
+    private void Split(InputAction.CallbackContext callback)
+    {
+        if (IsFrozen || currentState is WaitingState) return;
+        if (normalizedScale / 2 > playerParameters.minNormalizedScale)
+        {
+            normalizedScale /= 2;
+            ApplyScale();
+            Player child = Instantiate(playerPrefab, transform.position + new Vector3(0.1f, 0, 0), Quaternion.identity);
+            child.SetNormalizedScale(normalizedScale);
+        }
+    }
+
     public void Shrink(bool forcedScaleLoss = false, int scaleLossUnits = 1)
     {
         if (IsFrozen) return;
         if (moveAmount < 1 && !forcedScaleLoss) return;
         if (!forcedScaleLoss) moveAmount--;
-        normalizedScale = Mathf.Max(transform.localScale.x / initialScale.x - playerParameters.scaleReductionPerUnit * scaleLossUnits, playerParameters.minNormalizedScale);
-        transform.localScale = initialScale * normalizedScale;
-        controller.UpdateCollisions(normalizedScale);
-
+        normalizedScale = Mathf.Max(normalizedScale - playerParameters.scaleReductionPerUnit * scaleLossUnits, playerParameters.minNormalizedScale);
+        ApplyScale();
         if (normalizedScale == playerParameters.minNormalizedScale)
             KillPlayer();
     }
@@ -161,8 +153,13 @@ public class Player : MonoBehaviour
     public void Upscale()
     {
         if (IsFrozen) return;
-        normalizedScale = Mathf.Min(transform.localScale.x / initialScale.x + playerParameters.scaleReductionPerUnit * playerParameters.upscalePerUnit, 1f);
-        transform.localScale = initialScale * normalizedScale;
+        normalizedScale = Mathf.Min(normalizedScale + playerParameters.scaleReductionPerUnit * playerParameters.upscalePerUnit, 1f);
+        ApplyScale();
+    }
+
+    private void ApplyScale()
+    {
+        transform.localScale = playerParameters.maxScale * normalizedScale;
         controller.UpdateCollisions(normalizedScale);
     }
 
@@ -191,6 +188,12 @@ public class Player : MonoBehaviour
         controller.ClampDisplacement(ref moveAmount);
         transform.Translate(moveAmount);
         this.moveAmount += moveAmount.x;
+    }
+
+    public void SetNormalizedScale(float value)
+    {
+        normalizedScale = value;
+        ApplyScale();
     }
 
     public void SetInput(PlayerInput input)

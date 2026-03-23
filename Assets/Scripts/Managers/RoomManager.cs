@@ -20,6 +20,7 @@ public class RoomManager : MonoBehaviour
     private void Start()
     {
         initialPlayer.transform.position = SpawnPoint.position;
+        initialPlayer.SetNormalizedScale(1f);
         initialPlayer.gameObject.SetActive(true);
     }
 

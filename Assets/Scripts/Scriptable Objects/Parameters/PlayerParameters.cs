@@ -32,7 +32,7 @@ public class PlayerParameters : ScriptableObject
     public Vector2 slopeSlidingJump;
 
     [Header("Scale Settings")]
-    public float maxScale;
+    public Vector3 maxScale;
     public float upscalePerUnit;
     public float splashFallMinVelocity;
     public float splashWallMinVelocity;
