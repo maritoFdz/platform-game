@@ -40,6 +40,8 @@ public class RoomManager : MonoBehaviour
         player.gameObject.SetActive(false);
         yield return new WaitForSeconds(respawnWait);
         player.transform.position = SpawnPoint.position;
+        initialPlayer.SetNormalizedScale(1f);
         player.gameObject.SetActive(true);
+        PlayerSwitchManager.instance.Add(player);
     }
 }

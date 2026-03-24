@@ -23,16 +23,17 @@ public class Player : MonoBehaviour
     [HideInInspector] public float targetVelocity;
     [HideInInspector] public bool onFreezeTile;
 
-    private PlayerInput PlayerInput;
+    private PlayerInput playerInput;
     public bool JumpPressed => jumpBufferCounter > 0;
-    public bool JumpReleased => !PlayerInput.Player.Jump.IsPressed();
-    public bool IsRunning => PlayerInput.Player.Run.IsPressed();
-    public bool IsMoving => PlayerInput.Player.Move.IsPressed();
+    public bool JumpReleased => !playerInput.Player.Jump.IsPressed();
+    public bool IsRunning => playerInput.Player.Run.IsPressed();
+    public bool IsMoving => playerInput.Player.Move.IsPressed();
     public bool IsFrozen => Time.time < freezeTime;
     private float freezeTime;
     private float jumpBufferCounter;
     private float normalizedScale;
     private float moveAmount;
+    private bool isActive;
 
     private IPlayerState currentState;
     // states instances
@@ -45,7 +46,6 @@ public class Player : MonoBehaviour
     public SlopeSlidingState slopeSlidingState = new();
     public PushingObjectState pushingObjectState = new();
     public SwimingState swimingState = new();
-    public WaitingState waitingState = new();
 
     private void Start()
     {
@@ -63,15 +63,15 @@ public class Player : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerInput.Player.Jump.performed -= Jump;
-        PlayerInput.Player.Split.performed -= Split;
+        playerInput.Player.Jump.performed -= Jump;
+        playerInput.Player.Split.performed -= Split;
     }
 
     private void Update()
     {
         if (jumpBufferCounter > 0f)
             jumpBufferCounter -= Time.deltaTime;
-        inputX = PlayerInput.Player.Move.ReadValue<float>();
+        inputX = isActive ? playerInput.Player.Move.ReadValue<float>() : 0f;
         targetVelocity = inputX * playerParameters.moveSpeed;
         currentState.UpdateState(this);
         tilesController.HandleTilesCollision();
@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
 
     private void Split(InputAction.CallbackContext callback)
     {
-        if (IsFrozen || currentState is WaitingState) return;
+        if (IsFrozen) return;
         if (normalizedScale / 2 > playerParameters.minNormalizedScale)
         {
             normalizedScale /= 2;
@@ -198,11 +198,24 @@ public class Player : MonoBehaviour
 
     public void SetInput(PlayerInput input)
     {
-        PlayerInput = input;
+        playerInput = input;
+    }
 
-        PlayerInput.Player.Enable();
-        PlayerInput.Player.Jump.performed += Jump;
-        PlayerInput.Player.Split.performed += Split;
+    public void EnableInput()
+    {
+        isActive = true;
+        playerInput.Player.Jump.performed -= Jump;
+        playerInput.Player.Jump.performed += Jump;
+
+        playerInput.Player.Split.performed -= Split;
+        playerInput.Player.Split.performed += Split;
+    }
+
+    public void DisableInput()
+    {
+        isActive = false;
+        playerInput.Player.Jump.performed -= Jump;
+        playerInput.Player.Split.performed -= Split;
     }
 
     #region Collisions related methods called by states

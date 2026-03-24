@@ -15,7 +15,7 @@ public class PlayerSwitchManager : MonoBehaviour
             Destroy(gameObject);
         else
             instance = this;
-        activePlayers = new List<Player>();
+       activePlayers = new List<Player>();
        playerInput = new();
     }
 
@@ -34,30 +34,32 @@ public class PlayerSwitchManager : MonoBehaviour
     private void Switch(InputAction.CallbackContext callback)
     {
         Player current = activePlayers[activePlayerIndex];
-        current.SwitchState(current.waitingState);
+        current.DisableInput();
         activePlayerIndex = (activePlayerIndex + 1) % activePlayers.Count;
-        current = activePlayers[activePlayerIndex];
-        current.SwitchState(current.idleState);
+        Player next = activePlayers[activePlayerIndex];
+        next.EnableInput();
     }
 
     public void Add(Player player)
     {
         activePlayers.Add(player);
         player.SetInput(playerInput);
+        player.DisableInput();
         if (activePlayers.Count == 1)
         {
             activePlayerIndex = 0;
-            player.SwitchState(player.idleState);
+            player.EnableInput();
         }
-        else
-            player.SwitchState(player.waitingState);
+        player.SwitchState(player.idleState);
     }
 
     public void Erase(Player player)
     {
         int index = activePlayers.IndexOf(player);
         bool wasCurrent = index == activePlayerIndex;
+        player.DisableInput();
         activePlayers.Remove(player);
+
         bool isLast = activePlayers.Count == 0;
         if (isLast)
         {
@@ -71,7 +73,7 @@ public class PlayerSwitchManager : MonoBehaviour
             activePlayerIndex %= activePlayers.Count;
 
         Player newCurrent = activePlayers[activePlayerIndex];
-        newCurrent.SwitchState(newCurrent.idleState);
+        newCurrent.EnableInput();
 
         RoomManager.instance.KillPlayer(player, false);
     }
