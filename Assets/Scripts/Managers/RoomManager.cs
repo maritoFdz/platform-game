@@ -1,11 +1,19 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager instance;
 
+    [Header("References")]
+    public Tilemap worldTilemap;
+    public Tilemap trailTilemap;
+    public Tilemap splashTilemap;
     [SerializeField] private Player initialPlayer;
+
+    [Header("Parameters")]
     [SerializeField] private Transform SpawnPoint;
     [SerializeField] private float respawnWait;
 
@@ -19,29 +27,24 @@ public class RoomManager : MonoBehaviour
 
     private void Start()
     {
-        initialPlayer.transform.position = SpawnPoint.position;
-        initialPlayer.SetNormalizedScale(1f);
-        initialPlayer.gameObject.SetActive(true);
+        SetPlayer();
     }
 
-    public void KillPlayer(Player player, bool isLast)
+    private void SetPlayer()
     {
-        if (isLast)
-            StartCoroutine(PlayerDiesCo(player));
-        else
-        {
-            player.gameObject.SetActive(false);
-            Destroy(player);
-        }
+        Player newPlayer = Instantiate(initialPlayer, SpawnPoint.position, Quaternion.identity);
+        newPlayer.SetNormalizedScale(1f);
+        newPlayer.gameObject.SetActive(true);
     }
 
-    private IEnumerator PlayerDiesCo(Player player)
+    public void PlayersDead()
     {
-        player.gameObject.SetActive(false);
+        StartCoroutine(RespawnCo());
+    }
+
+    private IEnumerator RespawnCo()
+    {
         yield return new WaitForSeconds(respawnWait);
-        player.transform.position = SpawnPoint.position;
-        initialPlayer.SetNormalizedScale(1f);
-        player.gameObject.SetActive(true);
-        PlayerSwitchManager.instance.Add(player);
+        SetPlayer();
     }
 }

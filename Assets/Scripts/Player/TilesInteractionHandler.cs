@@ -6,16 +6,15 @@ using static RaycastLayout;
 public class TilesInteractionHandler : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Tilemap trailTilemap;
-    [SerializeField] private Tilemap worldTilemap;
-    [SerializeField] private Tilemap splashTilemap;
     [SerializeField] private Player player;
     [SerializeField] private CollisionsHandler2D playerController;
     [SerializeField] private LayerMask waterLayer;
     [SerializeField] private TilesInteractionParameters tilesInteractionParameters;
 
-    // gives a less uniform effect by not allowing to paint all tiles at once
-    private Dictionary<Vector3Int, float> neighborTilesColdown;
+    private Tilemap trailTilemap;
+    private Tilemap worldTilemap;
+    private Tilemap splashTilemap;
+    private Dictionary<Vector3Int, float> neighborTilesColdown; // gives a less uniform effect by not allowing to paint all tiles at once
     private Dictionary<TileEffectType, float> effectsApplied; // makes effects unique and frame independent
     private List<RaycastHit2D> hitsAbove;
     private List<RaycastHit2D> hitsBelow;
@@ -30,6 +29,13 @@ public class TilesInteractionHandler : MonoBehaviour
         hitsRight = new List<RaycastHit2D>();
         neighborTilesColdown = new Dictionary<Vector3Int, float>();
         effectsApplied = new Dictionary<TileEffectType, float>();
+    }
+
+    private void Start()
+    {
+        worldTilemap = RoomManager.instance.worldTilemap;
+        trailTilemap = RoomManager.instance.trailTilemap;
+        splashTilemap = RoomManager.instance.splashTilemap;
     }
 
     public bool CheckWater()

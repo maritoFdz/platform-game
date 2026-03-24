@@ -59,11 +59,11 @@ public class PlayerSwitchManager : MonoBehaviour
         bool wasCurrent = index == activePlayerIndex;
         player.DisableInput();
         activePlayers.Remove(player);
+        Destroy(player.gameObject);
 
-        bool isLast = activePlayers.Count == 0;
-        if (isLast)
+        if (activePlayers.Count == 0)
         {
-            RoomManager.instance.KillPlayer(player, true);
+            RoomManager.instance.PlayersDead();
             return;
         }
 
@@ -74,7 +74,5 @@ public class PlayerSwitchManager : MonoBehaviour
 
         Player newCurrent = activePlayers[activePlayerIndex];
         newCurrent.EnableInput();
-
-        RoomManager.instance.KillPlayer(player, false);
     }
 }

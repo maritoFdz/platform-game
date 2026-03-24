@@ -61,12 +61,6 @@ public class Player : MonoBehaviour
         ApplyScale();
     }
 
-    private void OnDisable()
-    {
-        playerInput.Player.Jump.performed -= Jump;
-        playerInput.Player.Split.performed -= Split;
-    }
-
     private void Update()
     {
         if (jumpBufferCounter > 0f)
