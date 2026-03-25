@@ -163,6 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e99dc37b32bbd40b88078280e4efd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSwitchManager
+  switchParticlePrefab: {fileID: 3764793467928912211, guid: 4a2c279ab80281d4d83cdccf54c2ef87, type: 3}
+  trailDuration: 0
 --- !u!1 &435947500
 GameObject:
   m_ObjectHideFlags: 0

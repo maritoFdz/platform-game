@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,18 +6,26 @@ using UnityEngine.InputSystem;
 public class PlayerSwitchManager : MonoBehaviour
 {
     public static PlayerSwitchManager instance;
+
+    [Header("References")]
+    [SerializeField] private SwitchParticle switchParticlePrefab;
+
+    [Header("Parameters")]
+    [SerializeField] private float trailDuration;
+
     private List<Player> activePlayers;
+    private List<SwitchParticle> activeParticles;
     private int activePlayerIndex;
     private PlayerInput playerInput;
 
     private void Awake()
     {
-        if (instance != null)
-            Destroy(gameObject);
-        else
-            instance = this;
-       activePlayers = new List<Player>();
-       playerInput = new();
+        if (instance != null) Destroy(gameObject);
+        else instance = this;
+
+        activePlayers = new List<Player>();
+        activeParticles = new List<SwitchParticle>();
+        playerInput = new();
     }
 
     private void OnEnable()
@@ -33,11 +42,30 @@ public class PlayerSwitchManager : MonoBehaviour
 
     private void Switch(InputAction.CallbackContext callback)
     {
+        if (activePlayers.Count <= 1)
+            return;
+
         Player current = activePlayers[activePlayerIndex];
         current.DisableInput();
         activePlayerIndex = (activePlayerIndex + 1) % activePlayers.Count;
         Player next = activePlayers[activePlayerIndex];
+        SpawnParticles(current.transform.position, next.transform);
         next.EnableInput();
+    }
+
+    private void SpawnParticles(Vector3 origin, Transform target)
+    {
+        ClearParticles();
+        SwitchParticle particlesThrwwn = Instantiate(switchParticlePrefab, origin, Quaternion.identity);
+        particlesThrwwn.ThrowRay(target);
+        activeParticles.Add(particlesThrwwn);
+    }
+
+    private void ClearParticles()
+    {
+        foreach (var particles in activeParticles)
+            if (particles != null) Destroy(particles.gameObject);
+        activeParticles.Clear();
     }
 
     public void Add(Player player)
@@ -73,6 +101,8 @@ public class PlayerSwitchManager : MonoBehaviour
             activePlayerIndex %= activePlayers.Count;
 
         Player newCurrent = activePlayers[activePlayerIndex];
+        if (activePlayers.Count > 0 && wasCurrent)
+            SpawnParticles(player.transform.position, newCurrent.transform);
         newCurrent.EnableInput();
     }
 }
