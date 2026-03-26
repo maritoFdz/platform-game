@@ -10,6 +10,7 @@ public class PlayerParameters : ScriptableObject
     public float runningVelocityMultiplier;
     public float timeToIdle;
     public float coyoteTime;
+    public bool canRun;
 
     [Header("Jump Settings")]
     public float maxJumpHeight;

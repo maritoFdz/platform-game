@@ -25,7 +25,7 @@ public class WalkingState : IPlayerState
             player.HandleJumpingStateTransition();
             return;
         }
-        else if (player.IsRunning)
+        else if (player.IsRunning && player.playerParameters.canRun)
         {
             player.StopWalkingAnimation();
             player.SwitchState(player.runningState);
