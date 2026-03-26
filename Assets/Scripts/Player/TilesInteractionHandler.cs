@@ -57,6 +57,10 @@ public class TilesInteractionHandler : MonoBehaviour
 
     public void HandleTilesCollision()
     {
+        if (worldTilemap == null) return;
+        if (trailTilemap == null) return;
+        if (splashTilemap == null) return;
+
         // restarts tiles stored
         hitsBelow.Clear();
         hitsAbove.Clear();
