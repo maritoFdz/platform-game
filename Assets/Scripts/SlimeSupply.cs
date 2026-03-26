@@ -108,7 +108,9 @@ public class SlimeSupply : MonoBehaviour
 
         if (currentAmount <= 0f)
         {
-            Destroy(gameObject);
+            currentAmount = 0f;
+            meshRenderer.enabled = false;
+            col.enabled = false;
             return false;
         }
 
