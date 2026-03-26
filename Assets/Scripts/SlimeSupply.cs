@@ -8,14 +8,16 @@ public class SlimeSupply : MonoBehaviour
     [SerializeField] private float width;
     [SerializeField] private float height;
     [SerializeField] private Material material;
-    [SerializeField] private BoxCollider2D edgeCollider;
+    [SerializeField] private BoxCollider2D col;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private MeshFilter meshFilter;
     [SerializeField] private SpriteRenderer placeholder;
+    [SerializeField] private float maxAmount;
 
     private Mesh mesh;
     private Vector3[] vertices;
     private int[] topVerticesIndex;
+    private float currentAmount;
 
     private void Awake()
     {
@@ -34,6 +36,7 @@ public class SlimeSupply : MonoBehaviour
     private void Start()
     {
         GenerateMesh();
+        currentAmount = maxAmount;
     }
 
     public void GenerateMesh()
@@ -85,5 +88,54 @@ public class SlimeSupply : MonoBehaviour
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
         meshFilter.mesh = mesh;
+    }
+
+    public float GetSurfaceHeight()
+    {
+        float normalized = currentAmount / maxAmount;
+        return transform.position.y + (normalized * height) - height / 2;
+    }
+
+    public bool TryConsume(float amount)
+    {
+        if (currentAmount <= 0f)
+            return false;
+
+        currentAmount -= amount;
+        currentAmount = Mathf.Max(currentAmount, 0f);
+
+        UpdateVisual();
+
+        if (currentAmount <= 0f)
+        {
+            Destroy(gameObject);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void UpdateVisual()
+    {
+        float normalized = currentAmount / maxAmount;
+        float newHeight = normalized * height;
+
+        for (int i = 0; i < topVerticesIndex.Length; i++)
+        {
+            int index = topVerticesIndex[i];
+            vertices[index].y = newHeight - height / 2;
+        }
+
+        mesh.vertices = vertices;
+        mesh.RecalculateBounds();
+
+        col.size = new Vector2 (col.size.x, newHeight);
+        // keeps collider pivot top down
+        col.offset = new Vector2(0f, (newHeight - height) / 2f - 0.25f);
+    }
+
+    public bool HasSlime()
+    {
+        return currentAmount > 0.01f;
     }
 }

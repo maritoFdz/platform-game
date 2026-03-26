@@ -142,6 +142,7 @@ public class Player : MonoBehaviour
         ApplyScale();
         if (normalizedScale == playerParameters.minNormalizedScale)
             KillPlayer();
+        
     }
 
     public void Upscale()
@@ -267,6 +268,22 @@ public class Player : MonoBehaviour
         return hit.transform.GetComponent<PushableObject>();
     }
 
+    public SlimeSupply GetCurrentwater()
+    {
+        if (tilesController.currentWater  == null) return null;
+        return tilesController.currentWater;
+    }
+
+    public void ClearCurrentWater()
+    {
+        tilesController.currentWater = null;
+    }
+
+    public float GetWaterSurface()
+    {
+        if (tilesController.currentWater == null) return -1f;
+        return tilesController.currentWater.GetSurfaceHeight();
+    }
     #endregion
 
     #region Animations related methods called by states

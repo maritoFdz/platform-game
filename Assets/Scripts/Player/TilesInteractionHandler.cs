@@ -20,6 +20,7 @@ public class TilesInteractionHandler : MonoBehaviour
     private List<RaycastHit2D> hitsBelow;
     private List<RaycastHit2D> hitsLeft;
     private List<RaycastHit2D> hitsRight;
+    [HideInInspector] public SlimeSupply currentWater;
 
     private void Awake()
     {
@@ -44,7 +45,14 @@ public class TilesInteractionHandler : MonoBehaviour
         Vector2 center = (origins.bottomLeft + origins.topRight) / 2;
         float width = Vector2.Distance(origins.bottomLeft, origins.bottomRight);
         float height = Vector2.Distance(origins.bottomLeft, origins.topLeft);
-        return Physics2D.OverlapBox(center, new Vector2(width, height), 0f, waterLayer);
+        Collider2D hit = Physics2D.OverlapBox(center, new Vector2(width, height), 0f, waterLayer);
+        if (hit)
+        {
+            currentWater = hit.GetComponent<SlimeSupply>();
+            return currentWater != null && currentWater.HasSlime();
+        }
+        currentWater = null;
+        return false;
     }
 
     public void HandleTilesCollision()

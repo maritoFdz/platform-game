@@ -38,4 +38,8 @@ public class PlayerParameters : ScriptableObject
     public float splashWallMinVelocity;
     [Range(0f, 1f)] public float scaleReductionPerUnit;
     [Range(0.1f, 1f)] public float minNormalizedScale;
+
+    [Header("Swimming Settings")]
+    public float floatingForce;
+    public float damping;
 }
