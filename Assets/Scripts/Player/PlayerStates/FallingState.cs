@@ -28,6 +28,11 @@ public class FallingState : IPlayerState
             return;
         }
         player.Move(false, false, player.playerParameters.gravityFallMultiplier);
+        if (player.IsDashing)
+        {
+            player.SwitchState(player.dashingState);
+            return;
+        }
         if (player.WallLeft() || player.WallRight())
         {
             if (!player.HasSlopeNear((int)Mathf.Sign(player.inputX), 30))

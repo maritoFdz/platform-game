@@ -23,6 +23,8 @@ public class PlayerAnimationStateController : MonoBehaviour
     private Material material;
     private float normalFreezeAmount;
 
+    public float FacingDir => spriteRenderer.flipX ? 1f : -1f;
+
     private int isWalkingHash;
     private int isRunningHash;
     private int isFallingHash;

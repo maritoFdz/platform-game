@@ -29,8 +29,12 @@ public class Player : MonoBehaviour
     public bool IsRunning => playerInput.Player.Run.IsPressed();
     public bool IsMoving => playerInput.Player.Move.IsPressed();
     public bool IsFrozen => Time.time < freezeTime;
+    public bool IsDashing => dashBufferCounter > 0  && dashCooldownCounter <= 0;
+
     private float freezeTime;
     private float jumpBufferCounter;
+    private float dashBufferCounter;
+    private float dashCooldownCounter;
     private float normalizedScale;
     private float moveAmount;
     private bool isActive;
@@ -40,6 +44,7 @@ public class Player : MonoBehaviour
     public IdleState idleState = new();
     public FallingState fallingState = new();
     public WalkingState walkingState = new();
+    public DashingState dashingState = new();
     public RunningState runningState = new();
     public JumpingState jumpingState = new();
     public WallSlidingState wallSlidingState = new();
@@ -65,6 +70,10 @@ public class Player : MonoBehaviour
     {
         if (jumpBufferCounter > 0f)
             jumpBufferCounter -= Time.deltaTime;
+        if (dashCooldownCounter > 0f)
+            dashCooldownCounter -= Time.deltaTime;
+        if (dashBufferCounter > 0f)
+            dashBufferCounter -= Time.deltaTime;
         inputX = isActive ? playerInput.Player.Move.ReadValue<float>() : 0f;
         targetVelocity = inputX * playerParameters.moveSpeed;
         currentState.UpdateState(this);
@@ -83,6 +92,11 @@ public class Player : MonoBehaviour
         float dt = Time.deltaTime;
         Vector2 acceleration = new(0, gravityScale * gravityMultiplier);
         Vector2 deltaMove = GetDisplacement(dt, acceleration);
+        if (currentState is DashingState && controller.colDetails.onSlopeDescent)
+        {
+            deltaMove.x += deltaMove.y;
+            deltaMove.y = 0f;
+        }
         transform.Translate(deltaMove);
         if (storeHorMovement && !IsFrozen) moveAmount += Mathf.Abs(deltaMove.x);
         if (storeVerMovement && !IsFrozen) moveAmount += Mathf.Abs(deltaMove.y);
@@ -99,12 +113,29 @@ public class Player : MonoBehaviour
 
     public void ConsumeJump()
     {
-        jumpBufferCounter = 0;
+        jumpBufferCounter = 0f;
+    }
+
+    public void ConsumeDash()
+    {
+        dashCooldownCounter = playerParameters.dashCooldown;
+        dashBufferCounter = 0f;
     }
 
     private void Jump(InputAction.CallbackContext callback)
     {
         jumpBufferCounter = playerParameters.jumpBufferTime;
+    }
+
+    private void Dash(InputAction.CallbackContext context)
+    {
+        if (!isActive) return;
+        dashBufferCounter = playerParameters.dashBufferTime;
+    }
+
+    public float GetFacingDir()
+    {
+        return animationController.FacingDir;
     }
 
     public void MakeSplash(float rotation)
@@ -204,6 +235,9 @@ public class Player : MonoBehaviour
 
         playerInput.Player.Split.performed -= Split;
         playerInput.Player.Split.performed += Split;
+
+        playerInput.Player.Dash.performed -= Dash;
+        playerInput.Player.Dash.performed += Dash;
     }
 
     public void DisableInput()
@@ -211,6 +245,7 @@ public class Player : MonoBehaviour
         isActive = false;
         playerInput.Player.Jump.performed -= Jump;
         playerInput.Player.Split.performed -= Split;
+        playerInput.Player.Dash.performed -= Dash;
     }
 
     #region Collisions related methods called by states

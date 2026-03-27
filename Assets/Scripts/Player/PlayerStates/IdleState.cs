@@ -30,7 +30,10 @@ public class IdleState : IPlayerState
             return;
         }
 
-        if (player.JumpPressed)
+        if (player.IsDashing)
+            player.SwitchState(player.dashingState);
+
+        else if (player.JumpPressed)
         {
             player.ConsumeJump();
             player.StopIdleAnimation();

@@ -37,6 +37,12 @@ public class WalkingState : IPlayerState
             return;
         }
 
+        if (player.IsDashing)
+        {
+            player.SwitchState(player.dashingState);
+            return;
+        }
+
         if (player.IsMoving)
         {
             idleCount = player.playerParameters.timeToIdle;

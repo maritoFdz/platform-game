@@ -22,6 +22,11 @@ public class JumpingState : IPlayerState
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeAir);
         player.Move(false, false, gravityMultiplier);
 
+        if (player.IsDashing)
+        {
+            player.SwitchState(player.dashingState);
+            return;
+        }
         if (player.velocity.y <= 0 || player.CeilingAbove())
         {
             player.StopJumpingAnimation();

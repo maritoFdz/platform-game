@@ -17,6 +17,11 @@ MonoBehaviour:
   runningVelocityMultiplier: 2.5
   timeToIdle: 0.1
   coyoteTime: 0.05
+  canRun: 0
+  dashDistance: 5
+  dashTime: 0.1
+  dashCooldown: 1
+  dashBufferTime: 0.1
   maxJumpHeight: 6
   minJumpHeight: 3
   maxHeightTime: 0.5

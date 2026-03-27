@@ -11,6 +11,10 @@ public class PlayerParameters : ScriptableObject
     public float timeToIdle;
     public float coyoteTime;
     public bool canRun;
+    public float dashDistance;
+    public float dashTime;
+    public float dashCooldown;
+    public float dashBufferTime;
 
     [Header("Jump Settings")]
     public float maxJumpHeight;
