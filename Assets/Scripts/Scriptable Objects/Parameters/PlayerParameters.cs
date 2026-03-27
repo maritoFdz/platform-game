@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "New Player Parameters", menuName = "Scriptable Objects/Player Parameters")]
 public class PlayerParameters : ScriptableObject
@@ -11,6 +10,11 @@ public class PlayerParameters : ScriptableObject
     public float timeToIdle;
     public float coyoteTime;
     public bool canRun;
+
+    [Header("Dash Settings")]
+    public bool canDash;
+    public bool canDashVertical;
+    public bool canDashDiagonal;
     public float dashDistance;
     public float dashTime;
     public float dashCooldown;

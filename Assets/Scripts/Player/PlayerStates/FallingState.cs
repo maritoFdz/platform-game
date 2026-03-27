@@ -17,8 +17,8 @@ public class FallingState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        if (player.inputX != 0)
-            player.FlipSprite(player.inputX);
+        if (player.input.x != 0)
+            player.FlipSprite(player.input.x);
         if (freezeBehaviour) return;
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeAir);
         if (player.OnWater())
@@ -35,7 +35,7 @@ public class FallingState : IPlayerState
         }
         if (player.WallLeft() || player.WallRight())
         {
-            if (!player.HasSlopeNear((int)Mathf.Sign(player.inputX), 30))
+            if (!player.HasSlopeNear((int)Mathf.Sign(player.input.x), 30))
             {
                 if (player.WallLeft()) player.FlipSprite(-1);
                 else player.FlipSprite(1);

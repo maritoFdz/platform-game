@@ -4,7 +4,6 @@ using UnityEngine.Windows;
 public class JumpingState : IPlayerState
 {
     private const float gravityMultiplier = 1f;
-    private const int amountOfScaleUnits = 2;
     private bool freezeBehaviour;
 
     public void EnterState(Player player)
@@ -17,8 +16,8 @@ public class JumpingState : IPlayerState
     public void UpdateState(Player player)
     {
         if (freezeBehaviour) return;
-        if (player.inputX != 0)
-            player.FlipSprite(player.inputX);
+        if (player.input.x != 0)
+            player.FlipSprite(player.input.x);
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeAir);
         player.Move(false, false, gravityMultiplier);
 
@@ -32,9 +31,9 @@ public class JumpingState : IPlayerState
             player.StopJumpingAnimation();
             player.SwitchState(player.fallingState);
         }
-        else if ((player.WallLeft() && player.inputX == -1 || player.WallRight() && player.inputX == 1) && !player.OnSlope())
+        else if ((player.WallLeft() && player.input.x == -1 || player.WallRight() && player.input.x == 1) && !player.OnSlope())
         {
-            if (!player.HasSlopeNear((int)Mathf.Sign(player.inputX), 30))
+            if (!player.HasSlopeNear((int)Mathf.Sign(player.input.x), 30))
             {
                 if (player.WallLeft()) player.FlipSprite(-1);
                 else player.FlipSprite(1);

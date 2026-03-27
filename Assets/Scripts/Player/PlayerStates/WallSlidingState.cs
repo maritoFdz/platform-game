@@ -30,14 +30,14 @@ public class WallSlidingState : IPlayerState
         player.PaintTrail();
         if (player.JumpPressed || player.playerParameters.wallStickTime != dirDecisionTimer) // if is jump pressed or countdown to chose direction has started
         {
-            if (dirDecisionTimer < 0 || player.inputX != 0f) ExecuteJump(player);
+            if (dirDecisionTimer < 0 || player.input.x != 0f) ExecuteJump(player);
             else dirDecisionTimer -= Time.deltaTime;
         }
         else if (player.OnSlope() || player.GroundBelow())
         {
             player.SwitchState(player.walkingState);
         }
-        else if (-player.inputX == direction || player.playerParameters.wallStickTime != dropTimer)
+        else if (-player.input.x == direction || player.playerParameters.wallStickTime != dropTimer)
         {
             dropTimer -= Time.deltaTime;
 
@@ -52,12 +52,12 @@ public class WallSlidingState : IPlayerState
 
     private void ExecuteJump(Player player)
     {
-        if (direction == player.inputX)
+        if (direction == player.input.x)
         {
             player.velocity.x = player.playerParameters.climbJump.x * -direction;
             player.velocity.y = player.playerParameters.climbJump.y;
         }
-        else if (direction == -player.inputX)
+        else if (direction == -player.input.x)
         {
             player.velocity.x = player.playerParameters.frontDirectionJump.x * -direction;
             player.velocity.y = player.playerParameters.frontDirectionJump.y;

@@ -32,8 +32,8 @@ public class SwimingState : IPlayerState
             player.Upscale();
         }
 
-        if (player.inputX != 0)
-            player.FlipSprite(player.inputX);
+        if (player.input.x != 0)
+            player.FlipSprite(player.input.x);
 
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeGround);
         swimTimer += Time.deltaTime;

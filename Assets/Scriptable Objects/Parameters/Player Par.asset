@@ -18,9 +18,12 @@ MonoBehaviour:
   timeToIdle: 0.1
   coyoteTime: 0.05
   canRun: 0
-  dashDistance: 5
+  canDash: 1
+  canDashVertical: 1
+  canDashDiagonal: 1
+  dashDistance: 4
   dashTime: 0.1
-  dashCooldown: 1
+  dashCooldown: 0.5
   dashBufferTime: 0.1
   maxJumpHeight: 6
   minJumpHeight: 3

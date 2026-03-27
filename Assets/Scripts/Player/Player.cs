@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public float gravityScale;
     [HideInInspector] public float jumpForce;
     [HideInInspector] public float minJumpForce;
-    [HideInInspector] public float inputX;
+    [HideInInspector] public Vector2 input;
     [HideInInspector] public Vector2 velocity;
     [HideInInspector] public float velocityXSmoothing;
     [HideInInspector] public float velocityYSmoothing;
@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     public bool IsRunning => playerInput.Player.Run.IsPressed();
     public bool IsMoving => playerInput.Player.Move.IsPressed();
     public bool IsFrozen => Time.time < freezeTime;
-    public bool IsDashing => dashBufferCounter > 0  && dashCooldownCounter <= 0;
+    public bool IsDashing => dashBufferCounter > 0  && dashCooldownCounter <= 0 && playerParameters.canDash;
 
     private float freezeTime;
     private float jumpBufferCounter;
@@ -74,8 +74,8 @@ public class Player : MonoBehaviour
             dashCooldownCounter -= Time.deltaTime;
         if (dashBufferCounter > 0f)
             dashBufferCounter -= Time.deltaTime;
-        inputX = isActive ? playerInput.Player.Move.ReadValue<float>() : 0f;
-        targetVelocity = inputX * playerParameters.moveSpeed;
+        input = isActive ? playerInput.Player.Move.ReadValue<Vector2>() : new Vector2(0f, 0f);
+        targetVelocity = input.x * playerParameters.moveSpeed;
         currentState.UpdateState(this);
         tilesController.HandleTilesCollision();
     }

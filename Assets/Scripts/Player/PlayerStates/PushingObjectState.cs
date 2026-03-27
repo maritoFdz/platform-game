@@ -9,7 +9,7 @@ public class PushingObjectState : IPlayerState
     public void EnterState(Player player)
     {
         drop = false;
-        pushDirection = Mathf.Sign(player.inputX);
+        pushDirection = Mathf.Sign(player.input.x);
         player.velocity.x = 0f;
         player.velocityXSmoothing = 0f;
         target = player.GetPushableObject(pushDirection);
@@ -21,7 +21,7 @@ public class PushingObjectState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        if (Mathf.Sign(player.inputX) != pushDirection || player.inputX == 0 || drop)
+        if (Mathf.Sign(player.input.x) != pushDirection || player.input.x == 0 || drop)
         {
             if (target != null)
             {
@@ -43,7 +43,7 @@ public class PushingObjectState : IPlayerState
             return;
         }
         if (target != null)
-            target.SetDirection(player.inputX);
+            target.SetDirection(player.input.x);
         player.Move(true, false, 0f);
         player.PaintTrail();
     }

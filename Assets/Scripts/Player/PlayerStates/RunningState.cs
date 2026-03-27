@@ -13,8 +13,8 @@ public class RunningState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        if (player.inputX != 0)
-            player.FlipSprite(player.inputX);
+        if (player.input.x != 0)
+            player.FlipSprite(player.input.x);
         targetVelocity = player.targetVelocity * player.playerParameters.runningVelocityMultiplier;
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeGround);
         player.Move(true, false, gravityMultiplier);
