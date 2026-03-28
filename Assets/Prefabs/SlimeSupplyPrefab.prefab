@@ -114,7 +114,10 @@ MonoBehaviour:
   meshRenderer: {fileID: 3986997454652551732}
   meshFilter: {fileID: 134679417925709010}
   placeholder: {fileID: 3393229468930226786}
-  maxAmount: 1
+  maxAmount: 1.2
+  autoDrainThreshold: 0.2
+  autoDrainSpeed: 2
+  enableAutoDrain: 1
 --- !u!210 &5320978589166108873
 SortingGroup:
   m_ObjectHideFlags: 0

@@ -12,6 +12,8 @@ public class SlimeSupply : MonoBehaviour
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private MeshFilter meshFilter;
     [SerializeField] private SpriteRenderer placeholder;
+
+    [Header("Parameters")]
     [SerializeField] private float maxAmount;
 
     private Mesh mesh;
@@ -133,7 +135,7 @@ public class SlimeSupply : MonoBehaviour
 
         col.size = new Vector2 (col.size.x, newHeight);
         // keeps collider pivot top down
-        col.offset = new Vector2(0f, (newHeight - height) / 2f - 0.25f);
+        col.offset = new Vector2(0f, (newHeight - height) / 2f);
     }
 
     public bool HasSlime()

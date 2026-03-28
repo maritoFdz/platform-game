@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     public bool IsMoving => playerInput.Player.Move.IsPressed();
     public bool IsFrozen => Time.time < freezeTime;
     public bool IsDashing => dashBufferCounter > 0  && dashCooldownCounter <= 0 && playerParameters.canDash;
+    public bool IsFull => transform.localScale.Equals(playerParameters.maxScale);
 
     private float freezeTime;
     private float jumpBufferCounter;

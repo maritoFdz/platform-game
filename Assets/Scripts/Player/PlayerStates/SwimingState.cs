@@ -22,12 +22,13 @@ public class SwimingState : IPlayerState
         if (upscaleTimer >= 0.1f)
         {
             upscaleTimer = 0f;
-            if (!currentWater.TryConsume(player.playerParameters.scaleReductionPerUnit * player.playerParameters.upscalePerUnit))
-            {
-                player.ClearCurrentWater();
-                player.SwitchState(player.idleState);
-                return;
-            }
+            if (!player.IsFull)
+                if (!currentWater.TryConsume(player.playerParameters.scaleReductionPerUnit * player.playerParameters.upscalePerUnit))
+                {
+                    player.ClearCurrentWater();
+                    player.SwitchState(player.idleState);
+                    return;
+                }
 
             player.Upscale();
         }
