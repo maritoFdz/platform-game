@@ -42,10 +42,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _Edge_Smoothness: 10
-    - _Thickness: 30
+    - _Scale: 50
+    - _Thickness: 40
     m_Colors:
     - White: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 5.992157, g: 5.992157, b: 5.992157, a: 1}
+    - _Color: {r: 23.96863, g: 0, b: 0, a: 1}
+    - _Speed: {r: -0.5, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &4390689234936454813
