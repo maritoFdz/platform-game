@@ -9,24 +9,35 @@ public class Laser : MonoBehaviour
     [SerializeField] private LayerMask collisionMask;
     [SerializeField] private LayerMask playerMask;
 
+    [Header("Parameters")]
+    [SerializeField] private float laserSpeed;
+
     private Vector3 currentEnd;
 
     private void Awake()
     {
+        currentEnd = start.position;
         lineRenderer.useWorldSpace = true;
         lineRenderer.positionCount = 2;
     }
 
     void Update()
     {
-        currentEnd = end.position;
-        RaycastHit2D hit = Physics2D.Raycast(start.position, end.position - start.position, Vector3.Distance(start.position, end.position), collisionMask | playerMask);
+        Vector3 targetEnd = end.position;
+        RaycastHit2D hit = Physics2D.Raycast(start.position,
+            end.position - start.position,
+            Vector3.Distance(start.position, end.position),
+            collisionMask | playerMask);
+
         if (hit)
         {
-            currentEnd = hit.point;
+            targetEnd = hit.point;
             if ((playerMask & (1 << hit.collider.gameObject.layer)) != 0)
-                Debug.Log("Te cogi chico");
+                hit.collider.GetComponent<Player>().KillPlayer();
         }
+        currentEnd = Vector3.MoveTowards(currentEnd, targetEnd, laserSpeed * Time.deltaTime);
+        if (Vector3.Distance(start.position, targetEnd) < Vector3.Distance(start.position, currentEnd))
+            currentEnd = targetEnd;
         lineRenderer.SetPositions(new Vector3[] { start.position, currentEnd });
     }
 }
