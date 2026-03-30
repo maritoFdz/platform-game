@@ -34,7 +34,7 @@ MonoBehaviour:
   wallSlideSpeed: 5
   accelerationTimeWall: 0.5
   wallStickTime: 0.1
-  frontDirectionJump: {x: 20, y: 30}
+  frontDirectionJump: {x: 35, y: 30}
   climbJump: {x: 7.5, y: 35}
   fallOfJump: {x: 10, y: 5}
   endSlopeBoostX: 3

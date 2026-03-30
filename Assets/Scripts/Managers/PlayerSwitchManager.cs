@@ -10,9 +10,6 @@ public class PlayerSwitchManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private SwitchParticle switchParticlePrefab;
 
-    [Header("Parameters")]
-    [SerializeField] private float trailDuration;
-
     private List<Player> activePlayers;
     private List<SwitchParticle> activeParticles;
     private int activePlayerIndex;
