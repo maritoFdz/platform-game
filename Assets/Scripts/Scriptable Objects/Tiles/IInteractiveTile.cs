@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public enum TileEffectType { Heat, Freeze }
+public enum TileEffectType { Heat, Freeze,
+    PressurePlate
+}
 
 public interface IInteractiveTile
 {
