@@ -13,4 +13,5 @@ public class PushableObjectParameters : ScriptableObject
     public int slopeBelowTol;
     public int slideSlopeBeneathTol;
     public float maxVisualOffset;
+    public float pushDistance;
 }

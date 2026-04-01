@@ -231,7 +231,7 @@ MonoBehaviour:
   col: {fileID: 1933779762286835770}
   collisionMask:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 832
   collisionParameters: {fileID: 11400000, guid: 948a2d749f6f3ce4f848a33cc5c31d02, type: 2}
   pushableLayerName: Pushable
 --- !u!114 &6248119225859901008
@@ -254,7 +254,7 @@ MonoBehaviour:
   gravityScale: 2
   jumpForce: 4
   minJumpForce: 0
-  inputX: 0
+  input: {x: 0, y: 0}
   velocity: {x: 0, y: 0}
   velocityXSmoothing: 0
   velocityYSmoothing: 0
@@ -272,12 +272,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c53fbb80ccfafe4db4df71f96b32b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  trailTilemap: {fileID: 0}
-  worldTilemap: {fileID: 0}
-  splashTilemap: {fileID: 0}
   player: {fileID: 6248119225859901008}
   playerController: {fileID: 5044437817793177407}
   waterLayer:
     serializedVersion: 2
     m_Bits: 16
   tilesInteractionParameters: {fileID: 11400000, guid: b4d05e1c236bda340aa37958f5010dad, type: 2}
+  currentWater: {fileID: 0}

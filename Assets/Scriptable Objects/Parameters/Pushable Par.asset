@@ -22,3 +22,4 @@ MonoBehaviour:
   slopeBelowTol: 15
   slideSlopeBeneathTol: 45
   maxVisualOffset: 0.1
+  pushDistance: 1

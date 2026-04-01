@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using static RaycastLayout;
 public class PushableObject : MonoBehaviour
@@ -75,6 +76,7 @@ public class PushableObject : MonoBehaviour
 
     private void GroundUpdate(float dt, int leftHits, int rightHits, float supportRatio)
     {
+        CheckPlayerPushing();
         velocity.y = 0f;
         Vector2 displacement = velocity * dt;
         controller.ClampDisplacement(ref displacement);
@@ -123,6 +125,19 @@ public class PushableObject : MonoBehaviour
             if (playerPushing != null && (controller.IsNextToSlope(-1, parameters.groundSlopeFrontTol) || controller.IsNextToSlope(1, parameters.groundSlopeFrontTol)))
                 playerPushing.velocity.x = -playerPush * parameters.slopeSlideMultiplier * 1.5f;
             currentState = State.SlidingSlope;
+        }
+    }
+
+    private void CheckPlayerPushing()
+    {
+        if (playerPushing != null)
+        {
+            float dist = Mathf.Abs(playerPushing.transform.position.x - transform.position.x);
+            if (dist > parameters.pushDistance)
+            {
+                playerPushing.pushingObjectState.drop = true;
+                playerPushing = null;
+            }
         }
     }
 
