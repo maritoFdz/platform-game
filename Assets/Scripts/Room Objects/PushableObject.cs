@@ -132,8 +132,7 @@ public class PushableObject : MonoBehaviour
     {
         if (playerPushing != null)
         {
-            float dist = Mathf.Abs(playerPushing.transform.position.x - transform.position.x);
-            if (dist > parameters.pushDistance)
+            if (Vector3.Distance(playerPushing.transform.position, transform.position) > parameters.pushDistance)
             {
                 playerPushing.pushingObjectState.drop = true;
                 playerPushing = null;
