@@ -183,10 +183,11 @@ public class TilesInteractionHandler : MonoBehaviour
                 case SurfaceType.Slope:
                     splashTilemap.SetTile(tilePos, tilesInteractionParameters.splashTilesSlope[Random.Range(0, tilesInteractionParameters.splashTilesSlope.Length)]);
                     splashTilemap.SetTileFlags(tilePos, TileFlags.None);
-                    rotationMatrix = hit.normal.x > 0
-                        ? Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(-1f, 1f, 1f))
-                        : Matrix4x4.Rotate(Quaternion.Euler(0f, 0f, 0f));
-                    splashTilemap.SetTransformMatrix(tilePos, rotationMatrix);
+
+                    Matrix4x4 tileMatrix = worldTilemap.GetTransformMatrix(tilePos);
+                    Quaternion tileRotation = tileMatrix.rotation;
+
+                    splashTilemap.SetTransformMatrix(tilePos, Matrix4x4.Rotate(tileRotation));
                     break;
             }
         }
