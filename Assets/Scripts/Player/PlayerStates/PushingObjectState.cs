@@ -21,6 +21,17 @@ public class PushingObjectState : IPlayerState
 
     public void UpdateState(Player player)
     {
+        if (player.pendingAutoMove)
+        {
+            if (target != null)
+            {
+                target.SetAsTargetOf(null);
+                target = null;
+            }
+            player.SwitchState(player.autoMoveState);
+            return;
+        }
+
         if (Mathf.Sign(player.input.x) != pushDirection || player.input.x == 0 || drop)
         {
             if (target != null)

@@ -111,8 +111,9 @@ MonoBehaviour:
     m_Bits: 320
   speed: 1
   raycastOffset: 0.015
-  collisionTolerance: 0
+  collisionTolerance: 0.2
   rayAmount: 3
+  locked: 0
 --- !u!61 &5152603006537298484
 BoxCollider2D:
   m_ObjectHideFlags: 0

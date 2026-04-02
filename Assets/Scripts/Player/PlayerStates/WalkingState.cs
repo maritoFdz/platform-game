@@ -18,6 +18,13 @@ public class WalkingState : IPlayerState
             player.FlipSprite(player.input.x);
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeGround); // simulates acceleration
         player.Move(true, false, gravityMultiplier);
+
+        if (player.pendingAutoMove)
+        {
+            player.SwitchState(player.autoMoveState);
+            return;
+        }
+
         if (player.JumpPressed)
         {
             player.ConsumeJump();

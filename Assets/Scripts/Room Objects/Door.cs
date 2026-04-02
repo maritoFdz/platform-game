@@ -14,7 +14,7 @@ public class Door : MonoBehaviour
     [SerializeField] private int rayAmount;
 
     private bool isClosing;
-    private bool locked;
+    public bool locked;
     private Vector2 target;
     private Vector2 initialPos;
 
@@ -25,7 +25,11 @@ public class Door : MonoBehaviour
 
     private void Update()
     {
-        if (locked) return;
+        if (locked)
+        {
+            Debug.Log("SE TRANCO ESTA PINGA");
+            return;
+        }
 
         if (isClosing)
         {

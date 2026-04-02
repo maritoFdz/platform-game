@@ -14,10 +14,11 @@ public class RoomManager : MonoBehaviour
     public Tilemap splashTilemap;
     [SerializeField] private Player initialPlayer;
     [SerializeField] private string nextRoomName;
+    [SerializeField] private Door entry;
+    [SerializeField] private EventPoint[] eventPoints;
 
     [Header("Parameters")]
     [SerializeField] private Transform spawnPoint;
-    [SerializeField] private Transform endPoint;
     [SerializeField] private float respawnWait;
 
     private void Awake()
@@ -33,9 +34,10 @@ public class RoomManager : MonoBehaviour
 
     private void SetPlayer()
     {
-        Player newPlayer = Instantiate(initialPlayer, spawnPoint.position, Quaternion.identity);
+        Player newPlayer = Instantiate(initialPlayer, spawnPoint.transform.position, Quaternion.identity);
         newPlayer.SetNormalizedScale(1f);
         newPlayer.gameObject.SetActive(true);
+        newPlayer.SetActiverState(false);
     }
 
     public void PlayersDead()
@@ -48,8 +50,21 @@ public class RoomManager : MonoBehaviour
         SceneManager.LoadScene(nextRoomName);
     }
 
+    public void LockPLayers()
+    {
+        PlayerSwitchManager.instance.DisableAll();
+    }
+
+    public void UnlockPlayers()
+    {
+        PlayerSwitchManager.instance.EnableAll();
+    }
+
     private IEnumerator RespawnCo()
     {
+        entry.Open();
+        foreach (var eventPoint in eventPoints)
+            eventPoint.gameObject.SetActive(true);
         yield return new WaitForSeconds(respawnWait);
         SetPlayer();
     }

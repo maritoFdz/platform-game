@@ -23,6 +23,10 @@ public class Player : MonoBehaviour
     [HideInInspector] public float velocityYSmoothing;
     [HideInInspector] public float targetVelocity;
     [HideInInspector] public bool onFreezeTile;
+    [HideInInspector] public bool pendingAutoMove;
+    [HideInInspector] public float autoMoveDir;
+    [HideInInspector] public float autoMoveSpeed;
+    [HideInInspector] public float autoMoveDuration;
 
     private PlayerInput playerInput;
     public bool JumpPressed => jumpBufferCounter > 0;
@@ -32,6 +36,8 @@ public class Player : MonoBehaviour
     public bool IsFrozen => Time.time < freezeTime;
     public bool IsDashing => dashBufferCounter > 0  && dashCooldownCounter <= 0 && playerParameters.canDash;
     public bool IsFull => transform.localScale.Equals(playerParameters.maxScale);
+
+    public bool IsActive => isActive;
 
     private float freezeTime;
     private float jumpBufferCounter;
@@ -53,6 +59,7 @@ public class Player : MonoBehaviour
     public SlopeSlidingState slopeSlidingState = new();
     public PushingObjectState pushingObjectState = new();
     public SwimingState swimingState = new();
+    public AutoMoveState autoMoveState = new();
 
     private void Start()
     {
@@ -70,16 +77,21 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        HandleCounters();
+        input = isActive ? playerInput.Player.Move.ReadValue<Vector2>() : new Vector2(0f, 0f);
+        targetVelocity = input.x * playerParameters.moveSpeed;
+        currentState.UpdateState(this);
+        tilesController.HandleTilesCollision();
+    }
+
+    private void HandleCounters()
+    {
         if (jumpBufferCounter > 0f)
             jumpBufferCounter -= Time.deltaTime;
         if (dashCooldownCounter > 0f)
             dashCooldownCounter -= Time.deltaTime;
         if (dashBufferCounter > 0f)
             dashBufferCounter -= Time.deltaTime;
-        input = isActive ? playerInput.Player.Move.ReadValue<Vector2>() : new Vector2(0f, 0f);
-        targetVelocity = input.x * playerParameters.moveSpeed;
-        currentState.UpdateState(this);
-        tilesController.HandleTilesCollision();
     }
 
     public void SwitchState(IPlayerState nextState)
@@ -126,6 +138,7 @@ public class Player : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext callback)
     {
+        if (!isActive) return;
         jumpBufferCounter = playerParameters.jumpBufferTime;
     }
 
@@ -157,6 +170,7 @@ public class Player : MonoBehaviour
     private void Split(InputAction.CallbackContext callback)
     {
         if (IsFrozen) return;
+        if (!isActive) return;
         if (normalizedScale / 2 > playerParameters.minNormalizedScale)
         {
             normalizedScale /= 2;
@@ -218,6 +232,14 @@ public class Player : MonoBehaviour
         this.moveAmount += moveAmount.x;
     }
 
+    public void StartAutoMove(float direction, float speed, float duration)
+    {
+        pendingAutoMove = true;
+        autoMoveDir = direction;
+        autoMoveSpeed = speed;
+        autoMoveDuration = duration;
+    }
+
     public void SetNormalizedScale(float value)
     {
         normalizedScale = value;
@@ -231,7 +253,7 @@ public class Player : MonoBehaviour
 
     public void EnableInput()
     {
-        isActive = true;
+        SetActiverState(true);
         playerInput.Player.Jump.performed -= Jump;
         playerInput.Player.Jump.performed += Jump;
 
@@ -242,9 +264,14 @@ public class Player : MonoBehaviour
         playerInput.Player.Dash.performed += Dash;
     }
 
+    public void SetActiverState(bool enable)
+    {
+        isActive = enable;
+    }
+
     public void DisableInput()
     {
-        isActive = false;
+        SetActiverState(false);
         playerInput.Player.Jump.performed -= Jump;
         playerInput.Player.Split.performed -= Split;
         playerInput.Player.Dash.performed -= Dash;

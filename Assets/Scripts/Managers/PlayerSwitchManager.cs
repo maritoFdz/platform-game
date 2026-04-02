@@ -19,7 +19,6 @@ public class PlayerSwitchManager : MonoBehaviour
     {
         if (instance != null) Destroy(gameObject);
         else instance = this;
-
         activePlayers = new List<Player>();
         activeParticles = new List<SwitchParticle>();
         playerInput = new();
@@ -39,8 +38,7 @@ public class PlayerSwitchManager : MonoBehaviour
 
     private void Switch(InputAction.CallbackContext callback)
     {
-        if (activePlayers.Count <= 1)
-            return;
+        if (activePlayers.Count <= 1) return;
 
         Player current = activePlayers[activePlayerIndex];
         current.DisableInput();
@@ -73,7 +71,8 @@ public class PlayerSwitchManager : MonoBehaviour
         if (activePlayers.Count == 1)
         {
             activePlayerIndex = 0;
-            player.EnableInput();
+            if (player.IsActive)
+                player.EnableInput();
         }
         player.SwitchState(player.idleState);
     }
@@ -101,5 +100,15 @@ public class PlayerSwitchManager : MonoBehaviour
         if (activePlayers.Count > 0 && wasCurrent)
             SpawnParticles(player.transform.position, newCurrent.transform);
         newCurrent.EnableInput();
+    }
+
+    public void DisableAll()
+    {
+        playerInput.Disable();
+    }
+
+    public void EnableAll()
+    {
+        playerInput.Enable();
     }
 }
