@@ -15,3 +15,4 @@ MonoBehaviour:
   sprite: {fileID: 1366250838301343861, guid: 14acaac5f0b522a4fb9b01da538f3c6b, type: 3}
   freezeTime: 3
   applyTime: 0
+  isScalable: 1

@@ -268,12 +268,16 @@ public class Player : MonoBehaviour
 
     public bool WallLeft()
     {
-        return controller.colDetails.left;
+        if (controller.colDetails.left)
+            return tilesController.IsWallScalable(Vector2.left);
+        return false;
     }
 
     public bool WallRight()
     {
-        return controller.colDetails.right;
+        if (controller.colDetails.right)
+            return tilesController.IsWallScalable(Vector2.right);
+        return false;
     }
 
     public bool HasSlopeNear(int direction, int tolerance = 1)

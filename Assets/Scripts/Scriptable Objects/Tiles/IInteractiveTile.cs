@@ -7,6 +7,7 @@ public enum TileEffectType { Heat, Freeze,
 public interface IInteractiveTile
 {
     TileEffectType EffectType { get; }
+    bool IsScalable { get; }
     float Cooldown { get; }
     public void OnPlayerEnter(Player player);
 }

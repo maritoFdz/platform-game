@@ -15,3 +15,4 @@ MonoBehaviour:
   sprite: {fileID: 8608716160671858551, guid: d6af37df4560cd44cb7e4487fdae9320, type: 3}
   surfaceType: 1
   isPainted: 0
+  isScalable: 1

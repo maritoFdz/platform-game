@@ -15,3 +15,4 @@ MonoBehaviour:
   sprite: {fileID: 6074903659321076009, guid: b7c7c82ca5339a64ab686b370067713c, type: 3}
   shrinksPerTime: 25
   applyTime: 0.5
+  isScalable: 1

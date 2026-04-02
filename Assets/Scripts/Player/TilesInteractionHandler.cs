@@ -55,6 +55,24 @@ public class TilesInteractionHandler : MonoBehaviour
         return false;
     }
 
+    public bool IsWallScalable(Vector2 direction)
+    {
+        List<RaycastHit2D> hits = direction.x < 0 ? hitsLeft : hitsRight;
+        foreach (var hit in hits)
+        {
+            Vector3Int tilePos = worldTilemap.WorldToCell(hit.point - hit.normal * 0.01f);
+            var tileBase = worldTilemap.GetTile(tilePos);
+
+            if (tileBase is PaintableTile tile)
+            {
+                if (tile.isScalable) return true;
+            }
+            else if (tileBase is IInteractiveTile iTile)
+                if (iTile.IsScalable) return true;
+        }
+        return false;
+    }
+
     public void HandleTilesCollision()
     {
         if (worldTilemap == null) return;

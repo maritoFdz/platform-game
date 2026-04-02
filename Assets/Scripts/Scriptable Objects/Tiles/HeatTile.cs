@@ -10,9 +10,11 @@ public class HeatTile : TileBase, IInteractiveTile
     [Header("Effect Parameters")]
     [SerializeField] private int shrinksPerTime;
     [SerializeField] private float applyTime;
+    [SerializeField] private bool isScalable;
 
     public TileEffectType EffectType => TileEffectType.Heat;
     public float Cooldown => applyTime;
+    public bool IsScalable => isScalable;
 
     public void OnPlayerEnter(Player player)
     {

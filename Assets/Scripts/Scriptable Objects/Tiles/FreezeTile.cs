@@ -10,9 +10,11 @@ public class FreezeTile : TileBase, IInteractiveTile
     [Header("Effect Parameters")]
     [SerializeField] private float freezeTime;
     [SerializeField] private float applyTime;
+    [SerializeField] private bool isScalable;
 
     public TileEffectType EffectType => TileEffectType.Freeze;
     public float Cooldown => applyTime;
+    public bool IsScalable => isScalable;
 
     public void OnPlayerEnter(Player player)
     {

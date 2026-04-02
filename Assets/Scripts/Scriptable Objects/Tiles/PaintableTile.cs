@@ -10,6 +10,8 @@ public class PaintableTile : TileBase
     [SerializeField] private Sprite sprite;
     [SerializeField] private SurfaceType surfaceType;
     public bool isPainted;
+    public bool isScalable;
+
     public SurfaceType GetSurfaceType()
     {
         return surfaceType;
