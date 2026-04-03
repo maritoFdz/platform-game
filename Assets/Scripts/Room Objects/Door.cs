@@ -25,11 +25,7 @@ public class Door : MonoBehaviour
 
     private void Update()
     {
-        if (locked)
-        {
-            Debug.Log("SE TRANCO ESTA PINGA");
-            return;
-        }
+        if (locked) return;
 
         if (isClosing)
         {

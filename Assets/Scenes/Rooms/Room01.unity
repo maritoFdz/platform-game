@@ -24768,6 +24768,37 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &850840800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 850840801}
+  m_Layer: 0
+  m_Name: ------- Managers -------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &850840801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850840800}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.26787, y: 7.48992, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &851947135
 GameObject:
   m_ObjectHideFlags: 0
@@ -25453,6 +25484,7 @@ MonoBehaviour:
   - {fileID: 777923134}
   - {fileID: 880004670}
   - {fileID: 635125195}
+  - {fileID: 938127661}
   - {fileID: 1855896262}
   spawnPoint: {fileID: 777923133}
   respawnWait: 1
@@ -25945,9 +25977,10 @@ SceneRoots:
   - {fileID: 1146659866}
   - {fileID: 1089409686}
   - {fileID: 143178053}
+  - {fileID: 1421351937}
+  - {fileID: 850840801}
   - {fileID: 1015004240}
   - {fileID: 570317127}
-  - {fileID: 1421351937}
   - {fileID: 961640228}
   - {fileID: 1476693318}
   - {fileID: 1165916680}

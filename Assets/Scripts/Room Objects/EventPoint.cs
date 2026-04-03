@@ -60,7 +60,6 @@ public class EventPoint : MonoBehaviour
 
     private IEnumerator HandlePlayerLock(bool end)
     {
-        Debug.Log("me dispare chico");
         RoomManager.instance.LockPLayers();
         yield return new WaitUntil(() =>
         {
@@ -70,7 +69,6 @@ public class EventPoint : MonoBehaviour
             return true;
         });
         yield return new WaitForSeconds(0.25f); // a little bit of extra time
-        Debug.Log("Ya nada gracias");
         RoomManager.instance.UnlockPlayers();
         if (end) RoomManager.instance.LevelPased();
         gameObject.SetActive(false);
