@@ -218,6 +218,11 @@ public class PlayerAnimationStateController : MonoBehaviour
         player.SwitchState(player.jumpingState);
     }
 
+    public void ExecuteWallJump()
+    {
+        player.SwitchState(player.wallJumpState);
+    }
+
     public void StickWall()
     {
         player.SwitchState(player.wallSlidingState);

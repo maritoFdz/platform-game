@@ -21,8 +21,8 @@ MonoBehaviour:
   canDash: 1
   canDashVertical: 1
   canDashDiagonal: 1
-  dashDistance: 3
-  dashTime: 0.1
+  dashDistance: 2
+  dashTime: 0.05
   dashCooldown: 0.5
   dashBufferTime: 0.1
   decelerationTimeDash: 0.08
@@ -37,9 +37,9 @@ MonoBehaviour:
   wallSlideSpeed: 5
   accelerationTimeWall: 0.5
   wallStickTime: 0.1
-  frontDirectionJump: {x: 15, y: 10}
-  climbJump: {x: 7.5, y: 35}
-  fallOfJump: {x: 10, y: 5}
+  frontDirectionJump: {x: 25, y: 18}
+  climbJump: {x: 15, y: 20}
+  fallOfMove: {x: 8, y: 5}
   endSlopeBoostX: 3
   slopeSlidingJump: {x: 22, y: 20}
   maxScale: {x: 1.4, y: 1.4, z: 1.4}

@@ -37,7 +37,7 @@ public class PlayerParameters : ScriptableObject
     public float wallStickTime;
     public Vector2 frontDirectionJump;
     public Vector2 climbJump;
-    public Vector2 fallOfJump;
+    public Vector2 fallOfMove;
 
     [Header("Slopes Movement Settings")]
     public float endSlopeBoostX;

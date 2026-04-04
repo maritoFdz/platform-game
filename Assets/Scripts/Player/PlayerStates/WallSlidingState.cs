@@ -55,7 +55,7 @@ public class WallSlidingState : IPlayerState
         }
         else if (player.OnSlope() || player.GroundBelow())
         {
-            player.SwitchState(player.walkingState);
+            player.SwitchState(player.idleState);
         }
         else if (-player.input.x == direction || player.playerParameters.wallStickTime != dropTimer)
         {
@@ -63,8 +63,8 @@ public class WallSlidingState : IPlayerState
 
             if (dropTimer <= 0f)
             {
-                player.velocity.x = player.playerParameters.fallOfJump.x * -direction;
-                player.velocity.y = player.playerParameters.fallOfJump.y;
+                player.velocity.x = player.playerParameters.fallOfMove.x * -direction;
+                player.velocity.y = player.playerParameters.fallOfMove.y;
                 player.SwitchState(player.fallingState);
             }
         }
@@ -73,22 +73,19 @@ public class WallSlidingState : IPlayerState
     private void ExecuteJump(Player player)
     {
         if (direction == player.input.x)
-        {
-            player.velocity.x = player.playerParameters.climbJump.x * -direction;
-            player.velocity.y = player.playerParameters.climbJump.y;
-        }
+            player.wallJumpState.jumpType = WallJump.Climb;
         else if (direction == -player.input.x)
-        {
-            player.velocity.x = player.playerParameters.frontDirectionJump.x * -direction;
-            player.velocity.y = player.playerParameters.frontDirectionJump.y;
-        }
+            player.wallJumpState.jumpType = WallJump.Front;
         else
         {
-            player.velocity.x = player.playerParameters.fallOfJump.x * -direction;
-            player.velocity.y = player.playerParameters.fallOfJump.y;
+            player.velocity.x = player.playerParameters.fallOfMove.x * -direction;
+            player.velocity.y = player.playerParameters.fallOfMove.y;
+            player.SwitchState(player.fallingState);
+            return;
         }
-        player.MakeSplash(90f * direction);
         player.HandleJumpingStateTransition();
+        player.MakeSplash(90f * direction);
         freezeBehaviour = true;
+        return;
     }
 }

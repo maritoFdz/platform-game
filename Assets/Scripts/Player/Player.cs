@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
     public RunningState runningState = new();
     public JumpingState jumpingState = new();
     public WallSlidingState wallSlidingState = new();
+    public WallJumpState wallJumpState = new();
     public SlopeSlidingState slopeSlidingState = new();
     public PushingObjectState pushingObjectState = new();
     public SwimingState swimingState = new();
@@ -417,11 +418,6 @@ public class Player : MonoBehaviour
         animationController.StopFalling();
     }
 
-    public void PlayJumpingAnimation()
-    {
-        animationController.PlayJumping();
-    }
-
     public void ForceJumpingAnimation()
     {
         animationController.ForceInstantJump();
@@ -434,7 +430,7 @@ public class Player : MonoBehaviour
 
     public void HandleJumpingStateTransition()
     {
-        PlayJumpingAnimation();
+        animationController.PlayJumping();
     }
 
     public void HandleWallSlidingStateTransition()
