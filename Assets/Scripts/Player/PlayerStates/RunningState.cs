@@ -8,6 +8,7 @@ public class RunningState : IPlayerState
 
     public void EnterState(Player player)
     {
+        player.hasDashAir = false;
         player.PlayRunningAnimation();
     }
 
@@ -21,6 +22,7 @@ public class RunningState : IPlayerState
         player.PaintTrail();
         if (player.JumpPressed)
         {
+            player.ActivateDash();
             player.ConsumeJump();
             player.StopRunningAnimation();
             player.HandleJumpingStateTransition();
@@ -56,6 +58,7 @@ public class RunningState : IPlayerState
             coyoteCount -= Time.deltaTime;
             if (coyoteCount <= 0)
             {
+                player.ActivateDash();
                 player.StopRunningAnimation();
                 player.SwitchState(player.fallingState);
             }

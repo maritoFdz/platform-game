@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public float targetVelocity;
     [HideInInspector] public bool onFreezeTile;
     [HideInInspector] public bool pendingAutoMove;
+    [HideInInspector] public bool hasDashAir;
     [HideInInspector] public float autoMoveDir;
     [HideInInspector] public float autoMoveSpeed;
     [HideInInspector] public float autoMoveDuration;
@@ -120,6 +121,7 @@ public class Player : MonoBehaviour
 
     public Vector2 GetDisplacement(float dt, Vector2 acceleration)
     {
+        velocity.y = Mathf.Max(velocity.y, -playerParameters.maxFallSpeed);
         Vector2 deltaMove = velocity * dt + 0.5f * dt * dt * acceleration;
         controller.ClampDisplacement(ref deltaMove);
         return deltaMove;
@@ -134,6 +136,11 @@ public class Player : MonoBehaviour
     {
         dashCooldownCounter = playerParameters.dashCooldown;
         dashBufferCounter = 0f;
+    }
+
+    public void ActivateDash()
+    {
+        dashCooldownCounter = 0f;
     }
 
     private void Jump(InputAction.CallbackContext callback)
@@ -305,6 +312,16 @@ public class Player : MonoBehaviour
         if (controller.colDetails.right)
             return tilesController.IsWallScalable(Vector2.right);
         return false;
+    }
+
+    public bool CollisionLeft()
+    {
+        return controller.colDetails.left;
+    }
+
+    public bool CollisionRight()
+    {
+        return controller.colDetails.right;
     }
 
     public bool HasSlopeNear(int direction, int tolerance = 1)

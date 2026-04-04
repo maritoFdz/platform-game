@@ -21,20 +21,23 @@ MonoBehaviour:
   canDash: 1
   canDashVertical: 1
   canDashDiagonal: 1
-  dashDistance: 4
+  dashDistance: 3
   dashTime: 0.1
   dashCooldown: 0.5
   dashBufferTime: 0.1
+  decelerationTimeDash: 0.08
   maxJumpHeight: 6
   minJumpHeight: 3
   maxHeightTime: 0.5
   jumpBufferTime: 0.2
-  accelerationTimeAir: 0.25
+  accelerationTimeAir: 0.1
   gravityFallMultiplier: 2.5
+  hangTime: 0.1
+  maxFallSpeed: 50
   wallSlideSpeed: 5
   accelerationTimeWall: 0.5
   wallStickTime: 0.1
-  frontDirectionJump: {x: 35, y: 30}
+  frontDirectionJump: {x: 15, y: 10}
   climbJump: {x: 7.5, y: 35}
   fallOfJump: {x: 10, y: 5}
   endSlopeBoostX: 3

@@ -19,6 +19,7 @@ public class PlayerParameters : ScriptableObject
     public float dashTime;
     public float dashCooldown;
     public float dashBufferTime;
+    public float decelerationTimeDash;
 
     [Header("Jump Settings")]
     public float maxJumpHeight;
@@ -27,6 +28,8 @@ public class PlayerParameters : ScriptableObject
     public float jumpBufferTime;
     public float accelerationTimeAir;
     public float gravityFallMultiplier;
+    public float hangTime;
+    public float maxFallSpeed;
 
     [Header("Wall Movement Settings")]
     public float wallSlideSpeed;

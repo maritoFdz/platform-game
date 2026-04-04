@@ -12,6 +12,8 @@ public class WallSlidingState : IPlayerState
 
     public void EnterState(Player player)
     {
+        player.hasDashAir = false;
+        player.ActivateDash();
         freezeBehaviour = false;
         direction = player.WallLeft() ? -1 : 1;
         if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))

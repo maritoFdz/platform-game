@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class FallingState : IPlayerState
 {
@@ -17,8 +16,7 @@ public class FallingState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        if (player.input.x != 0)
-            player.FlipSprite(player.input.x);
+        if (player.input.x != 0) player.FlipSprite(player.input.x);
         if (freezeBehaviour) return;
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeAir);
         if (player.OnWater())
@@ -27,9 +25,11 @@ public class FallingState : IPlayerState
             player.SwitchState(player.swimingState);
             return;
         }
+
         player.Move(false, false, player.playerParameters.gravityFallMultiplier);
-        if (player.IsDashing)
+        if (player.IsDashing && !player.hasDashAir)
         {
+            player.hasDashAir = true;
             player.SwitchState(player.dashingState);
             return;
         }
@@ -47,6 +47,7 @@ public class FallingState : IPlayerState
         else if (player.GroundBelow())
         {
             player.StopFallingAnimation();
+            player.ActivateDash();
             player.SwitchState(player.idleState);
         }    
     }

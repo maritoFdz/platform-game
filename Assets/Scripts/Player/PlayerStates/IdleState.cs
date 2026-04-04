@@ -8,6 +8,7 @@ public class IdleState : IPlayerState
 
     public void EnterState(Player player)
     {
+        player.hasDashAir = false;
         if (player.playerParameters.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
             player.MakeSplash(0f);
         player.PlayIdleAnimation();
@@ -37,10 +38,14 @@ public class IdleState : IPlayerState
         }
 
         if (player.IsDashing)
+        {
             player.SwitchState(player.dashingState);
+            return;
+        }
 
         else if (player.JumpPressed)
         {
+            player.ActivateDash();
             player.ConsumeJump();
             player.StopIdleAnimation();
             player.HandleJumpingStateTransition();
@@ -71,6 +76,7 @@ public class IdleState : IPlayerState
             coyoteCount -= Time.deltaTime;
             if (coyoteCount <= 0)
             {
+                player.ActivateDash();
                 player.SwitchState(player.fallingState);
                 player.StopIdleAnimation();
             }

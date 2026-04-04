@@ -8,6 +8,7 @@ public class WalkingState : IPlayerState
 
     public void EnterState(Player player)
     {
+        player.hasDashAir = false;
         player.PlayWalkingAnimation();
         player.velocity.y = 0;
     }
@@ -27,6 +28,7 @@ public class WalkingState : IPlayerState
 
         if (player.JumpPressed)
         {
+            player.ActivateDash();
             player.ConsumeJump();
             player.StopWalkingAnimation();
             player.HandleJumpingStateTransition();

@@ -5463,8 +5463,9 @@ MonoBehaviour:
   splashTilemap: {fileID: 807508566}
   initialPlayer: {fileID: 6248119225859901008, guid: 8ae034325c7542d429d76b1750b0aa2c, type: 3}
   nextRoomName: 
+  entry: {fileID: 0}
+  eventPoints: []
   spawnPoint: {fileID: 1473438692}
-  endPoint: {fileID: 0}
   respawnWait: 1
 --- !u!1 &740611700
 GameObject:
