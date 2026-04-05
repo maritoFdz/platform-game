@@ -110,7 +110,8 @@ public class Player : MonoBehaviour
         Vector2 deltaMove = GetDisplacement(dt, acceleration);
         if (currentState is DashingState && controller.colDetails.onSlopeDescent)
         {
-            deltaMove.x += deltaMove.y;
+            float direction = Mathf.Sign(deltaMove.x);
+            deltaMove.x += Mathf.Abs(deltaMove.y) * direction;
             deltaMove.y = 0f;
         }
         transform.Translate(deltaMove);

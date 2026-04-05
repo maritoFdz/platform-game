@@ -48,6 +48,7 @@ public class DashingState : IPlayerState
         {
             if (initialVelocity.y != 0f)
             {
+                Debug.Log("Yo fui el culpable");
                 player.ActivateDash();
                 player.velocity = Vector2.zero;
                 player.MakeSplash(0f);
@@ -61,12 +62,6 @@ public class DashingState : IPlayerState
         if (player.CeilingAbove())
         {
             player.SwitchState(player.fallingState);
-            return;
-        }
-
-        if (player.CollisionLeft() && initialVelocity.x < 0 || player.CollisionRight() && initialVelocity.x > 0)
-        {
-            player.SwitchState(player.idleState);
             return;
         }
 
@@ -111,7 +106,10 @@ public class DashingState : IPlayerState
                     if (player.input.x != 0f)
                         player.SwitchState(player.walkingState);
                     else
+                    {
+                        Debug.Log("De hecho");
                         player.SwitchState(player.idleState);
+                    }
                 }
                 else
                 {

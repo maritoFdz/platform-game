@@ -47,6 +47,6 @@ MonoBehaviour:
   splashFallMinVelocity: 35
   splashWallMinVelocity: 15
   scaleReductionPerUnit: 0.001
-  minNormalizedScale: 0.1
+  minNormalizedScale: 0.25
   floatingForce: 5
   damping: 20

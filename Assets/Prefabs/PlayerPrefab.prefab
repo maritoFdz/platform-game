@@ -133,7 +133,7 @@ MonoBehaviour:
   idleWaitTime: 0.5
   splashVFXPrefab: {fileID: 6640021389163789217, guid: f822bfca91021b543b4d9217411043b1, type: 3}
   frozenColor: {r: 0, g: 0.969697, b: 1, a: 1}
-  colorSpeed: 1
+  colorSpeed: 2
 --- !u!1 &8260429854782688017
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +260,11 @@ MonoBehaviour:
   velocityYSmoothing: 0
   targetVelocity: 0
   onFreezeTile: 0
+  pendingAutoMove: 0
+  hasDashAir: 0
+  autoMoveDir: 0
+  autoMoveSpeed: 0
+  autoMoveDuration: 0
 --- !u!114 &3957637794669289830
 MonoBehaviour:
   m_ObjectHideFlags: 0

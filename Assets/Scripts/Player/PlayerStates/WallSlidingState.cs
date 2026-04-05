@@ -72,9 +72,9 @@ public class WallSlidingState : IPlayerState
 
     private void ExecuteJump(Player player)
     {
-        if (direction == player.input.x)
+        if (direction == Mathf.Sign(player.input.x) && player.input.x != 0)
             player.wallJumpState.jumpType = WallJump.Climb;
-        else if (direction == -player.input.x)
+        else if (direction == Mathf.Sign(- player.input.x) && player.input.x != 0)
             player.wallJumpState.jumpType = WallJump.Front;
         else
         {
