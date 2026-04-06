@@ -35,14 +35,13 @@ public class FallingState : IPlayerState
         }
         if (player.WallLeft() || player.WallRight())
         {
-            if (!player.HasSlopeNear((int)Mathf.Sign(player.input.x), 30))
-            {
-                if (player.WallLeft()) player.FlipSprite(-1);
-                else player.FlipSprite(1);
-                player.StopFallingAnimation();
-                player.HandleWallSlidingStateTransition();
-                freezeBehaviour = true;
-            }
+            float dir = player.WallLeft() ? -1 : 1;
+            player.FlipSprite(dir);
+            if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
+                player.MakeSplash(90f * dir);
+            player.StopFallingAnimation();
+            player.HandleWallSlidingStateTransition();
+            freezeBehaviour = true;
         }
         else if (player.GroundBelow())
         {

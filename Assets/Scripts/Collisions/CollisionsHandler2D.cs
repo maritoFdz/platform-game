@@ -151,8 +151,6 @@ public class CollisionsHandler2D : RaycastLayout
                         float slopeAngleRad = slopeAngle * Mathf.Deg2Rad;
                         displacement.x = slopeDisplacement * Mathf.Cos(slopeAngleRad) * Mathf.Sign(displacement.x);
                         displacement.y -= slopeDisplacement * Mathf.Sin(slopeAngleRad);
-                        Debug.Log(displacement.x);
-                        Debug.Log(displacement.y);
                         colDetails.below = true;
                         colDetails.onSlopeDescent = true;
                         colDetails.slopeAngle = slopeAngle;

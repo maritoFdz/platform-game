@@ -23,6 +23,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a8a5e5ee026b8af4191a3648397d0e12, type: 2}
   - {fileID: 11400000, guid: 305bc73721d45984eaa099607021b15a, type: 2}
   - {fileID: 11400000, guid: 18078b4a2b0a0494691196c275f49986, type: 2}
+  splashTilesSteepSlope:
+  - {fileID: 11400000, guid: 0586e6e4a8b62b548ae3fc0de5ee0ca2, type: 2}
+  - {fileID: 11400000, guid: d97a1102f499292429a6f921826ba0a4, type: 2}
+  - {fileID: 11400000, guid: b93888a1e95e2ba4099871577f6e1103, type: 2}
+  splashTilesSteepSlopeSmall:
+  - {fileID: 11400000, guid: a52c0cc42068dd943a74e57218f4f149, type: 2}
+  - {fileID: 11400000, guid: 9f1215565c412fb48b48444b01734d7d, type: 2}
+  - {fileID: 11400000, guid: e206c364ac55eb34d9b85a7da1618bc1, type: 2}
   rayLength: 0.05
   maxSpread: 3
   tileCooldown: 0.1

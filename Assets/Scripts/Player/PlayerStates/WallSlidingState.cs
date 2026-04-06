@@ -16,15 +16,13 @@ public class WallSlidingState : IPlayerState
         player.ActivateDash();
         freezeBehaviour = false;
         direction = player.WallLeft() ? -1 : 1;
-        if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
-            player.MakeSplash(90f * direction);
+        player.FlipSprite(direction);
         player.velocity = Vector2.zero; // cancel all movement
         player.velocityXSmoothing = 0f;
         player.velocityYSmoothing = 0f;
         dirDecisionTimer = player.playerParameters.wallStickTime;
         dropTimer = player.playerParameters.wallStickTime;
         wallAttachTimer = wallEndTimer;
-        player.FlipSprite(direction);
     }
 
     public void UpdateState(Player player)

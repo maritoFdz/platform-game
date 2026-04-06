@@ -16,7 +16,7 @@ MonoBehaviour:
   accelerationTimeGround: 0.2
   runningVelocityMultiplier: 2.5
   timeToIdle: 0.1
-  coyoteTime: 0.05
+  coyoteTime: 0.1
   canRun: 0
   canDash: 1
   canDashVertical: 1
@@ -25,7 +25,7 @@ MonoBehaviour:
   dashTime: 0.05
   dashCooldown: 0.5
   dashBufferTime: 0.1
-  decelerationTimeDash: 0.08
+  decelerationTimeDash: 0.06
   maxJumpHeight: 6
   minJumpHeight: 3
   maxHeightTime: 0.5
@@ -41,11 +41,11 @@ MonoBehaviour:
   climbJump: {x: 15, y: 20}
   fallOfMove: {x: 8, y: 5}
   endSlopeBoostX: 3
-  slopeSlidingJump: {x: 22, y: 20}
+  slopeSlidingJump: {x: 25, y: 18}
   maxScale: {x: 1.4, y: 1.4, z: 1.4}
   upscalePerUnit: 10
   splashFallMinVelocity: 35
-  splashWallMinVelocity: 15
+  splashWallMinVelocity: 10
   scaleReductionPerUnit: 0.001
   minNormalizedScale: 0.25
   floatingForce: 5

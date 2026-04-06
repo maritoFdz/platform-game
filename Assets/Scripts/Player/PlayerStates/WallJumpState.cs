@@ -43,8 +43,10 @@ public class WallJumpState : IPlayerState
 
         if (player.WallLeft() && player.input.x == -1 || player.WallRight() && player.input.x == 1)
         {
-            if (player.WallLeft()) player.FlipSprite(-1);
-            else player.FlipSprite(1);
+            float dir = player.WallLeft() ? -1 : 1;
+            player.FlipSprite(dir);
+            if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
+                player.MakeSplash(90f * dir);
             player.HandleWallSlidingStateTransition();
             freezeBehaviour = true;
         }

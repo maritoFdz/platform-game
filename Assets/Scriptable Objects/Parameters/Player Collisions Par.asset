@@ -15,5 +15,5 @@ MonoBehaviour:
   raySpacing: 0.25
   skinWidth: 0.015
   groundProbeDistance: 0.015
-  maxSlopeAngle: 50
+  maxSlopeAngle: 45.5
   slopeEpsilon: 0.1

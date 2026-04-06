@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEngine.Tilemaps.Tile;
 
-public enum SurfaceType { Floor, Wall, Slope }
+public enum SurfaceType { Floor, Wall, Slope, SteepSlope, SteepSlopeSmall }
 
 [CreateAssetMenu(fileName = "Paintable Tile", menuName = "Scriptable Objects/Paintable Tile")]
 public class PaintableTile : TileBase

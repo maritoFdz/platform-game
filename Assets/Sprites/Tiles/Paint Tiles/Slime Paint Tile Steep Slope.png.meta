@@ -1,10 +1,25 @@
 fileFormatVersion: 2
-guid: d6af37df4560cd44cb7e4487fdae9320
+guid: b43ad5ff922187747b71717a924d8651
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8608716160671858551
-    second: Sample Tile_0
+      213: 2783181456725258602
+    second: Slime Paint Tile Steep Slope_0
+  - first:
+      213: 7883753767227341127
+    second: Slime Paint Tile Steep Slope_1
+  - first:
+      213: -3420651096495211536
+    second: Slime Paint Tile Steep Slope_2
+  - first:
+      213: 5248797410396525095
+    second: Slime Paint Tile Steep Slope_3
+  - first:
+      213: 4155074495575416010
+    second: Slime Paint Tile Steep Slope_4
+  - first:
+      213: 1198111659622534979
+    second: Slime Paint Tile Steep Slope_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +115,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sample Tile_0
+      name: Slime Paint Tile Steep Slope_0
       rect:
         serializedVersion: 2
         x: 0
@@ -113,16 +128,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 77fb209bcbd487770800000000000000
-      internalID: 8608716160671858551
+      spriteID: a613099f9c8df9620800000000000000
+      internalID: 2783181456725258602
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sample Tile_1
+      name: Slime Paint Tile Steep Slope_1
       rect:
         serializedVersion: 2
         x: 16
@@ -135,16 +150,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a273803a5e07a0d4aa3cec26bc480dbd
-      internalID: 444020278
+      spriteID: 749bb380848b86d60800000000000000
+      internalID: 7883753767227341127
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sample Tile_2
+      name: Slime Paint Tile Steep Slope_2
       rect:
         serializedVersion: 2
         x: 32
@@ -156,14 +171,77 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape:
-      - - {x: 8, y: 8}
-        - {x: -8, y: -8}
-        - {x: 8, y: -8}
-      tessellationDetail: 0
+      physicsShape: []
+      tessellationDetail: -1
       bones: []
-      spriteID: 0391fb0bbb194f34abee0338ca6fff0d
-      internalID: -1926922787
+      spriteID: 0fb3adc73f76780d0800000000000000
+      internalID: -3420651096495211536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime Paint Tile Steep Slope_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 722dca87f6977d840800000000000000
+      internalID: 5248797410396525095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime Paint Tile Steep Slope_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: accde0c3d3ac9a930800000000000000
+      internalID: 4155074495575416010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime Paint Tile Steep Slope_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34f0e01e43c80a010800000000000000
+      internalID: 1198111659622534979
       vertices: []
       indices: 
       edges: []
@@ -172,7 +250,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 0218146f92e745e4caeaf944ef94cf75
+    spriteID: 1d79fc3647fcbf443bfb3098599f3102
     internalID: 0
     vertices: []
     indices: 
@@ -184,9 +262,12 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Sample Tile_0: 8608716160671858551
-      Sample Tile_1: 444020278
-      Sample Tile_2: -1926922787
+      Slime Paint Tile Steep Slope_0: 2783181456725258602
+      Slime Paint Tile Steep Slope_1: 7883753767227341127
+      Slime Paint Tile Steep Slope_2: -3420651096495211536
+      Slime Paint Tile Steep Slope_3: 5248797410396525095
+      Slime Paint Tile Steep Slope_4: 4155074495575416010
+      Slime Paint Tile Steep Slope_5: 1198111659622534979
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

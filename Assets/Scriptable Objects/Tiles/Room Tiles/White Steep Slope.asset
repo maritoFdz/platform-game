@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e8fda03ba7128b4fa57f00b3cd32bb7, type: 3}
-  m_Name: White Slope
+  m_Name: White Steep Slope
   m_EditorClassIdentifier: Assembly-CSharp::PaintableTile
-  sprite: {fileID: -1926922787, guid: d6af37df4560cd44cb7e4487fdae9320, type: 3}
-  surfaceType: 2
+  sprite: {fileID: 1728252548, guid: 3b7119334b7eaf94c964d1cf716ef426, type: 3}
+  surfaceType: 3
   isPainted: 0
   isScalable: 0

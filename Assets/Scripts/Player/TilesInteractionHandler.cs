@@ -207,6 +207,24 @@ public class TilesInteractionHandler : MonoBehaviour
 
                     splashTilemap.SetTransformMatrix(tilePos, Matrix4x4.Rotate(tileRotation));
                     break;
+                case SurfaceType.SteepSlope:
+                    splashTilemap.SetTile(tilePos, tilesInteractionParameters.splashTilesSteepSlope[Random.Range(0, tilesInteractionParameters.splashTilesSteepSlope.Length)]);
+                    splashTilemap.SetTileFlags(tilePos, TileFlags.None);
+
+                    Matrix4x4 tileMatrixSteep = worldTilemap.GetTransformMatrix(tilePos);
+                    Quaternion tileRotationSteep = tileMatrixSteep.rotation;
+
+                    splashTilemap.SetTransformMatrix(tilePos, Matrix4x4.Rotate(tileRotationSteep));
+                    break;
+                case SurfaceType.SteepSlopeSmall:
+                    splashTilemap.SetTile(tilePos, tilesInteractionParameters.splashTilesSteepSlopeSmall[Random.Range(0, tilesInteractionParameters.splashTilesSteepSlopeSmall.Length)]);
+                    splashTilemap.SetTileFlags(tilePos, TileFlags.None);
+
+                    Matrix4x4 tileMatrixSteep2 = worldTilemap.GetTransformMatrix(tilePos);
+                    Quaternion tileRotationSteep2 = tileMatrixSteep2.rotation;
+
+                    splashTilemap.SetTransformMatrix(tilePos, Matrix4x4.Rotate(tileRotationSteep2));
+                    break;
             }
         }
     }

@@ -22,7 +22,6 @@ public class DashingState : IPlayerState
             player.input.y = 0f;
         else if (player.playerParameters.canDashVertical && !player.playerParameters.canDashDiagonal)
         {
-            // vertical movement over horizontal
             if (player.input.y != 0f) player.input = new Vector2(0f, Mathf.Sign(player.input.x));
         }
         else
@@ -48,7 +47,6 @@ public class DashingState : IPlayerState
         {
             if (initialVelocity.y != 0f)
             {
-                Debug.Log("Yo fui el culpable");
                 player.ActivateDash();
                 player.velocity = Vector2.zero;
                 player.MakeSplash(0f);
@@ -67,7 +65,10 @@ public class DashingState : IPlayerState
 
         if (player.WallLeft() || player.WallRight())
         {
-            player.velocity.x = 0f;
+            float dir = player.WallLeft() ? -1 : 1;
+            player.FlipSprite(dir);
+            if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
+                player.MakeSplash(90f * dir);
             player.StopFallingAnimation();
             player.HandleWallSlidingStateTransition();
             freezeBehaviour = true;
@@ -107,7 +108,6 @@ public class DashingState : IPlayerState
                         player.SwitchState(player.walkingState);
                     else
                     {
-                        Debug.Log("De hecho");
                         player.SwitchState(player.idleState);
                     }
                 }
