@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Freeze Slope Tile
   m_EditorClassIdentifier: Assembly-CSharp::FreezeTile
   sprite: {fileID: -1157970238, guid: 14acaac5f0b522a4fb9b01da538f3c6b, type: 3}
-  freezeTime: 3
+  freezeTime: 5
   applyTime: 0
+  isScalable: 0

@@ -41,7 +41,7 @@ MonoBehaviour:
   climbJump: {x: 15, y: 20}
   fallOfMove: {x: 8, y: 5}
   endSlopeBoostX: 3
-  slopeSlidingJump: {x: 25, y: 18}
+  slopeSlidingJump: {x: 28, y: 18}
   maxScale: {x: 1.4, y: 1.4, z: 1.4}
   upscalePerUnit: 10
   splashFallMinVelocity: 35
