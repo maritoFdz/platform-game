@@ -15,7 +15,7 @@ MonoBehaviour:
   pushSpeed: 7
   accelerationTime: 0.1
   slopeSlideMultiplier: 10
-  gravity: -20
+  gravity: -25
   rotationVelocity: 150
   maxRotationAngle: 45
   groundSlopeFrontTol: 35

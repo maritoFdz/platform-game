@@ -26,24 +26,24 @@ MonoBehaviour:
   dashCooldown: 0.5
   dashBufferTime: 0.1
   decelerationTimeDash: 0.06
-  maxJumpHeight: 6
-  minJumpHeight: 3
-  maxHeightTime: 0.5
+  maxJumpHeight: 5
+  minJumpHeight: 2
+  maxHeightTime: 0.4
   jumpBufferTime: 0.2
   accelerationTimeAir: 0.1
-  gravityFallMultiplier: 2.5
+  gravityFallMultiplier: 2
   hangTime: 0.1
   maxFallSpeed: 50
   wallSlideSpeed: 5
   accelerationTimeWall: 0.5
   wallStickTime: 0.1
-  frontDirectionJump: {x: 25, y: 18}
-  climbJump: {x: 15, y: 20}
+  frontDirectionJump: {x: 30, y: 18}
+  climbJump: {x: 20, y: 23}
   fallOfMove: {x: 8, y: 5}
   endSlopeBoostX: 3
-  slopeSlidingJump: {x: 28, y: 18}
+  slopeSlidingJump: {x: 30, y: 18}
   maxScale: {x: 1.4, y: 1.4, z: 1.4}
-  upscalePerUnit: 10
+  upscalePerUnit: 20
   splashFallMinVelocity: 35
   splashWallMinVelocity: 10
   scaleReductionPerUnit: 0.001

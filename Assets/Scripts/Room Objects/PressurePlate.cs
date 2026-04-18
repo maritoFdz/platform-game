@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -11,6 +12,7 @@ public class PressurePlate : MonoBehaviour
     [SerializeField] private Sprite[] statesSprite;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private BoxCollider2D col;
+    [SerializeField] private bool keepsDoorClosed;
 
     [Header("Detection")]
     [SerializeField] private LayerMask activationLayer;
@@ -21,27 +23,37 @@ public class PressurePlate : MonoBehaviour
 
     private void Update()
     {
+        bool detected = false;
         Vector2 origin = new(col.bounds.min.x, col.bounds.max.y);
         float spacing = col.bounds.size.x / (rayAmount - 1);
         for (int i = 0; i < rayAmount; i++)
         {
             if (i == 0 || i == rayAmount - 1) continue;
+
             Vector2 rayOrigin = origin + i * spacing * Vector2.right;
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up, checkHeight, activationLayer);
-
             if (hit)
             {
-                if (!pressed)
-                {
-                    pressed = true;
-                    spriteRenderer.sprite = statesSprite[pressedSpriteIndex];
-                    foreach (var door in doorsConnected) door.Open();
-                }
-                return;
+                detected = true;
+                break;
             }
         }
-        spriteRenderer.sprite = statesSprite[unpressedSpriteIndex];
-        pressed = false;
-        foreach (var door in doorsConnected) door.Close();
+
+        if (detected && !pressed)
+        {
+            pressed = true;
+            spriteRenderer.sprite = statesSprite[pressedSpriteIndex];
+            foreach (var door in doorsConnected)
+                if (!keepsDoorClosed) door.Open();
+                else door.Close();
+        }
+        else if (!detected && pressed)
+        {
+            pressed = false;
+            spriteRenderer.sprite = statesSprite[unpressedSpriteIndex];
+            foreach (var door in doorsConnected)
+                if (!keepsDoorClosed) door.Close();
+                else door.Open();
+        }
     }
 }

@@ -17,6 +17,8 @@ public class Door : MonoBehaviour
     public bool locked;
     private Vector2 target;
     private Vector2 initialPos;
+    private Vector2 dir;
+private Vector2 right;
 
     private void Awake()
     {
