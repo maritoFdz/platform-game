@@ -170,6 +170,9 @@ public class TilesInteractionHandler : MonoBehaviour
 
     public void PaintSplash(Vector3 worldPos, float rotation)
     {
+        if (worldTilemap == null) return;
+        if (trailTilemap == null) return;
+        if (splashTilemap == null) return;
         RaycastLayoutDetails layoutInfo = playerController.GetRaycastLayoutDetails();
         Vector2 direction = rotation % 180 == 0f ? Vector2.up : Vector2.right * Mathf.Sign(rotation);
         if (rotation == 0f) direction = Vector2.down;

@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     public bool IsRunning => playerInput.Player.Run.IsPressed();
     public bool IsMoving => playerInput.Player.Move.IsPressed();
     public bool IsFrozen => Time.time < freezeTime;
-    public bool IsDashing => dashBufferCounter > 0  && dashCooldownCounter <= 0 && playerParameters.canDash;
+    public bool IsDashing => dashBufferCounter > 0 && dashCooldownCounter <= 0 && playerParameters.canDash;
     public bool IsFull => transform.localScale.Equals(playerParameters.maxScale);
 
     public bool IsActive => isActive;
@@ -165,6 +165,7 @@ public class Player : MonoBehaviour
     public void MakeSplash(float rotation)
     {
         if (IsFrozen) return;
+        if (!tilesController || !animationController) return;
         tilesController.PaintSplash(transform.position, rotation);
         animationController.MakeSplash(rotation);
         Shrink(true, 2);

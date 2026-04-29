@@ -9,15 +9,21 @@ public class SwimingState : IPlayerState
     public void EnterState(Player player)
     {
         currentWater = null;
-        player.MakeSplash(0f);
-        player.PlayIdleAnimation();
         currentWater = player.GetCurrentwater();
         if (currentWater == null)
             player.SwitchState(player.idleState);
+        player.MakeSplash(0f);
+        player.PlayIdleAnimation();
     }
 
     public void UpdateState(Player player)
     {
+        if (currentWater == null)
+        {
+            player.SwitchState(player.idleState);
+            return;
+        }
+
         upscaleTimer += Time.deltaTime;
         if (upscaleTimer >= 0.1f)
         {
@@ -38,7 +44,6 @@ public class SwimingState : IPlayerState
 
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeGround);
         swimTimer += Time.deltaTime;
-
         float wave = Mathf.Sin(swimTimer * 2f) * 5f;
         float surface = currentWater.GetSurfaceHeight();
         float difference = surface - player.transform.position.y;
