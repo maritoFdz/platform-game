@@ -41,7 +41,7 @@ public class WallJumpState : IPlayerState
             return;
         }
 
-        if (player.WallLeft() && player.input.x == -1 || player.WallRight() && player.input.x == 1)
+        if ((player.WallLeft() && player.input.x == -1 || player.WallRight() && player.input.x == 1) && !player.IsFrozen)
         {
             float dir = player.WallLeft() ? -1 : 1;
             player.FlipSprite(dir);

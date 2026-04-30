@@ -20,7 +20,7 @@ MonoBehaviour:
   canRun: 0
   canDash: 1
   canDashVertical: 1
-  canDashDiagonal: 1
+  canDashDiagonal: 0
   dashDistance: 2
   dashTime: 0.05
   dashCooldown: 0.5
@@ -40,9 +40,9 @@ MonoBehaviour:
   frontDirectionJump: {x: 30, y: 18}
   climbJump: {x: 20, y: 23}
   fallOfMove: {x: 8, y: 5}
-  gravitySlideMultiplier: 0
+  gravitySlideMultiplier: 0.8
   endSlopeBoostX: 3
-  slopeSlidingJump: {x: 30, y: 18}
+  slopeSlidingJump: {x: 35, y: 18}
   maxScale: {x: 1.4, y: 1.4, z: 1.4}
   upscalePerUnit: 20
   splashFallMinVelocity: 35

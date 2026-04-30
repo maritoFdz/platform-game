@@ -9,7 +9,7 @@ public class SlopeSlidingState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        player.Move(true, false);
+        player.Move(true, false, player.playerParameters.gravitySlideMultiplier);
         if (player.JumpPressed)
         {
             player.velocity.x = player.playerParameters.slopeSlidingJump.x * -direction;
