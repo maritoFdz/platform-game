@@ -34,12 +34,13 @@ MonoBehaviour:
   gravityFallMultiplier: 2
   hangTime: 0.1
   maxFallSpeed: 50
-  wallSlideSpeed: 5
+  wallSlideSpeed: 3
   accelerationTimeWall: 0.5
   wallStickTime: 0.1
   frontDirectionJump: {x: 30, y: 18}
   climbJump: {x: 20, y: 23}
   fallOfMove: {x: 8, y: 5}
+  gravitySlideMultiplier: 0
   endSlopeBoostX: 3
   slopeSlidingJump: {x: 30, y: 18}
   maxScale: {x: 1.4, y: 1.4, z: 1.4}

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent (typeof(MeshFilter), typeof(MeshRenderer), typeof(BoxCollider2D))]
-public class SlimeSupply : MonoBehaviour
+public class SlimeSupply : Resetteable
 {
     [Header("Water mesh")]
     [SerializeField] private int verticesAmountPerSide;
@@ -141,5 +141,13 @@ public class SlimeSupply : MonoBehaviour
     public bool HasSlime()
     {
         return currentAmount > 0.01f;
+    }
+
+    public override void ResetEntity()
+    {
+        currentAmount = maxAmount;
+        meshRenderer.enabled = true;
+        col.enabled = true;
+        UpdateVisual();
     }
 }

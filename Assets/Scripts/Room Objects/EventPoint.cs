@@ -1,11 +1,10 @@
 using NUnit;
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody2D), typeof(BoxCollider2D))]
-public class EventPoint : MonoBehaviour
+public class EventPoint : Resetteable
 {
     public enum EventType { EndLevel, AutoMove, CloseDoor }
 
@@ -20,6 +19,11 @@ public class EventPoint : MonoBehaviour
 
     [Header("For Door and End")]
     [SerializeField] private bool waitUntilDoorLocked;
+
+    public override void ResetEntity()
+    {
+        gameObject.SetActive(true);
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

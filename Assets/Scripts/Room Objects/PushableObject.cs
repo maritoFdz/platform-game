@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using static RaycastLayout;
-public class PushableObject : MonoBehaviour
+public class PushableObject : Resetteable
 {
     
     [Header("References")]
@@ -9,6 +9,7 @@ public class PushableObject : MonoBehaviour
     [SerializeField] private Transform visual;
     [SerializeField] private PushableObjectParameters parameters;
 
+    private Vector3 initialPos;
     private float rotationAngle;
     private float push;
     private Vector2 velocity;
@@ -20,6 +21,7 @@ public class PushableObject : MonoBehaviour
 
     private void Start()
     {
+        initialPos = transform.position;
         currentState = State.Falling;
     }
 
@@ -212,6 +214,12 @@ public class PushableObject : MonoBehaviour
     public void SetDirection(float push)
     {
         this.push = push;
+    }
+
+    public override void ResetEntity()
+    {
+        transform.position = initialPos;
+        currentState = State.Falling;
     }
 
     private enum State { Falling, Ground, SlidingSlope }

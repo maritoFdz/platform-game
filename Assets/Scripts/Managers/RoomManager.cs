@@ -1,5 +1,6 @@
-using System;
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
@@ -15,7 +16,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private Player initialPlayer;
     [SerializeField] private string nextRoomName;
     [SerializeField] private Door entry;
-    [SerializeField] private EventPoint[] eventPoints;
+    private Resetteable[] resetteables;
 
     [Header("Parameters")]
     [SerializeField] private Transform spawnPoint;
@@ -24,7 +25,11 @@ public class RoomManager : MonoBehaviour
     private void Awake()
     {
         if (instance != null) Destroy(gameObject);
-        else instance = this;
+        else
+        {
+            instance = this;
+            resetteables = FindObjectsByType<Resetteable>(FindObjectsSortMode.None);
+        }
     }
 
     private void Start()
@@ -63,8 +68,8 @@ public class RoomManager : MonoBehaviour
     private IEnumerator RespawnCo()
     {
         entry.Open();
-        foreach (var eventPoint in eventPoints)
-            eventPoint.gameObject.SetActive(true);
+        foreach (var resseteable in resetteables)
+            resseteable.ResetEntity();
         yield return new WaitForSeconds(respawnWait);
         SetPlayer();
     }

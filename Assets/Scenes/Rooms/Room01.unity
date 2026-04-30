@@ -21969,12 +21969,6 @@ MonoBehaviour:
   initialPlayer: {fileID: 6248119225859901008, guid: 8ae034325c7542d429d76b1750b0aa2c, type: 3}
   nextRoomName: Room02
   entry: {fileID: 1476693319}
-  eventPoints:
-  - {fileID: 777923134}
-  - {fileID: 880004670}
-  - {fileID: 635125195}
-  - {fileID: 938127661}
-  - {fileID: 1855896262}
   spawnPoint: {fileID: 777923133}
   respawnWait: 1
 --- !u!4 &1015004240

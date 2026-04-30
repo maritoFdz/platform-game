@@ -40,6 +40,7 @@ public class PlayerParameters : ScriptableObject
     public Vector2 fallOfMove;
 
     [Header("Slopes Movement Settings")]
+    public float gravitySlideMultiplier;
     public float endSlopeBoostX;
     public Vector2 slopeSlidingJump;
 
