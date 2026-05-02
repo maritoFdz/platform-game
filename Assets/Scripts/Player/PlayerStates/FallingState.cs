@@ -39,6 +39,7 @@ public class FallingState : IPlayerState
             player.FlipSprite(dir);
             if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
                 player.MakeSplash(90f * dir);
+            else AudioManager.instance.Play(AudioName.FallWeak);
             player.StopFallingAnimation();
             player.HandleWallSlidingStateTransition();
             freezeBehaviour = true;

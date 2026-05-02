@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +20,7 @@ public class AudioManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+
         audioContainer = new GameObject("Audio Container").transform;
         audioContainer.transform.SetParent(transform);
         soundDictionary = new Dictionary<AudioName, Sound>();
@@ -45,6 +45,21 @@ public class AudioManager : MonoBehaviour
         if (soundDictionary.TryGetValue(name, out Sound sound))
         {
             sound.audioSource.Play();
+        }
+    }
+
+
+    public void PlayRandom(params AudioName[] names)
+    {
+        AudioName random = names[Random.Range(0, names.Length)];
+        Play(random);
+    }
+
+    public void StopPlaying(AudioName name)
+    {
+        if (soundDictionary.TryGetValue(name, out Sound sound))
+        {
+            sound.audioSource.Stop();
         }
     }
 }

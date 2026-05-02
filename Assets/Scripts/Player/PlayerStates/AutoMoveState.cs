@@ -18,6 +18,7 @@ public class AutoMoveState : IPlayerState
         if (Time.time >= endTime)
         {
             player.StopWalkingAnimation();
+            AudioManager.instance.StopPlaying(AudioName.Movement);
             player.SwitchState(player.idleState);
             player.EnableInput();
             return;

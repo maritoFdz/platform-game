@@ -10,6 +10,7 @@ public class WallJumpState : IPlayerState
 
     public void EnterState(Player player)
     {
+        AudioManager.instance.Play(AudioName.Jump);
         freezeBehaviour = false;
         direction = player.WallLeft() ? -1 : 1;
         Vector2 jump;
@@ -47,6 +48,7 @@ public class WallJumpState : IPlayerState
             player.FlipSprite(dir);
             if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
                 player.MakeSplash(90f * dir);
+            else AudioManager.instance.Play(AudioName.FallWeak);
             player.HandleWallSlidingStateTransition();
             freezeBehaviour = true;
         }

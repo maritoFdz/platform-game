@@ -12,7 +12,10 @@ public class SwimingState : IPlayerState
         currentWater = player.GetCurrentwater();
         if (currentWater == null)
             player.SwitchState(player.idleState);
-        player.MakeSplash(0f);
+        player.MakeSplash(0f, true);
+        if (player.playerParameters.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
+            AudioManager.instance.Play(AudioName.SplashLoud);
+        else AudioManager.instance.Play(AudioName.SplashWeak);
         player.PlayIdleAnimation();
     }
 
@@ -58,6 +61,7 @@ public class SwimingState : IPlayerState
             player.StopIdleAnimation();
             player.MakeSplash(0f);
             player.ForceJumpingAnimation();
+            AudioManager.instance.Play(AudioName.SplashOut);
             player.SwitchState(player.jumpingState);
             player.ClearCurrentWater();
         }

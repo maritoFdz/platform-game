@@ -23,6 +23,7 @@ public class WallSlidingState : IPlayerState
         dirDecisionTimer = player.playerParameters.wallStickTime;
         dropTimer = player.playerParameters.wallStickTime;
         wallAttachTimer = wallEndTimer;
+        AudioManager.instance.Play(AudioName.Sliding);
     }
 
     public void UpdateState(Player player)
@@ -39,6 +40,7 @@ public class WallSlidingState : IPlayerState
             wallAttachTimer -= Time.deltaTime;
             if (wallAttachTimer <= 0f)
             {
+                AudioManager.instance.StopPlaying(AudioName.Sliding);
                 player.SwitchState(player.fallingState);
                 return;
             }
@@ -53,6 +55,7 @@ public class WallSlidingState : IPlayerState
         }
         else if (player.OnSlope() || player.GroundBelow())
         {
+            AudioManager.instance.StopPlaying(AudioName.Sliding);
             player.SwitchState(player.idleState);
         }
         else if (-player.input.x == direction || player.playerParameters.wallStickTime != dropTimer)
@@ -63,6 +66,7 @@ public class WallSlidingState : IPlayerState
             {
                 player.velocity.x = player.playerParameters.fallOfMove.x * -direction;
                 player.velocity.y = player.playerParameters.fallOfMove.y;
+                AudioManager.instance.StopPlaying(AudioName.Sliding);
                 player.SwitchState(player.fallingState);
             }
         }
@@ -82,7 +86,8 @@ public class WallSlidingState : IPlayerState
             return;
         }
         player.HandleJumpingStateTransition();
-        player.MakeSplash(90f * direction);
+        AudioManager.instance.StopPlaying(AudioName.Sliding);
+        player.MakeSplash(90f * direction, true);
         freezeBehaviour = true;
         return;
     }

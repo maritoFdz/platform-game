@@ -9,6 +9,7 @@ public class DashingState : IPlayerState
 
     public void EnterState(Player player)
     {
+        AudioManager.instance.PlayRandom(AudioName.DashOne, AudioName.DashTwo);
         player.hasDashAir = true;
         freezeBehaviour = false;
         player.ConsumeDash();
@@ -22,7 +23,7 @@ public class DashingState : IPlayerState
             player.input.y = 0f;
         else if (player.playerParameters.canDashVertical && !player.playerParameters.canDashDiagonal)
         {
-            if (player.input.y != 0f) player.input = new Vector2(0f, Mathf.Sign(player.input.x));
+            if (player.input.y != 0f) player.input = new Vector2(Mathf.Sign(player.input.y), Mathf.Sign(player.input.x));
         }
         else
         {
@@ -51,6 +52,7 @@ public class DashingState : IPlayerState
                 player.velocity = Vector2.zero;
                 player.MakeSplash(0f);
                 player.StopFallingAnimation();
+                AudioManager.instance.Play(AudioName.FallHeavy);
                 player.SwitchState(player.idleState);
                 return;
             }
@@ -59,6 +61,7 @@ public class DashingState : IPlayerState
 
         if (player.CeilingAbove())
         {
+            AudioManager.instance.Play(AudioName.FallHeavy);
             player.SwitchState(player.fallingState);
             return;
         }
@@ -87,9 +90,7 @@ public class DashingState : IPlayerState
 
             float decelTimeX = grounded ? player.playerParameters.decelerationTimeDash * 0.25f : player.playerParameters.decelerationTimeDash;
             float targetY = fallingDash ? player.playerParameters.maxFallSpeed : 0f;
-
             player.velocity.x = Mathf.SmoothDamp(player.velocity.x, 0f, ref player.velocityXSmoothing, decelTimeX);
-
             player.velocity.y = Mathf.SmoothDamp(player.velocity.y, targetY, ref player.velocityYSmoothing, player.playerParameters.decelerationTimeDash);
 
             if (fallingDash)

@@ -162,13 +162,14 @@ public class Player : MonoBehaviour
         return animationController.FacingDir;
     }
 
-    public void MakeSplash(float rotation)
+    public void MakeSplash(float rotation, bool skipSound = false)
     {
         if (IsFrozen) return;
         if (!tilesController || !animationController) return;
         tilesController.PaintSplash(transform.position, rotation);
         animationController.MakeSplash(rotation);
         Shrink(true, 2);
+        if (!skipSound) AudioManager.instance.Play(AudioName.FallHeavy);
     }
 
     public void PaintTrail()
@@ -187,6 +188,7 @@ public class Player : MonoBehaviour
             ApplyScale();
             Player child = Instantiate(playerPrefab, transform.position + new Vector3(0.1f, 0, 0), Quaternion.identity);
             child.SetNormalizedScale(normalizedScale);
+            AudioManager.instance.Play(AudioName.Split);
         }
     }
 

@@ -11,6 +11,7 @@ public class IdleState : IPlayerState
         player.hasDashAir = false;
         if (player.playerParameters.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
             player.MakeSplash(0f);
+        else if (player.velocity.y != 0) AudioManager.instance.Play(AudioName.FallWeak);
         player.PlayIdleAnimation();
         player.velocity.y = 0;
     }

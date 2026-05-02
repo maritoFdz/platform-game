@@ -92,14 +92,14 @@ MonoBehaviour:
     audioSource: {fileID: 0}
     volume: 1
     pitch: 1
-    loops: 0
+    loops: 1
     playsOnAwake: 0
   - name: 7
     clip: {fileID: 8300000, guid: 1c74fae2d141e07469f055efd41f2056, type: 3}
     audioSource: {fileID: 0}
     volume: 1
     pitch: 1
-    loops: 0
+    loops: 1
     playsOnAwake: 0
   - name: 8
     clip: {fileID: 8300000, guid: 6d4f45edc40e899459ec936f15384ab7, type: 3}

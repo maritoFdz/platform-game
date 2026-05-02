@@ -8,6 +8,7 @@ public class WalkingState : IPlayerState
 
     public void EnterState(Player player)
     {
+        AudioManager.instance.Play(AudioName.Movement);
         player.hasDashAir = false;
         player.PlayWalkingAnimation();
         player.velocity.y = 0;
@@ -32,23 +33,27 @@ public class WalkingState : IPlayerState
             player.ConsumeJump();
             player.StopWalkingAnimation();
             player.HandleJumpingStateTransition();
+            AudioManager.instance.StopPlaying(AudioName.Movement);
             return;
         }
         else if (player.IsRunning && player.playerParameters.canRun)
         {
             player.StopWalkingAnimation();
             player.SwitchState(player.runningState);
+            AudioManager.instance.StopPlaying(AudioName.Movement);
         }
 
         if (player.IsSliding())
         {
             player.SwitchState(player.slopeSlidingState);
+            AudioManager.instance.StopPlaying(AudioName.Movement);
             return;
         }
 
         if (player.IsDashing)
         {
             player.SwitchState(player.dashingState);
+            AudioManager.instance.StopPlaying(AudioName.Movement);
             return;
         }
 
@@ -63,6 +68,7 @@ public class WalkingState : IPlayerState
             if (idleCount <= 0)
             {
                 player.StopWalkingAnimation();
+                AudioManager.instance.StopPlaying(AudioName.Movement);
                 player.SwitchState(player.idleState);
             }
         }
@@ -77,12 +83,14 @@ public class WalkingState : IPlayerState
             if (coyoteCount <= 0)
             {
                 player.StopWalkingAnimation();
+                AudioManager.instance.StopPlaying(AudioName.Movement);
                 player.SwitchState(player.fallingState);
             }
         }
 
         if (player.IsPushing())
         {
+            AudioManager.instance.StopPlaying(AudioName.Movement);
             player.SwitchState(player.pushingObjectState);
         }
     }

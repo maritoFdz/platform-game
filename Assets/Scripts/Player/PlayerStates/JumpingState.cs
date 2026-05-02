@@ -9,11 +9,12 @@ public class JumpingState : IPlayerState
 
     public void EnterState(Player player)
     {
+        AudioManager.instance.Play(AudioName.Jump);
         gravityMultiplier = 1f;
         isHanging = false;
         hangCounter = 0f;
         freezeBehaviour = false;
-        player.MakeSplash(0f);
+        player.MakeSplash(0f, true);
         player.velocity.y = player.jumpForce;
     }
 
@@ -63,6 +64,7 @@ public class JumpingState : IPlayerState
             player.FlipSprite(dir);
             if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
                 player.MakeSplash(90f * dir);
+            else AudioManager.instance.Play(AudioName.FallWeak);
             player.HandleWallSlidingStateTransition();
             freezeBehaviour = true;
         }
