@@ -21,7 +21,7 @@ public class SlopeSlidingState : IPlayerState
         else if (!player.IsSliding())
         {
             player.velocity.x = player.playerParameters.endSlopeBoostX * -direction;
-            AudioManager.instance.Play(AudioName.Sliding);
+            AudioManager.instance.StopPlaying(AudioName.Sliding);
             player.SwitchState(player.idleState);
         }
     }

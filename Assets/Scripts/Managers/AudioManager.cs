@@ -48,7 +48,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-
     public void PlayRandom(params AudioName[] names)
     {
         AudioName random = names[Random.Range(0, names.Length)];
