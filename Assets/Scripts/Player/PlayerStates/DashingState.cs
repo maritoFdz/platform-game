@@ -23,7 +23,8 @@ public class DashingState : IPlayerState
             player.input.y = 0f;
         else if (player.playerParameters.canDashVertical && !player.playerParameters.canDashDiagonal)
         {
-            if (player.input.y != 0f) player.input = new Vector2(Mathf.Sign(player.input.y), Mathf.Sign(player.input.x));
+            if (player.input.x != 0f) player.input = new Vector2(Mathf.Sign(player.input.x), 0f);
+            else player.input = new Vector2(0, Mathf.Sign(player.input.y));
         }
         else
         {
