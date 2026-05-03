@@ -26,8 +26,12 @@ public class Sound
 
     [Range (0, 1)]
     public float volume;
-    [Range (-3, 3)]
-    public float pitch;
+    [Range(-3f, 3f)]
+    public float minPitch;
+    [Range(-3f, 3f)]
+    public float maxPitch;
+    [Range(-3f, 3f)]
+    public float defaultPitch;
     public bool loops;
     public bool playsOnAwake;
 }

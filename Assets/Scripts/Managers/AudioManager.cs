@@ -35,15 +35,17 @@ public class AudioManager : MonoBehaviour
             sound.audioSource.loop = sound.loops;
             sound.audioSource.clip = sound.clip;
             sound.audioSource.volume = sound.volume;
-            sound.audioSource.pitch = sound.pitch;
+            sound.audioSource.pitch = sound.minPitch;
 
         }
     }
 
-    public void Play(AudioName name)
+    public void Play(AudioName name, bool randomize = true)
     {
         if (soundDictionary.TryGetValue(name, out Sound sound))
         {
+            if (randomize) sound.audioSource.pitch = Random.Range(sound.minPitch, sound.maxPitch);
+            else sound.audioSource.pitch = sound.defaultPitch;
             sound.audioSource.Play();
         }
     }
