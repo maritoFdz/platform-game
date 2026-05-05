@@ -31,6 +31,7 @@ public class AudioManager : MonoBehaviour
                 soundDictionary.Add(sound.name, sound);
 
             sound.audioSource = audioContainer.gameObject.AddComponent<AudioSource>();
+            sound.audioSource.outputAudioMixerGroup = sound.mixerGroup;
             sound.audioSource.playOnAwake = sound.playsOnAwake;
             sound.audioSource.loop = sound.loops;
             sound.audioSource.clip = sound.clip;

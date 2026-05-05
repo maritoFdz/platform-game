@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public enum AudioName {
     DashOne,
@@ -34,4 +35,5 @@ public class Sound
     public float defaultPitch;
     public bool loops;
     public bool playsOnAwake;
+    public AudioMixerGroup mixerGroup;
 }

@@ -48,108 +48,120 @@ MonoBehaviour:
   - name: 0
     clip: {fileID: 8300000, guid: ff2c06c4cbc1c5f42aac9457bafc0877, type: 3}
     audioSource: {fileID: 0}
-    volume: 0.1
+    volume: 0.4
     minPitch: 1
     maxPitch: 1.5
     defaultPitch: 1
     loops: 0
     playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   - name: 1
     clip: {fileID: 8300000, guid: bba8cff0359d1244c88ed7d38850319f, type: 3}
     audioSource: {fileID: 0}
-    volume: 0.1
+    volume: 0.4
     minPitch: 1
     maxPitch: 1.5
     defaultPitch: 1
     loops: 0
     playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   - name: 2
     clip: {fileID: 8300000, guid: a08838289d4651c43bd873d770a95650, type: 3}
     audioSource: {fileID: 0}
-    volume: 0.8
+    volume: 1
     minPitch: 1
     maxPitch: 1.5
     defaultPitch: 1
     loops: 0
     playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   - name: 3
     clip: {fileID: 8300000, guid: 93b019fe9310d54479b7924bf145422a, type: 3}
     audioSource: {fileID: 0}
-    volume: 0.8
+    volume: 1
     minPitch: 1
     maxPitch: 1.5
     defaultPitch: 1
     loops: 0
     playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   - name: 4
     clip: {fileID: 8300000, guid: e75077109114f4f40b4e2e95f899c815, type: 3}
     audioSource: {fileID: 0}
-    volume: 0.8
+    volume: 1
     minPitch: 1
     maxPitch: 1.5
     defaultPitch: 1
     loops: 0
     playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   - name: 5
     clip: {fileID: 8300000, guid: dfabc3cc031d59d44becd29b3d745735, type: 3}
     audioSource: {fileID: 0}
-    volume: 0.8
+    volume: 1
     minPitch: 1
     maxPitch: 1.5
     defaultPitch: 1
     loops: 0
     playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   - name: 6
     clip: {fileID: 8300000, guid: 912293f12d3590b4e9e648bd3692f407, type: 3}
     audioSource: {fileID: 0}
-    volume: 0.8
+    volume: 1
     minPitch: 1
     maxPitch: 1.5
     defaultPitch: 1
     loops: 1
     playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   - name: 7
     clip: {fileID: 8300000, guid: 1c74fae2d141e07469f055efd41f2056, type: 3}
     audioSource: {fileID: 0}
-    volume: 0.8
+    volume: 1
     minPitch: 1
     maxPitch: 1.5
     defaultPitch: 1
     loops: 1
     playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   - name: 8
     clip: {fileID: 8300000, guid: 6d4f45edc40e899459ec936f15384ab7, type: 3}
     audioSource: {fileID: 0}
-    volume: 0.8
+    volume: 1
     minPitch: 1
     maxPitch: 1.5
     defaultPitch: 1
     loops: 0
     playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   - name: 9
     clip: {fileID: 8300000, guid: e8b59ddedf7911049bf79104d6f45c4a, type: 3}
     audioSource: {fileID: 0}
-    volume: 0.8
+    volume: 1
     minPitch: 1
     maxPitch: 1.5
     defaultPitch: 1
     loops: 0
     playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   - name: 10
     clip: {fileID: 8300000, guid: 56e15963c47398a4385e99dafb9b024a, type: 3}
     audioSource: {fileID: 0}
-    volume: 0.8
+    volume: 1
     minPitch: 1
     maxPitch: 1.5
     defaultPitch: 1
     loops: 0
     playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   - name: 11
     clip: {fileID: 8300000, guid: 5d68c202e0771034db008da6eebb038d, type: 3}
     audioSource: {fileID: 0}
-    volume: 0.8
+    volume: 1
     minPitch: 1
     maxPitch: 1.5
     defaultPitch: 1
     loops: 0
     playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
