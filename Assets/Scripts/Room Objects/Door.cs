@@ -78,8 +78,7 @@ public class Door : MonoBehaviour
                 Vector2 rayOrigin = baseOrigin + i * spacing * rayOriginVector;
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, dir, displacement, collisionLayer);
                 Debug.DrawRay(rayOrigin, dir * displacement, Color.red);
-                if (hit)
-                    minDistance = Mathf.Min(hit.distance, minDistance);
+                if (hit) minDistance = Mathf.Min(hit.distance, minDistance);
             }
 
             displacement = minDistance;
@@ -129,10 +128,7 @@ public class Door : MonoBehaviour
 
         if (hit)
         {
-            float extent = (dir == Vector2.up || dir == Vector2.down)
-                ? col.bounds.extents.y
-                : col.bounds.extents.x;
-
+            float extent = (dir == Vector2.up || dir == Vector2.down) ? col.bounds.extents.y : col.bounds.extents.x;
             target = hit.point - dir * extent;
         }
     }

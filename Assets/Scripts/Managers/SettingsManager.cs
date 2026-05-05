@@ -6,7 +6,9 @@ public class SettingsManager : MonoBehaviour
     public static SettingsManager instance;
 
     [SerializeField] private AudioMixer audioMixer;
-    public Resolution[] resolutions;
+
+    [HideInInspector] public Resolution[] resolutions;
+    [HideInInspector] public bool initialized;
 
     private void Awake()
     {
@@ -27,7 +29,7 @@ public class SettingsManager : MonoBehaviour
         SetFullscreen(settingsData.isFullscreen);
         SetResolution(settingsData.resolution);
         SetVolume(settingsData.volume);
-
+        initialized = true;
     }
 
     public void SetFullscreen(bool isFullscreen)

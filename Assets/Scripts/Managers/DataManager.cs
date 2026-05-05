@@ -4,6 +4,8 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
 
+    [HideInInspector] public bool initialized;
+
     private void Awake()
     {
         if (instance != null)
@@ -15,6 +17,7 @@ public class DataManager : MonoBehaviour
         instance = this;
 
         DontDestroyOnLoad(gameObject);
+        initialized = true;
     }
 
     #region Settings Data
