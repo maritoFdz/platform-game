@@ -1395,7 +1395,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsMenuUI
   resolutionsDropdown: {fileID: 299370248}
-  audioMixer: {fileID: 24100000, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   mainSceneName: Main Menu
 --- !u!1 &688739163
 GameObject:
