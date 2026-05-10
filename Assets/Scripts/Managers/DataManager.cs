@@ -1,10 +1,15 @@
+using System.IO;
+using UnityEditor.U2D.Tooling.Analyzer;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
+    private const string saveFile = "data.pepillo";
 
     [HideInInspector] public bool initialized;
+    [SerializeField] private string firstRoomName;
+    [HideInInspector] public string lastRoomName;
 
     private void Awake()
     {
@@ -17,6 +22,11 @@ public class DataManager : MonoBehaviour
         instance = this;
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        LoadGameData();
         initialized = true;
     }
 
@@ -43,14 +53,26 @@ public class DataManager : MonoBehaviour
     #endregion
 
     #region Game Data
-    private void SaveGameData()
+    public void SaveGameData(GameData data)
     {
-
+        string path = Path.Combine(Application.persistentDataPath, saveFile);
+        lastRoomName = data.lastRoomName;
+        File.WriteAllText(path, JsonUtility.ToJson(data, true));
     }
 
     private void LoadGameData()
     {
-
+        string path = Path.Combine(Application.persistentDataPath, saveFile);
+        if (File.Exists(path))
+        {
+            GameData data = JsonUtility.FromJson<GameData>(File.ReadAllText(path));
+            lastRoomName = data.lastRoomName;
+        }
+        else
+        {
+            lastRoomName = firstRoomName;
+            SaveGameData(new(firstRoomName));
+        }
     }
     #endregion
 }

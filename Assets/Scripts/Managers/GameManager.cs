@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(InitCo());
-        DontDestroyOnLoad(gameObject);
     }
 
     private IEnumerator InitCo()

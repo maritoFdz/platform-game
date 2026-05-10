@@ -3,9 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUI : MonoBehaviour
 {
+
     public void SwitchScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void SwitchPlayRoom()
+    {
+        if (DataManager.instance != null)
+            SceneManager.LoadScene(DataManager.instance.lastRoomName);
     }
 
     public void Quit()

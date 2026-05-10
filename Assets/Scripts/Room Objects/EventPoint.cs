@@ -36,7 +36,7 @@ public class EventPoint : Resetteable
                 if (waitUntilDoorLocked) StartCoroutine(HandlePlayerLock(true));
                 else
                 {
-                    RoomManager.instance.LevelPased();
+                    RoomManager.instance.LevelPassed();
                     gameObject.SetActive(false);
                 }
                 break;
@@ -64,7 +64,7 @@ public class EventPoint : Resetteable
 
     private IEnumerator HandlePlayerLock(bool end)
     {
-        RoomManager.instance.LockPLayers();
+        RoomManager.instance.LockPlayers();
         yield return new WaitUntil(() =>
         {
             foreach (Door door in doors)
@@ -74,7 +74,7 @@ public class EventPoint : Resetteable
         });
         yield return new WaitForSeconds(0.25f); // a little bit of extra time
         RoomManager.instance.UnlockPlayers();
-        if (end) RoomManager.instance.LevelPased();
+        if (end) RoomManager.instance.LevelPassed();
         gameObject.SetActive(false);
     }
 }

@@ -50,12 +50,13 @@ public class RoomManager : MonoBehaviour
         StartCoroutine(RespawnCo());
     }
 
-    public void LevelPased()
+    public void LevelPassed()
     {
+        DataManager.instance.SaveGameData(new(nextRoomName));
         SceneManager.LoadScene(nextRoomName);
     }
 
-    public void LockPLayers()
+    public void LockPlayers()
     {
         PlayerSwitchManager.instance.DisableAll();
     }
