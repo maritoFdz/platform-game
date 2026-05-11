@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class SettingsMenuUI : MonoBehaviour
@@ -57,5 +58,10 @@ public class SettingsMenuUI : MonoBehaviour
     {
         if (SettingsManager.instance != null)
             SettingsManager.instance.SetVolume(volume);
+    }
+
+    public void SelectButton(GameObject button)
+    {
+        EventSystem.current.SetSelectedGameObject(button);
     }
 }
