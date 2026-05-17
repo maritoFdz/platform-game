@@ -22,19 +22,19 @@ public class SettingsMenuUI : MonoBehaviour
         for (int i = 0; i < resolutions.Length; i++)
         {
             Resolution resolution = resolutions[i];
-            string resolutionString = resolution.width + "x" + resolution.height;
-            if (resolutionsStrings.Contains(resolutionString))
-                continue;
-
+            string resolutionString = resolution.width + "x" + resolution.height + " @" + Mathf.RoundToInt((float)resolution.refreshRateRatio.value) + "Hz";
             resolutionsStrings.Add(resolutionString);
 
-            if (resolution.width == Screen.currentResolution.width && resolution.height == Screen.currentResolution.height)
-                currentResolutionIndex = i;
+            if (resolution.width == Screen.width && resolution.height == Screen.height)
+                currentResolutionIndex = resolutionsStrings.Count - 1;
         }
+
         resolutionsDropdown.AddOptions(resolutionsStrings);
         resolutionsDropdown.value = currentResolutionIndex;
         resolutionsDropdown.RefreshShownValue();
     }
+
+
 
     public void GoBack()
     {
