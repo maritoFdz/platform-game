@@ -137,6 +137,7 @@ public class PlayerAnimationStateController : MonoBehaviour
     public void PlayIdle()
     {
         idleCancelled = false;
+        animator.SetBool(isWalkingHash, false);
         animator.SetTrigger(playIdleHash);
     }
 

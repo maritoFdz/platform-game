@@ -155,6 +155,7 @@ public class Player : MonoBehaviour
     {
         if (!isActive) return;
         dashBufferCounter = playerParameters.dashBufferTime;
+        Debug.Log(IsDashing);
     }
 
     public float GetFacingDir()

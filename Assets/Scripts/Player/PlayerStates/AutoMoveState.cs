@@ -8,6 +8,8 @@ public class AutoMoveState : IPlayerState
     {
         player.pendingAutoMove = false;
         player.PlayWalkingAnimation();
+        if (AudioManager.instance != null)
+            AudioManager.instance.Play(AudioName.Movement);
         player.velocity = Vector2.zero;
         player.velocityXSmoothing = 0;
         endTime = Time.time + player.autoMoveDuration;

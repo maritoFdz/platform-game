@@ -45,6 +45,8 @@ public class AudioManager : MonoBehaviour
     {
         if (soundDictionary.TryGetValue(name, out Sound sound))
         {
+            if (sound.loops && sound.audioSource.isPlaying)
+                return;
             if (randomize) sound.audioSource.pitch = Random.Range(sound.minPitch, sound.maxPitch);
             else sound.audioSource.pitch = sound.defaultPitch;
             sound.audioSource.Play();

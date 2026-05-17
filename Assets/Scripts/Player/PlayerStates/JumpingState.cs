@@ -9,6 +9,7 @@ public class JumpingState : IPlayerState
 
     public void EnterState(Player player)
     {
+        AudioManager.instance.StopPlaying(AudioName.Movement);
         AudioManager.instance.Play(AudioName.Jump);
         gravityMultiplier = 1f;
         isHanging = false;

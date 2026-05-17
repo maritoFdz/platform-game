@@ -22,7 +22,12 @@ public class SettingsMenuUI : MonoBehaviour
         for (int i = 0; i < resolutions.Length; i++)
         {
             Resolution resolution = resolutions[i];
-            resolutionsStrings.Add(resolution.width + "x" + resolution.height);
+            string resolutionString = resolution.width + "x" + resolution.height;
+            if (resolutionsStrings.Contains(resolutionString))
+                continue;
+
+            resolutionsStrings.Add(resolutionString);
+
             if (resolution.width == Screen.currentResolution.width && resolution.height == Screen.currentResolution.height)
                 currentResolutionIndex = i;
         }

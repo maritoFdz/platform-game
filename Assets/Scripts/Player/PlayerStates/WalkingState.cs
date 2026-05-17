@@ -23,17 +23,18 @@ public class WalkingState : IPlayerState
 
         if (player.pendingAutoMove)
         {
+            AudioManager.instance.StopPlaying(AudioName.Movement);
             player.SwitchState(player.autoMoveState);
             return;
         }
 
         if (player.JumpPressed)
         {
+            AudioManager.instance.StopPlaying(AudioName.Movement);
             player.ActivateDash();
             player.ConsumeJump();
             player.StopWalkingAnimation();
             player.HandleJumpingStateTransition();
-            AudioManager.instance.StopPlaying(AudioName.Movement);
             return;
         }
         else if (player.IsRunning && player.playerParameters.canRun)
@@ -45,17 +46,17 @@ public class WalkingState : IPlayerState
 
         if (player.IsSliding())
         {
+            AudioManager.instance.StopPlaying(AudioName.Movement);
             player.SwitchState(player.slopeSlidingState);
             player.StopWalkingAnimation();
-            AudioManager.instance.StopPlaying(AudioName.Movement);
             return;
         }
 
         if (player.IsDashing)
         {
+            AudioManager.instance.StopPlaying(AudioName.Movement);
             player.StopWalkingAnimation();
             player.SwitchState(player.dashingState);
-            AudioManager.instance.StopPlaying(AudioName.Movement);
             return;
         }
 

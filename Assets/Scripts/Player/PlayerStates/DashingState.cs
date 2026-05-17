@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class DashingState : IPlayerState
@@ -43,6 +44,14 @@ public class DashingState : IPlayerState
         player.velocity = player.input * dashSpeed;
         initialVelocity = player.velocity;
         startedOnAir = !player.GroundBelow();
+        if (startedOnAir)
+        {
+            player.ForceFallingAnimation();
+            player.StartCoroutine(StopFall(player));
+        }
+        else
+            player.StopFallingAnimation();
+        Debug.Log(startedOnAir);
     }
 
     public void UpdateState(Player player)
@@ -62,6 +71,7 @@ public class DashingState : IPlayerState
                 player.StopFallingAnimation();
                 AudioManager.instance.Play(AudioName.FallHeavy);
                 player.SwitchState(player.idleState);
+                Debug.Log("Toco piso");
                 return;
             }
             else player.PaintTrail();
@@ -118,6 +128,7 @@ public class DashingState : IPlayerState
                     if (fallingDash)
                         player.ActivateDash();
                     player.SwitchState(player.idleState);
+                    Debug.Log("Asi tan natural");
                 }
                 else
                 {
@@ -125,5 +136,11 @@ public class DashingState : IPlayerState
                 }
             }
         }
+    }
+
+    private IEnumerator StopFall(Player player)
+    {
+        yield return null;
+        player.StopFallingAnimation();
     }
 }
