@@ -46,12 +46,14 @@ public class WalkingState : IPlayerState
         if (player.IsSliding())
         {
             player.SwitchState(player.slopeSlidingState);
+            player.StopWalkingAnimation();
             AudioManager.instance.StopPlaying(AudioName.Movement);
             return;
         }
 
         if (player.IsDashing)
         {
+            player.StopWalkingAnimation();
             player.SwitchState(player.dashingState);
             AudioManager.instance.StopPlaying(AudioName.Movement);
             return;

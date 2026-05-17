@@ -427,6 +427,11 @@ public class Player : MonoBehaviour
         animationController.ForceInstantJump();
     }
 
+    public void ForceFallingAnimation()
+    {
+        animationController.ForceInstantFall();
+    }
+
     public void StopJumpingAnimation()
     {
         animationController.StopJumping();
@@ -440,6 +445,11 @@ public class Player : MonoBehaviour
     public void HandleWallSlidingStateTransition()
     {
         animationController.PlayWallSliding();
+    }
+
+    public void StopWallSlidingAnimation()
+    {
+        animationController.StopWallSliding();
     }
 
     #endregion

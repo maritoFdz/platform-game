@@ -1,7 +1,9 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class DashingState : IPlayerState
 {
+    private bool startedOnAir;
     private float dashCounter;
     private bool freezeBehaviour;
     private Vector2 initialVelocity;
@@ -9,6 +11,7 @@ public class DashingState : IPlayerState
 
     public void EnterState(Player player)
     {
+        
         AudioManager.instance.PlayRandom(AudioName.DashOne, AudioName.DashTwo);
         player.hasDashAir = true;
         freezeBehaviour = false;
@@ -37,6 +40,7 @@ public class DashingState : IPlayerState
         }
         player.velocity = player.input * dashSpeed;
         initialVelocity = player.velocity;
+        startedOnAir = !player.GroundBelow();
     }
 
     public void UpdateState(Player player)
@@ -47,11 +51,12 @@ public class DashingState : IPlayerState
         player.Move(true, false, 0f);
         if (player.GroundBelow())
         {
-            if (initialVelocity.y != 0f)
+            if (initialVelocity.y != 0f || startedOnAir)
             {
                 player.ActivateDash();
                 player.velocity = Vector2.zero;
                 player.MakeSplash(0f);
+                player.ForceFallingAnimation();
                 player.StopFallingAnimation();
                 AudioManager.instance.Play(AudioName.FallHeavy);
                 player.SwitchState(player.idleState);
@@ -105,13 +110,7 @@ public class DashingState : IPlayerState
                 {
                     if (fallingDash)
                         player.ActivateDash();
-
-                    if (player.input.x != 0f)
-                        player.SwitchState(player.walkingState);
-                    else
-                    {
-                        player.SwitchState(player.idleState);
-                    }
+                    player.SwitchState(player.idleState);
                 }
                 else
                 {
