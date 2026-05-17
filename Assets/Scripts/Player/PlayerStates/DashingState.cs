@@ -1,8 +1,9 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class DashingState : IPlayerState
 {
+    private float endReduction;
+    private bool collidedWall;
     private bool startedOnAir;
     private float dashCounter;
     private bool freezeBehaviour;
@@ -11,7 +12,8 @@ public class DashingState : IPlayerState
 
     public void EnterState(Player player)
     {
-        
+        collidedWall = false;
+        endReduction = 1f; // time to cut from the dash end
         AudioManager.instance.PlayRandom(AudioName.DashOne, AudioName.DashTwo);
         player.hasDashAir = true;
         freezeBehaviour = false;
@@ -83,21 +85,26 @@ public class DashingState : IPlayerState
             freezeBehaviour = true;
             return;
         }
+        else if(player.CollisionLeft() || player.CollisionRight())
+        {
+            collidedWall = true;
+            endReduction = 0.5f; // if collides with wall, stop dashing sooner
+            dashCounter = player.playerParameters.dashTime;
+        }
 
         if (dashCounter >= player.playerParameters.dashTime)
         {
             bool fallingDash = initialVelocity.y < 0;
-            bool grounded = player.GroundBelow();
 
-            float extraGroundTime = grounded ? player.playerParameters.decelerationTimeDash * 0.7f : 0f;
+            float extraGroundTime = player.GroundBelow() && !collidedWall ? player.playerParameters.decelerationTimeDash * 0.7f : 0f;
 
             if (dashCounter < player.playerParameters.dashTime + extraGroundTime)
                 return;
 
-            float decelTimeX = grounded ? player.playerParameters.decelerationTimeDash * 0.25f : player.playerParameters.decelerationTimeDash;
+            float decelTimeX = (player.GroundBelow() ? player.playerParameters.decelerationTimeDash * 0.25f : player.playerParameters.decelerationTimeDash) * endReduction;
             float targetY = fallingDash ? player.playerParameters.maxFallSpeed : 0f;
             player.velocity.x = Mathf.SmoothDamp(player.velocity.x, 0f, ref player.velocityXSmoothing, decelTimeX);
-            player.velocity.y = Mathf.SmoothDamp(player.velocity.y, targetY, ref player.velocityYSmoothing, player.playerParameters.decelerationTimeDash);
+            player.velocity.y = Mathf.SmoothDamp(player.velocity.y, targetY, ref player.velocityYSmoothing, player.playerParameters.decelerationTimeDash * endReduction);
 
             if (fallingDash)
                 player.SwitchState(player.fallingState);
@@ -106,7 +113,7 @@ public class DashingState : IPlayerState
             {
                 player.velocity = Vector2.zero;
 
-                if (grounded)
+                if (player.GroundBelow())
                 {
                     if (fallingDash)
                         player.ActivateDash();
