@@ -6,6 +6,7 @@ public class Door : MonoBehaviour
     [Header("References")]
     [SerializeField] private Collider2D col;
     [SerializeField] private LayerMask collisionLayer;
+    [SerializeField] private LayerMask finalCollisionLayer;
 
     [Header("Parameters")]
     [SerializeField] private float speed;
@@ -20,6 +21,7 @@ public class Door : MonoBehaviour
     private float spacing;
     private Vector2 dir;
     private Vector2 rayOriginVector;
+    private bool isTouchingWall;
 
     private void Awake()
     {
@@ -73,12 +75,18 @@ public class Door : MonoBehaviour
             else if (dir == Vector2.left)
                 baseOrigin = new Vector2(col.bounds.min.x - raycastOffset, col.bounds.min.y);
 
+            isTouchingWall = false;
             for (int i = 0; i < rayAmount; i++)
             {
                 Vector2 rayOrigin = baseOrigin + i * spacing * rayOriginVector;
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, dir, displacement, collisionLayer);
                 Debug.DrawRay(rayOrigin, dir * displacement, Color.red);
-                if (hit) minDistance = Mathf.Min(hit.distance, minDistance);
+                if (hit)
+                {
+                    minDistance = Mathf.Min(hit.distance, minDistance);
+                    if (((1 << hit.collider.gameObject.layer) & finalCollisionLayer) != 0)
+                        isTouchingWall = true;
+                }
             }
 
             displacement = minDistance;
@@ -88,7 +96,8 @@ public class Door : MonoBehaviour
             if (Vector3.Distance(transform.position, target) < collisionTolerance)
             {
                 transform.position = target;
-                locked = true;
+                if (isTouchingWall)
+                    locked = true;
             }
         }
         else

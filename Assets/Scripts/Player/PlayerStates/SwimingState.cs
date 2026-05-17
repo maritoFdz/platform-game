@@ -18,6 +18,7 @@ public class SwimingState : IPlayerState
         else AudioManager.instance.Play(AudioName.SplashWeak);
         player.PlayIdleAnimation();
         player.ActivateDash();
+        player.hasDashAir = false;
     }
 
     public void UpdateState(Player player)
