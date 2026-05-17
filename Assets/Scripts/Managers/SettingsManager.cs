@@ -6,6 +6,7 @@ public class SettingsManager : MonoBehaviour
     public static SettingsManager instance;
 
     [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private int frameRate;
 
     [HideInInspector] public Resolution[] resolutions;
     [HideInInspector] public bool initialized;
@@ -20,6 +21,8 @@ public class SettingsManager : MonoBehaviour
 
         instance = this;
         resolutions = Screen.resolutions;
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = frameRate;
         DontDestroyOnLoad(gameObject);
     }
 

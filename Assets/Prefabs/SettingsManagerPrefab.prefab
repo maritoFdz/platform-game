@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsManager
   audioMixer: {fileID: 24100000, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
+  frameRate: 60
   initialized: 0
