@@ -27,6 +27,17 @@ public class FallingState : IPlayerState
         }
 
         player.Move(false, false, player.playerParameters.gravityFallMultiplier);
+
+        if (player.JumpPressed && player.CanDoubleJump)
+        {
+            Debug.Log("Entrar entrar tecnicamente si entre");
+            player.hasJumpAir = true;
+            player.ConsumeJump();
+            player.HandleJumpingStateTransition();
+            player.StopFallingAnimation();
+            return;
+        }
+
         if (player.IsDashing && !player.hasDashAir)
         {
             player.hasDashAir = true;

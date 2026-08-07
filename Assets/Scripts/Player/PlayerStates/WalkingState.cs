@@ -9,6 +9,7 @@ public class WalkingState : IPlayerState
     public void EnterState(Player player)
     {
         AudioManager.instance.Play(AudioName.Movement);
+        player.hasJumpAir = false;
         player.hasDashAir = false;
         player.PlayWalkingAnimation();
         player.velocity.y = 0;

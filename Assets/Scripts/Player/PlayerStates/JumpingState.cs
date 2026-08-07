@@ -27,6 +27,16 @@ public class JumpingState : IPlayerState
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeAir);
         player.Move(false, false, gravityMultiplier);
 
+        if (player.JumpPressed && player.CanDoubleJump)
+        {
+            Debug.Log("Entrar entrar tecnicamente si entre");
+            player.hasJumpAir = true;
+            player.ConsumeJump();
+            player.HandleJumpingStateTransition();
+            player.StopFallingAnimation();
+            return;
+        }
+
         if (player.IsDashing && !player.hasDashAir)
         {
             player.hasDashAir = true;

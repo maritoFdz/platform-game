@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool onFreezeTile;
     [HideInInspector] public bool pendingAutoMove;
     [HideInInspector] public bool hasDashAir;
+    [HideInInspector] public bool hasJumpAir;
     [HideInInspector] public float autoMoveDir;
     [HideInInspector] public float autoMoveSpeed;
     [HideInInspector] public float autoMoveDuration;
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour
     public bool IsMoving => playerInput.Player.Move.IsPressed();
     public bool IsFrozen => Time.time < freezeTime;
     public bool IsDashing => dashBufferCounter > 0 && dashCooldownCounter <= 0 && playerParameters.canDash;
+    public bool CanDoubleJump => playerParameters.canDoubleJump && !hasJumpAir;
     public bool IsFull => transform.localScale.Equals(playerParameters.maxScale);
 
     public bool IsActive => isActive;

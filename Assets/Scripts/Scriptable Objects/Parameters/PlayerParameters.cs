@@ -15,6 +15,7 @@ public class PlayerParameters : ScriptableObject
     public bool canDash;
     public bool canDashVertical;
     public bool canDashDiagonal;
+    public bool canDoubleJump;
     public float dashDistance;
     public float dashTime;
     public float dashCooldown;

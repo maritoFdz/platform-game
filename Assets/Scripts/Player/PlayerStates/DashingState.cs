@@ -17,6 +17,7 @@ public class DashingState : IPlayerState
         endReduction = 1f; // time to cut from the dash end
         AudioManager.instance.PlayRandom(AudioName.DashOne, AudioName.DashTwo);
         player.hasDashAir = true;
+        player.hasJumpAir = true;
         freezeBehaviour = false;
         player.ConsumeDash();
         dashCounter = 0f;
@@ -29,15 +30,16 @@ public class DashingState : IPlayerState
             player.input.y = 0f;
         else if (player.playerParameters.canDashVertical && !player.playerParameters.canDashDiagonal)
         {
-            if (player.input.x != 0f) player.input = new Vector2(Mathf.Sign(player.input.x), 0f);
-            else player.input = new Vector2(0, Mathf.Sign(player.input.y));
+            if (player.input.x != 0f) player.input.x = -player.GetFacingDir();
+            if (Mathf.Sign(player.input.y) == -1f) player.input = new Vector2(0f, -1f); // siempre dashea para abajo
+            else player.input.y = 0f;
         }
         else
         {
             if (player.input.y != 0f && player.input.x != 0f)
                 player.input = new Vector2(Mathf.Sign(player.input.x) * diagonalValue, Mathf.Sign(player.input.y) * diagonalValue);
             else if (player.input.y != 0f)
-                player.input = new Vector2(0f, Mathf.Sign(player.input.y));
+                player.input = Mathf.Sign(player.input.y) == -1f ? new Vector2(0f, player.input.y) : new Vector2(-player.GetFacingDir(), 0f);
             else
                 player.input = new Vector2(Mathf.Sign(player.input.x), 0f);
         }

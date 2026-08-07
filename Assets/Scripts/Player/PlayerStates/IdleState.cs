@@ -8,6 +8,7 @@ public class IdleState : IPlayerState
 
     public void EnterState(Player player)
     {
+        player.hasJumpAir = false;
         player.hasDashAir = false;
         if (player.playerParameters.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
             player.MakeSplash(0f);

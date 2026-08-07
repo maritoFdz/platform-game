@@ -21,6 +21,7 @@ MonoBehaviour:
   canDash: 1
   canDashVertical: 1
   canDashDiagonal: 0
+  canDoubleJump: 1
   dashDistance: 2
   dashTime: 0.05
   dashCooldown: 0.5

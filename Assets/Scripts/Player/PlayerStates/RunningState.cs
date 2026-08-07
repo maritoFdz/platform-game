@@ -8,6 +8,7 @@ public class RunningState : IPlayerState
 
     public void EnterState(Player player)
     {
+        player.hasJumpAir = false;
         player.hasDashAir = false;
         player.PlayRunningAnimation();
     }

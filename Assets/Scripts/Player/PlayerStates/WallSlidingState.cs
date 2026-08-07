@@ -12,6 +12,7 @@ public class WallSlidingState : IPlayerState
 
     public void EnterState(Player player)
     {
+        player.hasJumpAir = false;
         player.hasDashAir = false;
         player.ActivateDash();
         freezeBehaviour = false;

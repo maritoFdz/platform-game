@@ -19,6 +19,7 @@ public class SwimingState : IPlayerState
         player.PlayIdleAnimation();
         player.ActivateDash();
         player.hasDashAir = false;
+        player.hasJumpAir = false;
     }
 
     public void UpdateState(Player player)
