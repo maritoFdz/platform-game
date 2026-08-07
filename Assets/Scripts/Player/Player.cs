@@ -160,6 +160,12 @@ public class Player : MonoBehaviour
         Debug.Log(IsDashing);
     }
 
+    private void Die(InputAction.CallbackContext context)
+    {
+        if (!isActive) return;
+        KillPlayer();
+    }
+
     public float GetFacingDir()
     {
         return animationController.FacingDir;
@@ -277,6 +283,9 @@ public class Player : MonoBehaviour
 
         playerInput.Player.Dash.performed -= Dash;
         playerInput.Player.Dash.performed += Dash;
+
+        playerInput.Player.Kill.performed -= Die;
+        playerInput.Player.Kill.performed += Die;
     }
 
     public void SetActiverState(bool enable)
@@ -290,6 +299,7 @@ public class Player : MonoBehaviour
         playerInput.Player.Jump.performed -= Jump;
         playerInput.Player.Split.performed -= Split;
         playerInput.Player.Dash.performed -= Dash;
+        playerInput.Player.Kill.performed -= Die;
     }
 
     #region Collisions related methods called by states
