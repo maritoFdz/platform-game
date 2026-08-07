@@ -34,6 +34,7 @@ public class PlayerAnimationStateController : MonoBehaviour
     private int stickWallHash;
     private int isSlidingWallHash;
     private int instantFallHash;
+    private int anyStateBlockedHash;
 
     private bool idleCancelled;
 
@@ -50,6 +51,7 @@ public class PlayerAnimationStateController : MonoBehaviour
         stickWallHash = Animator.StringToHash("StickWall");
         instantJumpHash = Animator.StringToHash("InstantJump");
         instantFallHash = Animator.StringToHash("InstantJumpEnd");
+        anyStateBlockedHash = Animator.StringToHash("AnyStateBlocked");
         freezeAmountHash = Shader.PropertyToID("_Freeze_Amount");
     }
 
@@ -180,6 +182,7 @@ public class PlayerAnimationStateController : MonoBehaviour
     public void PlayJumping()
     {
         animator.SetTrigger(startJumpHash);
+        LockAnyStateTransitions();
     }
 
     public void StopJumping()
@@ -223,11 +226,13 @@ public class PlayerAnimationStateController : MonoBehaviour
     public void ExecuteJump()
     {
         player.SwitchState(player.jumpingState);
+        EnableAnyStateTransitions();
     }
 
     public void ExecuteWallJump()
     {
         player.SwitchState(player.wallJumpState);
+        EnableAnyStateTransitions();
     }
 
     public void StickWall()
@@ -238,6 +243,16 @@ public class PlayerAnimationStateController : MonoBehaviour
     public void StartFallingAnimation()
     {
         animator.SetTrigger(endJumpHash);
+    }
+
+    public void LockAnyStateTransitions()
+    {
+        animator.SetBool(anyStateBlockedHash, true);
+    }
+
+    public void EnableAnyStateTransitions()
+    {
+        animator.SetBool(anyStateBlockedHash, false);
     }
     #endregion
 }

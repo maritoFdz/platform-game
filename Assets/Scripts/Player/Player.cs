@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool onFreezeTile;
     [HideInInspector] public bool pendingAutoMove;
     [HideInInspector] public bool hasDashAir;
-    [HideInInspector] public bool hasJumpAir;
+    [HideInInspector] public bool hasJumpAir; 
     [HideInInspector] public float autoMoveDir;
     [HideInInspector] public float autoMoveSpeed;
     [HideInInspector] public float autoMoveDuration;

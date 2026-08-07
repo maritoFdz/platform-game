@@ -86,6 +86,7 @@ public class WallSlidingState : IPlayerState
             player.velocity.x = player.playerParameters.fallOfMove.x * -direction;
             player.velocity.y = player.playerParameters.fallOfMove.y;
             player.SwitchState(player.fallingState);
+            player.ConsumeJump();
             AudioManager.instance.StopPlaying(AudioName.Sliding);
             return;
         }

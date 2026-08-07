@@ -32,7 +32,6 @@ public class FallingState : IPlayerState
         {
             Debug.Log("Entrar entrar tecnicamente si entre");
             player.hasJumpAir = true;
-            player.ConsumeJump();
             player.HandleJumpingStateTransition();
             player.StopFallingAnimation();
             return;
