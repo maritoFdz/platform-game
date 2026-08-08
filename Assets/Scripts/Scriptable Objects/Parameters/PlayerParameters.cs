@@ -56,4 +56,7 @@ public class PlayerParameters : ScriptableObject
     [Header("Swimming Settings")]
     public float floatingForce;
     public float damping;
+
+    [Header("Join Settings")]
+    public float joinRadius;
 }

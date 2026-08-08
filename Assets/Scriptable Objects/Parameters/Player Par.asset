@@ -52,3 +52,4 @@ MonoBehaviour:
   minNormalizedScale: 0.25
   floatingForce: 5
   damping: 20
+  joinRadius: 1

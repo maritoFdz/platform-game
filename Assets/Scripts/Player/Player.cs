@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Security.Cryptography;
+using static RaycastLayout;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -166,6 +164,38 @@ public class Player : MonoBehaviour
         KillPlayer();
     }
 
+    private void Join(InputAction.CallbackContext context)
+    {
+        if (!isActive) return;
+        Player closestMinion = GetClosestMinion();
+        if (closestMinion != null)
+        {
+            Upscale(closestMinion.normalizedScale);
+            closestMinion.KillPlayer();
+        }
+    }
+
+    private Player GetClosestMinion()
+    {
+        float minDistance = Mathf.Infinity;
+        Collider2D closestMinion = null;
+        Collider2D[] minions = Physics2D.OverlapCircleAll((Vector2)transform.position, playerParameters.joinRadius, 1 << gameObject.layer);
+        foreach (Collider2D collision in minions)
+        {
+            if (collision.gameObject == gameObject)
+                continue;
+
+            float distance = Vector2.Distance(transform.position, collision.transform.position);
+            if (distance < minDistance)
+            {
+                closestMinion = collision;
+                minDistance = distance;
+            }
+        }
+        if (closestMinion != null && closestMinion.TryGetComponent<Player>(out var minion)) return minion;
+        return null;
+    }
+
     public float GetFacingDir()
     {
         return animationController.FacingDir;
@@ -217,6 +247,12 @@ public class Player : MonoBehaviour
     {
         if (IsFrozen) return;
         normalizedScale = Mathf.Min(normalizedScale + playerParameters.scaleReductionPerUnit * playerParameters.upscalePerUnit, 1f);
+        ApplyScale();
+    }
+
+    public void Upscale(float amount)
+    {
+        normalizedScale = Mathf.Min(normalizedScale + amount, 1f);
         ApplyScale();
     }
 
@@ -275,6 +311,8 @@ public class Player : MonoBehaviour
     public void EnableInput()
     {
         SetActiverState(true);
+        if (playerInput == null)
+            return;
         playerInput.Player.Jump.performed -= Jump;
         playerInput.Player.Jump.performed += Jump;
 
@@ -286,6 +324,9 @@ public class Player : MonoBehaviour
 
         playerInput.Player.Kill.performed -= Die;
         playerInput.Player.Kill.performed += Die;
+
+        playerInput.Player.Join.performed -= Join;
+        playerInput.Player.Join.performed += Join;
     }
 
     public void SetActiverState(bool enable)
@@ -296,11 +337,15 @@ public class Player : MonoBehaviour
     public void DisableInput()
     {
         SetActiverState(false);
+        if (playerInput == null)
+            return;
         playerInput.Player.Jump.performed -= Jump;
         playerInput.Player.Split.performed -= Split;
         playerInput.Player.Dash.performed -= Dash;
         playerInput.Player.Kill.performed -= Die;
+        playerInput.Player.Join.performed -= Join;
     }
+
 
     #region Collisions related methods called by states
     public bool GroundBelow()
