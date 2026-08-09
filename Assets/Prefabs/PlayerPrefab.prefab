@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -6137007217024267201, guid: dca71f26113044f4ea9e2597bf1b21c8, type: 3}
+  m_Sprite: {fileID: 5759807744476881585, guid: 4a7d9cba45b160243bfc715bc2228a57, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -262,6 +262,7 @@ MonoBehaviour:
   onFreezeTile: 0
   pendingAutoMove: 0
   hasDashAir: 0
+  hasJumpAir: 0
   autoMoveDir: 0
   autoMoveSpeed: 0
   autoMoveDuration: 0

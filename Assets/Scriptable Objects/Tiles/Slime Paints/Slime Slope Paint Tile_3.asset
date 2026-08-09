@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Slime Slope Paint Tile_3
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.Tilemaps.Tile
-  m_Sprite: {fileID: -447896045, guid: ca72dc19a8d45f74f8bec95eb76f89b1, type: 3}
+  m_Sprite: {fileID: -76407848085074989, guid: 669b879c1d6c35e4d98e0e4a1b6e0b14, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

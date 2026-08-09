@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Slime Paint Tile_1
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.Tilemaps.Tile
-  m_Sprite: {fileID: 1725204485, guid: 6f1a9b0e4047c0d4187b1fce3341d0ff, type: 3}
+  m_Sprite: {fileID: 2042742199, guid: 1d95525fcaf7ed64d8eaabe38a94de03, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
