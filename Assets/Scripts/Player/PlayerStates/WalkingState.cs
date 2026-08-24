@@ -22,6 +22,12 @@ public class WalkingState : IPlayerState
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeGround); // simulates acceleration
         player.Move(true, false, gravityMultiplier);
 
+        if (player.IsSplitting)
+        {
+            player.SwitchState(player.splitingState);
+            return;
+        }
+
         if (player.pendingAutoMove)
         {
             AudioManager.instance.StopPlaying(AudioName.Movement);

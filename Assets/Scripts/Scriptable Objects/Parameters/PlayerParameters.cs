@@ -57,6 +57,7 @@ public class PlayerParameters : ScriptableObject
     public float floatingForce;
     public float damping;
 
-    [Header("Join Settings")]
+    [Header("Split Settings")]
     public float joinRadius;
+    public float splitTrhowTime;
 }

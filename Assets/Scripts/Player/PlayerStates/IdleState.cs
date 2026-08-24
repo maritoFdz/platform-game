@@ -27,6 +27,12 @@ public class IdleState : IPlayerState
         player.Move(true, false, gravityMultiplier);
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeGround);
 
+        if (player.IsSplitting)
+        {
+            player.SwitchState(player.splitingState);
+            return;
+        }
+
         if (player.pendingAutoMove)
         {
             player.SwitchState(player.autoMoveState);

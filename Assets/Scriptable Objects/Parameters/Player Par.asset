@@ -53,3 +53,4 @@ MonoBehaviour:
   floatingForce: 5
   damping: 20
   joinRadius: 1
+  splitTrhowTime: 0.25

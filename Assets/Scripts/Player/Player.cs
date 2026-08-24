@@ -23,7 +23,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool onFreezeTile;
     [HideInInspector] public bool pendingAutoMove;
     [HideInInspector] public bool hasDashAir;
-    [HideInInspector] public bool hasJumpAir; 
+    [HideInInspector] public bool hasJumpAir;
+    [HideInInspector] public bool forceSplit;
     [HideInInspector] public float autoMoveDir;
     [HideInInspector] public float autoMoveSpeed;
     [HideInInspector] public float autoMoveDuration;
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
     public bool IsDashing => dashBufferCounter > 0 && dashCooldownCounter <= 0 && playerParameters.canDash;
     public bool CanDoubleJump => playerParameters.canDoubleJump && !hasJumpAir;
     public bool IsFull => transform.localScale.Equals(playerParameters.maxScale);
+    public bool IsSplitting => isSplitting && throwCooldownCounter > 0 || forceSplit;
 
     public bool IsActive => isActive;
 
@@ -44,6 +46,8 @@ public class Player : MonoBehaviour
     private float jumpBufferCounter;
     private float dashBufferCounter;
     private float dashCooldownCounter;
+    private float throwCooldownCounter;
+    private bool isSplitting;
     private float normalizedScale;
     private float moveAmount;
     private bool isActive;
@@ -61,6 +65,7 @@ public class Player : MonoBehaviour
     public SlopeSlidingState slopeSlidingState = new();
     public PushingObjectState pushingObjectState = new();
     public SwimingState swimingState = new();
+    public SplitingState splitingState = new();
     public AutoMoveState autoMoveState = new();
 
     private void Start()
@@ -94,6 +99,8 @@ public class Player : MonoBehaviour
             dashCooldownCounter -= Time.deltaTime;
         if (dashBufferCounter > 0f)
             dashBufferCounter -= Time.deltaTime;
+        if (throwCooldownCounter > 0f)
+            throwCooldownCounter -= Time.deltaTime;
     }
 
     public void SwitchState(IPlayerState nextState)
@@ -217,10 +224,28 @@ public class Player : MonoBehaviour
             tilesController.PaintTrail();
     }
 
-    private void Split(InputAction.CallbackContext callback)
+    private void StartSplit(InputAction.CallbackContext callback)
     {
         if (IsFrozen) return;
         if (!isActive) return;
+        throwCooldownCounter = playerParameters.splitTrhowTime;
+        isSplitting = true;
+    }
+
+    private void EndSplit(InputAction.CallbackContext callback)
+    {
+        if (throwCooldownCounter > 0f)
+            Split();
+        throwCooldownCounter = 0f;
+        isSplitting = false;
+        forceSplit = false;
+    }
+
+    public void Split()
+    {
+        if (IsFrozen) return;
+        if (!isActive) return;
+
         if (normalizedScale / 2 > playerParameters.minNormalizedScale)
         {
             normalizedScale /= 2;
@@ -316,8 +341,11 @@ public class Player : MonoBehaviour
         playerInput.Player.Jump.performed -= Jump;
         playerInput.Player.Jump.performed += Jump;
 
-        playerInput.Player.Split.performed -= Split;
-        playerInput.Player.Split.performed += Split;
+        playerInput.Player.Split.started -= StartSplit;
+        playerInput.Player.Split.started += StartSplit;
+
+        playerInput.Player.Split.canceled -= EndSplit;
+        playerInput.Player.Split.canceled += EndSplit;
 
         playerInput.Player.Dash.performed -= Dash;
         playerInput.Player.Dash.performed += Dash;
@@ -340,7 +368,7 @@ public class Player : MonoBehaviour
         if (playerInput == null)
             return;
         playerInput.Player.Jump.performed -= Jump;
-        playerInput.Player.Split.performed -= Split;
+        playerInput.Player.Split.performed -= StartSplit;
         playerInput.Player.Dash.performed -= Dash;
         playerInput.Player.Kill.performed -= Die;
         playerInput.Player.Join.performed -= Join;
