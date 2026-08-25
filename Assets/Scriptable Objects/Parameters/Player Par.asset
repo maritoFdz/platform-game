@@ -54,3 +54,7 @@ MonoBehaviour:
   damping: 20
   joinRadius: 1
   splitTrhowTime: 0.25
+  throwInitialVelocity: {x: 30, y: 25}
+  accelerationTimeThrow: 1
+  throwSpeedFrontMultiplier: 2
+  throwSpeedBackMultiplier: 7

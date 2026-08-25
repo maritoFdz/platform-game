@@ -13,7 +13,7 @@ public class SplitingState : IPlayerState
         {
             player.Split();
             player.forceSplit = false;
-            player.SwitchState(player.idleState);
+            player.SwitchState(player.throwingState);
         }
     }
 }

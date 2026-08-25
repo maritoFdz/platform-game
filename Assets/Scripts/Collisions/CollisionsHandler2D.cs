@@ -212,6 +212,27 @@ public class CollisionsHandler2D : RaycastLayout
         return false;
     }
 
+    public bool CheckWallNear(Vector2 direction)
+    {
+        Vector2 rayCorner = direction.x > 0 ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
+        float rayLength = scaledSkinWidth + collisionParameters.groundProbeDistance + 1;
+
+        for (int i = 0; i < horizontalRayAmount; i++)
+        {
+            Vector2 rayOrigin = rayCorner + Vector2.up * (horRaySpacing * i);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction, rayLength, collisionMask);
+            Debug.DrawRay(rayOrigin, direction * rayLength, Color.green);
+
+            if (hit)
+            {
+                float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                if (slopeAngle > collisionParameters.maxSlopeAngle)
+                    return true;
+            }
+        }
+        return false;
+    }
+
     public bool FallInFront(float direction, int tolerance = 1)
     {
         float probeLength = scaledSkinWidth + collisionParameters.groundProbeDistance * tolerance;

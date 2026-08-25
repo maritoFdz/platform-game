@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
     public PushingObjectState pushingObjectState = new();
     public SwimingState swimingState = new();
     public SplitingState splitingState = new();
+    public ThrowingState throwingState = new();
     public AutoMoveState autoMoveState = new();
 
     private void Start()
@@ -106,7 +107,7 @@ public class Player : MonoBehaviour
     public void SwitchState(IPlayerState nextState)
     {
         currentState = nextState;
-        Debug.Log(nextState.ToString());
+        if (isActive) Debug.Log(nextState.ToString());
         currentState.EnterState(this);
     }
 
@@ -226,8 +227,7 @@ public class Player : MonoBehaviour
 
     private void StartSplit(InputAction.CallbackContext callback)
     {
-        if (IsFrozen) return;
-        if (!isActive) return;
+        if (IsFrozen || !isActive || !(normalizedScale / 2 > playerParameters.minNormalizedScale)) return;
         throwCooldownCounter = playerParameters.splitTrhowTime;
         isSplitting = true;
     }
@@ -284,6 +284,7 @@ public class Player : MonoBehaviour
     private void ApplyScale()
     {
         transform.localScale = playerParameters.maxScale * normalizedScale;
+        Physics2D.SyncTransforms();
         controller.UpdateCollisions(normalizedScale);
     }
 
@@ -413,6 +414,16 @@ public class Player : MonoBehaviour
     public bool CollisionRight()
     {
         return controller.colDetails.right;
+    }
+
+    public bool WallLeftNear()
+    {
+        return controller.CheckWallNear(Vector2.left); //&& tilesController.IsWallScalable(Vector2.left);
+    }
+
+    public bool WallRightNear()
+    {
+        return controller.CheckWallNear(Vector2.right); //&& tilesController.IsWallScalable(Vector2.right);
     }
 
     public bool HasSlopeNear(int direction, int tolerance = 1)

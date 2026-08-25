@@ -60,4 +60,8 @@ public class PlayerParameters : ScriptableObject
     [Header("Split Settings")]
     public float joinRadius;
     public float splitTrhowTime;
+    public Vector2 throwInitialVelocity;
+    public float accelerationTimeThrow;
+    public float throwSpeedFrontMultiplier;
+    public float throwSpeedBackMultiplier;
 }

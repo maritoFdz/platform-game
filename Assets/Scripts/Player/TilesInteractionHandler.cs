@@ -73,6 +73,30 @@ public class TilesInteractionHandler : MonoBehaviour
         return false;
     }
 
+    public bool IsWallScalableNear(Vector2 direction, int verticalSamples = 6)
+    {
+        RaycastOrigins origins = playerController.GetRaycastOrigins();
+        Vector2 bottom = direction.x > 0 ? origins.bottomRight : origins.bottomLeft;
+        Vector2 top = direction.x > 0 ? origins.topRight : origins.topLeft;
+
+        // qué tan lejos del borde del collider "empuja" el punto de muestreo hacia adentro de la pared
+        float probeDepth = tilesInteractionParameters.rayLength;
+
+        for (int i = 0; i <= verticalSamples; i++)
+        {
+            float t = (float)i / verticalSamples;
+            Vector2 samplePoint = Vector2.Lerp(bottom, top, t) + direction.normalized * probeDepth;
+            Vector3Int cellPos = worldTilemap.WorldToCell(samplePoint);
+            var tileBase = worldTilemap.GetTile(cellPos);
+
+            if (tileBase is PaintableTile tile && tile.isScalable)
+                return true;
+            if (tileBase is IInteractiveTile iTile && iTile.IsScalable)
+                return true;
+        }
+        return false;
+    }
+
     public void HandleTilesCollision()
     {
         if (worldTilemap == null) return;
