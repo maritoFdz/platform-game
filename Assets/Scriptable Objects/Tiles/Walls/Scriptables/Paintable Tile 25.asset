@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PaintableTile
   sprite: {fileID: -1166991011, guid: f201ffd88dc78184baf3b46328531639, type: 3}
   surfaceType: 1
-  isPainted: 0
+  isPainted: 1
   isScalable: 1
