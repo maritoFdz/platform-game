@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -8,7 +9,14 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private int frameRate;
 
+    [Header("Pallete Shader")]
+    [SerializeField] private Material palleteMaterial;
+    [SerializeField] private ColorPallete defaultPallete;
+    [SerializeField] private float tolerance;
+    public ColorPallete[] palletes;
+
     [HideInInspector] public Resolution[] resolutions;
+    [HideInInspector] public int currentPalleteIndex;
     [HideInInspector] public bool initialized;
 
     private void Awake()
@@ -23,12 +31,15 @@ public class SettingsManager : MonoBehaviour
         resolutions = Screen.resolutions;
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = frameRate;
+        SetDefaultPalleteShader();
         DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
         SettingsData settingsData = DataManager.instance.GetSettingsData();
+        currentPalleteIndex = settingsData.currentPallete;
+        SetColorPallete(currentPalleteIndex);
         SetFullscreen(settingsData.isFullscreen);
         SetResolution(settingsData.resolution);
         SetVolume(settingsData.volume);
@@ -57,6 +68,40 @@ public class SettingsManager : MonoBehaviour
         audioMixer.SetFloat("Volume", dB);
         if (DataManager.instance != null)
             DataManager.instance.SaveVolumeSetting(volume);
+    }
+
+    public void SetColorPallete(int palleteIndex)
+    {
+        palleteIndex = palleteIndex == -1 ? 0 : Mathf.Clamp(palleteIndex, 0, palletes.Length - 1);
+        ColorPallete pallete = palletes[palleteIndex];
+        if (pallete == null)
+        {
+            pallete = defaultPallete;
+            palleteIndex = 0;
+        }
+        currentPalleteIndex = palleteIndex;
+        palleteMaterial.SetColor("_New1", pallete.color1);
+        palleteMaterial.SetColor("_New2", pallete.color2);
+        palleteMaterial.SetColor("_New3", pallete.color3);
+        palleteMaterial.SetColor("_New4", pallete.color4);
+        palleteMaterial.SetColor("_New5", pallete.color5);
+        palleteMaterial.SetColor("_New6", pallete.color6);
+        palleteMaterial.SetColor("_New7", pallete.color7);
+        if (DataManager.instance != null)
+            DataManager.instance.SavePalleteSetting(palleteIndex);
+    }
+
+    private void SetDefaultPalleteShader()
+    {
+        palleteMaterial.SetColor("_Original1", defaultPallete.color1);
+        palleteMaterial.SetColor("_Original2", defaultPallete.color2);
+        palleteMaterial.SetColor("_Original3", defaultPallete.color3);
+        palleteMaterial.SetColor("_Original4", defaultPallete.color4);
+        palleteMaterial.SetColor("_Original5", defaultPallete.color5);
+        palleteMaterial.SetColor("_Original6", defaultPallete.color6);
+        palleteMaterial.SetColor("_Original7", defaultPallete.color7);
+
+        palleteMaterial.SetFloat("_Tolerance", tolerance);
     }
 
     private int GetHighestResolution()

@@ -36,7 +36,7 @@ public class DataManager : MonoBehaviour
     #region Settings Data
     public SettingsData GetSettingsData()
     {
-        return new SettingsData(PlayerPrefs.GetInt("Fullscreen", 1) != 0, PlayerPrefs.GetInt("ResolutionIndex", -1), PlayerPrefs.GetFloat("Volume", 1f));
+        return new SettingsData(PlayerPrefs.GetInt("Fullscreen", 1) != 0, PlayerPrefs.GetInt("ResolutionIndex", -1), PlayerPrefs.GetFloat("Volume", 1f), PlayerPrefs.GetInt("PalleteIndex", -1));
     }
 
     public void SaveResolutionSetting(int resolution)
@@ -52,6 +52,11 @@ public class DataManager : MonoBehaviour
     public void SaveVolumeSetting(float volume)
     {
         PlayerPrefs.SetFloat("Volume", volume);
+    }
+
+    public void SavePalleteSetting(int pallete)
+    {
+        PlayerPrefs.SetInt("PalleteIndex", pallete);
     }
     #endregion
 
@@ -127,11 +132,13 @@ public struct SettingsData
     public bool isFullscreen;
     public int resolution;
     public float volume;
+    public int currentPallete;
 
-    public SettingsData(bool isFullscreen, int resolution, float volume)
+    public SettingsData(bool isFullscreen, int resolution, float volume, int pallete)
     {
         this.isFullscreen = isFullscreen;
         this.resolution = resolution;
         this.volume = volume;
+        this.currentPallete = pallete;
     }
 }

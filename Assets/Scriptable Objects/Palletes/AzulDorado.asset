@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676dc276e8ed90c49bd3e26e3e003e20, type: 3}
+  m_Name: AzulDorado
+  m_EditorClassIdentifier: Assembly-CSharp::ColorPallete
+  color1: {r: 0.03137255, g: 0.09803922, b: 0.23529412, a: 1}
+  color2: {r: 0.09411765, g: 0.24705882, b: 0.45490196, a: 1}
+  color3: {r: 0.16862746, g: 0.42352942, b: 0.62352943, a: 1}
+  color4: {r: 0.62352943, g: 0.3647059, b: 0.16862746, a: 1}
+  color5: {r: 0.7294118, g: 0.6039216, b: 0.29803923, a: 1}
+  color6: {r: 0.5803922, g: 0.5568628, b: 0.48235294, a: 1}
+  color7: {r: 0.85882354, g: 0.827451, b: 0.7294118, a: 1}
+  palleteName: Azul Dorado

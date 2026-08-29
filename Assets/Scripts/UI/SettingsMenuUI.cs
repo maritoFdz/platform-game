@@ -7,15 +7,22 @@ using UnityEngine.SceneManagement;
 public class SettingsMenuUI : MonoBehaviour
 {
     public TMP_Dropdown resolutionsDropdown;
+    public TMP_Text paletteText;
     [SerializeField] private string mainSceneName;
 
     private Resolution[] resolutions;
+    private ColorPallete[] palletes;
+
+    private int palleteIndex;
 
     private void Start()
     {
         if (SettingsManager.instance == null) return;
 
         resolutions = SettingsManager.instance.resolutions;
+        palletes = SettingsManager.instance.palletes;
+        palleteIndex = SettingsManager.instance.currentPalleteIndex;
+        RefreshPalleteText(palletes[palleteIndex].name);
         resolutionsDropdown.ClearOptions();
         List<string> resolutionsStrings = new();
         int currentResolutionIndex = 0;
@@ -33,8 +40,6 @@ public class SettingsMenuUI : MonoBehaviour
         resolutionsDropdown.value = currentResolutionIndex;
         resolutionsDropdown.RefreshShownValue();
     }
-
-
 
     public void GoBack()
     {
@@ -68,5 +73,26 @@ public class SettingsMenuUI : MonoBehaviour
     public void SelectButton(GameObject button)
     {
         EventSystem.current.SetSelectedGameObject(button);
+    }
+
+    public void RefreshPalleteText(string text)
+    {
+        paletteText.text = text;
+    }
+
+    public void GoNextPallete()
+    {
+        palleteIndex = (palleteIndex + 1) % palletes.Length;
+        if (SettingsManager.instance != null)
+            SettingsManager.instance.SetColorPallete(palleteIndex);
+        RefreshPalleteText(palletes[palleteIndex].name);
+    }
+
+    public void GoBackPallete()
+    {
+        palleteIndex = (palleteIndex - 1 + palletes.Length) % palletes.Length;
+        if (SettingsManager.instance != null)
+            SettingsManager.instance.SetColorPallete(palleteIndex);
+        RefreshPalleteText(palletes[palleteIndex].name);
     }
 }

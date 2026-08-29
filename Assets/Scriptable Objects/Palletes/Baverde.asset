@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676dc276e8ed90c49bd3e26e3e003e20, type: 3}
+  m_Name: Baverde
+  m_EditorClassIdentifier: Assembly-CSharp::ColorPallete
+  color1: {r: 0.047058824, g: 0.07058824, b: 0.09411765, a: 1}
+  color2: {r: 0.10980392, g: 0.18431373, b: 0.20784314, a: 1}
+  color3: {r: 0.1764706, g: 0.32156864, b: 0.3254902, a: 1}
+  color4: {r: 0.22745098, g: 0.47058824, b: 0.3647059, a: 1}
+  color5: {r: 0.22352941, g: 0.654902, b: 0.29803923, a: 1}
+  color6: {r: 0.3882353, g: 0.827451, b: 0.2901961, a: 1}
+  color7: {r: 0.67058825, g: 0.9137255, b: 0.4862745, a: 1}
+  palleteName: Baverde

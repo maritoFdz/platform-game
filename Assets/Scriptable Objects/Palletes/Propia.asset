@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676dc276e8ed90c49bd3e26e3e003e20, type: 3}
+  m_Name: Propia
+  m_EditorClassIdentifier: Assembly-CSharp::ColorPallete
+  color1: {r: 0.3529412, g: 0.22352941, b: 0.12941177, a: 1}
+  color2: {r: 0.3882353, g: 0.3882353, b: 0.19607843, a: 1}
+  color3: {r: 0.41960785, g: 0.5019608, b: 0.30588236, a: 1}
+  color4: {r: 0.41960785, g: 0.54901963, b: 0.25882354, a: 1}
+  color5: {r: 0.48235294, g: 0.7764706, b: 0.48235294, a: 1}
+  color6: {r: 0.7411765, g: 0.8901961, b: 0.59607846, a: 1}
+  color7: {r: 1, g: 1, b: 0.70980394, a: 1}
+  palleteName: Propia

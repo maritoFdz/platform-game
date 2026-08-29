@@ -46,4 +46,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SettingsManager
   audioMixer: {fileID: 24100000, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
   frameRate: 60
+  palleteMaterial: {fileID: -876546973899608171, guid: 470c387a04a70f44a9106604ae1b88c4, type: 3}
+  defaultPallete: {fileID: 11400000, guid: 5d99a75eb1f912041a7ffa169e7b1adb, type: 2}
+  tolerance: 0.25
+  palletes:
+  - {fileID: 11400000, guid: 5d99a75eb1f912041a7ffa169e7b1adb, type: 2}
+  - {fileID: 11400000, guid: 67a9e44716274524998f2903ad2f25e1, type: 2}
+  - {fileID: 11400000, guid: 2342428ab280cf14d9d66156456e00cc, type: 2}
+  - {fileID: 11400000, guid: 31ae5ef33fab7d641a869bdd106d93a4, type: 2}
+  - {fileID: 11400000, guid: 23c68409b9d8c554d895e086534895b4, type: 2}
+  - {fileID: 11400000, guid: 45b0d3d3e5cc57a4aa3b063061d6a39b, type: 2}
+  - {fileID: 11400000, guid: 4650099ee3cc32442915cb37be4d0798, type: 2}
+  - {fileID: 11400000, guid: e8eae74bb3562cc4399edb7fb9800edf, type: 2}
+  - {fileID: 11400000, guid: 9a805569d463e7947bc2a162625d6c58, type: 2}
+  - {fileID: 11400000, guid: b6aee8ef380b6e64a94825e6a7d0df6b, type: 2}
+  - {fileID: 11400000, guid: f05f9dcbc62ec0a40bc6608df985cbcc, type: 2}
+  - {fileID: 11400000, guid: ab7d6a950860cee4a93f51fe6dd2a50a, type: 2}
+  currentPalleteIndex: 0
   initialized: 0

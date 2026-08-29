@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676dc276e8ed90c49bd3e26e3e003e20, type: 3}
+  m_Name: AzulGris
+  m_EditorClassIdentifier: Assembly-CSharp::ColorPallete
+  color1: {r: 0.2, g: 0.10980392, b: 0.078431375, a: 1}
+  color2: {r: 0.3019608, g: 0.1764706, b: 0.13333334, a: 1}
+  color3: {r: 0.4, g: 0.2509804, b: 0.2, a: 1}
+  color4: {r: 0.43137255, g: 0.3882353, b: 0.43529412, a: 1}
+  color5: {r: 0.49411765, g: 0.65882355, b: 0.9019608, a: 1}
+  color6: {r: 0.58431375, g: 0.76862746, b: 0.8980392, a: 1}
+  color7: {r: 0.9019608, g: 0.98039216, b: 1, a: 1}
+  palleteName: Azul Gris
