@@ -21,7 +21,6 @@ MonoBehaviour:
   canDash: 1
   canDashVertical: 1
   canDashDiagonal: 0
-  canDoubleJump: 0
   dashDistance: 1.5
   dashTime: 0.05
   dashCooldown: 0.5
@@ -35,6 +34,10 @@ MonoBehaviour:
   gravityFallMultiplier: 2
   hangTime: 0.1
   maxFallSpeed: 50
+  canDoubleJump: 1
+  jumpToDoubleJumpTime: 0.2
+  maxDoubleJumpHeight: 2.25
+  minDoubleJumpHeight: 0.5
   wallSlideSpeed: 3
   accelerationTimeWall: 0.5
   wallStickTime: 0.1

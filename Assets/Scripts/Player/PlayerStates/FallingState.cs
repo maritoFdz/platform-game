@@ -30,10 +30,10 @@ public class FallingState : IPlayerState
 
         if (player.JumpPressed && player.CanDoubleJump)
         {
-            Debug.Log("Entrar entrar tecnicamente si entre");
             player.hasJumpAir = true;
-            player.HandleJumpingStateTransition();
+            player.ConsumeJump();
             player.StopFallingAnimation();
+            player.SwitchState(player.doubleJumpingState);
             return;
         }
 

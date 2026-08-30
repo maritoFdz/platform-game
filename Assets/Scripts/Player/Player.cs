@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public float gravityScale;
     [HideInInspector] public float jumpForce;
     [HideInInspector] public float minJumpForce;
+    [HideInInspector] public float doubleJumpForce;
+    [HideInInspector] public float minDoubleJumpForce;
     [HideInInspector] public Vector2 input;
     [HideInInspector] public Vector2 velocity;
     [HideInInspector] public float velocityXSmoothing;
@@ -60,6 +62,7 @@ public class Player : MonoBehaviour
     public DashingState dashingState = new();
     public RunningState runningState = new();
     public JumpingState jumpingState = new();
+    public DoubleJumpingState doubleJumpingState = new();
     public WallSlidingState wallSlidingState = new();
     public WallJumpState wallJumpState = new();
     public SlopeSlidingState slopeSlidingState = new();
@@ -75,6 +78,8 @@ public class Player : MonoBehaviour
         gravityScale = -(2 * playerParameters.maxJumpHeight) / Mathf.Pow(playerParameters.maxHeightTime, 2);
         jumpForce = Mathf.Abs(gravityScale * playerParameters.maxHeightTime);
         minJumpForce = Mathf.Sqrt(2 * Mathf.Abs(gravityScale) * playerParameters.minJumpHeight);
+        doubleJumpForce = Mathf.Sqrt(2f * Mathf.Abs(gravityScale) * playerParameters.maxDoubleJumpHeight);
+        minDoubleJumpForce = Mathf.Sqrt(2 * Mathf.Abs(gravityScale) * playerParameters.minDoubleJumpHeight);
         PlayerSwitchManager.instance.Add(this);
     }
 

@@ -1,24 +1,20 @@
 using UnityEngine;
 
-public class JumpingState : IPlayerState
+public class DoubleJumpingState : IPlayerState
 {
     private float gravityMultiplier;
     private bool freezeBehaviour;
     private bool isHanging;
     private float hangCounter;
-    private float doubleJumpCounter;
 
     public void EnterState(Player player)
     {
-        doubleJumpCounter = player.playerParameters.jumpToDoubleJumpTime;
-        AudioManager.instance.StopPlaying(AudioName.Movement);
-        AudioManager.instance.Play(AudioName.Jump);
+        AudioManager.instance.PlayRandom(AudioName.DashOne, AudioName.DashTwo);
         gravityMultiplier = 1f;
         isHanging = false;
         hangCounter = 0f;
         freezeBehaviour = false;
-        player.MakeSplash(0f, true);
-        player.velocity.y = player.jumpForce;
+        player.velocity.y = player.doubleJumpForce;
     }
 
     public void UpdateState(Player player)
@@ -26,21 +22,8 @@ public class JumpingState : IPlayerState
         if (freezeBehaviour) return;
         if (player.input.x != 0) player.FlipSprite(player.input.x);
 
-        if (doubleJumpCounter > 0)
-            doubleJumpCounter -= Time.deltaTime;
-        
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeAir);
         player.Move(false, false, gravityMultiplier);
-
-        if (player.JumpPressed && player.CanDoubleJump && doubleJumpCounter <= 0)
-        {
-            Debug.Log("Entrar entrar tecnicamente si entre");
-            player.hasJumpAir = true;
-            player.ConsumeJump();
-            player.StopFallingAnimation();
-            player.SwitchState(player.doubleJumpingState);
-            return;
-        }
 
         if (player.IsDashing && !player.hasDashAir)
         {
@@ -58,7 +41,7 @@ public class JumpingState : IPlayerState
                 player.SwitchState(player.fallingState);
                 return;
             }
-            
+
             if (!isHanging)
             {
                 gravityMultiplier = 0f;
@@ -86,8 +69,8 @@ public class JumpingState : IPlayerState
         }
         else if (player.JumpReleased)
         {
-            if (player.velocity.y > player.minJumpForce)
-                player.velocity.y = player.minJumpForce;
+            if (player.velocity.y > player.minDoubleJumpForce)
+                player.velocity.y = player.minDoubleJumpForce;
         }
     }
 }

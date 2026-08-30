@@ -17,7 +17,6 @@ public class DashingState : IPlayerState
         endReduction = 1f; // time to cut from the dash end
         AudioManager.instance.PlayRandom(AudioName.DashOne, AudioName.DashTwo);
         player.hasDashAir = true;
-        player.hasJumpAir = true;
         freezeBehaviour = false;
         player.ConsumeDash();
         dashCounter = 0f;
