@@ -26,7 +26,7 @@ MonoBehaviour:
   dashCooldown: 0.5
   dashBufferTime: 0.1
   decelerationTimeDash: 0.06
-  maxJumpHeight: 3.5
+  maxJumpHeight: 3
   minJumpHeight: 1
   maxHeightTime: 0.4
   jumpBufferTime: 0.15

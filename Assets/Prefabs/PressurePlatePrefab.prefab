@@ -49,10 +49,11 @@ MonoBehaviour:
   doorsConnected:
   - {fileID: 0}
   statesSprite:
-  - {fileID: -8938819534478884857, guid: 4d6acd0b257dadc41ad4dd09117ee8f5, type: 3}
-  - {fileID: -1636734841, guid: 4d6acd0b257dadc41ad4dd09117ee8f5, type: 3}
+  - {fileID: -7538540903602149362, guid: a28ba15505d7ef3448c6260e2956bf61, type: 3}
+  - {fileID: 484907977, guid: a28ba15505d7ef3448c6260e2956bf61, type: 3}
   spriteRenderer: {fileID: 8488700306626681413}
   col: {fileID: 2839295471022552669}
+  keepsDoorClosed: 0
   activationLayer:
     serializedVersion: 2
     m_Bits: 384
@@ -105,9 +106,9 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -8938819534478884857, guid: 4d6acd0b257dadc41ad4dd09117ee8f5, type: 3}
+  m_Sprite: {fileID: -7538540903602149362, guid: a28ba15505d7ef3448c6260e2956bf61, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

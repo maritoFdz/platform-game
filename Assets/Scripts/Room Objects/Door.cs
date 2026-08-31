@@ -22,7 +22,8 @@ public class Door : MonoBehaviour
     private Vector2 dir;
     private Vector2 rayOriginVector;
     private bool isTouchingWall;
-
+    private bool lockX;
+    private bool lockY;
     private void Awake()
     {
         initialPos = transform.position;
@@ -54,6 +55,9 @@ public class Door : MonoBehaviour
                 spacing = col.bounds.size.x / (rayAmount - 1);
                 break;
         }
+
+        lockX = (dir == Vector2.up || dir == Vector2.down);
+        lockY = (dir == Vector2.left || dir == Vector2.right);
     }
 
     private void Update()
@@ -109,6 +113,11 @@ public class Door : MonoBehaviour
                 locked = true;
             }
         }
+
+        Vector3 pos = transform.position;
+        if (lockX) pos.x = initialPos.x;
+        if (lockY) pos.y = initialPos.y;
+        transform.position = pos;
     }
 
     [ContextMenu("Open Door")]
