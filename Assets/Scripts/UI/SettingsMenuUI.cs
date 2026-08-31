@@ -84,7 +84,8 @@ public class SettingsMenuUI : MonoBehaviour
     {
         palleteIndex = (palleteIndex + 1) % palletes.Length;
         if (SettingsManager.instance != null)
-            SettingsManager.instance.SetColorPallete(palleteIndex);
+            while (!SettingsManager.instance.SetColorPallete(palleteIndex))
+                palleteIndex = (palleteIndex + 1) % palletes.Length;
         RefreshPalleteText(palletes[palleteIndex].name);
     }
 
@@ -92,7 +93,8 @@ public class SettingsMenuUI : MonoBehaviour
     {
         palleteIndex = (palleteIndex - 1 + palletes.Length) % palletes.Length;
         if (SettingsManager.instance != null)
-            SettingsManager.instance.SetColorPallete(palleteIndex);
+            while (!SettingsManager.instance.SetColorPallete(palleteIndex))
+                palleteIndex = (palleteIndex - 1 + palletes.Length) % palletes.Length;
         RefreshPalleteText(palletes[palleteIndex].name);
     }
 }

@@ -20,3 +20,4 @@ MonoBehaviour:
   color6: {r: 0.9411765, g: 0.8117647, b: 0.5568628, a: 1}
   color7: {r: 0.9647059, g: 0.92941177, b: 0.8039216, a: 1}
   palleteName: Pastel
+  palleteId: 6

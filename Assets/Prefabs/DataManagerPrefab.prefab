@@ -46,4 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DataManager
   initialized: 1
   firstRoomName: Room01
+  defaultPallete: {fileID: 11400000, guid: 5d99a75eb1f912041a7ffa169e7b1adb, type: 2}
   lastRoomName: 
+  unlockedPalletes: 

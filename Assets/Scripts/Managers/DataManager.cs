@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,7 +13,9 @@ public class DataManager : MonoBehaviour
 
     [HideInInspector] public bool initialized;
     [SerializeField] private string firstRoomName;
+    [SerializeField] ColorPallete defaultPallete;
     [HideInInspector] public string lastRoomName;
+    [HideInInspector] public List<int> unlockedPalletes;
 
     private void Awake()
     {
@@ -61,10 +64,11 @@ public class DataManager : MonoBehaviour
     #endregion
 
     #region Game Data
-    public void SaveGameData(GameData data)
+    private void SaveGameData(GameData data)
     {
         string path = Path.Combine(Application.persistentDataPath, saveFile);
         lastRoomName = data.lastRoomName;
+        unlockedPalletes = data.unlockedPalletes;
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(path, Encrypt(json));
     }
@@ -77,12 +81,26 @@ public class DataManager : MonoBehaviour
             string dataText = File.ReadAllText(path);
             GameData data = JsonUtility.FromJson<GameData>(Decrypt(dataText));
             lastRoomName = data.lastRoomName;
+            unlockedPalletes = data.unlockedPalletes;
         }
         else
         {
             lastRoomName = firstRoomName;
-            SaveGameData(new(firstRoomName));
+            unlockedPalletes = new List<int> { defaultPallete.palleteId };
+            SaveGameData(new(lastRoomName, unlockedPalletes));
         }
+    }
+
+    public void SaveLastRoom(string room)
+    {
+        lastRoomName = room;
+        SaveGameData(new(lastRoomName, unlockedPalletes));
+    }
+
+    public void AddUnlockedPallete(ColorPallete unlocked)
+    {
+        unlockedPalletes.Add(unlocked.palleteId);
+        SaveGameData(new(lastRoomName, unlockedPalletes));
     }
     #endregion
 

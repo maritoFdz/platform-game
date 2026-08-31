@@ -20,3 +20,4 @@ MonoBehaviour:
   color6: {r: 0.7529412, g: 0.8156863, b: 0.45490196, a: 1}
   color7: {r: 0.9882353, g: 0.9882353, b: 0.9882353, a: 1}
   palleteName: Desastre
+  palleteId: 4

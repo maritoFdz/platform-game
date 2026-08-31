@@ -20,3 +20,4 @@ MonoBehaviour:
   color6: {r: 0.7019608, g: 0.7019608, b: 0.49411765, a: 1}
   color7: {r: 0.84705883, g: 0.80784315, b: 0.68235296, a: 1}
   palleteName: Clasico
+  palleteId: 10

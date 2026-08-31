@@ -39,7 +39,8 @@ public class SettingsManager : MonoBehaviour
     {
         SettingsData settingsData = DataManager.instance.GetSettingsData();
         currentPalleteIndex = settingsData.currentPallete;
-        SetColorPallete(currentPalleteIndex);
+        if (!SetColorPallete(currentPalleteIndex))
+            SetColorPallete(0);
         SetFullscreen(settingsData.isFullscreen);
         SetResolution(settingsData.resolution);
         SetVolume(settingsData.volume);
@@ -70,7 +71,7 @@ public class SettingsManager : MonoBehaviour
             DataManager.instance.SaveVolumeSetting(volume);
     }
 
-    public void SetColorPallete(int palleteIndex)
+    public bool SetColorPallete(int palleteIndex) // returns true if seted
     {
         palleteIndex = palleteIndex == -1 ? 0 : Mathf.Clamp(palleteIndex, 0, palletes.Length - 1);
         ColorPallete pallete = palletes[palleteIndex];
@@ -80,6 +81,13 @@ public class SettingsManager : MonoBehaviour
             palleteIndex = 0;
         }
         currentPalleteIndex = palleteIndex;
+        if (DataManager.instance != null)
+        {
+            if (!DataManager.instance.unlockedPalletes.Contains(pallete.palleteId))
+                return false;
+        }
+        else
+            return false;
         palleteMaterial.SetColor("_New1", pallete.color1);
         palleteMaterial.SetColor("_New2", pallete.color2);
         palleteMaterial.SetColor("_New3", pallete.color3);
@@ -89,6 +97,7 @@ public class SettingsManager : MonoBehaviour
         palleteMaterial.SetColor("_New7", pallete.color7);
         if (DataManager.instance != null)
             DataManager.instance.SavePalleteSetting(palleteIndex);
+        return true;
     }
 
     private void SetDefaultPalleteShader()

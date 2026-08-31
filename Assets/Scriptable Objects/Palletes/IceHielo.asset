@@ -20,3 +20,4 @@ MonoBehaviour:
   color6: {r: 0.047058824, g: 0.9019608, b: 0.9490196, a: 1}
   color7: {r: 1, g: 1, b: 1, a: 1}
   palleteName: Ice Hielo
+  palleteId: 5

@@ -20,3 +20,4 @@ MonoBehaviour:
   color6: {r: 1, g: 0.69803923, b: 0.7137255, a: 1}
   color7: {r: 1, g: 0.8627451, b: 0.87058824, a: 1}
   palleteName: Pinky
+  palleteId: 8

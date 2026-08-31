@@ -12,4 +12,5 @@ public class ColorPallete : ScriptableObject
     public Color color7;
 
     public string palleteName;
+    public int palleteId;
 }

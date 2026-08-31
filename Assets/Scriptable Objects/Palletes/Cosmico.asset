@@ -20,3 +20,4 @@ MonoBehaviour:
   color6: {r: 0.7647059, g: 0.33333334, b: 0.85490197, a: 1}
   color7: {r: 0.45490196, g: 0.68235296, b: 1, a: 1}
   palleteName: Cosmico
+  palleteId: 3

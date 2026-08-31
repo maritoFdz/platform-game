@@ -50,7 +50,8 @@ public class RoomManager : MonoBehaviour
 
     public void LevelPassed()
     {
-        DataManager.instance.SaveGameData(new(nextRoomName));
+        if (DataManager.instance != null)
+            DataManager.instance.SaveLastRoom(nextRoomName);
         SceneManager.LoadScene(nextRoomName);
     }
 
