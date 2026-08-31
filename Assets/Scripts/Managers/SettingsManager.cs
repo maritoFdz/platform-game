@@ -1,4 +1,5 @@
 using NUnit.Framework.Constraints;
+using System;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -98,6 +99,24 @@ public class SettingsManager : MonoBehaviour
         if (DataManager.instance != null)
             DataManager.instance.SavePalleteSetting(palleteIndex);
         return true;
+    }
+
+    public void SetPalleteById(int id)
+    {
+        if (DataManager.instance == null) return;
+        if (DataManager.instance.unlockedPalletes.Contains(id))
+        {
+            int value = GetPalleteIndex(id);
+            currentPalleteIndex = value == -1 ? currentPalleteIndex : value;
+            SetColorPallete(currentPalleteIndex);
+        }
+    }
+
+    private int GetPalleteIndex(int id)
+    {
+        for (int i = 0; i < palletes.Length; i++)
+            if (palletes[i].palleteId == id) return i;
+        return -1;
     }
 
     private void SetDefaultPalleteShader()

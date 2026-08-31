@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 3957637794669289830}
   m_Layer: 7
   m_Name: PlayerPrefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -254,6 +254,8 @@ MonoBehaviour:
   gravityScale: 2
   jumpForce: 4
   minJumpForce: 0
+  doubleJumpForce: 0
+  minDoubleJumpForce: 0
   input: {x: 0, y: 0}
   velocity: {x: 0, y: 0}
   velocityXSmoothing: 0
