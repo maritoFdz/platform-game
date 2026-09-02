@@ -21,3 +21,4 @@ MonoBehaviour:
   color7: {r: 0.85882354, g: 0.827451, b: 0.7294118, a: 1}
   palleteName: Azul Dorado
   palleteId: 1
+  iceOpacity: 0.5

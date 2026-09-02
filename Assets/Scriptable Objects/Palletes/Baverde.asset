@@ -20,3 +20,5 @@ MonoBehaviour:
   color6: {r: 0.3882353, g: 0.827451, b: 0.2901961, a: 1}
   color7: {r: 0.67058825, g: 0.9137255, b: 0.4862745, a: 1}
   palleteName: Baverde
+  palleteId: 0
+  iceOpacity: 0.5

@@ -12,6 +12,7 @@ public class SettingsManager : MonoBehaviour
 
     [Header("Pallete Shader")]
     [SerializeField] private Material palleteMaterial;
+    [SerializeField] private Material iceMaterial;
     [SerializeField] private ColorPallete defaultPallete;
     [SerializeField] private float tolerance;
     public ColorPallete[] palletes;
@@ -96,6 +97,8 @@ public class SettingsManager : MonoBehaviour
         palleteMaterial.SetColor("_New5", pallete.color5);
         palleteMaterial.SetColor("_New6", pallete.color6);
         palleteMaterial.SetColor("_New7", pallete.color7);
+        iceMaterial.SetColor("_Ice_Color", pallete.color7);
+        iceMaterial.SetFloat("_Opacity", pallete.iceOpacity);
         if (DataManager.instance != null)
             DataManager.instance.SavePalleteSetting(palleteIndex);
         return true;
@@ -128,7 +131,8 @@ public class SettingsManager : MonoBehaviour
         palleteMaterial.SetColor("_Original5", defaultPallete.color5);
         palleteMaterial.SetColor("_Original6", defaultPallete.color6);
         palleteMaterial.SetColor("_Original7", defaultPallete.color7);
-
+        iceMaterial.SetColor("_Ice_Color", defaultPallete.color7);
+        iceMaterial.SetFloat("_Opacity", defaultPallete.iceOpacity);
         palleteMaterial.SetFloat("_Tolerance", tolerance);
     }
 

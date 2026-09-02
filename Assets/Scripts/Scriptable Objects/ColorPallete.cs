@@ -13,4 +13,5 @@ public class ColorPallete : ScriptableObject
 
     public string palleteName;
     public int palleteId;
+    public float iceOpacity;
 }
