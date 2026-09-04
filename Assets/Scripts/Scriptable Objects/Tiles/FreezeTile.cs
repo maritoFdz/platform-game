@@ -19,6 +19,7 @@ public class FreezeTile : TileBase, IInteractiveTile
     public void OnPlayerEnter(Player player)
     {
         player.Freeze(freezeTime);
+        player.onFreezeTile = true;
     }
 
     public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)

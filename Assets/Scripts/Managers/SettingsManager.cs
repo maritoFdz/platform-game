@@ -13,6 +13,7 @@ public class SettingsManager : MonoBehaviour
     [Header("Pallete Shader")]
     [SerializeField] private Material palleteMaterial;
     [SerializeField] private Material iceMaterial;
+    [SerializeField] private Material playerIceMaterial;
     [SerializeField] private ColorPallete defaultPallete;
     [SerializeField] private float tolerance;
     public ColorPallete[] palletes;
@@ -99,6 +100,8 @@ public class SettingsManager : MonoBehaviour
         palleteMaterial.SetColor("_New7", pallete.color7);
         iceMaterial.SetColor("_Ice_Color", pallete.color7);
         iceMaterial.SetFloat("_Opacity", pallete.iceOpacity);
+        playerIceMaterial.SetColor("_Ice_Color", pallete.color7);
+
         if (DataManager.instance != null)
             DataManager.instance.SavePalleteSetting(palleteIndex);
         return true;
@@ -134,6 +137,7 @@ public class SettingsManager : MonoBehaviour
         iceMaterial.SetColor("_Ice_Color", defaultPallete.color7);
         iceMaterial.SetFloat("_Opacity", defaultPallete.iceOpacity);
         palleteMaterial.SetFloat("_Tolerance", tolerance);
+        playerIceMaterial.SetColor("_Ice_Color", defaultPallete.color7);
     }
 
     private int GetHighestResolution()

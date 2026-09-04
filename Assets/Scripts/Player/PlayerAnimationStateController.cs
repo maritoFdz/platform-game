@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class PlayerAnimationStateController : MonoBehaviour
@@ -7,6 +8,7 @@ public class PlayerAnimationStateController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Player player;
+    [SerializeField] private SpriteRenderer materialRenderer;
 
     [Header("Parameters")]
     [SerializeField] private float idleWaitTime;
@@ -17,9 +19,17 @@ public class PlayerAnimationStateController : MonoBehaviour
     [Header("Other")]
     [SerializeField] private Color frozenColor;
     [SerializeField] private float colorSpeed;
+
+    [Header("Ice Effect Settings")]
+    [SerializeField] private Material iceMaterial;
+    [SerializeField] private GameObject fog;
+    [SerializeField] private GameObject snowflakesParticles;
+    [SerializeField] private float snowflakesFrequency;
+
     public Coroutine colorRoutine;
-    private Material material;
     private float normalFreezeAmount;
+    private float snowflakesCounter;
+    private GameObject currentFog;
 
     public float FacingDir => spriteRenderer.flipX ? 1f : -1f;
 
@@ -40,7 +50,6 @@ public class PlayerAnimationStateController : MonoBehaviour
 
     private void Awake()
     {
-        material = spriteRenderer.material;
         isWalkingHash = Animator.StringToHash("IsWalking");
         isRunningHash = Animator.StringToHash("IsRunning");
         isFallingHash = Animator.StringToHash("IsFalling");
@@ -55,6 +64,17 @@ public class PlayerAnimationStateController : MonoBehaviour
         freezeAmountHash = Shader.PropertyToID("_Freeze_Amount");
     }
 
+    private void Update()
+    {
+        if (snowflakesCounter > 0f)
+            snowflakesCounter -= Time.deltaTime;
+    }
+
+    private void LateUpdate()
+    {
+        SyncMaterialRenderer();
+    }
+
     private IEnumerator IdleLoop()
     {
         yield return new WaitForSeconds(idleWaitTime);
@@ -67,16 +87,37 @@ public class PlayerAnimationStateController : MonoBehaviour
         spriteRenderer.flipX = isFacingLeft;
     }
 
+    private void SyncMaterialRenderer() // hasta ahora, solo el hielo
+    {
+        if (materialRenderer == null) return;
+        bool visible = normalFreezeAmount > 0.001f;
+        materialRenderer.enabled = visible; // opcional, puedes omitir esto y dejar que el alpha 0 baste
+        if (!HasMaterialsRendering()) return;
+        materialRenderer.sprite = spriteRenderer.sprite;
+        materialRenderer.flipX = spriteRenderer.flipX;
+    }
+
+    private bool HasMaterialsRendering()
+    {
+        return normalFreezeAmount > 0.001f;
+    }
+
     public void StartFreezeEffect(float freezeTime)
     {
+        if (materialRenderer == null) return;
+        if (currentFog == null)
+        {
+            currentFog = Instantiate(fog, transform);
+            currentFog.transform.localPosition = Vector3.zero;
+        }
         colorRoutine ??= StartCoroutine(FreezeColorCo(freezeTime));
     }
 
     public void StopFreezeEffect()
     {
+        if (materialRenderer == null) return;
         if (colorRoutine != null)
             StopCoroutine(colorRoutine); // stops current color effect
-
         colorRoutine = StartCoroutine(UnFreezeColorCo());
     }
 
@@ -84,6 +125,7 @@ public class PlayerAnimationStateController : MonoBehaviour
     {
         float currentFreeze = normalFreezeAmount;
         float timer = 0f;
+        snowflakesCounter = snowflakesFrequency;
         while (true)
         {
             if (player.onFreezeTile) // changes player color and actualizes counter so staying on an ice tile doesnt count as time frozen
@@ -99,13 +141,23 @@ public class PlayerAnimationStateController : MonoBehaviour
                 normalFreezeAmount = Mathf.Lerp(currentFreeze, 0f, changeRatio);
             }
 
-            material.SetFloat(freezeAmountHash, normalFreezeAmount);
+            iceMaterial.SetFloat(freezeAmountHash, normalFreezeAmount);
+            if (snowflakesCounter <= 0)
+            {
+                snowflakesCounter = snowflakesFrequency;
+                Instantiate(snowflakesParticles, transform.position, Quaternion.identity);
+            }
 
             if (!player.onFreezeTile && normalFreezeAmount <= 0.001f)
             {
                 normalFreezeAmount = 0;
-                material.SetFloat(freezeAmountHash, normalFreezeAmount);
+                iceMaterial.SetFloat(freezeAmountHash, normalFreezeAmount);
                 colorRoutine = null;
+                if (currentFog != null)
+                {
+                    Destroy(currentFog);
+                    currentFog = null;
+                }
                 yield break;
             }
 
@@ -118,22 +170,34 @@ public class PlayerAnimationStateController : MonoBehaviour
         while (normalFreezeAmount >= 0.001f)
         {
             normalFreezeAmount = Mathf.Lerp(normalFreezeAmount, 0f, Time.deltaTime * colorSpeed * 10);
-            material.SetFloat(freezeAmountHash, normalFreezeAmount);
+            iceMaterial.SetFloat(freezeAmountHash, normalFreezeAmount);
             yield return null;
         }
+
+        if (currentFog != null)
+        {
+            Destroy(currentFog);
+            currentFog = null;
+        }
         normalFreezeAmount = 0f;
-        material.SetFloat(freezeAmountHash, normalFreezeAmount);
+        iceMaterial.SetFloat(freezeAmountHash, normalFreezeAmount);
         colorRoutine = null;
     }
 
     public void ResetFreezeColor()
     {
+        if (materialRenderer == null) return;
         if (colorRoutine != null)
             StopCoroutine(colorRoutine);
 
+        if (currentFog != null)
+        {
+            Destroy(currentFog);
+            currentFog = null;
+        }
         colorRoutine = null;
         normalFreezeAmount = 0f;
-        material.SetFloat(freezeAmountHash, normalFreezeAmount);
+        iceMaterial.SetFloat(freezeAmountHash, normalFreezeAmount);
     }
 
     public void PlayIdle()

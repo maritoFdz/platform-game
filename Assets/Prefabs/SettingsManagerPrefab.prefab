@@ -48,6 +48,7 @@ MonoBehaviour:
   frameRate: 60
   palleteMaterial: {fileID: -876546973899608171, guid: 470c387a04a70f44a9106604ae1b88c4, type: 3}
   iceMaterial: {fileID: -876546973899608171, guid: 1753f0c3ec090eb4182be91de78b5b07, type: 3}
+  playerIceMaterial: {fileID: -876546973899608171, guid: cffbc98763b740c42a71902e1b0bc426, type: 3}
   defaultPallete: {fileID: 11400000, guid: 5d99a75eb1f912041a7ffa169e7b1adb, type: 2}
   tolerance: 0.25
   palletes:
