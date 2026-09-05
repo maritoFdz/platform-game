@@ -80,6 +80,7 @@ public class SettingsManager : MonoBehaviour
         ColorPallete pallete = palletes[palleteIndex];
         if (pallete == null)
         {
+            Debug.Log("peldon fui yo");
             pallete = defaultPallete;
             palleteIndex = 0;
         }
@@ -87,10 +88,14 @@ public class SettingsManager : MonoBehaviour
         if (DataManager.instance != null)
         {
             if (!DataManager.instance.unlockedPalletes.Contains(pallete.palleteId))
+            {
                 return false;
+            }
         }
         else
+        {
             return false;
+        }
         palleteMaterial.SetColor("_New1", pallete.color1);
         palleteMaterial.SetColor("_New2", pallete.color2);
         palleteMaterial.SetColor("_New3", pallete.color3);
@@ -134,6 +139,13 @@ public class SettingsManager : MonoBehaviour
         palleteMaterial.SetColor("_Original5", defaultPallete.color5);
         palleteMaterial.SetColor("_Original6", defaultPallete.color6);
         palleteMaterial.SetColor("_Original7", defaultPallete.color7);
+        palleteMaterial.SetColor("_New1", defaultPallete.color1);
+        palleteMaterial.SetColor("_New2", defaultPallete.color2);
+        palleteMaterial.SetColor("_New3", defaultPallete.color3);
+        palleteMaterial.SetColor("_New4", defaultPallete.color4);
+        palleteMaterial.SetColor("_New5", defaultPallete.color5);
+        palleteMaterial.SetColor("_New6", defaultPallete.color6);
+        palleteMaterial.SetColor("_New7", defaultPallete.color7);
         iceMaterial.SetColor("_Ice_Color", defaultPallete.color7);
         iceMaterial.SetFloat("_Opacity", defaultPallete.iceOpacity);
         palleteMaterial.SetFloat("_Tolerance", tolerance);

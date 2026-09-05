@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
+[DefaultExecutionOrder(-1)]
 public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
