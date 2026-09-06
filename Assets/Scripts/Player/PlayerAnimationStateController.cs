@@ -45,6 +45,7 @@ public class PlayerAnimationStateController : MonoBehaviour
     private int isSlidingWallHash;
     private int instantFallHash;
     private int anyStateBlockedHash;
+    private int doubleJumpHash;
 
     private bool idleCancelled;
 
@@ -61,6 +62,7 @@ public class PlayerAnimationStateController : MonoBehaviour
         instantJumpHash = Animator.StringToHash("InstantJump");
         instantFallHash = Animator.StringToHash("InstantJumpEnd");
         anyStateBlockedHash = Animator.StringToHash("AnyStateBlocked");
+        doubleJumpHash = Animator.StringToHash("DoubleJump");
         freezeAmountHash = Shader.PropertyToID("_Freeze_Amount");
     }
 
@@ -247,6 +249,11 @@ public class PlayerAnimationStateController : MonoBehaviour
     {
         animator.SetTrigger(startJumpHash);
         LockAnyStateTransitions();
+    }
+
+    public void PlayDoubleJump()
+    {
+        animator.SetTrigger(doubleJumpHash);
     }
 
     public void StopJumping()

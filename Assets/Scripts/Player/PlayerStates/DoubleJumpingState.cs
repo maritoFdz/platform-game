@@ -10,6 +10,7 @@ public class DoubleJumpingState : IPlayerState
     public void EnterState(Player player)
     {
         AudioManager.instance.PlayRandom(AudioName.DashOne, AudioName.DashTwo);
+        player.StartDoubleJump();
         gravityMultiplier = 1f;
         isHanging = false;
         hangCounter = 0f;

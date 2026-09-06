@@ -8,7 +8,6 @@ public class Dyes : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("nos tocamso");
         if (!collision.CompareTag("Player")) return;
         if (DataManager.instance != null)
             DataManager.instance.AddUnlockedPallete(palleteUnlocked);

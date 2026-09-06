@@ -80,7 +80,6 @@ public class SettingsManager : MonoBehaviour
         ColorPallete pallete = palletes[palleteIndex];
         if (pallete == null)
         {
-            Debug.Log("peldon fui yo");
             pallete = defaultPallete;
             palleteIndex = 0;
         }

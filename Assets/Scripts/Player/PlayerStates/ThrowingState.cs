@@ -38,7 +38,6 @@ public class ThrowingState : IPlayerState
 
         if (player.JumpPressed && player.CanDoubleJump)
         {
-            Debug.Log("Entrar entrar tecnicamente si entre");
             player.hasJumpAir = true;
             player.HandleJumpingStateTransition();
             player.StopFallingAnimation();
@@ -54,7 +53,6 @@ public class ThrowingState : IPlayerState
 
         if ((player.WallLeft() || player.WallRight()) && !player.IsFrozen)
         {
-            Debug.Log("si choque jejeje");
             float dir = player.WallLeft() ? -1 : 1;
             player.FlipSprite(dir);
             if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))

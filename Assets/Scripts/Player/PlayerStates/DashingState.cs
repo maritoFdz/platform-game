@@ -52,7 +52,6 @@ public class DashingState : IPlayerState
         }
         else
             player.StopFallingAnimation();
-        Debug.Log(startedOnAir);
     }
 
     public void UpdateState(Player player)
@@ -72,7 +71,6 @@ public class DashingState : IPlayerState
                 player.StopFallingAnimation();
                 AudioManager.instance.Play(AudioName.FallHeavy);
                 player.SwitchState(player.idleState);
-                Debug.Log("Toco piso");
                 return;
             }
             else player.PaintTrail();
@@ -129,7 +127,6 @@ public class DashingState : IPlayerState
                     if (fallingDash)
                         player.ActivateDash();
                     player.SwitchState(player.idleState);
-                    Debug.Log("Asi tan natural");
                 }
                 else
                 {

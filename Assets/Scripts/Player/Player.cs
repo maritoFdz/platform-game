@@ -168,7 +168,6 @@ public class Player : MonoBehaviour
     {
         if (!isActive) return;
         dashBufferCounter = playerParameters.dashBufferTime;
-        Debug.Log(IsDashing);
     }
 
     private void Die(InputAction.CallbackContext context)
@@ -542,6 +541,11 @@ public class Player : MonoBehaviour
     public void HandleJumpingStateTransition()
     {
         animationController.PlayJumping();
+    }
+
+    public void StartDoubleJump()
+    {
+        animationController.PlayDoubleJump();
     }
 
     public void HandleWallSlidingStateTransition()
