@@ -31,7 +31,7 @@ public class DashingState : IPlayerState
         {
             if (player.input.x != 0f) player.input.x = -player.GetFacingDir();
             if (Mathf.Sign(player.input.y) == -1f) player.input = new Vector2(0f, -1f); // siempre dashea para abajo
-            else player.input.y = 0f;
+            else player.input = new Vector2(-player.GetFacingDir(), 0f);
         }
         else
         {

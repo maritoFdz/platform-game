@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player Par
   m_EditorClassIdentifier: Assembly-CSharp::PlayerParameters
   moveSpeed: 6
-  accelerationTimeGround: 0.2
+  accelerationTimeGround: 0.24
   runningVelocityMultiplier: 2.5
   timeToIdle: 0.1
   coyoteTime: 0.1
@@ -21,7 +21,7 @@ MonoBehaviour:
   canDash: 1
   canDashVertical: 1
   canDashDiagonal: 0
-  dashDistance: 1.5
+  dashDistance: 1.6
   dashTime: 0.05
   dashCooldown: 0.5
   dashBufferTime: 0.1
@@ -30,8 +30,8 @@ MonoBehaviour:
   minJumpHeight: 1
   maxHeightTime: 0.4
   jumpBufferTime: 0.15
-  accelerationTimeAir: 0.1
-  gravityFallMultiplier: 2
+  accelerationTimeAir: 0.12
+  gravityFallMultiplier: 1.75
   hangTime: 0.1
   maxFallSpeed: 50
   canDoubleJump: 1
