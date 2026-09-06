@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Slime Water MAT
-  m_Shader: {fileID: -6465566751694194690, guid: fdd5997d0d0a13b46a828c935080c9eb, type: 3}
+  m_Name: Heat Distorsion Mat
+  m_Shader: {fileID: -6465566751694194690, guid: cd207c5a2c7662a4d8bdb8a111a0b728, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,12 +23,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _CameraSortingLayerTexture:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Texture:
-        m_Texture: {fileID: 0}
+    - _Mask:
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -45,33 +41,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistorsionScale: 30
-    - _DistorsionStrength: 0.05
-    - _Distorsion_Speed: 1
-    - _Foam_Width: 0.985
-    - _NoisePower: 8.7
-    - _NoiseScale: 2.1
-    - _NoiseSpeed: 1
-    - _NoiseStrength: 5
-    - _QueueControl: -1
-    - _QueueOffset: 0
-    - _Transparency: 0.1
-    - _Transparency_1: 0.5
-    - _WaveFlowDirection: -1
-    - _Wave_Frequency: 0.5
-    - _Wave_Size: 0.1
-    - _Wave_Speed: 5
+    - _Heat_Distortion: 0.01
     m_Colors:
     - White: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.09167615, g: 1.0592736, b: 0.09167615, a: 1}
-    - _Distorsion_Direction: {r: 0.05, g: 0, b: 0, a: 0}
-    - _Foam_Color: {r: 0, g: 4, b: 0.12549019, a: 1}
-    - _NoiseColor: {r: 0.15742409, g: 1, b: 0.15742409, a: 1}
-    - _NoiseMovDirection: {r: 0.045, g: 0, b: 0, a: 0}
-    - _NoiseTiling: {r: 0.5, g: 1.5, b: 0, a: 0}
+    - _Distorsion_Speed: {r: 0, g: -0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &8630968590382258343
+--- !u!114 &7325479668005799346
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

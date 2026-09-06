@@ -115,9 +115,6 @@ MonoBehaviour:
   meshFilter: {fileID: 134679417925709010}
   placeholder: {fileID: 3393229468930226786}
   maxAmount: 1.2
-  autoDrainThreshold: 0.2
-  autoDrainSpeed: 2
-  enableAutoDrain: 1
 --- !u!210 &5320978589166108873
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -126,8 +123,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3310975433224590803}
   m_Enabled: 1
-  m_SortingLayerID: 1644660577
-  m_SortingLayer: 1
+  m_SortingLayerID: 396952023
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0

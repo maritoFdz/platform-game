@@ -16,8 +16,8 @@ MonoBehaviour:
   accelerationTime: 0.1
   slopeSlideMultiplier: 10
   gravity: -25
-  rotationVelocity: 150
-  maxRotationAngle: 45
+  rotationVelocity: 100
+  maxRotationAngle: 25
   groundSlopeFrontTol: 35
   slopeBelowTol: 15
   slideSlopeBeneathTol: 45

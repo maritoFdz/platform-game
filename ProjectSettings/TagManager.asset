@@ -17,7 +17,7 @@ TagManager:
   - Plate
   - Ice Material
   - Player Materials
-  - 
+  - Heat Material
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: SortingTexture
     uniqueID: 1644660577
+    locked: 0
+  - name: CSLT Layer
+    uniqueID: 396952023
     locked: 0
   m_RenderingLayers:
   - Default
