@@ -45,28 +45,28 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistorsionScale: 30
+    - _DistorsionScale: 50
     - _DistorsionStrength: 0.05
     - _Distorsion_Speed: 1
-    - _Foam_Width: 0.985
-    - _NoisePower: 8.7
-    - _NoiseScale: 2.1
-    - _NoiseSpeed: 1
-    - _NoiseStrength: 5
+    - _Foam_Width: 0.99
+    - _NoisePower: 8.1
+    - _NoiseScale: 6
+    - _NoiseSpeed: 1.2
+    - _NoiseStrength: 0
     - _QueueControl: -1
     - _QueueOffset: 0
     - _Transparency: 0.1
-    - _Transparency_1: 0.5
+    - _Transparency_1: 0.92
     - _WaveFlowDirection: -1
     - _Wave_Frequency: 0.5
     - _Wave_Size: 0.1
-    - _Wave_Speed: 5
+    - _Wave_Speed: 4
     m_Colors:
     - White: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.09167615, g: 1.0592736, b: 0.09167615, a: 1}
+    - _Color: {r: 0.7294118, g: 0.6039216, b: 0.29803923, a: 1}
     - _Distorsion_Direction: {r: 0.05, g: 0, b: 0, a: 0}
-    - _Foam_Color: {r: 0, g: 4, b: 0.12549019, a: 1}
-    - _NoiseColor: {r: 0.15742409, g: 1, b: 0.15742409, a: 1}
+    - _Foam_Color: {r: 0.85882354, g: 0.827451, b: 0.7294118, a: 1}
+    - _NoiseColor: {r: 0.5803922, g: 0.5568628, b: 0.48235294, a: 1}
     - _NoiseMovDirection: {r: 0.045, g: 0, b: 0, a: 0}
     - _NoiseTiling: {r: 0.5, g: 1.5, b: 0, a: 0}
   m_BuildTextureStacks: []

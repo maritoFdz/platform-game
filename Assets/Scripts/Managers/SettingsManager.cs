@@ -14,6 +14,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Material palleteMaterial;
     [SerializeField] private Material iceMaterial;
     [SerializeField] private Material playerIceMaterial;
+    [SerializeField] private Material waterMaterial;
     [SerializeField] private ColorPallete defaultPallete;
     [SerializeField] private float tolerance;
     public ColorPallete[] palletes;
@@ -104,6 +105,9 @@ public class SettingsManager : MonoBehaviour
         palleteMaterial.SetColor("_New7", pallete.color7);
         iceMaterial.SetColor("_Ice_Color", pallete.color7);
         iceMaterial.SetFloat("_Opacity", pallete.iceOpacity);
+        waterMaterial.SetColor("_NoiseColor", pallete.color6);
+        waterMaterial.SetColor("_Color", pallete.color5);
+        waterMaterial.SetColor("_Foam_Color", pallete.color7);
         playerIceMaterial.SetColor("_Ice_Color", pallete.color7);
 
         if (DataManager.instance != null)
@@ -147,6 +151,9 @@ public class SettingsManager : MonoBehaviour
         palleteMaterial.SetColor("_New7", defaultPallete.color7);
         iceMaterial.SetColor("_Ice_Color", defaultPallete.color7);
         iceMaterial.SetFloat("_Opacity", defaultPallete.iceOpacity);
+        waterMaterial.SetColor("_NoiseColor", defaultPallete.color6);
+        waterMaterial.SetColor("_Color", defaultPallete.color5);
+        waterMaterial.SetColor("_Foam_Color", defaultPallete.color7);
         palleteMaterial.SetFloat("_Tolerance", tolerance);
         playerIceMaterial.SetColor("_Ice_Color", defaultPallete.color7);
     }
