@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CollisionParameters
   raySpacing: 0.25
   skinWidth: 0.015
-  groundProbeDistance: 0.015
+  groundProbeDistance: 0.1
   maxSlopeAngle: 80
   slopeEpsilon: 0.1
