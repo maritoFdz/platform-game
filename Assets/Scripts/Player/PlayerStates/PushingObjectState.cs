@@ -39,7 +39,7 @@ public class PushingObjectState : IPlayerState
                 target.SetAsTargetOf(null);
                 target = null;
             }
-            player.SwitchState(player.idleState);
+            player.SwitchState(player.walkingState);
             return;
         }
 

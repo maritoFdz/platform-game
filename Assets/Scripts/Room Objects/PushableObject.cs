@@ -111,7 +111,11 @@ public class PushableObject : Resetteable
         }
 
         float playerPush = controller.IsNextToSlope(-1, parameters.groundSlopeFrontTol) ? -1 : 1;
-        if (supportRatio <= 0f)
+
+        if (controller.colDetails.onMovingPlatform)
+            PasteToMovingPlatform();
+
+        if (supportRatio <= 0f && !controller.colDetails.onMovingPlatform)
         {
             currentState = State.Falling;
 
@@ -145,8 +149,7 @@ public class PushableObject : Resetteable
     private void FallingUpdate(float dt)
     {
         velocity.y += parameters.gravity * dt;
-        velocity.x = 0.5f * velocity.x;
-        velocityXSmoothing = 0;
+        velocity.x = Mathf.SmoothDamp(velocity.x, 0f, ref velocityXSmoothing, parameters.accelerationTimeAir);
         Vector2 displacement = velocity * dt;
         controller.ClampDisplacement(ref displacement);
         transform.Translate(displacement);
@@ -203,6 +206,16 @@ public class PushableObject : Resetteable
             }
             else if (controller.colDetails.below)
                 currentState = State.Falling;
+        }
+    }
+
+    private void PasteToMovingPlatform()
+    {
+        if (controller.GetPlatformSpace(out float space))
+        {
+            float maxDelta = parameters.platformPasteSpeed * Time.deltaTime;
+            float delta = Mathf.Clamp(-space, -maxDelta, maxDelta);
+            transform.Translate(new Vector2(0f, delta));
         }
     }
 

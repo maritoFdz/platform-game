@@ -17,3 +17,4 @@ MonoBehaviour:
   groundProbeDistance: 0
   maxSlopeAngle: 0
   slopeEpsilon: 0
+  movingPlatTolerance: 0

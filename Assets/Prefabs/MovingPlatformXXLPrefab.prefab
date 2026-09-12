@@ -165,7 +165,7 @@ MonoBehaviour:
   - {x: 0, y: 0}
   speed: 5
   hasCyclicalPath: 1
-  waypointDelay: 0.1
+  waypointDelay: 0.9
   waypointVisRadius: 0.5
   easingIntensity: 1.5
   upwardsDetectionEpsilon: 1

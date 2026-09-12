@@ -58,6 +58,9 @@ public class FallingState : IPlayerState
         {
             player.StopFallingAnimation();
             player.ActivateDash();
+            if (player.playerParameters.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
+                player.MakeSplash(0f);
+            else if (player.velocity.y != 0 && AudioManager.instance != null) AudioManager.instance.Play(AudioName.FallWeak);
             player.SwitchState(player.idleState);
         }    
     }

@@ -63,10 +63,10 @@ Material:
     - _Wave_Speed: 4
     m_Colors:
     - White: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.7294118, g: 0.6039216, b: 0.29803923, a: 1}
+    - _Color: {r: 0.22352941, g: 0.654902, b: 0.29803923, a: 1}
     - _Distorsion_Direction: {r: 0.05, g: 0, b: 0, a: 0}
-    - _Foam_Color: {r: 0.85882354, g: 0.827451, b: 0.7294118, a: 1}
-    - _NoiseColor: {r: 0.5803922, g: 0.5568628, b: 0.48235294, a: 1}
+    - _Foam_Color: {r: 0.67058825, g: 0.9137255, b: 0.4862745, a: 1}
+    - _NoiseColor: {r: 0.3882353, g: 0.827451, b: 0.2901961, a: 1}
     - _NoiseMovDirection: {r: 0.045, g: 0, b: 0, a: 0}
     - _NoiseTiling: {r: 0.5, g: 1.5, b: 0, a: 0}
   m_BuildTextureStacks: []

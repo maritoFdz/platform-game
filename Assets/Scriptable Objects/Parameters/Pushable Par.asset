@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PushableObjectParameters
   pushSpeed: 3
   accelerationTime: 0.1
-  slopeSlideMultiplier: 10
+  slopeSlideMultiplier: 0
   gravity: -25
   rotationVelocity: 100
   maxRotationAngle: 25
@@ -23,3 +23,5 @@ MonoBehaviour:
   slideSlopeBeneathTol: 45
   maxVisualOffset: 0.1
   pushDistance: 1
+  platformPasteSpeed: 1
+  accelerationTimeAir: 0.25

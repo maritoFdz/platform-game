@@ -260,7 +260,7 @@ public class CollisionsHandler2D : RaycastLayout
         if (hit && hit.collider.CompareTag("MovingPlatform"))
         {
             space = hit.distance - scaledSkinWidth;
-            return Mathf.Abs(space) > 0.005f;
+            return Mathf.Abs(space) > collisionParameters.groundProbeDistance;
         }
         return false;
     }
