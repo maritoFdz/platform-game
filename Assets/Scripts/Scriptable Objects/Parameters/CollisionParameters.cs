@@ -8,4 +8,5 @@ public class CollisionParameters : ScriptableObject
     public float groundProbeDistance;
     public float maxSlopeAngle;
     public float slopeEpsilon;
+    public float movingPlatTolerance;
 }

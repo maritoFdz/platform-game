@@ -56,13 +56,18 @@ public class RunningState : IPlayerState
         }
         else
         {
-            coyoteCount -= Time.deltaTime;
-            if (coyoteCount <= 0)
+            if (!player.IsOnMovingPlatform())
             {
-                player.ActivateDash();
-                player.StopRunningAnimation();
-                player.SwitchState(player.fallingState);
+                coyoteCount -= Time.deltaTime;
+                if (coyoteCount <= 0)
+                {
+                    player.ActivateDash();
+                    player.StopRunningAnimation();
+                    player.SwitchState(player.fallingState);
+                }
             }
+            else
+                player.PasteToMovingPlatform();
         }
 
         if (player.IsPushing())

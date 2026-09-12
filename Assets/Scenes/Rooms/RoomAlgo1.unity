@@ -694,7 +694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4202360148123115546, guid: c3b6704b916c3f941ba648f2b8478ad1, type: 3}
       propertyPath: speed
-      value: 5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4202360148123115546, guid: c3b6704b916c3f941ba648f2b8478ad1, type: 3}
       propertyPath: waypointDelay
@@ -2535,21 +2535,11 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741824
-  - first: {x: 9, y: -3, z: 0}
+  - first: {x: 10, y: -3, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 12
       m_TileSpriteIndex: 12
-      m_TileMatrixIndex: 1
-      m_TileColorIndex: 13
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 10, y: -3, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 14
-      m_TileSpriteIndex: 14
       m_TileMatrixIndex: 1
       m_TileColorIndex: 13
       m_TileObjectToInstantiateIndex: 65535
@@ -4695,7 +4685,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 5a85c990cfc665d468c72ed8c42096a3, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 1900961bc924a984098391498255d2b0, type: 2}
-  - m_RefCount: 9
+  - m_RefCount: 8
     m_Data: {fileID: 11400000, guid: 3d71f013a14b2c04ea5497ee67548b12, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 5135c5672cb15914cbfb079e8e6ad14f, type: 2}
@@ -4764,7 +4754,7 @@ Tilemap:
     m_Data: {fileID: -2765854811191841948, guid: 29be858ef9b617041b0af302a48e0053, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -520976934, guid: 29be858ef9b617041b0af302a48e0053, type: 3}
-  - m_RefCount: 9
+  - m_RefCount: 8
     m_Data: {fileID: 1743902420, guid: ba93839ee472d9446ace783e4ee53a00, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -6748595648834692464, guid: ba93839ee472d9446ace783e4ee53a00, type: 3}
@@ -4823,7 +4813,7 @@ Tilemap:
       e31: 0
       e32: 0
       e33: 1
-  - m_RefCount: 14
+  - m_RefCount: 13
     m_Data:
       e00: 1
       e01: 0
@@ -4976,7 +4966,7 @@ Tilemap:
     m_Data: {r: 4.5e-44, g: 4.5e-44, b: 4.5e-44, a: 4.5e-44}
   - m_RefCount: 0
     m_Data: {r: 4.5e-44, g: 4.5e-44, b: 4.5e-44, a: 4.5e-44}
-  - m_RefCount: 284
+  - m_RefCount: 283
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -5203,6 +5193,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &831659363 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8777271909506590005, guid: 38df52e39fb79c94094992a24db79db9, type: 3}
+  m_PrefabInstance: {fileID: 1592020884}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec4f45978c763d649990351f5d4df1a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Door
 --- !u!1 &850840800
 GameObject:
   m_ObjectHideFlags: 0
@@ -6434,6 +6435,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PressurePlatePrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 5979379181700872305, guid: 53c724d135fa02846a2239353e587813, type: 3}
+      propertyPath: 'doorsConnected.Array.data[0]'
+      value: 
+      objectReference: {fileID: 831659363}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

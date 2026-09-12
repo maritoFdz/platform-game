@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f53b6d220ef5548b3f7f578d193990, type: 3}
   m_Name: Pushable Par
   m_EditorClassIdentifier: Assembly-CSharp::PushableObjectParameters
-  pushSpeed: 7
+  pushSpeed: 3
   accelerationTime: 0.1
   slopeSlideMultiplier: 10
   gravity: -25

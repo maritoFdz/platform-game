@@ -69,4 +69,7 @@ public class PlayerParameters : ScriptableObject
     public float accelerationTimeThrow;
     public float throwSpeedFrontMultiplier;
     public float throwSpeedBackMultiplier;
+
+    [Header("Moving Platform Settings")]
+    public float platformPasteSpeed;
 }

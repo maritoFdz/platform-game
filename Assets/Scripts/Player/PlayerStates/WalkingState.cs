@@ -89,13 +89,18 @@ public class WalkingState : IPlayerState
         }
         else
         {
-            coyoteCount -= Time.deltaTime;
-            if (coyoteCount <= 0)
+            if (!player.IsOnMovingPlatform())
             {
-                player.StopWalkingAnimation();
-                AudioManager.instance.StopPlaying(AudioName.Movement);
-                player.SwitchState(player.fallingState);
+                coyoteCount -= Time.deltaTime;
+                if (coyoteCount <= 0)
+                {
+                    player.StopWalkingAnimation();
+                    AudioManager.instance.StopPlaying(AudioName.Movement);
+                    player.SwitchState(player.fallingState);
+                }
             }
+            else
+                player.PasteToMovingPlatform();
         }
 
         if (player.IsPushing())

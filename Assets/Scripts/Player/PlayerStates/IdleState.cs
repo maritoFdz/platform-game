@@ -82,13 +82,18 @@ public class IdleState : IPlayerState
         }
         else
         {
-            coyoteCount -= Time.deltaTime;
-            if (coyoteCount <= 0)
+            if (!player.IsOnMovingPlatform())
             {
-                player.ActivateDash();
-                player.SwitchState(player.fallingState);
-                player.StopIdleAnimation();
+                coyoteCount -= Time.deltaTime;
+                if (coyoteCount <= 0)
+                {
+                    player.ActivateDash();
+                    player.SwitchState(player.fallingState);
+                    player.StopIdleAnimation();
+                }
             }
+            else
+                player.PasteToMovingPlatform();
         }
     }
 }

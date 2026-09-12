@@ -319,6 +319,16 @@ public class Player : MonoBehaviour
         this.moveAmount += moveAmount.x;
     }
 
+    public void PasteToMovingPlatform()
+    {
+        if (controller.GetPlatformSpace(out float space))
+        {
+            float maxDelta = playerParameters.platformPasteSpeed * Time.deltaTime;
+            float delta = Mathf.Clamp(-space, -maxDelta, maxDelta);
+            transform.Translate(new Vector2(0f, delta));
+        }
+    }
+
     public void StartAutoMove(float direction, float speed, float duration)
     {
         pendingAutoMove = true;
@@ -474,6 +484,11 @@ public class Player : MonoBehaviour
     {
         if (tilesController.currentWater == null) return -1f;
         return tilesController.currentWater.GetSurfaceHeight();
+    }
+
+    public bool IsOnMovingPlatform()
+    {
+        return controller.colDetails.onMovingPlatform;
     }
     #endregion
 
