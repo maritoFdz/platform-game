@@ -25,3 +25,7 @@ MonoBehaviour:
   pushDistance: 1
   platformPasteSpeed: 1
   accelerationTimeAir: 0.25
+  passengerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  upwardsDetectionEpsilon: 1

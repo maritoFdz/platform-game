@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody2D), typeof(BoxCollider2D))]
-public class EventPoint : Resetteable
+public class EventPoint : MonoBehaviour, IResetteable
 {
     public enum EventType { EndLevel, AutoMove, CloseDoor }
 
@@ -20,7 +20,7 @@ public class EventPoint : Resetteable
     [Header("For Door and End")]
     [SerializeField] private bool waitUntilDoorLocked;
 
-    public override void ResetEntity()
+    public void ResetEntity()
     {
         gameObject.SetActive(true);
     }

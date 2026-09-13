@@ -18,3 +18,4 @@ MonoBehaviour:
   maxSlopeAngle: 0
   slopeEpsilon: 0
   movingPlatTolerance: 0
+  movingPlatTags: []

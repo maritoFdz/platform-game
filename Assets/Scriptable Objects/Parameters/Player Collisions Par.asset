@@ -18,3 +18,6 @@ MonoBehaviour:
   maxSlopeAngle: 80
   slopeEpsilon: 0.1
   movingPlatTolerance: 15.5
+  movingPlatTags:
+  - MovingPlatformCarrier
+  - MovingPlatform

@@ -18,21 +18,25 @@ public class PlatformCollisionsHandler2D : RaycastLayout
     private float normalizedDistance;
     private float delayCounter;
     private List<PassengerDetails> passengers;
-    private Dictionary<Transform, CollisionsHandler2D> knownPassengers; // to reduce GetComponent<CollisionsHandler2D>() calls 
+    private Dictionary<Transform, CollisionsHandler2D> knownPassengers; // to reduce GetComponent<CollisionsHandler2D>() calls
+    private Dictionary<Transform, IPlatformCarrier> knownCarriers;
+    private HashSet<Transform> knownNonCarriers;
 
     protected override void Awake()
     {
         knownPassengers = new Dictionary<Transform, CollisionsHandler2D>();
+        knownCarriers = new Dictionary<Transform, IPlatformCarrier>();
+        knownNonCarriers = new HashSet<Transform>();
         waypoints = new Vector3[relativeWaypoints.Length];
         base.Awake();
     }
 
     private void Start()
     {
-        RelativeWaypoints2Global();
+        RelativeWaypointsToGlobal();
     }
 
-    private void RelativeWaypoints2Global()
+    private void RelativeWaypointsToGlobal()
     {
         for (int i = 0; i < waypoints.Length; i++)
         {
@@ -44,6 +48,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
     {
         UpdateRaycast();
         Vector2 displacement = GetPlatformDisplacement();
+        passengers = new List<PassengerDetails>();
         CalculatePassengersDisplacement(displacement);
         MovePassengers(true); // move passengers that need first
         transform.Translate(displacement);
@@ -97,14 +102,55 @@ public class PlatformCollisionsHandler2D : RaycastLayout
                 passengerValue.ClampDisplacement(ref passengerDis, passenger.onPlatform);
                 passenger.displacement = passengerDis;
                 passengers[i] = passenger;
-                passengers[i].transform.Translate(passengers[i].displacement);
+
+                if (knownNonCarriers.Contains(passenger.transform))
+                {
+                    passengers[i].transform.Translate(passengers[i].displacement);
+                    continue;
+                }
+
+                if (knownCarriers.ContainsKey(passenger.transform))
+                {
+                    MoveCarrier(passenger);
+                }
+                else
+                {
+                    if (passenger.transform.TryGetComponent<IPlatformCarrier>(out IPlatformCarrier carrier))
+                    {
+                        knownCarriers.Add(passenger.transform, carrier);
+                        MoveCarrier(passenger);
+                    }
+                    else
+                        knownNonCarriers.Add(passenger.transform);
+                }
             }
         }
     }
 
+    private void MoveCarrier(PassengerDetails passenger)
+    {
+        IPlatformCarrier carrier = knownCarriers[passenger.transform];
+        List<Transform> carrierPassengers = carrier.GetPassengersOnTop();
+
+        if (carrierPassengers.Count == 0)
+        {
+            passenger.transform.Translate(passenger.displacement);
+            return;
+        }
+
+        bool moveFirst = passenger.displacement.y < 0f; // only move first when going down
+        if (moveFirst) 
+            passenger.transform.Translate(passenger.displacement);
+        foreach (Transform carrierPassenger in carrierPassengers)
+        {
+            carrierPassenger.transform.Translate(passenger.displacement);
+        }
+        if (!moveFirst)
+            passenger.transform.Translate(passenger.displacement);
+    }
+
     private void CalculatePassengersDisplacement(Vector2 displacement)
     {
-        passengers = new List<PassengerDetails>();
         HashSet<Transform> detectedPassengers = new();
         float directionX = Mathf.Sign(displacement.x);
         float directionY = Mathf.Sign(displacement.y);
@@ -197,20 +243,20 @@ public class PlatformCollisionsHandler2D : RaycastLayout
                 Gizmos.DrawWireSphere(!Application.isPlaying ? transform.position + (Vector3)(relativeWaypoints[i]) : waypoints[i], waypointVisRadius);
         }
     }
+}
 
-    private struct PassengerDetails
+public struct PassengerDetails
+{
+    public Transform transform;
+    public Vector2 displacement;
+    public bool onPlatform;
+    public bool moveFirst;
+
+    public PassengerDetails(Transform transform, Vector2 displacement, bool onPlatform, bool moveFirst)
     {
-        public Transform transform;
-        public Vector2 displacement;
-        public bool onPlatform;
-        public bool moveFirst;
-
-        public PassengerDetails(Transform transform, Vector2 displacement, bool onPlatform, bool moveFirst)
-        {
-            this.transform = transform;
-            this.displacement = displacement;
-            this.onPlatform = onPlatform;
-            this.moveFirst = moveFirst;
-        }
+        this.transform = transform;
+        this.displacement = displacement;
+        this.onPlatform = onPlatform;
+        this.moveFirst = moveFirst;
     }
 }

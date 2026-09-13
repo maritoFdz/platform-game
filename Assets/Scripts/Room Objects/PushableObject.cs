@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static RaycastLayout;
-public class PushableObject : Resetteable
+
+public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
 {
-    
     [Header("References")]
     [SerializeField] private CollisionsHandler2D controller;
     [SerializeField] private Transform visual;
@@ -18,11 +19,17 @@ public class PushableObject : Resetteable
     private State currentState;
     private RaycastHit2D hitNormal;
     private bool hasStoredNormal = false;
+    private Vector3 lastFramePosition;
+    private string originalTag;
+
+    public LayerMask PassengerMask => parameters.passengerMask;
+    public string OriginalTag => originalTag;
 
     private void Start()
     {
         initialPos = transform.position;
         currentState = State.Falling;
+        originalTag = gameObject.tag;
     }
 
     private void Update()
@@ -54,6 +61,8 @@ public class PushableObject : Resetteable
         }
         float supportRatio = (float) supportRays / info.horizontalRayAmount;
 
+        IPlatformCarrier thisInterface = (IPlatformCarrier) this;
+        thisInterface.UpdateMovingPlatformTag(controller);
         switch (currentState)
         {
             case State.Ground:
@@ -229,10 +238,15 @@ public class PushableObject : Resetteable
         this.push = push;
     }
 
-    public override void ResetEntity()
+    public void ResetEntity()
     {
         transform.position = initialPos;
         currentState = State.Falling;
+    }
+
+    public List<Transform> GetPassengersOnTop()
+    {
+        return controller.GetTransformsInDirection(Vector2.up, PassengerMask, parameters.upwardsDetectionEpsilon);
     }
 
     private enum State { Falling, Ground, SlidingSlope }

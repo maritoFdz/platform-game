@@ -16,4 +16,6 @@ public class PushableObjectParameters : ScriptableObject
     public float pushDistance;
     public float platformPasteSpeed;
     public float accelerationTimeAir;
+    public LayerMask passengerMask;
+    public float upwardsDetectionEpsilon;
 }

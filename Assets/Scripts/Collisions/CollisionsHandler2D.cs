@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -57,8 +59,15 @@ public class CollisionsHandler2D : RaycastLayout
                     Vector2.down,
                     collisionParameters.groundProbeDistance * collisionParameters.movingPlatTolerance,
                     collisionMask);
-                if (hitMovingBelow && hitMovingBelow.collider.CompareTag("MovingPlatform"))
-                    colDetails.onMovingPlatform = true;
+                if (hitMovingBelow)
+                {
+                    foreach (var tag in collisionParameters.movingPlatTags)
+                        if (hitMovingBelow.collider.CompareTag(tag))
+                        {
+                            colDetails.onMovingPlatform = true;
+                            break;
+                        }
+                }
             }
             if (hit)
             {   
@@ -255,14 +264,51 @@ public class CollisionsHandler2D : RaycastLayout
     {
         space = 0f;
         if (!colDetails.onMovingPlatform) return false;
-        Vector2 rayOrigin = (raycastOrigins.bottomLeft + raycastOrigins.bottomRight) * 0.5f;
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, collisionParameters.groundProbeDistance * collisionParameters.movingPlatTolerance, collisionMask);
-        if (hit && hit.collider.CompareTag("MovingPlatform"))
+
+        float rayLength = collisionParameters.groundProbeDistance * collisionParameters.movingPlatTolerance;
+        float minDistance = float.MaxValue;
+        bool hitted = false;
+
+        for (int i = 0; i < horizontalRayAmount; i++)
         {
-            space = hit.distance - scaledSkinWidth;
-            return Mathf.Abs(space) > collisionParameters.groundProbeDistance;
+            Vector2 rayOrigin = raycastOrigins.bottomLeft + Vector2.right * (horRaySpacing * i);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, rayLength, collisionMask);
+            if (!hit) continue;
+            foreach (var tag in collisionParameters.movingPlatTags)
+                if (hit.collider.CompareTag(tag))
+                {
+                    if (hit.distance < minDistance)
+                    {
+                        minDistance = hit.distance;
+                        hitted = true;
+                    }
+                    break;
+                }
         }
-        return false;
+        if (!hitted) return false;
+
+        space = minDistance - scaledSkinWidth;
+        return Mathf.Abs(space) > collisionParameters.groundProbeDistance;
+    }
+
+    public List<Transform> GetTransformsInDirection(Vector2 direction, LayerMask layer, float distance)
+    {
+        HashSet<Transform> detectedTransforms = new();
+        List<Transform> transforms = new();
+        for (int i = 0; i < verticalRayAmount; i++)
+        {
+            Vector2 rayOrigin = raycastOrigins.topLeft + Vector2.right * (verRaySpacing * i);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin,
+                direction,
+                distance,
+                layer);
+            if (hit && !detectedTransforms.Contains(hit.transform))
+            {
+                transforms.Add(hit.transform);
+                detectedTransforms.Add(hit.transform);
+            }
+        }
+        return transforms;
     }
 
     public LayerMask GetPushableLayer()

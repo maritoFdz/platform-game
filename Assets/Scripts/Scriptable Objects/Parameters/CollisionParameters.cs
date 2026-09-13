@@ -9,4 +9,5 @@ public class CollisionParameters : ScriptableObject
     public float maxSlopeAngle;
     public float slopeEpsilon;
     public float movingPlatTolerance;
+    public string[] movingPlatTags;
 }
