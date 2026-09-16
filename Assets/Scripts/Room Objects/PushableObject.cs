@@ -25,6 +25,8 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
     public LayerMask PassengerMask => parameters.passengerMask;
     public string OriginalTag => originalTag;
 
+    [HideInInspector] public bool IsGrounded => currentState == State.Ground;
+
     private void Start()
     {
         initialPos = transform.position;
@@ -37,7 +39,7 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
         float dt = Time.deltaTime;
         RaycastLayoutDetails info = controller.GetRaycastLayoutDetails();
         RaycastOrigins origins = controller.GetRaycastOrigins();
-        float rayLength = info.skinWidth + 0.2f;
+        //float rayLength = ;
         int supportRays = 0;
         int leftHits = 0;
         int rightHits = 0;
@@ -45,7 +47,7 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
         for (int i = 0; i < info.horizontalRayAmount; i++)
         {
             Vector2 origin = origins.bottomLeft + Vector2.right * (info.horRaySpacing * i);
-            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, rayLength, info.collisionMask);
+            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, info.skinWidth + 0.1f, info.collisionMask);
 
             if (hit)
             {
@@ -133,6 +135,7 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
                 visual.localPosition = new Vector3(0f, 0f, 0f);
                 playerPushing.pushingObjectState.drop = true;
                 playerPushing = null;
+                Debug.Log("Asere a mi no me digan nada que yo lo solte");
             }
         }
         else if (controller.colDetails.onSlopeSlide || controller.colDetails.onSlope || controller.colDetails.onSlopeDescent || controller.IsNextToSlope(-1, parameters.groundSlopeFrontTol) || controller.IsNextToSlope(1, parameters.groundSlopeFrontTol))

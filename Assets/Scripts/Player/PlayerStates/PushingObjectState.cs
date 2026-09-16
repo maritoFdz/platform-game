@@ -13,7 +13,7 @@ public class PushingObjectState : IPlayerState
         player.velocity.x = 0f;
         player.velocityXSmoothing = 0f;
         target = player.GetPushableObject(pushDirection);
-        if (target)
+        if (target && target.IsGrounded)
             target.SetAsTargetOf(player);
         else
             player.SwitchState(player.idleState);
@@ -34,6 +34,7 @@ public class PushingObjectState : IPlayerState
 
         if (Mathf.Sign(player.input.x) != pushDirection || player.input.x == 0 || drop)
         {
+            Debug.Log("Es verdad asere a mi me soltaron");
             if (target != null)
             {
                 target.SetAsTargetOf(null);
