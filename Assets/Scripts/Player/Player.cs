@@ -49,10 +49,12 @@ public class Player : MonoBehaviour
     private float dashBufferCounter;
     private float dashCooldownCounter;
     private float throwCooldownCounter;
+    private float joinSplitCooldownCounter;
     private bool isSplittingHeld;
     private float normalizedScale;
     private float moveAmount;
     private bool isActive;
+    private bool isDead;
 
     private IPlayerState currentState;
     // states instances
@@ -107,6 +109,8 @@ public class Player : MonoBehaviour
             dashBufferCounter -= Time.deltaTime;
         if (throwCooldownCounter > 0f)
             throwCooldownCounter -= Time.deltaTime;
+        if (joinSplitCooldownCounter > 0f)
+            joinSplitCooldownCounter -= Time.deltaTime;
     }
 
     public void SwitchState(IPlayerState nextState)
@@ -178,7 +182,7 @@ public class Player : MonoBehaviour
 
     private void Join(InputAction.CallbackContext context)
     {
-        if (!isActive) return;
+        if (!isActive || joinSplitCooldownCounter > 0f || !PlayerSwitchManager.instance.IsAdded(this)) return;
         Player closestMinion = GetClosestMinion();
         if (closestMinion != null)
         {
@@ -195,6 +199,8 @@ public class Player : MonoBehaviour
         foreach (Collider2D collision in minions)
         {
             if (collision.gameObject == gameObject)
+                continue;
+            if (!collision.TryGetComponent<Player>(out var candidate) || candidate.isDead)
                 continue;
 
             float distance = Vector2.Distance(transform.position, collision.transform.position);
@@ -249,7 +255,7 @@ public class Player : MonoBehaviour
     {
         if (IsFrozen) return;
         if (!isActive) return;
-
+        joinSplitCooldownCounter = playerParameters.joinSplitCooldown;
         if (normalizedScale / 2 > playerParameters.minNormalizedScale)
         {
             normalizedScale /= 2;
@@ -294,6 +300,8 @@ public class Player : MonoBehaviour
 
     public void KillPlayer()
     {
+        if (isDead || !PlayerSwitchManager.instance.IsAdded(this)) return;
+        isDead = true;
         // todo animation death event
         animationController.ResetFreezeColor();
         PlayerSwitchManager.instance.Erase(this);

@@ -61,4 +61,5 @@ MonoBehaviour:
   accelerationTimeThrow: 1
   throwSpeedFrontMultiplier: 2
   throwSpeedBackMultiplier: 7
+  joinSplitCooldown: 0.2
   platformPasteSpeed: 1

@@ -80,6 +80,11 @@ public class PlayerSwitchManager : MonoBehaviour
     public void Erase(Player player)
     {
         int index = activePlayers.IndexOf(player);
+        if (index == -1)
+        {
+            player.gameObject.SetActive(false);
+            return;
+        }
         bool wasCurrent = index == activePlayerIndex;
         player.DisableInput();
         activePlayers.Remove(player);
@@ -96,10 +101,19 @@ public class PlayerSwitchManager : MonoBehaviour
         else if (wasCurrent)
             activePlayerIndex %= activePlayers.Count;
 
+        if (activePlayerIndex >= activePlayers.Count)
+        {
+            activePlayerIndex = activePlayers.Count - 1;
+        }
         Player newCurrent = activePlayers[activePlayerIndex];
         if (activePlayers.Count > 0 && wasCurrent)
             SpawnParticles(player.transform.position, newCurrent.transform);
         newCurrent.EnableInput();
+    }
+
+    public bool IsAdded(Player player)
+    {
+        return activePlayers.Contains(player);
     }
 
     public void DisableAll()
