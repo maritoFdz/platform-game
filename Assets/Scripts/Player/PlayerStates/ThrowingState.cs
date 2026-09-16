@@ -70,5 +70,15 @@ public class ThrowingState : IPlayerState
             player.ActivateDash();
             player.SwitchState(player.idleState);
         }
+        else if (player.CollisionLeft() || player.CollisionRight())
+        {
+            float dir = player.CollisionLeft() ? -1 : 1;
+            player.velocity = Vector2.zero;
+            if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
+                player.MakeSplash(90f * dir);
+            else AudioManager.instance.Play(AudioName.FallWeak);
+            player.StopFallingAnimation();
+            player.SwitchState(player.idleState);
+        }
     }
 }

@@ -51,6 +51,8 @@ public class PushingObjectState : IPlayerState
                 target.SetAsTargetOf(null);
                 target = null;
             }
+            player.StopWalkingAnimation();
+            player.ForceJumpingAnimation();
             player.SwitchState(player.jumpingState);
             return;
         }
