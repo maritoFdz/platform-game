@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     public bool IsDashing => dashBufferCounter > 0 && dashCooldownCounter <= 0 && playerParameters.canDash;
     public bool CanDoubleJump => playerParameters.canDoubleJump && !hasJumpAir;
     public bool IsFull => transform.localScale.Equals(playerParameters.maxScale);
-    public bool IsSplitting => isSplitting && throwCooldownCounter > 0 || forceSplit;
+    public bool IsSplitting => isSplittingHeld && throwCooldownCounter <= 0 || forceSplit;
 
     public bool IsActive => isActive;
 
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     private float dashBufferCounter;
     private float dashCooldownCounter;
     private float throwCooldownCounter;
-    private bool isSplitting;
+    private bool isSplittingHeld;
     private float normalizedScale;
     private float moveAmount;
     private bool isActive;
@@ -233,7 +233,7 @@ public class Player : MonoBehaviour
     {
         if (IsFrozen || !isActive || !(normalizedScale / 2 > playerParameters.minNormalizedScale)) return;
         throwCooldownCounter = playerParameters.splitTrhowTime;
-        isSplitting = true;
+        isSplittingHeld = true;
     }
 
     private void EndSplit(InputAction.CallbackContext callback)
@@ -241,7 +241,7 @@ public class Player : MonoBehaviour
         if (throwCooldownCounter > 0f)
             Split();
         throwCooldownCounter = 0f;
-        isSplitting = false;
+        isSplittingHeld = false;
         forceSplit = false;
     }
 
