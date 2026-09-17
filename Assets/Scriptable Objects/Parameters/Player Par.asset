@@ -37,7 +37,7 @@ MonoBehaviour:
   canDoubleJump: 1
   jumpToDoubleJumpTime: 0.2
   maxDoubleJumpHeight: 2.25
-  minDoubleJumpHeight: 0.5
+  minDoubleJumpHeight: 1.5
   wallSlideSpeed: 3
   accelerationTimeWall: 0.5
   wallStickTime: 0.1

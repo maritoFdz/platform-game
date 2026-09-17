@@ -34,7 +34,6 @@ public class PushingObjectState : IPlayerState
 
         if (Mathf.Sign(player.input.x) != pushDirection || player.input.x == 0 || drop)
         {
-            Debug.Log("Es verdad asere a mi me soltaron");
             if (target != null)
             {
                 target.SetAsTargetOf(null);

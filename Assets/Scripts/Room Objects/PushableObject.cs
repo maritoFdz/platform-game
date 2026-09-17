@@ -135,7 +135,6 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
                 visual.localPosition = new Vector3(0f, 0f, 0f);
                 playerPushing.pushingObjectState.drop = true;
                 playerPushing = null;
-                Debug.Log("Asere a mi no me digan nada que yo lo solte");
             }
         }
         else if (controller.colDetails.onSlopeSlide || controller.colDetails.onSlope || controller.colDetails.onSlopeDescent || controller.IsNextToSlope(-1, parameters.groundSlopeFrontTol) || controller.IsNextToSlope(1, parameters.groundSlopeFrontTol))

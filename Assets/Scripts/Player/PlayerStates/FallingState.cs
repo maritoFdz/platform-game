@@ -28,6 +28,12 @@ public class FallingState : IPlayerState
 
         player.Move(false, false, player.playerParameters.gravityFallMultiplier);
 
+        if (player.pendingAutoMove)
+        {
+            player.SwitchState(player.autoMoveState);
+            return;
+        }
+
         if (player.JumpPressed && player.CanDoubleJump)
         {
             player.hasJumpAir = true;

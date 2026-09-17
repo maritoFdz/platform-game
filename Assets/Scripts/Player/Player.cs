@@ -219,13 +219,14 @@ public class Player : MonoBehaviour
         return animationController.FacingDir;
     }
 
-    public void MakeSplash(float rotation, bool skipSound = false)
+    public void MakeSplash(float rotation, bool skipSound = false, bool isInfladera = false)
     {
         if (IsFrozen) return;
         if (!tilesController || !animationController) return;
         tilesController.PaintSplash(transform.position, rotation);
         animationController.MakeSplash(rotation);
-        Shrink(true, 2);
+        if (!isInfladera)
+            Shrink(true, 2);
         if (!skipSound) AudioManager.instance.Play(AudioName.FallHeavy);
     }
 
@@ -358,7 +359,7 @@ public class Player : MonoBehaviour
 
     public void EnableInput()
     {
-        SetActiverState(true);
+        SetActiveState(true);
         if (playerInput == null)
             return;
         playerInput.Player.Jump.performed -= Jump;
@@ -380,14 +381,14 @@ public class Player : MonoBehaviour
         playerInput.Player.Join.performed += Join;
     }
 
-    public void SetActiverState(bool enable)
+    public void SetActiveState(bool enable)
     {
         isActive = enable;
     }
 
     public void DisableInput()
     {
-        SetActiverState(false);
+        SetActiveState(false);
         if (playerInput == null)
             return;
         playerInput.Player.Jump.performed -= Jump;

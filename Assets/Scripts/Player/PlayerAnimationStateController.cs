@@ -12,6 +12,7 @@ public class PlayerAnimationStateController : MonoBehaviour
 
     [Header("Parameters")]
     [SerializeField] private float idleWaitTime;
+    [SerializeField] private float anyStateLockedTime;
 
     [Header("VFX Settings")]
     public GameObject splashVFXPrefab;
@@ -44,10 +45,11 @@ public class PlayerAnimationStateController : MonoBehaviour
     private int stickWallHash;
     private int isSlidingWallHash;
     private int instantFallHash;
-    private int anyStateBlockedHash;
+    private int anyStateLockedHash;
     private int doubleJumpHash;
 
     private bool idleCancelled;
+    private float anyStateLockedCounter;
 
     private void Awake()
     {
@@ -61,7 +63,7 @@ public class PlayerAnimationStateController : MonoBehaviour
         stickWallHash = Animator.StringToHash("StickWall");
         instantJumpHash = Animator.StringToHash("InstantJump");
         instantFallHash = Animator.StringToHash("InstantJumpEnd");
-        anyStateBlockedHash = Animator.StringToHash("AnyStateBlocked");
+        anyStateLockedHash = Animator.StringToHash("AnyStateLocked");
         doubleJumpHash = Animator.StringToHash("DoubleJump");
         freezeAmountHash = Shader.PropertyToID("_Freeze_Amount");
     }
@@ -70,6 +72,10 @@ public class PlayerAnimationStateController : MonoBehaviour
     {
         if (snowflakesCounter > 0f)
             snowflakesCounter -= Time.deltaTime;
+        if (animator.GetBool(anyStateLockedHash) && anyStateLockedCounter <= 0f)
+            EnableAnyStateTransitions();
+        if (anyStateLockedCounter > 0f)
+            anyStateLockedCounter -= Time.deltaTime;
     }
 
     private void LateUpdate()
@@ -318,12 +324,13 @@ public class PlayerAnimationStateController : MonoBehaviour
 
     public void LockAnyStateTransitions()
     {
-        animator.SetBool(anyStateBlockedHash, true);
+        animator.SetBool(anyStateLockedHash, true);
+        anyStateLockedCounter = anyStateLockedTime;
     }
 
     public void EnableAnyStateTransitions()
     {
-        animator.SetBool(anyStateBlockedHash, false);
+        animator.SetBool(anyStateLockedHash, false);
     }
     #endregion
 }

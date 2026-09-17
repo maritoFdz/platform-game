@@ -41,7 +41,7 @@ public class RoomManager : MonoBehaviour
         Player newPlayer = Instantiate(initialPlayer, spawnPoint.transform.position, Quaternion.identity);
         newPlayer.SetNormalizedScale(1f);
         newPlayer.gameObject.SetActive(true);
-        newPlayer.SetActiverState(false);
+        newPlayer.SetActiveState(false);
     }
 
     public void PlayersDead()
