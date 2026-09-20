@@ -8,7 +8,7 @@ public class FallingState : IPlayerState
         freezeBehaviour = false;
         if (player.CeilingAbove())
         {
-            player.velocity.y = player.gravityScale * 0.1f; // arbitrary low value to avoid making a smooth transition when player should just fall
+            player.velocity.y = 0f;
             player.MakeSplash(180f);
         }
         player.PlayFallingAnimation();

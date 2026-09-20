@@ -37,12 +37,12 @@ MonoBehaviour:
   canDoubleJump: 1
   jumpToDoubleJumpTime: 0.2
   maxDoubleJumpHeight: 2.25
-  minDoubleJumpHeight: 1.5
+  minDoubleJumpHeight: 0.5
   wallSlideSpeed: 3
   accelerationTimeWall: 0.5
   wallStickTime: 0.1
-  frontDirectionJump: {x: 20, y: 10}
-  climbJump: {x: 10, y: 15}
+  frontDirectionJump: {x: 15, y: 10}
+  climbJump: {x: 10, y: 14}
   fallOfMove: {x: 8, y: 5}
   gravitySlideMultiplier: 0.8
   endSlopeBoostX: 3
@@ -61,5 +61,6 @@ MonoBehaviour:
   accelerationTimeThrow: 1
   throwSpeedFrontMultiplier: 2
   throwSpeedBackMultiplier: 7
+  checkWallTime: 0.1
   joinSplitCooldown: 0.2
   platformPasteSpeed: 1

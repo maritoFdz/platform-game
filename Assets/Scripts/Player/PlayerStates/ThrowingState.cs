@@ -4,9 +4,12 @@ public class ThrowingState : IPlayerState
 {
     private bool freezeBehaviour;
     private float direction;
+    private float checkWallCounter;
+
     public void EnterState(Player player)
     {
         direction = -player.GetFacingDir();
+        checkWallCounter = player.playerParameters.checkWallTime;
         // todo anim
         freezeBehaviour = false;
         player.velocity = new Vector2 (player.playerParameters.throwInitialVelocity.x * direction, player.playerParameters.throwInitialVelocity.y);
@@ -72,13 +75,20 @@ public class ThrowingState : IPlayerState
         }
         else if (player.CollisionLeft() || player.CollisionRight())
         {
-            float dir = player.CollisionLeft() ? -1 : 1;
-            player.velocity = Vector2.zero;
-            if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
-                player.MakeSplash(90f * dir);
-            else AudioManager.instance.Play(AudioName.FallWeak);
-            player.StopFallingAnimation();
-            player.SwitchState(player.idleState);
+            if (checkWallCounter <= 0)
+            {
+                float dir = player.CollisionLeft() ? -1 : 1;
+                player.velocity = Vector2.zero;
+                if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
+                    player.MakeSplash(90f * dir);
+                else AudioManager.instance.Play(AudioName.FallWeak);
+                player.StopFallingAnimation();
+                player.SwitchState(player.idleState);
+            }
+            else
+                checkWallCounter -= Time.deltaTime;
         }
+        else
+            checkWallCounter = player.playerParameters.checkWallTime;
     }
 }

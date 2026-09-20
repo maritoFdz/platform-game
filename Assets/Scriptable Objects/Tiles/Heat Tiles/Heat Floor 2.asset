@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Heat Floor 2
   m_EditorClassIdentifier: Assembly-CSharp::HeatTile
   sprite: {fileID: 1554374549879948025, guid: 4697c922ddffe244f8c67ca2202f45a2, type: 3}
-  shrinksPerTime: 40
-  applyTime: 0.5
+  shrinksPerTime: 20
+  applyTime: 0.25
   isScalable: 0

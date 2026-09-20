@@ -69,6 +69,7 @@ public class PlayerParameters : ScriptableObject
     public float accelerationTimeThrow;
     public float throwSpeedFrontMultiplier;
     public float throwSpeedBackMultiplier;
+    public float checkWallTime;
     public float joinSplitCooldown;
 
     [Header("Moving Platform Settings")]
