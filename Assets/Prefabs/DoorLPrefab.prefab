@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8777271909506590005}
   - component: {fileID: 5152603006537298484}
   m_Layer: 6
-  m_Name: DoorPrefab
+  m_Name: DoorLPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,5 +161,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.671257, y: 9.957195}
+  m_Size: {x: 0.46244812, y: 9.957195}
   m_EdgeRadius: 0

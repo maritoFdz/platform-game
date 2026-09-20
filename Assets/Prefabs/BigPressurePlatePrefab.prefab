@@ -46,14 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d44b37aa1d376354dab6bbeb69bbd36d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PressurePlate
-  doorsConnected:
-  - {fileID: 0}
+  doorsToOpen: []
+  doorsToClose: []
   statesSprite:
   - {fileID: 7581095899793540494, guid: 4eb23b7c84f5f504c8e65d83909aecf7, type: 3}
   - {fileID: 4334139946098689386, guid: 4eb23b7c84f5f504c8e65d83909aecf7, type: 3}
   spriteRenderer: {fileID: 8488700306626681413}
   col: {fileID: 2839295471022552669}
-  keepsDoorClosed: 0
   activationLayer:
     serializedVersion: 2
     m_Bits: 384
