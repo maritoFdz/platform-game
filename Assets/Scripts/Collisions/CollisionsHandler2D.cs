@@ -87,6 +87,8 @@ public class CollisionsHandler2D : RaycastLayout
         float rayLength = Mathf.Abs(displacement.x) + scaledSkinWidth;
         Vector2 rayCorner = direction >= 0 ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
         int raysPushable = 0;
+        bool gettingStep = false;
+        float stepDist = 0f;
         for (int i = 0; i < horizontalRayAmount; i++)
         {
             Vector2 rayOrigin = rayCorner + Vector2.up * (horRaySpacing * i);
@@ -100,16 +102,32 @@ public class CollisionsHandler2D : RaycastLayout
                 collisionParameters.groundProbeDistance * 5,
                 collisionMask);
             if (hitPushable)
-            {
-                if (hitPushable.collider.gameObject.layer == LayerMask.NameToLayer(pushableLayerName) && transform.gameObject.layer != LayerMask.NameToLayer(pushableLayerName))
-                {
-                    raysPushable++;
-                }
-            }
+                if (hitPushable.collider.gameObject.layer == LayerMask.NameToLayer(pushableLayerName) && transform.gameObject.layer != LayerMask.NameToLayer(pushableLayerName)) raysPushable++;
             if (hit)
             {
                 if (hit.distance == 0) continue;
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+                if (i == 0 && Mathf.Approximately(slopeAngle, 90f) && collisionParameters.canStepUp)
+                {
+                    Vector2 stepOrigin = rayOrigin + Vector2.up * collisionParameters.maxStep; // tira para arriba y luego para abajo para saber la distancia en si del salto
+                    if (!Physics2D.Raycast(stepOrigin, Vector2.right * direction, rayLength, collisionMask))
+                    {
+                        Vector2 topStepOrigin = stepOrigin + direction * rayLength * Vector2.right;
+                        RaycastHit2D stepHit = Physics2D.Raycast(topStepOrigin, Vector2.down, collisionParameters.maxStep, collisionMask);
+                        if (stepHit)
+                            if (collisionParameters.maxStep - stepHit.distance > 0f)
+                            {
+                                gettingStep = true;
+                                stepDist = collisionParameters.maxStep - stepHit.distance;
+                            }
+                    }
+                }
+                else if (gettingStep && (rayOrigin.y - rayCorner.y) > collisionParameters.maxStep)
+                {
+                    gettingStep = false;
+                    stepDist = 0f;
+                }
 
                 if (i == 0 && slopeAngle <= collisionParameters.maxSlopeAngle)
                 {
@@ -119,7 +137,7 @@ public class CollisionsHandler2D : RaycastLayout
                     displacement.x += slopeStartDistance;
                 }
 
-                if (!colDetails.onSlope || slopeAngle > collisionParameters.maxSlopeAngle)
+                if ((!colDetails.onSlope || slopeAngle > collisionParameters.maxSlopeAngle) && !gettingStep)
                 {
                     displacement.x = Mathf.Min(Mathf.Abs(displacement.x), (hit.distance - scaledSkinWidth)) * direction;
                     rayLength = Mathf.Min(Mathf.Abs(displacement.x), hit.distance); // this prevents an error because a ray touching a slope with higher angle than current slope 
@@ -129,6 +147,11 @@ public class CollisionsHandler2D : RaycastLayout
                 }
             }
             colDetails.nextPushable = raysPushable >= horizontalRayAmount / 2; // count as pushable only if most of the rays hited the pushable
+        }
+        if (collisionParameters.canStepUp && stepDist > 0f)
+        {
+            displacement.y += stepDist;
+            colDetails.below = true;
         }
     }
 

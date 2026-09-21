@@ -63,7 +63,7 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
         }
         float supportRatio = (float) supportRays / info.horizontalRayAmount;
 
-        IPlatformCarrier thisInterface = (IPlatformCarrier) this;
+        IPlatformCarrier thisInterface = this;
         thisInterface.UpdateMovingPlatformTag(controller);
         switch (currentState)
         {

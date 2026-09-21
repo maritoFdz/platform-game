@@ -57,7 +57,7 @@ public class PushingObjectState : IPlayerState
         }
         if (target != null)
             target.SetDirection(player.input.x);
-        player.Move(true, false, 0f);
+        player.Move(true, false);
         player.PaintTrail();
     }
 }

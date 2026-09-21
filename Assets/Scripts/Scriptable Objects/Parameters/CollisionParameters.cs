@@ -10,4 +10,6 @@ public class CollisionParameters : ScriptableObject
     public float slopeEpsilon;
     public float movingPlatTolerance;
     public string[] movingPlatTags;
+    public bool canStepUp;
+    public float maxStep;
 }

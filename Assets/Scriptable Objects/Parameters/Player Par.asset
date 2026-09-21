@@ -16,7 +16,7 @@ MonoBehaviour:
   accelerationTimeGround: 0.24
   runningVelocityMultiplier: 2.5
   timeToIdle: 0.1
-  coyoteTime: 0.05
+  coyoteTime: 0.075
   canRun: 0
   canDash: 1
   canDashVertical: 1

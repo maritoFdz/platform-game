@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b50bf5673ae31e246a0d6b2f38220fc6, type: 3}
   m_Name: Player Collisions Par
   m_EditorClassIdentifier: Assembly-CSharp::CollisionParameters
-  raySpacing: 0.25
+  raySpacing: 0.1
   skinWidth: 0.015
   groundProbeDistance: 0.025
   maxSlopeAngle: 80
@@ -21,3 +21,5 @@ MonoBehaviour:
   movingPlatTags:
   - MovingPlatformCarrier
   - MovingPlatform
+  canStepUp: 1
+  maxStep: 0.15
