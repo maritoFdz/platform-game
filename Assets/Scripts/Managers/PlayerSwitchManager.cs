@@ -51,9 +51,9 @@ public class PlayerSwitchManager : MonoBehaviour
     private void SpawnParticles(Vector3 origin, Transform target)
     {
         ClearParticles();
-        SwitchParticle particlesThrwwn = Instantiate(switchParticlePrefab, origin, Quaternion.identity);
-        particlesThrwwn.ThrowRay(target);
-        activeParticles.Add(particlesThrwwn);
+        SwitchParticle particlesThrown = Instantiate(switchParticlePrefab, origin, Quaternion.identity);
+        particlesThrown.ThrowRay(target);
+        activeParticles.Add(particlesThrown);
     }
 
     private void ClearParticles()

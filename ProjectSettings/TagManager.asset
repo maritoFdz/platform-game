@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MovingPlatform
   - MovingPlatformCarrier
+  - SwitchParticle
   layers:
   - Default
   - TransparentFX
