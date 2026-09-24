@@ -9,6 +9,7 @@ public class PlayerSwitchManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private SwitchParticle switchParticlePrefab;
+    [SerializeField] private LayerMask cameraSwitchTriggerLayer;
 
     private List<Player> activePlayers;
     private List<SwitchParticle> activeParticles;
@@ -44,6 +45,7 @@ public class PlayerSwitchManager : MonoBehaviour
         current.DisableInput();
         activePlayerIndex = (activePlayerIndex + 1) % activePlayers.Count;
         Player next = activePlayers[activePlayerIndex];
+        HandleCameraSwitching(current, next);
         SpawnParticles(current.transform.position, next.transform);
         next.EnableInput();
     }
@@ -109,6 +111,30 @@ public class PlayerSwitchManager : MonoBehaviour
         if (activePlayers.Count > 0 && wasCurrent)
             SpawnParticles(player.transform.position, newCurrent.transform);
         newCurrent.EnableInput();
+    }
+
+    private void HandleCameraSwitching(Player player, Player player2)
+    {
+        Vector2 start = player.transform.position;
+        Vector2 end = player2.transform.position;
+
+        RaycastHit2D[] hits = Physics2D.LinecastAll(start, end, cameraSwitchTriggerLayer);
+        if (hits.Length == 0) return;
+
+        RaycastHit2D closestTrigger = hits[0];
+        float closestDist = Vector2.Distance(closestTrigger.point, end);
+        foreach (RaycastHit2D hit in hits)
+        {
+            float distance = Vector2.Distance(hit.point, end);
+            if (distance < closestDist)
+            {
+                closestDist = distance;
+                closestTrigger = hit;
+            }
+        }
+
+        if (closestTrigger.collider.TryGetComponent<CameraSwitchTrigger>(out var trigger))
+            trigger.Activate();
     }
 
     public bool IsAdded(Player player)

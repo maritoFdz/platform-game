@@ -16,6 +16,11 @@ public class CameraSwitchTrigger : MonoBehaviour
         if (CameraManager.instance == null) return;
         foreach (var tag in activationTags)
             if (collision.gameObject.CompareTag(tag))
-                CameraManager.instance.SwitchCamera(target);
+                Activate();
+    }
+    public void Activate()
+    {
+        if (CameraManager.instance == null) return;
+        CameraManager.instance.SwitchCamera(target);
     }
 }

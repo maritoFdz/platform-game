@@ -6,7 +6,6 @@ TagManager:
   tags:
   - MovingPlatform
   - MovingPlatformCarrier
-  - SwitchParticle
   layers:
   - Default
   - TransparentFX
@@ -21,7 +20,7 @@ TagManager:
   - Ice Material
   - Player Materials
   - Heat Material
-  - 
+  - CameraTrigger
   - 
   - 
   - 

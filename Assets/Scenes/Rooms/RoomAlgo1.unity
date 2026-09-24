@@ -1120,6 +1120,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSwitchManager
   switchParticlePrefab: {fileID: 3764793467928912211, guid: 4a2c279ab80281d4d83cdccf54c2ef87, type: 3}
+  cameraSwitchTriggerLayer:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!4 &570317127
 Transform:
   m_ObjectHideFlags: 0

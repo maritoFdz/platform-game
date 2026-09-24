@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 48779546244178623}
   - component: {fileID: 1639520199935249656}
   - component: {fileID: 402417989981639312}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: CameraSwitchPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,4 +123,3 @@ MonoBehaviour:
   switchSpeed: 0
   activationTags:
   - Player
-  - SwitchParticle
