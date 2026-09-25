@@ -183,7 +183,7 @@ public class Player : MonoBehaviour
     private void Join(InputAction.CallbackContext context)
     {
         if (!isActive || joinSplitCooldownCounter > 0f || !PlayerSwitchManager.instance.IsAdded(this)) return;
-        Player closestMinion = GetClosestMinion();
+        Player closestMinion = GetClosestMinion(false);
         if (closestMinion != null)
         {
             Upscale(closestMinion.normalizedScale);
@@ -191,27 +191,25 @@ public class Player : MonoBehaviour
         }
     }
 
-    private Player GetClosestMinion()
+    private Player GetClosestMinion(bool ignoreObstacles)
     {
         float minDistance = Mathf.Infinity;
-        Collider2D closestMinion = null;
+        Player closestMinion = null;
         Collider2D[] minions = Physics2D.OverlapCircleAll((Vector2)transform.position, playerParameters.joinRadius, 1 << gameObject.layer);
         foreach (Collider2D collision in minions)
         {
-            if (collision.gameObject == gameObject)
-                continue;
-            if (!collision.TryGetComponent<Player>(out var candidate) || candidate.isDead)
-                continue;
+            if (collision.gameObject == gameObject) continue;
+            if (!collision.TryGetComponent<Player>(out var candidate) || candidate.isDead) continue;
+            if (!ignoreObstacles && controller.IsObstacleBetween(transform.position, candidate.transform.position)) continue;
 
-            float distance = Vector2.Distance(transform.position, collision.transform.position);
+            float distance = ((Vector2) (transform.position - collision.transform.position)).sqrMagnitude;
             if (distance < minDistance)
             {
-                closestMinion = collision;
+                closestMinion = candidate;
                 minDistance = distance;
             }
         }
-        if (closestMinion != null && closestMinion.TryGetComponent<Player>(out var minion)) return minion;
-        return null;
+        return closestMinion;
     }
 
     public float GetFacingDir()

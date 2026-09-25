@@ -333,6 +333,12 @@ public class CollisionsHandler2D : RaycastLayout
         return transforms;
     }
 
+    public bool IsObstacleBetween(Vector2 start, Vector2 end)
+    {
+        RaycastHit2D hit = Physics2D.Linecast(start, end, collisionMask);
+        return hit;
+    }
+
     public LayerMask GetPushableLayer()
     {
         return 1 << LayerMask.NameToLayer(pushableLayerName);
