@@ -123,9 +123,6 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
 
         float playerPush = controller.IsNextToSlope(-1, parameters.groundSlopeFrontTol) ? -1 : 1;
 
-        if (controller.colDetails.onMovingPlatform)
-            PasteToMovingPlatform();
-
         if (supportRatio <= 0f && !controller.colDetails.onMovingPlatform)
         {
             currentState = State.Falling;

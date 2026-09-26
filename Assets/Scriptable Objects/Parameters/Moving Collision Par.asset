@@ -19,5 +19,5 @@ MonoBehaviour:
   slopeEpsilon: 0
   movingPlatTolerance: 0
   movingPlatTags: []
-  canStepUp: 1
+  canStepUp: 0
   maxStep: 0

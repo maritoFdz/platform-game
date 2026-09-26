@@ -259,7 +259,7 @@ public class Player : MonoBehaviour
         {
             normalizedScale /= 2;
             ApplyScale();
-            Player child = Instantiate(playerPrefab, transform.position + new Vector3(0.1f, 0, 0), Quaternion.identity);
+            Player child = Instantiate(playerPrefab, transform.position + new Vector3(0.1f, - (controller.GetColliderHeight() / 4f), 0), Quaternion.identity);
             child.SetNormalizedScale(normalizedScale);
             AudioManager.instance.Play(AudioName.Split);
         }

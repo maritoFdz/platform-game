@@ -438,7 +438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4154120942511005052, guid: 53c724d135fa02846a2239353e587813, type: 3}
       propertyPath: m_Name
-      value: PressurePlatePrefab (2)
+      value: PressurePlateInf
       objectReference: {fileID: 0}
     - target: {fileID: 5979379181700872305, guid: 53c724d135fa02846a2239353e587813, type: 3}
       propertyPath: doorsToOpen.Array.size
@@ -1729,7 +1729,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4154120942511005052, guid: 53c724d135fa02846a2239353e587813, type: 3}
       propertyPath: m_Name
-      value: PressurePlatePrefab (1)
+      value: PressurePlateSup
       objectReference: {fileID: 0}
     - target: {fileID: 5979379181700872305, guid: 53c724d135fa02846a2239353e587813, type: 3}
       propertyPath: doorsToOpen.Array.size
@@ -5842,7 +5842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2459184799958239140, guid: 53b2e151db762724f9cd091a4bda7428, type: 3}
       propertyPath: m_Name
-      value: MovingPlatformSPrefab (1)
+      value: MovingPlatformSSup
       objectReference: {fileID: 0}
     - target: {fileID: 4202360148123115546, guid: 53b2e151db762724f9cd091a4bda7428, type: 3}
       propertyPath: speed
@@ -7061,7 +7061,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3244923679187426421, guid: 3c256a1be8831b74d8c89fe4b71622ec, type: 3}
       propertyPath: m_Name
-      value: PushableObjectPrefab (3)
+      value: PushableSup
       objectReference: {fileID: 0}
     - target: {fileID: 6748905490010928641, guid: 3c256a1be8831b74d8c89fe4b71622ec, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7189,7 +7189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4154120942511005052, guid: 53c724d135fa02846a2239353e587813, type: 3}
       propertyPath: m_Name
-      value: PressurePlatePrefab
+      value: PressurePlateMid
       objectReference: {fileID: 0}
     - target: {fileID: 5979379181700872305, guid: 53c724d135fa02846a2239353e587813, type: 3}
       propertyPath: worldTilemap
@@ -7755,7 +7755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2459184799958239140, guid: 53b2e151db762724f9cd091a4bda7428, type: 3}
       propertyPath: m_Name
-      value: MovingPlatformSPrefab
+      value: MovingPlatformSInf
       objectReference: {fileID: 0}
     - target: {fileID: 4202360148123115546, guid: 53b2e151db762724f9cd091a4bda7428, type: 3}
       propertyPath: speed
@@ -15219,7 +15219,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3244923679187426421, guid: 3c256a1be8831b74d8c89fe4b71622ec, type: 3}
       propertyPath: m_Name
-      value: PushableObjectPrefab (2)
+      value: PushableDown
       objectReference: {fileID: 0}
     - target: {fileID: 6748905490010928641, guid: 3c256a1be8831b74d8c89fe4b71622ec, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16155,6 +16155,17 @@ SceneRoots:
   - {fileID: 1886069005}
   - {fileID: 1189568939}
   - {fileID: 1300906835}
+  - {fileID: 283370243}
+  - {fileID: 749745057}
+  - {fileID: 81412668}
+  - {fileID: 427506505}
+  - {fileID: 2115703702}
+  - {fileID: 1815908880}
+  - {fileID: 1982756366}
+  - {fileID: 109096204}
+  - {fileID: 1655803507}
+  - {fileID: 870939186}
+  - {fileID: 33777985}
   - {fileID: 1339680677}
   - {fileID: 1608674277}
   - {fileID: 829655947}
@@ -16167,14 +16178,3 @@ SceneRoots:
   - {fileID: 2012513512}
   - {fileID: 1348269563}
   - {fileID: 1903928912}
-  - {fileID: 283370243}
-  - {fileID: 749745057}
-  - {fileID: 81412668}
-  - {fileID: 427506505}
-  - {fileID: 2115703702}
-  - {fileID: 1815908880}
-  - {fileID: 1982756366}
-  - {fileID: 109096204}
-  - {fileID: 1655803507}
-  - {fileID: 870939186}
-  - {fileID: 33777985}

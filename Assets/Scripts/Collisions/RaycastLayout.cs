@@ -61,6 +61,11 @@ public class RaycastLayout : MonoBehaviour
         raycastLayoutDetails.collisionMask = collisionMask;
     }
 
+    public float GetColliderHeight()
+    {
+        return col.bounds.size.y;
+    }
+
     public RaycastOrigins GetRaycastOrigins()
     {
         return raycastOrigins;

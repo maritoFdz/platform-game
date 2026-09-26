@@ -52,6 +52,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
         CalculatePassengersDisplacement(displacement);
         MovePassengers(true); // move passengers that need first
         transform.Translate(displacement);
+        Physics2D.SyncTransforms(); // te amo
         MovePassengers(false); // move the rest
     }
 

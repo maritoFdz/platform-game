@@ -83,24 +83,19 @@ public class WalkingState : IPlayerState
             }
         }
 
-        if (player.GroundBelow() || player.OnSlope())
+        if (player.GroundBelow() || player.OnSlope() || player.IsOnMovingPlatform())
         {
             coyoteCount = player.playerParameters.coyoteTime;
         }
         else
         {
-            if (!player.IsOnMovingPlatform())
+            coyoteCount -= Time.deltaTime;
+            if (coyoteCount <= 0)
             {
-                coyoteCount -= Time.deltaTime;
-                if (coyoteCount <= 0)
-                {
-                    player.StopWalkingAnimation();
-                    AudioManager.instance.StopPlaying(AudioName.Movement);
-                    player.SwitchState(player.fallingState);
-                }
+                player.StopWalkingAnimation();
+                AudioManager.instance.StopPlaying(AudioName.Movement);
+                player.SwitchState(player.fallingState);
             }
-            else
-                player.PasteToMovingPlatform();
         }
 
         if (player.IsPushing())

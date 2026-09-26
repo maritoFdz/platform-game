@@ -50,24 +50,19 @@ public class RunningState : IPlayerState
             return;
         }
 
-        if (player.GroundBelow() || player.OnSlope())
+        if (player.GroundBelow() || player.OnSlope() || player.IsOnMovingPlatform())
         {
             coyoteCount = player.playerParameters.coyoteTime;
         }
         else
         {
-            if (!player.IsOnMovingPlatform())
+            coyoteCount -= Time.deltaTime;
+            if (coyoteCount <= 0)
             {
-                coyoteCount -= Time.deltaTime;
-                if (coyoteCount <= 0)
-                {
-                    player.ActivateDash();
-                    player.StopRunningAnimation();
-                    player.SwitchState(player.fallingState);
-                }
+                player.ActivateDash();
+                player.StopRunningAnimation();
+                player.SwitchState(player.fallingState);
             }
-            else
-                player.PasteToMovingPlatform();
         }
 
         if (player.IsPushing())
