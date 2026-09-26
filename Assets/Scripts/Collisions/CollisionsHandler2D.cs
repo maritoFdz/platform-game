@@ -41,8 +41,8 @@ public class CollisionsHandler2D : RaycastLayout
         // diferent implementation respect to horizontal because rays need to go down if displacement.y = 0 which only occurs when character is on the ground or in jump's max height
         float direction = displacement.y > 0f ? 1f : -1f;
         float rayLength = Mathf.Abs(displacement.y) + scaledSkinWidth;
-        if (rayLength < scaledSkinWidth + collisionParameters.groundProbeDistance)
-            rayLength = scaledSkinWidth + collisionParameters.groundProbeDistance;
+        if (rayLength < scaledSkinWidth + collisionParameters.probeDistance)
+            rayLength = scaledSkinWidth + collisionParameters.probeDistance;
         Vector2 rayCorner = direction >= 0 ? raycastOrigins.topLeft : raycastOrigins.bottomLeft;
         for (int i = 0; i < verticalRayAmount; i++)
         {
@@ -56,7 +56,7 @@ public class CollisionsHandler2D : RaycastLayout
             {
                 RaycastHit2D hitMovingBelow = Physics2D.Raycast(rayOrigin,
                     Vector2.down,
-                    collisionParameters.groundProbeDistance * collisionParameters.movingPlatTolerance,
+                    collisionParameters.probeDistance * collisionParameters.movingPlatTolerance,
                     collisionMask);
                 if (hitMovingBelow)
                 {
@@ -69,7 +69,7 @@ public class CollisionsHandler2D : RaycastLayout
                 }
             }
             if (hit)
-            {   
+            {
                 displacement.y = (hit.distance - scaledSkinWidth) * direction;
                 rayLength = hit.distance; // for corners
 
@@ -98,7 +98,7 @@ public class CollisionsHandler2D : RaycastLayout
             Debug.DrawRay(rayOrigin, direction * rayLength * Vector2.right, Color.red);
             RaycastHit2D hitPushable = Physics2D.Raycast(rayOrigin,
                 Vector2.right * direction,
-                collisionParameters.groundProbeDistance * 5,
+                collisionParameters.probeDistance * 5,
                 collisionMask);
             if (hitPushable)
                 if (hitPushable.collider.gameObject.layer == LayerMask.NameToLayer(pushableLayerName) && transform.gameObject.layer != LayerMask.NameToLayer(pushableLayerName)) raysPushable++;
@@ -170,8 +170,8 @@ public class CollisionsHandler2D : RaycastLayout
 
     private void DescendSlope(ref Vector2 displacement)
     {
-        RaycastHit2D hitLeft = Physics2D.Raycast(raycastOrigins.bottomLeft, Vector2.down, collisionParameters.groundProbeDistance + scaledSkinWidth, collisionMask);
-        RaycastHit2D hitRight = Physics2D.Raycast(raycastOrigins.bottomRight, Vector2.down, collisionParameters.groundProbeDistance + scaledSkinWidth, collisionMask);
+        RaycastHit2D hitLeft = Physics2D.Raycast(raycastOrigins.bottomLeft, Vector2.down, collisionParameters.probeDistance + scaledSkinWidth, collisionMask);
+        RaycastHit2D hitRight = Physics2D.Raycast(raycastOrigins.bottomRight, Vector2.down, collisionParameters.probeDistance + scaledSkinWidth, collisionMask);
         SlideSlope(hitLeft, ref displacement);
         SlideSlope(hitRight, ref displacement);
         if (colDetails.onSlopeSlide) return;
@@ -213,9 +213,66 @@ public class CollisionsHandler2D : RaycastLayout
         }
     }
 
+    public void UpdateTouches(bool updateHor, bool updateVer)
+    {
+        float rayLength = scaledSkinWidth + collisionParameters.probeDistance;
+        Vector2 rayCorner;
+        Vector2 rayOrigin;
+
+        if (updateHor)
+        {
+            colDetails.ResetHorTouches();
+            for (int i = 0; i < horizontalRayAmount; i++)
+            {
+                if (colDetails.touchingRight && colDetails.touchingLeft) break;
+
+                if (!colDetails.touchingRight)
+                {
+                    rayCorner = raycastOrigins.bottomRight;
+                    rayOrigin = rayCorner + horRaySpacing * i * Vector2.up;
+                    RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right, rayLength, collisionMask);
+                    if (hit) colDetails.touchingRight = true;
+                }
+
+                if (!colDetails.touchingLeft)
+                {
+                    rayCorner = raycastOrigins.bottomLeft;
+                    rayOrigin = rayCorner + horRaySpacing * i * Vector2.up;
+                    RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin, Vector2.left, rayLength, collisionMask);
+                    if (hit2) colDetails.touchingLeft = true;
+                }
+            }
+        }
+
+        if (updateVer)
+        {
+            colDetails.ResetVerTouches();
+            for (int i = 0; i < verticalRayAmount; i++)
+            {
+                if (colDetails.touchingBelow && colDetails.touchingAbove) break;
+
+                if (!colDetails.touchingBelow)
+                {
+                    rayCorner = raycastOrigins.bottomLeft;
+                    rayOrigin = rayCorner + verRaySpacing * i * Vector2.right;
+                    RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, rayLength, collisionMask);
+                    if (hit) colDetails.touchingBelow = true;
+                }
+
+                if (!colDetails.touchingAbove)
+                {
+                    rayCorner = raycastOrigins.topLeft;
+                    rayOrigin = rayCorner + verRaySpacing * i * Vector2.right;
+                    RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin, Vector2.up, rayLength, collisionMask);
+                    if (hit2) colDetails.touchingAbove = true;
+                }
+            }
+        }
+    }
+
     public bool IsSlopeBelow(int tolerance = 1, bool ignoreMaxAngle = false)
     {
-        float probeLength = scaledSkinWidth + collisionParameters.groundProbeDistance * 2f * tolerance;
+        float probeLength = scaledSkinWidth + collisionParameters.probeDistance * 2f * tolerance;
         RaycastHit2D leftHit = Physics2D.Raycast(raycastOrigins.bottomLeft,
             Vector2.down,
             probeLength,
@@ -241,7 +298,7 @@ public class CollisionsHandler2D : RaycastLayout
 
     public bool IsNextToSlope(int direction, int tolerance = 1)
     {
-        float probeLength = scaledSkinWidth + collisionParameters.groundProbeDistance * 2f * tolerance;
+        float probeLength = scaledSkinWidth + collisionParameters.probeDistance * 2f * tolerance;
         Vector2 rayOrigin = direction >= 0 ? raycastOrigins.topRight : raycastOrigins.topLeft;
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * direction, probeLength, collisionMask);
         if (hit)
@@ -255,7 +312,7 @@ public class CollisionsHandler2D : RaycastLayout
     public bool CheckWallNear(Vector2 direction)
     {
         Vector2 rayCorner = direction.x > 0 ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
-        float rayLength = scaledSkinWidth + collisionParameters.groundProbeDistance + 1;
+        float rayLength = scaledSkinWidth + collisionParameters.probeDistance + 1;
 
         for (int i = 0; i < horizontalRayAmount; i++)
         {
@@ -275,7 +332,7 @@ public class CollisionsHandler2D : RaycastLayout
 
     public bool FallInFront(float direction, int tolerance = 1)
     {
-        float probeLength = scaledSkinWidth + collisionParameters.groundProbeDistance * tolerance;
+        float probeLength = scaledSkinWidth + collisionParameters.probeDistance * tolerance;
         Vector2 rayOrigin = direction >= 0 ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, probeLength, collisionMask);
         if (hit) return false;
@@ -287,7 +344,7 @@ public class CollisionsHandler2D : RaycastLayout
         space = 0f;
         if (!colDetails.onMovingPlatform) return false;
 
-        float rayLength = collisionParameters.groundProbeDistance * collisionParameters.movingPlatTolerance;
+        float rayLength = collisionParameters.probeDistance * collisionParameters.movingPlatTolerance;
         float minDistance = float.MaxValue;
         bool hitted = false;
 
@@ -310,7 +367,7 @@ public class CollisionsHandler2D : RaycastLayout
         if (!hitted) return false;
 
         space = minDistance - scaledSkinWidth;
-        return Mathf.Abs(space) > collisionParameters.groundProbeDistance;
+        return Mathf.Abs(space) > collisionParameters.probeDistance;
     }
 
     public List<Transform> GetTransformsInDirection(Vector2 direction, LayerMask layer, float distance)
@@ -347,6 +404,7 @@ public class CollisionsHandler2D : RaycastLayout
     public struct CollisionDetails
     {
         public bool above, below, left, right, onSlope, onSlopeDescent, onSlopeSlide, nextPushable, onMovingPlatform;
+        public bool touchingAbove, touchingBelow, touchingRight, touchingLeft; // NO USAR SIN LLAMAR A UPDATE TOUCHES!!!!!!
         public float slopeAngle, prevSlopeAngle;
 
         public void ResetCollisions()
@@ -355,12 +413,22 @@ public class CollisionsHandler2D : RaycastLayout
             prevSlopeAngle = slopeAngle;
             slopeAngle = 0;
         }
+
+        public void ResetHorTouches()
+        {
+            touchingLeft = touchingRight = false;
+        }
+
+        public void ResetVerTouches()
+        {
+            touchingAbove = touchingBelow = false;
+        }
     }
 
     private void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;
-        float probeLength = scaledSkinWidth + collisionParameters.groundProbeDistance;
+        float probeLength = scaledSkinWidth + collisionParameters.probeDistance;
         Gizmos.color = Color.red;
         RaycastHit2D leftHit = Physics2D.Raycast(raycastOrigins.bottomLeft,
             Vector2.down,

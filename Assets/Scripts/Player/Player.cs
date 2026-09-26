@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CollisionsHandler2D))]
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ICrushable
 {
     [Header("References")]
     [SerializeField] private CollisionsHandler2D controller;
@@ -44,6 +44,8 @@ public class Player : MonoBehaviour
 
     public bool IsActive => isActive;
 
+    public bool IsCrushed => isCrushed;
+
     private float freezeTime;
     private float jumpBufferCounter;
     private float dashBufferCounter;
@@ -55,6 +57,7 @@ public class Player : MonoBehaviour
     private float moveAmount;
     private bool isActive;
     private bool isDead;
+    private bool isCrushed;
 
     private IPlayerState currentState;
     // states instances
@@ -301,10 +304,12 @@ public class Player : MonoBehaviour
         controller.UpdateCollisions(normalizedScale);
     }
 
-    public void KillPlayer()
+    public void KillPlayer(bool doEvent = false)
     {
         if (isDead || !PlayerSwitchManager.instance.IsAdded(this)) return;
         isDead = true;
+        if (doEvent)
+            MakeSplash(0f, false, true);
         // todo animation death event
         animationController.ResetFreezeColor();
         PlayerSwitchManager.instance.Erase(this);
@@ -388,6 +393,24 @@ public class Player : MonoBehaviour
         playerInput.Player.Dash.performed -= Dash;
         playerInput.Player.Kill.performed -= Die;
         playerInput.Player.Join.performed -= Join;
+    }
+
+    public bool IsColidingVer()
+    {
+        controller.UpdateTouches(false, true);
+        return controller.colDetails.touchingBelow && controller.colDetails.touchingAbove;
+    }
+
+    public bool IsColidingHor()
+    {
+        controller.UpdateTouches(true, false);
+        return controller.colDetails.touchingRight && controller.colDetails.touchingLeft;
+    }
+
+    public void Crush()
+    {
+        isCrushed = true;
+        KillPlayer(true);
     }
 
     #region Collisions related methods called by states
@@ -568,6 +591,5 @@ public class Player : MonoBehaviour
     {
         animationController.StopWallSliding();
     }
-
     #endregion
 }

@@ -5,7 +5,7 @@ public class CollisionParameters : ScriptableObject
 {
     public float raySpacing;
     public float skinWidth;
-    public float groundProbeDistance;
+    public float probeDistance;
     public float maxSlopeAngle;
     public float slopeEpsilon;
     public float movingPlatTolerance;

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -7,6 +8,7 @@ public class Door : MonoBehaviour
     [SerializeField] private Collider2D col;
     [SerializeField] private LayerMask collisionLayer;
     [SerializeField] private LayerMask finalCollisionLayer;
+    [SerializeField] private LayerMask crushablesLayer;
 
     [Header("Parameters")]
     [SerializeField] private float speed;
@@ -24,6 +26,8 @@ public class Door : MonoBehaviour
     private bool isTouchingWall;
     private bool lockX;
     private bool lockY;
+    private List<ICrushable> objectsToCrush;
+
     private void Awake()
     {
         initialPos = transform.position;
@@ -62,6 +66,7 @@ public class Door : MonoBehaviour
 
     private void Update()
     {
+        objectsToCrush = new List<ICrushable>();
         if (locked) return;
 
         if (isClosing)
@@ -91,6 +96,12 @@ public class Door : MonoBehaviour
                     if (((1 << hit.collider.gameObject.layer) & finalCollisionLayer) != 0)
                         isTouchingWall = true;
                 }
+                RaycastHit2D crushHit = Physics2D.Raycast(rayOrigin, dir, displacement, crushablesLayer);
+                if (crushHit)
+                {
+                    if (crushHit.collider.TryGetComponent<ICrushable>(out ICrushable crushable))
+                       if (!objectsToCrush.Contains(crushable)) objectsToCrush.Add(crushable); // esto no es tan fula como para usar un hash set
+                }
             }
 
             displacement = minDistance;
@@ -118,6 +129,27 @@ public class Door : MonoBehaviour
         if (lockX) pos.x = initialPos.x;
         if (lockY) pos.y = initialPos.y;
         transform.position = pos;
+    }
+
+    private void LateUpdate()
+    {
+        if (!isClosing || locked) return;
+
+        foreach (ICrushable crushable in objectsToCrush)
+        {
+            if (crushable.IsCrushed) continue;
+
+            float rotation = transform.eulerAngles.z;
+            switch (rotation)
+            {
+                case 0f: case 180f:
+                    if (crushable.IsColidingVer()) crushable.Crush();
+                    break;
+                case 270f: case 90f:
+                    if (crushable.IsColidingHor()) crushable.Crush();
+                    break;
+            }
+        }
     }
 
     [ContextMenu("Open Door")]
