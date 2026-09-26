@@ -217,16 +217,6 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
         }
     }
 
-    private void PasteToMovingPlatform()
-    {
-        if (controller.GetPlatformSpace(out float space))
-        {
-            float maxDelta = parameters.platformPasteSpeed * Time.deltaTime;
-            float delta = Mathf.Clamp(-space, -maxDelta, maxDelta);
-            transform.Translate(new Vector2(0f, delta));
-        }
-    }
-
     public void SetAsTargetOf(Player player)
     {
         playerPushing = player;
@@ -240,6 +230,8 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
     public void ResetEntity()
     {
         transform.position = initialPos;
+        velocity = Vector2.zero;
+        velocityXSmoothing = 0f;
         currentState = State.Falling;
     }
 

@@ -81,7 +81,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: 6326368845970343591, guid: 3031929fbf35b8e4b977be64c84aa57a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -119,6 +119,7 @@ MonoBehaviour:
   raycastOffset: 0.015
   collisionTolerance: 0.05
   rayAmount: 3
+  crushTime: 0
   locked: 0
 --- !u!61 &5152603006537298484
 BoxCollider2D:

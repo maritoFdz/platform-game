@@ -15,6 +15,7 @@ public class Door : MonoBehaviour
     [SerializeField] private float raycastOffset;
     [SerializeField] private float collisionTolerance;
     [SerializeField] private int rayAmount;
+    [SerializeField] private float crushTime;
 
     private bool isClosing;
     public bool locked;
@@ -137,16 +138,17 @@ public class Door : MonoBehaviour
 
         foreach (ICrushable crushable in objectsToCrush)
         {
-            if (crushable.IsCrushed) continue;
+            if (crushable == null) continue;
+            if (crushable.IsPendingCrush) continue;
 
             float rotation = transform.eulerAngles.z;
             switch (rotation)
             {
                 case 0f: case 180f:
-                    if (crushable.IsColidingVer()) crushable.Crush();
+                    if (crushable.IsColidingVer()) crushable.Crush(true, crushTime);
                     break;
                 case 270f: case 90f:
-                    if (crushable.IsColidingHor()) crushable.Crush();
+                    if (crushable.IsColidingHor()) crushable.Crush(false, crushTime);
                     break;
             }
         }

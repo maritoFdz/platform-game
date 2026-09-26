@@ -33,7 +33,7 @@ MonoBehaviour:
   accelerationTimeAir: 0.12
   gravityFallMultiplier: 1.75
   hangTime: 0.1
-  maxFallSpeed: 50
+  maxFallSpeed: 70
   canDoubleJump: 1
   jumpToDoubleJumpTime: 0.2
   maxDoubleJumpHeight: 2.25

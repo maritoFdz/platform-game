@@ -1,6 +1,7 @@
 using static RaycastLayout;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 [RequireComponent(typeof(CollisionsHandler2D))]
 public class Player : MonoBehaviour, ICrushable
@@ -41,10 +42,8 @@ public class Player : MonoBehaviour, ICrushable
     public bool CanDoubleJump => playerParameters.canDoubleJump && !hasJumpAir;
     public bool IsFull => transform.localScale.Equals(playerParameters.maxScale);
     public bool IsSplitting => isSplittingHeld && throwCooldownCounter <= 0 || forceSplit;
-
     public bool IsActive => isActive;
-
-    public bool IsCrushed => isCrushed;
+    public bool IsPendingCrush => isPendingCrush;
 
     private float freezeTime;
     private float jumpBufferCounter;
@@ -57,7 +56,8 @@ public class Player : MonoBehaviour, ICrushable
     private float moveAmount;
     private bool isActive;
     private bool isDead;
-    private bool isCrushed;
+    private bool isPendingCrush;
+    private Coroutine crushRoutine;
 
     private IPlayerState currentState;
     // states instances
@@ -220,11 +220,12 @@ public class Player : MonoBehaviour, ICrushable
         return animationController.FacingDir;
     }
 
-    public void MakeSplash(float rotation, bool skipSound = false, bool isInfladera = false)
+    public void MakeSplash(float rotation, bool skipSound = false, bool isInfladera = false, bool leaveStain = false)
     {
         if (IsFrozen) return;
         if (!tilesController || !animationController) return;
-        tilesController.PaintSplash(transform.position, rotation);
+        if (leaveStain)
+            tilesController.PaintSplash(transform.position, rotation);
         animationController.MakeSplash(rotation);
         if (!isInfladera)
             Shrink(true, 2);
@@ -308,8 +309,9 @@ public class Player : MonoBehaviour, ICrushable
     {
         if (isDead || !PlayerSwitchManager.instance.IsAdded(this)) return;
         isDead = true;
+        if (crushRoutine != null) StopCoroutine(crushRoutine);
         if (doEvent)
-            MakeSplash(0f, false, true);
+            MakeSplash(0f, false, true, true);
         // todo animation death event
         animationController.ResetFreezeColor();
         PlayerSwitchManager.instance.Erase(this);
@@ -407,9 +409,30 @@ public class Player : MonoBehaviour, ICrushable
         return controller.colDetails.touchingRight && controller.colDetails.touchingLeft;
     }
 
-    public void Crush()
+    public void Crush(bool isVertical, float delay)
     {
-        isCrushed = true;
+        if (isPendingCrush) return; 
+        isPendingCrush = true;
+        crushRoutine = StartCoroutine(CrushCo(isVertical, delay));
+    }
+
+    public IEnumerator CrushCo(bool isVertical, float delay)
+    {
+        float deathTime = Time.time + delay;
+
+        while (Time.time < deathTime)
+        {
+            bool stillCrushed = isVertical ? IsColidingVer(): IsColidingHor();
+            if (!stillCrushed) // sale del crush
+            {
+                isPendingCrush = false;
+                crushRoutine = null;
+                yield break;
+            }
+            yield return null;
+        }
+        isPendingCrush = false;
+        crushRoutine = null;
         KillPlayer(true);
     }
 

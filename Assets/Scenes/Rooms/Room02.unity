@@ -589,6 +589,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSwitchManager
   switchParticlePrefab: {fileID: 3764793467928912211, guid: 4a2c279ab80281d4d83cdccf54c2ef87, type: 3}
+  cameraSwitchTriggerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &570317127
 Transform:
   m_ObjectHideFlags: 0
@@ -9541,7 +9544,7 @@ TilemapRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 7
+  m_SortingOrder: 15
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
