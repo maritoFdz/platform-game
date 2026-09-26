@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -291,6 +292,16 @@ public class PlayerAnimationStateController : MonoBehaviour
     public void MakeSplash(float angle)
     {
         Instantiate(splashVFXPrefab, player.transform.position, Quaternion.Euler(0, 0, angle));
+    }
+
+    public int GetOrderInLayer()
+    {
+        return spriteRenderer.sortingOrder;
+    }
+
+    public void PutInLayerOver(int order)
+    {
+        spriteRenderer.sortingOrder = order + 1;
     }
 
     #region Animation Clips Events

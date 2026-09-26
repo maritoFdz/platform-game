@@ -63,4 +63,4 @@ MonoBehaviour:
   throwSpeedBackMultiplier: 7
   checkWallTime: 0.1
   joinSplitCooldown: 0.2
-  platformPasteSpeed: 0
+  platformPasteSpeed: 10

@@ -259,9 +259,13 @@ public class Player : MonoBehaviour
         {
             normalizedScale /= 2;
             ApplyScale();
-            Player child = Instantiate(playerPrefab, transform.position + new Vector3(0.1f, - (controller.GetColliderHeight() / 4f), 0), Quaternion.identity);
+            
+            Player child = Instantiate(playerPrefab, transform.position + new Vector3(0.15f, -(controller.GetColliderHeight() / 2f) * 0.75f, 0), Quaternion.identity);
             child.SetNormalizedScale(normalizedScale);
-            AudioManager.instance.Play(AudioName.Split);
+            if (child.animationController != null) child.animationController.PutInLayerOver(animationController.GetOrderInLayer());
+            child.SetNormalizedScale(normalizedScale);
+
+            if (AudioManager.instance != null) AudioManager.instance.Play(AudioName.Split);
         }
     }
 
@@ -326,16 +330,6 @@ public class Player : MonoBehaviour
         this.moveAmount += moveAmount.x;
     }
 
-    public void PasteToMovingPlatform()
-    {
-        if (controller.GetPlatformSpace(out float space))
-        {
-            float maxDelta = playerParameters.platformPasteSpeed * Time.deltaTime;
-            float delta = Mathf.Clamp(-space, -maxDelta, maxDelta);
-            transform.Translate(new Vector2(0f, delta));
-        }
-    }
-
     public void StartAutoMove(float direction, float speed, float duration)
     {
         pendingAutoMove = true;
@@ -395,7 +389,6 @@ public class Player : MonoBehaviour
         playerInput.Player.Kill.performed -= Die;
         playerInput.Player.Join.performed -= Join;
     }
-
 
     #region Collisions related methods called by states
     public bool GroundBelow()
@@ -493,10 +486,6 @@ public class Player : MonoBehaviour
         return tilesController.currentWater.GetSurfaceHeight();
     }
 
-    public bool IsOnMovingPlatform()
-    {
-        return controller.colDetails.onMovingPlatform;
-    }
     #endregion
 
     #region Animations related methods called by states

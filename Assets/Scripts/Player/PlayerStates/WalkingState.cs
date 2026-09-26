@@ -83,7 +83,7 @@ public class WalkingState : IPlayerState
             }
         }
 
-        if (player.GroundBelow() || player.OnSlope() || player.IsOnMovingPlatform())
+        if (player.GroundBelow() || player.OnSlope())
         {
             coyoteCount = player.playerParameters.coyoteTime;
         }
