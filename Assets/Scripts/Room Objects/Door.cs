@@ -36,6 +36,7 @@ public class Door : MonoBehaviour
 
     private void Start()
     {
+        objectsToCrush = new List<ICrushable>();
         float rotation = transform.eulerAngles.z;
         switch (rotation)
         {
@@ -67,7 +68,7 @@ public class Door : MonoBehaviour
 
     private void Update()
     {
-        objectsToCrush = new List<ICrushable>();
+        objectsToCrush.Clear();
         if (locked) return;
 
         if (isClosing)

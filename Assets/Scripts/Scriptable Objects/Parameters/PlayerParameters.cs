@@ -68,7 +68,7 @@ public class PlayerParameters : ScriptableObject
     public Vector2 throwInitialVelocity;
     public float accelerationTimeThrow;
     public float throwSpeedFrontMultiplier;
-    public float throwSpeedBackMultiplier;
+    public float throwingStateSpeedBackMoveMult;
     public float checkWallTime;
     public float joinSplitCooldown;
 

@@ -28,6 +28,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
         knownCarriers = new Dictionary<Transform, IPlatformCarrier>();
         knownNonCarriers = new HashSet<Transform>();
         waypoints = new Vector3[relativeWaypoints.Length];
+        passengers = new List<PassengerDetails>();
         base.Awake();
     }
 
@@ -48,7 +49,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
     {
         UpdateRaycast();
         Vector2 displacement = GetPlatformDisplacement();
-        passengers = new List<PassengerDetails>();
+        passengers.Clear();
         CalculatePassengersDisplacement(displacement);
         MovePassengers(true); // move passengers that need first
         transform.Translate(displacement);

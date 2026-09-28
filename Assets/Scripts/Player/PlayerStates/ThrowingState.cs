@@ -23,7 +23,7 @@ public class ThrowingState : IPlayerState
         if (Mathf.Sign(player.input.x) == Mathf.Sign(direction))
             player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity * player.playerParameters.throwSpeedFrontMultiplier, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeThrow);
         else
-            player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity * player.playerParameters.throwSpeedBackMultiplier, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeThrow);
+            player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity * player.playerParameters.throwingStateSpeedBackMoveMult, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeThrow);
         if (player.OnWater())
         {
             player.StopFallingAnimation();

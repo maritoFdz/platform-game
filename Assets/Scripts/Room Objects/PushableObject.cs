@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 using static RaycastLayout;
 
@@ -21,11 +22,19 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
     private bool hasStoredNormal = false;
     private Vector3 lastFramePosition;
     private string originalTag;
+    private bool startedFrameFalling;
+
+    private List<ICrushable> objectsToCrush;
 
     public LayerMask PassengerMask => parameters.passengerMask;
     public string OriginalTag => originalTag;
 
     [HideInInspector] public bool IsGrounded => currentState == State.Ground;
+
+    private void Awake()
+    {
+        objectsToCrush = new List<ICrushable>();
+    }
 
     private void Start()
     {
@@ -36,10 +45,10 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
 
     private void Update()
     {
+        objectsToCrush.Clear();
         float dt = Time.deltaTime;
         RaycastLayoutDetails info = controller.GetRaycastLayoutDetails();
         RaycastOrigins origins = controller.GetRaycastOrigins();
-        //float rayLength = ;
         int supportRays = 0;
         int leftHits = 0;
         int rightHits = 0;
@@ -60,11 +69,19 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
                 if (i < info.horizontalRayAmount / 2) leftHits++;
                 else rightHits++;
             }
+
+            RaycastHit2D crushHit = Physics2D.Raycast(origin, Vector2.down, info.skinWidth + 0.1f, parameters.crushablesLayer);
+            if (crushHit)
+            {
+                if (crushHit.collider.TryGetComponent<ICrushable>(out ICrushable crushable))
+                    if (!objectsToCrush.Contains(crushable)) objectsToCrush.Add(crushable); // esto no es tan fula como para usar un hash set
+            }
         }
         float supportRatio = (float) supportRays / info.horizontalRayAmount;
 
         IPlatformCarrier thisInterface = this;
         thisInterface.UpdateMovingPlatformTag(controller);
+        startedFrameFalling = false;
         switch (currentState)
         {
             case State.Ground:
@@ -75,6 +92,7 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
 
             case State.Falling:
             {
+                startedFrameFalling = true;
                 FallingUpdate(dt);
                 break;
             }
@@ -84,6 +102,18 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
                 SlidingUpdate(dt);
                 break;
             }
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (!startedFrameFalling) return;
+
+        foreach (ICrushable crushable in objectsToCrush)
+        {
+            if (crushable == null) continue;
+            if (crushable.IsPendingCrush) continue;
+            if (crushable.IsColidingVer()) crushable.Crush(true, parameters.crushTime);
         }
     }
 
@@ -233,6 +263,7 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
         velocity = Vector2.zero;
         velocityXSmoothing = 0f;
         currentState = State.Falling;
+        startedFrameFalling = false;
     }
 
     public List<Transform> GetPassengersOnTop()

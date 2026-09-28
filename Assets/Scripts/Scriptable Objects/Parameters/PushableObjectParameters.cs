@@ -18,4 +18,6 @@ public class PushableObjectParameters : ScriptableObject
     public float accelerationTimeAir;
     public LayerMask passengerMask;
     public float upwardsDetectionEpsilon;
+    public float crushTime;
+    public LayerMask crushablesLayer;
 }

@@ -29,3 +29,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   upwardsDetectionEpsilon: 1
+  crushTime: 0
+  crushablesLayer:
+    serializedVersion: 2
+    m_Bits: 128
