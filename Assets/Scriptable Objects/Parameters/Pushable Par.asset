@@ -33,3 +33,6 @@ MonoBehaviour:
   crushablesLayer:
     serializedVersion: 2
     m_Bits: 128
+  pushersLayer:
+    serializedVersion: 2
+    m_Bits: 128

@@ -124,8 +124,9 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
         velocity.y = 0f;
         Vector2 displacement = velocity * dt;
         controller.ClampDisplacement(ref displacement);
-        float target;
-        if (playerPushing != null)
+        float target = 0f;
+        if (PusherInFront()) velocity.x = 0f;
+        else if (playerPushing != null)
             target = push * parameters.pushSpeed;
         else
             target = 0f;
@@ -171,6 +172,26 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
                 playerPushing.velocity.x = -playerPush * parameters.slopeSlideMultiplier * 1.5f;
             currentState = State.SlidingSlope;
         }
+    }
+
+    private bool PusherInFront()
+    {
+        RaycastLayoutDetails info = controller.GetRaycastLayoutDetails();
+        RaycastOrigins origins = controller.GetRaycastOrigins();
+        Vector2 rayCorner = (push >= 0f) ? origins.bottomRight : origins.bottomLeft;
+        Vector2 dir = (push >= 0f) ? Vector2.right : Vector2.left;
+        bool hitted = false;
+        for (int i = 0; i < info.verticalRayAmount; i++)
+        {
+            Vector2 origin = rayCorner + Vector2.up * (info.verRaySpacing * i);
+            RaycastHit2D hit = Physics2D.Raycast(origin, dir, info.skinWidth + 0.1f, parameters.pushersLayer);
+            if (hit)
+            {
+                hitted = true;
+                break;
+            }
+        }
+        return hitted;
     }
 
     private void CheckPlayerPushing()

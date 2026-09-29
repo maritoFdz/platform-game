@@ -20,4 +20,5 @@ public class PushableObjectParameters : ScriptableObject
     public float upwardsDetectionEpsilon;
     public float crushTime;
     public LayerMask crushablesLayer;
+    public LayerMask pushersLayer;
 }
