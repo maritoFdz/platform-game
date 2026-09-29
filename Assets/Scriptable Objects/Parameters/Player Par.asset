@@ -60,7 +60,9 @@ MonoBehaviour:
   throwInitialVelocity: {x: 30, y: 20}
   accelerationTimeThrow: 1
   throwSpeedFrontMultiplier: 2
-  throwSpeedBackMultiplier: 7
+  throwingStateSpeedBackMoveMult: 0
   checkWallTime: 0.1
   joinSplitCooldown: 0.2
   platformPasteSpeed: 10
+  crushThreeshold: 0.25
+  crushPushAway: 0.25

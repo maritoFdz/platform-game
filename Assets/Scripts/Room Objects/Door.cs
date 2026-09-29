@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, IResetteable
 {
     [Header("References")]
     [SerializeField] private Collider2D col;
@@ -147,9 +147,11 @@ public class Door : MonoBehaviour
             {
                 case 0f: case 180f:
                     if (crushable.IsColidingVer()) crushable.Crush(true, crushTime);
-                    break;
+                    else crushable.PushAwayFromCrushVer();
+                        break;
                 case 270f: case 90f:
                     if (crushable.IsColidingHor()) crushable.Crush(false, crushTime);
+                    else crushable.PushAwayFromCrushHor();
                     break;
             }
         }
@@ -184,5 +186,10 @@ public class Door : MonoBehaviour
             float extent = (dir == Vector2.up || dir == Vector2.down) ? col.bounds.extents.y : col.bounds.extents.x;
             target = hit.point - dir * extent;
         }
+    }
+
+    public void ResetEntity()
+    {
+        Open();
     }
 }

@@ -74,4 +74,8 @@ public class PlayerParameters : ScriptableObject
 
     [Header("Moving Platform Settings")]
     public float platformPasteSpeed;
+
+    [Header("Crushing settings")]
+    public float crushThreeshold;
+    public float crushPushAway;
 }

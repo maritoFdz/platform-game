@@ -221,53 +221,95 @@ public class CollisionsHandler2D : RaycastLayout
 
         if (updateHor)
         {
+            int rightRaysAmount = 0;
+            int leftRaysAmount = 0;
+
             colDetails.ResetHorTouches();
             for (int i = 0; i < horizontalRayAmount; i++)
             {
-                if (colDetails.touchingRight && colDetails.touchingLeft) break;
+                rayCorner = raycastOrigins.bottomRight;
+                rayOrigin = rayCorner + horRaySpacing * i * Vector2.up;
+                RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right, rayLength, collisionMask);
+                if (hit) rightRaysAmount++;
 
-                if (!colDetails.touchingRight)
-                {
-                    rayCorner = raycastOrigins.bottomRight;
-                    rayOrigin = rayCorner + horRaySpacing * i * Vector2.up;
-                    RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right, rayLength, collisionMask);
-                    if (hit) colDetails.touchingRight = true;
-                }
-
-                if (!colDetails.touchingLeft)
-                {
-                    rayCorner = raycastOrigins.bottomLeft;
-                    rayOrigin = rayCorner + horRaySpacing * i * Vector2.up;
-                    RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin, Vector2.left, rayLength, collisionMask);
-                    if (hit2) colDetails.touchingLeft = true;
-                }
+                rayCorner = raycastOrigins.bottomLeft;
+                rayOrigin = rayCorner + horRaySpacing * i * Vector2.up;
+                RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin, Vector2.left, rayLength, collisionMask);
+                if (hit2) leftRaysAmount++;
             }
+
+            colDetails.touchingLeftPer = (float) leftRaysAmount / horizontalRayAmount;
+            colDetails.touchingRightPer = (float) rightRaysAmount / horizontalRayAmount;
         }
 
         if (updateVer)
         {
+            int belowRaysAmount = 0;
+            int aboveRaysAmount = 0;
+
             colDetails.ResetVerTouches();
             for (int i = 0; i < verticalRayAmount; i++)
             {
-                if (colDetails.touchingBelow && colDetails.touchingAbove) break;
+                rayCorner = raycastOrigins.bottomLeft;
+                rayOrigin = rayCorner + verRaySpacing * i * Vector2.right;
+                RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, rayLength, collisionMask);
+                if (hit) belowRaysAmount++;
 
-                if (!colDetails.touchingBelow)
-                {
-                    rayCorner = raycastOrigins.bottomLeft;
-                    rayOrigin = rayCorner + verRaySpacing * i * Vector2.right;
-                    RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, rayLength, collisionMask);
-                    if (hit) colDetails.touchingBelow = true;
-                }
-
-                if (!colDetails.touchingAbove)
-                {
-                    rayCorner = raycastOrigins.topLeft;
-                    rayOrigin = rayCorner + verRaySpacing * i * Vector2.right;
-                    RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin, Vector2.up, rayLength, collisionMask);
-                    if (hit2) colDetails.touchingAbove = true;
-                }
+                rayCorner = raycastOrigins.topLeft;
+                rayOrigin = rayCorner + verRaySpacing * i * Vector2.right;
+                RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin, Vector2.up, rayLength, collisionMask);
+                if (hit2) aboveRaysAmount++;
             }
+
+            colDetails.touchingAbovePer = (float) aboveRaysAmount / verticalRayAmount;
+            colDetails.touchingBelowPer = (float) belowRaysAmount / verticalRayAmount;
         }
+    }
+
+    public int GetCornersColVertical(bool top) // returns -1 if it touches left, 0 if both or none, 1 if right
+    {
+        float rayLength = scaledSkinWidth + collisionParameters.probeDistance;
+        Vector2 rayOrigin;
+        RaycastHit2D hitLeft;
+        RaycastHit2D hitRight;
+        if (top)
+        {
+            rayOrigin = raycastOrigins.topLeft;
+            hitLeft = Physics2D.Raycast(rayOrigin, Vector2.up, rayLength, collisionMask);
+            rayOrigin = raycastOrigins.topRight;
+            hitRight = Physics2D.Raycast(rayOrigin, Vector2.up, rayLength, collisionMask);
+        }
+        else
+        {
+            rayOrigin = raycastOrigins.bottomLeft;
+            hitLeft = Physics2D.Raycast(rayOrigin, Vector2.down, rayLength, collisionMask);
+            rayOrigin = raycastOrigins.bottomRight;
+            hitRight = Physics2D.Raycast(rayOrigin, Vector2.down, rayLength, collisionMask);
+        }
+        return hitLeft ? hitRight ? 0 : -1 : hitRight ? 1 : 0;
+    }
+
+    public int GetCornersColHorizontal(bool right) // returns -1 if it touches down, 0 if both or none, 1 if up
+    {
+        float rayLength = scaledSkinWidth + collisionParameters.probeDistance;
+        Vector2 rayOrigin;
+        RaycastHit2D hitDown;
+        RaycastHit2D hitUp;
+        if (right)
+        {
+            rayOrigin = raycastOrigins.topLeft;
+            hitDown = Physics2D.Raycast(rayOrigin, Vector2.right, rayLength, collisionMask);
+            rayOrigin = raycastOrigins.topRight;
+            hitUp = Physics2D.Raycast(rayOrigin, Vector2.right, rayLength, collisionMask);
+        }
+        else
+        {
+            rayOrigin = raycastOrigins.bottomLeft;
+            hitDown = Physics2D.Raycast(rayOrigin, Vector2.left, rayLength, collisionMask);
+            rayOrigin = raycastOrigins.bottomRight;
+            hitUp = Physics2D.Raycast(rayOrigin, Vector2.left, rayLength, collisionMask);
+        }
+        return hitDown ? hitUp ? 0 : -1 : hitUp ? 1 : 0;
     }
 
     public bool IsSlopeBelow(int tolerance = 1, bool ignoreMaxAngle = false)
@@ -404,7 +446,7 @@ public class CollisionsHandler2D : RaycastLayout
     public struct CollisionDetails
     {
         public bool above, below, left, right, onSlope, onSlopeDescent, onSlopeSlide, nextPushable, onMovingPlatform;
-        public bool touchingAbove, touchingBelow, touchingRight, touchingLeft; // NO USAR SIN LLAMAR A UPDATE TOUCHES!!!!!!
+        public float touchingAbovePer, touchingBelowPer, touchingRightPer, touchingLeftPer; // NO USAR SIN LLAMAR A UPDATE TOUCHES!!!!!!
         public float slopeAngle, prevSlopeAngle;
 
         public void ResetCollisions()
@@ -416,12 +458,12 @@ public class CollisionsHandler2D : RaycastLayout
 
         public void ResetHorTouches()
         {
-            touchingLeft = touchingRight = false;
+            touchingLeftPer = touchingRightPer = 0f;
         }
 
         public void ResetVerTouches()
         {
-            touchingAbove = touchingBelow = false;
+            touchingAbovePer = touchingBelowPer = 0f;
         }
     }
 

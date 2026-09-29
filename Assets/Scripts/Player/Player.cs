@@ -135,6 +135,7 @@ public class Player : MonoBehaviour, ICrushable
             deltaMove.y = 0f;
         }
         transform.Translate(deltaMove);
+        Physics2D.SyncTransforms();
         if (storeHorMovement && !IsFrozen) moveAmount += Mathf.Abs(deltaMove.x);
         if (storeVerMovement && !IsFrozen) moveAmount += Mathf.Abs(deltaMove.y);
         Shrink();
@@ -334,6 +335,7 @@ public class Player : MonoBehaviour, ICrushable
         Vector2 moveAmount = new(deltaMove.x, deltaMove.y);
         controller.ClampDisplacement(ref moveAmount);
         transform.Translate(moveAmount);
+        Physics2D.SyncTransforms();
         this.moveAmount += moveAmount.x;
     }
 
@@ -400,13 +402,27 @@ public class Player : MonoBehaviour, ICrushable
     public bool IsColidingVer()
     {
         controller.UpdateTouches(false, true);
-        return controller.colDetails.touchingBelow && controller.colDetails.touchingAbove;
+        return controller.colDetails.touchingBelowPer > playerParameters.crushThreeshold && controller.colDetails.touchingAbovePer > playerParameters.crushThreeshold;
     }
 
     public bool IsColidingHor()
     {
         controller.UpdateTouches(true, false);
-        return controller.colDetails.touchingRight && controller.colDetails.touchingLeft;
+        return controller.colDetails.touchingRightPer > playerParameters.crushThreeshold && controller.colDetails.touchingLeftPer > playerParameters.crushThreeshold;
+    }
+
+    public void PushAwayFromCrushVer()
+    {
+        int touch = controller.GetCornersColVertical(true);
+        touch = touch == 0 ? controller.GetCornersColVertical(false) : touch;
+        velocity.x += playerParameters.crushPushAway * -touch;
+    }
+
+    public void PushAwayFromCrushHor()
+    {
+        int touch = controller.GetCornersColHorizontal(true);
+        touch = touch == 0 ? controller.GetCornersColHorizontal(false) : touch;
+        velocity.y += playerParameters.crushPushAway * -touch;
     }
 
     public void Crush(bool isVertical, float delay)

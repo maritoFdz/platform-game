@@ -114,6 +114,7 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
             if (crushable == null) continue;
             if (crushable.IsPendingCrush) continue;
             if (crushable.IsColidingVer()) crushable.Crush(true, parameters.crushTime);
+            else crushable.PushAwayFromCrushVer();
         }
     }
 

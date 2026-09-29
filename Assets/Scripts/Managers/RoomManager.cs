@@ -68,10 +68,10 @@ public class RoomManager : MonoBehaviour
 
     private IEnumerator RespawnCo()
     {
+        yield return new WaitForSeconds(respawnWait);
         entry.Open();
         foreach (var resseteable in resetteables)
             resseteable.ResetEntity();
-        yield return new WaitForSeconds(respawnWait);
         SetPlayer();
     }
 }
