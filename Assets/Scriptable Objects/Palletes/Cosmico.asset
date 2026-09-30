@@ -21,3 +21,4 @@ MonoBehaviour:
   color7: {r: 0.45490196, g: 0.68235296, b: 1, a: 1}
   palleteName: Cosmico
   palleteId: 3
+  iceOpacity: 0.5

@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.4653249, g: 0.84708774, b: 0.46023476, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -287,7 +287,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.6
+      scalar: 0.9
       minScalar: 0.3
       maxCurve:
         serializedVersion: 2
@@ -1435,8 +1435,8 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   UVModule:
     serializedVersion: 2
-    enabled: 0
-    mode: 0
+    enabled: 1
+    mode: 1
     timeMode: 0
     fps: 30
     frameOverTime:
@@ -1554,7 +1554,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 6464241461492095328, guid: 4cb72b16416d2694c9e3150b4ba4fc22, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -4850,7 +4850,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cc942b64440de034380282e33762dace, type: 2}
+  - {fileID: -876546973899608171, guid: b9a266af6b5507d439213a0a9d4b2b8f, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5128,7 +5128,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.22352941, g: 0.654902, b: 0.29803923, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5192,8 +5192,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.3
-      minScalar: 0.25
+      scalar: 0.1
+      minScalar: 0.05
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5951,29 +5951,29 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0.5565273
-          inSlope: 1.3709277
-          outSlope: 1.3709277
+          inSlope: -0.2054674
+          outSlope: -0.2054674
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.3232163
+          outWeight: 1
         - serializedVersion: 3
-          time: 0.27527493
-          value: 0.7867865
-          inSlope: 0.059743643
-          outSlope: 0.059743643
+          time: 0.28587216
+          value: 0.4764189
+          inSlope: -0.24114996
+          outSlope: -0.24114996
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0.65727234
+          outWeight: 0.42109278
         - serializedVersion: 3
           time: 1
-          value: 0.6372329
-          inSlope: -0.23518217
-          outSlope: -0.23518217
+          value: 0.33177304
+          inSlope: -0.041460264
+          outSlope: -0.041460264
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.24173363
+          inWeight: 0.2673267
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -6340,8 +6340,8 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   UVModule:
     serializedVersion: 2
-    enabled: 0
-    mode: 0
+    enabled: 1
+    mode: 1
     timeMode: 0
     fps: 30
     frameOverTime:
@@ -6459,7 +6459,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 6464241461492095328, guid: 4cb72b16416d2694c9e3150b4ba4fc22, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -9755,7 +9755,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cc942b64440de034380282e33762dace, type: 2}
+  - {fileID: -876546973899608171, guid: b9a266af6b5507d439213a0a9d4b2b8f, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

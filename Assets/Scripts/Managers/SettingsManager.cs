@@ -12,7 +12,7 @@ public class SettingsManager : MonoBehaviour
 
     [Header("Pallete Shader")]
     [SerializeField] private Material palleteMaterial;
-    [SerializeField] private Material iceMaterial;
+    [SerializeField] private Material fogMaterial;
     [SerializeField] private Material playerIceMaterial;
     [SerializeField] private Material waterMaterial;
     [SerializeField] private ColorPallete defaultPallete;
@@ -103,8 +103,8 @@ public class SettingsManager : MonoBehaviour
         palleteMaterial.SetColor("_New5", pallete.color5);
         palleteMaterial.SetColor("_New6", pallete.color6);
         palleteMaterial.SetColor("_New7", pallete.color7);
-        iceMaterial.SetColor("_Ice_Color", pallete.color7);
-        iceMaterial.SetFloat("_Opacity", pallete.iceOpacity);
+        fogMaterial.SetColor("_Fog_Color", pallete.color7);
+        fogMaterial.SetFloat("_Opacity", pallete.iceOpacity);
         waterMaterial.SetColor("_NoiseColor", pallete.color6);
         waterMaterial.SetColor("_Color", pallete.color5);
         waterMaterial.SetColor("_Foam_Color", pallete.color7);
@@ -149,8 +149,8 @@ public class SettingsManager : MonoBehaviour
         palleteMaterial.SetColor("_New5", defaultPallete.color5);
         palleteMaterial.SetColor("_New6", defaultPallete.color6);
         palleteMaterial.SetColor("_New7", defaultPallete.color7);
-        iceMaterial.SetColor("_Ice_Color", defaultPallete.color7);
-        iceMaterial.SetFloat("_Opacity", defaultPallete.iceOpacity);
+        fogMaterial.SetColor("_Fog_Color", defaultPallete.color7);
+        fogMaterial.SetFloat("_Opacity", defaultPallete.iceOpacity);
         waterMaterial.SetColor("_NoiseColor", defaultPallete.color6);
         waterMaterial.SetColor("_Color", defaultPallete.color5);
         waterMaterial.SetColor("_Foam_Color", defaultPallete.color7);

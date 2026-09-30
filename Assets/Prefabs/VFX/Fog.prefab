@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7583956861388214285}
   - component: {fileID: 4910428102769448069}
   - component: {fileID: 6630492778367443896}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Fog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4782,7 +4782,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 715c7dda22469d5438164c6c3ec2cd1a, type: 3}
+  - {fileID: -876546973899608171, guid: 1753f0c3ec090eb4182be91de78b5b07, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4803,7 +4803,7 @@ ParticleSystemRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 30
   m_MaskInteraction: 0
   m_RenderMode: 0
   m_MeshDistribution: 0

@@ -21,3 +21,4 @@ MonoBehaviour:
   color7: {r: 0.8392157, g: 0.7529412, b: 0.68235296, a: 1}
   palleteName: Pastel Verdoso
   palleteId: 7
+  iceOpacity: 0.5

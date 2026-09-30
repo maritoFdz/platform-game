@@ -31,7 +31,7 @@ public class SwitchParticle : MonoBehaviour
         if (dist <= distanceEpsilon)
         {
             particles.Stop();
-            Destroy(gameObject, 0.5f); // gives a little extra time to let the effect disspaear for itself first
+            Destroy(gameObject, 0.5f); // gives a little extra time to let the effect dissapear for itself first
             return;
         }
 

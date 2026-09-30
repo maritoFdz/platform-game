@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3389665090686799246}
   - component: {fileID: 6475219249195046058}
-  m_Layer: 11
+  m_Layer: 7
   m_Name: Materials
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 715c7dda22469d5438164c6c3ec2cd1a, type: 3}
+  - {fileID: -876546973899608171, guid: cffbc98763b740c42a71902e1b0bc426, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -151,7 +151,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: -876546973899608171, guid: b9a266af6b5507d439213a0a9d4b2b8f, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
