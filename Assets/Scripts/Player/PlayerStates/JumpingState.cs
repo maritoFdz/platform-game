@@ -18,6 +18,7 @@ public class JumpingState : IPlayerState
         hangCounter = 0f;
         freezeBehaviour = false;
         player.MakeSplash(0f, true);
+        player.SpawnDust(0f);
         player.velocity.y = player.jumpForce;
     }
 

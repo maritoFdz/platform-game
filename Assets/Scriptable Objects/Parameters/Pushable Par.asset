@@ -36,3 +36,4 @@ MonoBehaviour:
   pushersLayer:
     serializedVersion: 2
     m_Bits: 128
+  minDustFallVelocity: 15

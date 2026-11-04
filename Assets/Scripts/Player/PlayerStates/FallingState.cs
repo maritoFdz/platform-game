@@ -9,7 +9,8 @@ public class FallingState : IPlayerState
         if (player.CeilingAbove())
         {
             player.velocity.y = 0f;
-            player.MakeSplash(180f);
+            if (Mathf.Abs(player.velocity.y) <= player.playerParameters.splashFallMinVelocity)
+                player.MakeSplash(180f);
         }
         player.PlayFallingAnimation();
     }
@@ -54,7 +55,10 @@ public class FallingState : IPlayerState
             float dir = player.WallLeft() ? -1 : 1;
             player.FlipSprite(dir);
             if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
+            {
                 player.MakeSplash(90f * dir);
+                player.SpawnDust(90f * dir);
+            }
             else AudioManager.instance.Play(AudioName.FallWeak);
             player.StopFallingAnimation();
             player.HandleWallSlidingStateTransition();
@@ -65,7 +69,10 @@ public class FallingState : IPlayerState
             player.StopFallingAnimation();
             player.ActivateDash();
             if (player.playerParameters.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
+            {
+                player.SpawnDust(0f);
                 player.MakeSplash(0f);
+            }
             else if (player.velocity.y != 0 && AudioManager.instance != null) AudioManager.instance.Play(AudioName.FallWeak);
             player.SwitchState(player.idleState);
         }    

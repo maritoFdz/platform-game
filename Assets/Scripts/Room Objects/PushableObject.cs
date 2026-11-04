@@ -10,6 +10,7 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
     [SerializeField] private CollisionsHandler2D controller;
     [SerializeField] private Transform visual;
     [SerializeField] private PushableObjectParameters parameters;
+    [SerializeField] private GameObject dustVFXPrefab;
 
     private Vector3 initialPos;
     private float rotationAngle;
@@ -219,6 +220,8 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
         if (controller.colDetails.below)
         {
             rotationAngle = 0f;
+            if (Mathf.Abs(velocity.y) >= parameters.minDustFallVelocity)
+                SpawnDust(0f);
             velocity.y = 0f;
             currentState = State.Ground;
         }
@@ -286,6 +289,11 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
         velocityXSmoothing = 0f;
         currentState = State.Falling;
         startedFrameFalling = false;
+    }
+
+    private void SpawnDust(float angle)
+    {
+        Instantiate(dustVFXPrefab, transform.position, Quaternion.Euler(0, 0, angle));
     }
 
     public List<Transform> GetPassengersOnTop()

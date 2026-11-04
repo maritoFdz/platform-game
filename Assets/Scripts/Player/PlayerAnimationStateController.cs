@@ -16,7 +16,8 @@ public class PlayerAnimationStateController : MonoBehaviour
     [SerializeField] private float anyStateLockedTime;
 
     [Header("VFX Settings")]
-    public GameObject splashVFXPrefab;
+    [SerializeField] private GameObject splashVFXPrefab;
+    [SerializeField] private GameObject dustVFXPrefab;
 
     [Header("Other")]
     [SerializeField] private Color frozenColor;
@@ -292,6 +293,11 @@ public class PlayerAnimationStateController : MonoBehaviour
     public void MakeSplash(float angle)
     {
         Instantiate(splashVFXPrefab, player.transform.position, Quaternion.Euler(0, 0, angle));
+    }
+
+    public void SpawnDust(float angle)
+    {
+        Instantiate(dustVFXPrefab, player.transform.position, Quaternion.Euler(0, 0, angle));
     }
 
     public int GetOrderInLayer()

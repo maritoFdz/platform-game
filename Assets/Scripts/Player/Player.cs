@@ -238,6 +238,11 @@ public class Player : MonoBehaviour, ICrushable
         if (!skipSound) AudioManager.instance.Play(AudioName.FallHeavy);
     }
 
+    public void SpawnDust(float angle)
+    {
+        animationController.SpawnDust(angle);
+    }
+
     public void PaintTrail()
     {
         if (!IsFrozen)

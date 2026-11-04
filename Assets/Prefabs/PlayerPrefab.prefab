@@ -310,6 +310,7 @@ MonoBehaviour:
   idleWaitTime: 0.5
   anyStateLockedTime: 0
   splashVFXPrefab: {fileID: 6640021389163789217, guid: f822bfca91021b543b4d9217411043b1, type: 3}
+  dustVFXPrefab: {fileID: 2038591599289137643, guid: 09e4323021bbc7f4bb9ea82fc812d170, type: 3}
   frozenColor: {r: 0.854902, g: 0.82745105, b: 0.7176471, a: 1}
   colorSpeed: 2
   iceMaterial: {fileID: -876546973899608171, guid: cffbc98763b740c42a71902e1b0bc426, type: 3}

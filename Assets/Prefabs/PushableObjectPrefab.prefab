@@ -97,6 +97,7 @@ MonoBehaviour:
   controller: {fileID: 4519556003513909041}
   visual: {fileID: 3593771343611036994}
   parameters: {fileID: 11400000, guid: 6f2dcb0d0cda05345be7ea98f0d83fe8, type: 2}
+  dustVFXPrefab: {fileID: 2038591599289137643, guid: f35c61e585ac3c8488553477462f07f6, type: 3}
 --- !u!114 &4519556003513909041
 MonoBehaviour:
   m_ObjectHideFlags: 0

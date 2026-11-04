@@ -21,4 +21,5 @@ public class PushableObjectParameters : ScriptableObject
     public float crushTime;
     public LayerMask crushablesLayer;
     public LayerMask pushersLayer;
+    public float minDustFallVelocity;
 }

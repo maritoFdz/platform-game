@@ -93,6 +93,7 @@ public class WallSlidingState : IPlayerState
         player.HandleJumpingStateTransition();
         AudioManager.instance.StopPlaying(AudioName.Sliding);
         player.MakeSplash(90f * direction, true);
+        player.SpawnDust(90f * direction);
         freezeBehaviour = true;
         return;
     }
