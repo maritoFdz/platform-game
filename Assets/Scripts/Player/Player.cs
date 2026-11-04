@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.Rendering.Universal;
+using System;
 
 [RequireComponent(typeof(CollisionsHandler2D))]
 public class Player : MonoBehaviour, ICrushable
@@ -87,6 +88,9 @@ public class Player : MonoBehaviour, ICrushable
         doubleJumpForce = Mathf.Sqrt(2f * Mathf.Abs(gravityScale) * playerParameters.maxDoubleJumpHeight);
         minDoubleJumpForce = Mathf.Sqrt(2 * Mathf.Abs(gravityScale) * playerParameters.minDoubleJumpHeight);
         PlayerSwitchManager.instance.Add(this);
+        if (SettingsManager.instance !=  null)
+            playerLight.color = SettingsManager.instance.CurrentLightColor;
+        SettingsManager.OnPalleteChange += ChangeLightColor;
     }
 
     private void OnEnable()
@@ -451,6 +455,16 @@ public class Player : MonoBehaviour, ICrushable
         isPendingCrush = false;
         crushRoutine = null;
         KillPlayer();
+    }
+
+    private void ChangeLightColor(Color color)
+    {
+        playerLight.color = color;
+    }
+
+    private void OnDestroy()
+    {
+        SettingsManager.OnPalleteChange -= ChangeLightColor;
     }
 
     #region Collisions related methods called by states

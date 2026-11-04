@@ -23,6 +23,8 @@ public class SettingsManager : MonoBehaviour
     [HideInInspector] public Resolution[] resolutions;
     [HideInInspector] public int currentPalleteIndex;
     [HideInInspector] public bool initialized;
+    public static event Action<Color> OnPalleteChange;
+    public Color CurrentLightColor { get; private set; }
 
     private void Awake()
     {
@@ -112,6 +114,9 @@ public class SettingsManager : MonoBehaviour
         waterMaterial.SetColor("_Foam_Color", pallete.color7);
         playerIceMaterial.SetColor("_Ice_Color", pallete.color7);
 
+        CurrentLightColor = pallete.color7;
+        OnPalleteChange?.Invoke(pallete.color7);
+
         if (DataManager.instance != null)
             DataManager.instance.SavePalleteSetting(palleteIndex);
         return true;
@@ -159,6 +164,9 @@ public class SettingsManager : MonoBehaviour
         waterMaterial.SetColor("_Foam_Color", defaultPallete.color7);
         palleteMaterial.SetFloat("_Tolerance", tolerance);
         playerIceMaterial.SetColor("_Ice_Color", defaultPallete.color7);
+
+        CurrentLightColor = defaultPallete.color7;
+        OnPalleteChange?.Invoke(defaultPallete.color7);
     }
 
     private int GetHighestResolution()

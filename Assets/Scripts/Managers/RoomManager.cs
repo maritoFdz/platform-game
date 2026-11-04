@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
@@ -15,6 +16,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private Player initialPlayer;
     [SerializeField] private string nextRoomName;
     [SerializeField] private Door entry;
+    [SerializeField] private Light2D[] roomLights;
     private IResetteable[] resetteables;
 
     [Header("Parameters")]
@@ -34,6 +36,9 @@ public class RoomManager : MonoBehaviour
     private void Start()
     {
         SetPlayer();
+        SettingsManager.OnPalleteChange += ChangeLightsColor;
+        if (SettingsManager.instance != null)
+            ChangeLightsColor(SettingsManager.instance.CurrentLightColor);
     }
 
     private void SetPlayer()
@@ -53,6 +58,7 @@ public class RoomManager : MonoBehaviour
     {
         if (DataManager.instance != null)
             DataManager.instance.SaveLastRoom(nextRoomName);
+        if (SettingsManager.instance != null)
         SceneManager.LoadScene(nextRoomName);
     }
 
@@ -73,5 +79,17 @@ public class RoomManager : MonoBehaviour
         foreach (var resseteable in resetteables)
             resseteable.ResetEntity();
         SetPlayer();
+    }
+
+    public void ChangeLightsColor(Color color)
+    {
+        foreach (var light in roomLights)
+            light.color = color;
+    }
+
+    private void OnDestroy()
+    {
+        SettingsManager.OnPalleteChange -= ChangeLightsColor;
+        if (instance == this) instance = null;
     }
 }
