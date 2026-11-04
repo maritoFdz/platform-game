@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 7922874904800485169}
   - component: {fileID: 8777271909506590005}
   - component: {fileID: 5152603006537298484}
+  - component: {fileID: 4341820448712503087}
   m_Layer: 6
-  m_Name: DoorLPrefab
+  m_Name: DoorMPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 9c601ab93f1b7204f82804eb4f92a671, type: 3}
+  m_Sprite: {fileID: 6326368845970343591, guid: 3031929fbf35b8e4b977be64c84aa57a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -115,7 +116,7 @@ MonoBehaviour:
   crushablesLayer:
     serializedVersion: 2
     m_Bits: 128
-  speed: 1
+  speed: 2.5
   raycastOffset: 0.015
   collisionTolerance: 0.05
   rayAmount: 3
@@ -155,15 +156,68 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.03287506, y: -0.00901413}
+  m_Offset: {x: 0.0103302, y: -0.011018753}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 10}
+    oldSize: {x: 0.5625, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.46244812, y: 9.957195}
+  m_Size: {x: 0.40071106, y: 4.0113945}
   m_EdgeRadius: 0
+--- !u!114 &4341820448712503087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217716820901847449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.ShadowCaster2D
+  m_ShadowGroup: 0
+  m_Priority: 10
+  m_ComponentVersion: 5
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 0.1
+  m_ApplyToSortingLayers: 0000000061870762d701a917
+  m_ShapePath:
+  - {x: -1.9999995, y: -0.28125024, z: 0}
+  - {x: -1.9999995, y: 0.28125, z: 0}
+  - {x: 1.9999998, y: 0.28125, z: 0}
+  - {x: 1.9999998, y: -0.28125024, z: 0}
+  m_ShapePathHash: 0
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 5152603006537298484}
+  m_ShadowShape2DProvider:
+    rid: 6363164107148099924
+  m_ShadowCastingSource: 2
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: 0.0103302, y: -0.011016846, z: 0}
+      m_Extent: {x: 0.2003479, y: 2.0056915, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 0
+  m_CastingOption: 1
+  m_PreviousTrimEdge: 0
+  m_PreviousEdgeProcessing: 1
+  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowShape2DSource: {fileID: 5152603006537298484}
+  references:
+    version: 2
+    RefIds:
+    - rid: 6363164107148099924
+      type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data: 

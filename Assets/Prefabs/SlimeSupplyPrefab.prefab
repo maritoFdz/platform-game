@@ -109,7 +109,7 @@ MonoBehaviour:
   verticesAmountPerSide: 10
   width: 1
   height: 1
-  material: {fileID: -876546973899608171, guid: 715c7dda22469d5438164c6c3ec2cd1a, type: 3}
+  material: {fileID: 2100000, guid: 624a7c64a78ebd74bb079efb43197b9e, type: 2}
   col: {fileID: 6180593542997862115}
   meshRenderer: {fileID: 3986997454652551732}
   meshFilter: {fileID: 134679417925709010}
@@ -124,7 +124,7 @@ SortingGroup:
   m_GameObject: {fileID: 3310975433224590803}
   m_Enabled: 1
   m_SortingLayerID: 396952023
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0

@@ -1,7 +1,7 @@
-using static RaycastLayout;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(CollisionsHandler2D))]
 public class Player : MonoBehaviour, ICrushable
@@ -12,6 +12,7 @@ public class Player : MonoBehaviour, ICrushable
     [SerializeField] private TilesInteractionHandler tilesController;
     public PlayerParameters playerParameters;
     [SerializeField] private Player playerPrefab;
+    [SerializeField] private Light2D playerLight;
 
     [HideInInspector] public float gravityScale;
     [HideInInspector] public float jumpForce;
@@ -191,7 +192,7 @@ public class Player : MonoBehaviour, ICrushable
         if (closestMinion != null)
         {
             Upscale(closestMinion.normalizedScale);
-            closestMinion.KillPlayer();
+            closestMinion.KillPlayer(false);
         }
     }
 
@@ -306,13 +307,12 @@ public class Player : MonoBehaviour, ICrushable
         controller.UpdateCollisions(normalizedScale);
     }
 
-    public void KillPlayer(bool doEvent = false)
+    public void KillPlayer(bool doAnim = true)
     {
         if (isDead || !PlayerSwitchManager.instance.IsAdded(this)) return;
         isDead = true;
         if (crushRoutine != null) StopCoroutine(crushRoutine);
-        if (doEvent)
-            MakeSplash(0f, false, true, true);
+        if (doAnim) MakeSplash(0f, false, true, true);
         // todo animation death event
         animationController.ResetFreezeColor();
         PlayerSwitchManager.instance.Erase(this);
@@ -385,6 +385,7 @@ public class Player : MonoBehaviour, ICrushable
     public void SetActiveState(bool enable)
     {
         isActive = enable;
+        playerLight.gameObject.SetActive(enable);
     }
 
     public void DisableInput()
@@ -449,7 +450,7 @@ public class Player : MonoBehaviour, ICrushable
         }
         isPendingCrush = false;
         crushRoutine = null;
-        KillPlayer(true);
+        KillPlayer();
     }
 
     #region Collisions related methods called by states

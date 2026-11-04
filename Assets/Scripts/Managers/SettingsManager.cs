@@ -15,6 +15,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Material fogMaterial;
     [SerializeField] private Material playerIceMaterial;
     [SerializeField] private Material waterMaterial;
+    [SerializeField] private Material switchParticleMaterial;
     [SerializeField] private ColorPallete defaultPallete;
     [SerializeField] private float tolerance;
     public ColorPallete[] palletes;
@@ -105,6 +106,7 @@ public class SettingsManager : MonoBehaviour
         palleteMaterial.SetColor("_New7", pallete.color7);
         fogMaterial.SetColor("_Fog_Color", pallete.color7);
         fogMaterial.SetFloat("_Opacity", pallete.iceOpacity);
+        switchParticleMaterial.SetColor("_Glow_Color", pallete.color7);
         waterMaterial.SetColor("_NoiseColor", pallete.color6);
         waterMaterial.SetColor("_Color", pallete.color5);
         waterMaterial.SetColor("_Foam_Color", pallete.color7);
@@ -151,6 +153,7 @@ public class SettingsManager : MonoBehaviour
         palleteMaterial.SetColor("_New7", defaultPallete.color7);
         fogMaterial.SetColor("_Fog_Color", defaultPallete.color7);
         fogMaterial.SetFloat("_Opacity", defaultPallete.iceOpacity);
+        switchParticleMaterial.SetColor("_Glow_Color", defaultPallete.color7);
         waterMaterial.SetColor("_NoiseColor", defaultPallete.color6);
         waterMaterial.SetColor("_Color", defaultPallete.color5);
         waterMaterial.SetColor("_Foam_Color", defaultPallete.color7);

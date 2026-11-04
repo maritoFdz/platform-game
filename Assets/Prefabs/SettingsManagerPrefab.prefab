@@ -50,6 +50,7 @@ MonoBehaviour:
   fogMaterial: {fileID: -876546973899608171, guid: 1753f0c3ec090eb4182be91de78b5b07, type: 3}
   playerIceMaterial: {fileID: -876546973899608171, guid: cffbc98763b740c42a71902e1b0bc426, type: 3}
   waterMaterial: {fileID: 2100000, guid: 624a7c64a78ebd74bb079efb43197b9e, type: 2}
+  switchParticleMaterial: {fileID: -876546973899608171, guid: 141d4d5581e8fbd44927a9986ed7f63c, type: 3}
   defaultPallete: {fileID: 11400000, guid: 5d99a75eb1f912041a7ffa169e7b1adb, type: 2}
   tolerance: 0.25
   palletes:
