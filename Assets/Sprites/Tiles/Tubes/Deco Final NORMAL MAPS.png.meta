@@ -1,0 +1,1625 @@
+fileFormatVersion: 2
+guid: 6c4b1dc2b158cf54f80cb56685692786
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7197300487513608021
+    second: Deco Final NORMAL MAPS_0
+  - first:
+      213: 5476442485170334097
+    second: Deco Final NORMAL MAPS_1
+  - first:
+      213: -8155448763751646719
+    second: Deco Final NORMAL MAPS_2
+  - first:
+      213: -1959957239685931987
+    second: Deco Final NORMAL MAPS_3
+  - first:
+      213: 3435637241449736672
+    second: Deco Final NORMAL MAPS_4
+  - first:
+      213: -2570117093944772110
+    second: Deco Final NORMAL MAPS_5
+  - first:
+      213: 3892167949583358469
+    second: Deco Final NORMAL MAPS_6
+  - first:
+      213: -3815630267015861287
+    second: Deco Final NORMAL MAPS_7
+  - first:
+      213: 278636989112162536
+    second: Deco Final NORMAL MAPS_8
+  - first:
+      213: 4140299390121593022
+    second: Deco Final NORMAL MAPS_9
+  - first:
+      213: 2772313331401079772
+    second: Deco Final NORMAL MAPS_10
+  - first:
+      213: -3920820796877165138
+    second: Deco Final NORMAL MAPS_11
+  - first:
+      213: 6466537279270064853
+    second: Deco Final NORMAL MAPS_12
+  - first:
+      213: 3421648707583167749
+    second: Deco Final NORMAL MAPS_13
+  - first:
+      213: 17325799133323416
+    second: Deco Final NORMAL MAPS_14
+  - first:
+      213: 4755757618759956660
+    second: Deco Final NORMAL MAPS_15
+  - first:
+      213: -800703371629518655
+    second: Deco Final NORMAL MAPS_16
+  - first:
+      213: 371351951631611739
+    second: Deco Final NORMAL MAPS_17
+  - first:
+      213: -4703427057842405905
+    second: Deco Final NORMAL MAPS_18
+  - first:
+      213: 5607152851341809171
+    second: Deco Final NORMAL MAPS_19
+  - first:
+      213: -8237025932133569556
+    second: Deco Final NORMAL MAPS_20
+  - first:
+      213: 3359610380403144507
+    second: Deco Final NORMAL MAPS_21
+  - first:
+      213: -5796912351069740169
+    second: Deco Final NORMAL MAPS_22
+  - first:
+      213: 7729513748227862106
+    second: Deco Final NORMAL MAPS_23
+  - first:
+      213: -5594907777987247042
+    second: Deco Final NORMAL MAPS_24
+  - first:
+      213: 6702794675353300609
+    second: Deco Final NORMAL MAPS_25
+  - first:
+      213: -9106512126347524490
+    second: Deco Final NORMAL MAPS_26
+  - first:
+      213: 1616649483671915750
+    second: Deco Final NORMAL MAPS_27
+  - first:
+      213: 2936291110437794984
+    second: Deco Final NORMAL MAPS_28
+  - first:
+      213: 13826040288571019
+    second: Deco Final NORMAL MAPS_29
+  - first:
+      213: -1716276325694931309
+    second: Deco Final NORMAL MAPS_30
+  - first:
+      213: 4325465418535896922
+    second: Deco Final NORMAL MAPS_31
+  - first:
+      213: 2249465501128758204
+    second: Deco Final NORMAL MAPS_32
+  - first:
+      213: -8031154089825476978
+    second: Deco Final NORMAL MAPS_33
+  - first:
+      213: -832967105327668234
+    second: Deco Final NORMAL MAPS_34
+  - first:
+      213: 6762361277412320778
+    second: Deco Final NORMAL MAPS_35
+  - first:
+      213: -8597932262010686040
+    second: Deco Final NORMAL MAPS_36
+  - first:
+      213: 4343614811390159750
+    second: Deco Final NORMAL MAPS_37
+  - first:
+      213: -5983937200757135435
+    second: Deco Final NORMAL MAPS_38
+  - first:
+      213: 5165172707201701666
+    second: Deco Final NORMAL MAPS_39
+  - first:
+      213: -4438579981482931789
+    second: Deco Final NORMAL MAPS_40
+  - first:
+      213: 7281137356989792460
+    second: Deco Final NORMAL MAPS_41
+  - first:
+      213: -6691869169810566282
+    second: Deco Final NORMAL MAPS_42
+  - first:
+      213: -5955463003359548547
+    second: Deco Final NORMAL MAPS_43
+  - first:
+      213: 8938922892360509164
+    second: Deco Final NORMAL MAPS_44
+  - first:
+      213: -3766110985044918787
+    second: Deco Final NORMAL MAPS_45
+  - first:
+      213: 156397667218717725
+    second: Deco Final NORMAL MAPS_46
+  - first:
+      213: -2082615616445856806
+    second: Deco Final NORMAL MAPS_47
+  - first:
+      213: 6043129086093756831
+    second: Deco Final NORMAL MAPS_48
+  - first:
+      213: 8225903249763895122
+    second: Deco Final NORMAL MAPS_49
+  - first:
+      213: 2598048699626494273
+    second: Deco Final NORMAL MAPS_50
+  - first:
+      213: -4002361000815738033
+    second: Deco Final NORMAL MAPS_51
+  - first:
+      213: 7294240833498302805
+    second: Deco Final NORMAL MAPS_52
+  - first:
+      213: -5439444569070442667
+    second: Deco Final NORMAL MAPS_53
+  - first:
+      213: 7390163556602140369
+    second: Deco Final NORMAL MAPS_54
+  - first:
+      213: 4611399224304955078
+    second: Deco Final NORMAL MAPS_55
+  - first:
+      213: 3278524049095885723
+    second: Deco Final NORMAL MAPS_56
+  - first:
+      213: -4258507663518866530
+    second: Deco Final NORMAL MAPS_57
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 1
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 34
+        width: 26
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55f8ef319a2f1e360800000000000000
+      internalID: 7197300487513608021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_1
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 51
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1996f61cc6b300c40800000000000000
+      internalID: 5476442485170334097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_2
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 47
+        width: 26
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10a3fac0f8602de80800000000000000
+      internalID: -8155448763751646719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_3
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 34
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2c90995645dcc4e0800000000000000
+      internalID: -1959957239685931987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_4
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 51
+        width: 26
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e9e6b94ed5ddaf20800000000000000
+      internalID: 3435637241449736672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_5
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 47
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f93340ce1c155cd0800000000000000
+      internalID: -2570117093944772110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_6
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 49
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50a9319e022c30630800000000000000
+      internalID: 3892167949583358469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_7
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 50
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9db6a4cfc782c0bc0800000000000000
+      internalID: -3815630267015861287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_8
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 47
+        width: 31
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e890558ddaedd300800000000000000
+      internalID: 278636989112162536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_9
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 47
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb8c6fbeb5c457930800000000000000
+      internalID: 4140299390121593022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_10
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 51
+        width: 18
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdbbd3c594c397620800000000000000
+      internalID: 2772313331401079772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_11
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 34
+        width: 15
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ead2c2632427699c0800000000000000
+      internalID: -3920820796877165138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_12
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 47
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d296b1f461cdb950800000000000000
+      internalID: 6466537279270064853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_13
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 50
+        width: 27
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50d4ba1fe532c7f20800000000000000
+      internalID: 3421648707583167749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_14
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 47
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 890aac6f8bd8d3000800000000000000
+      internalID: 17325799133323416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_15
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 49
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b87b007b58dff140800000000000000
+      internalID: 4755757618759956660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_16
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 47
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c0a09b968453e4f0800000000000000
+      internalID: -800703371629518655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_17
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 47
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5776abe1ae472500800000000000000
+      internalID: 371351951631611739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_18
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 51
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fedb75eb2021abeb0800000000000000
+      internalID: -4703427057842405905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 31
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3161c817fcb90dd40800000000000000
+      internalID: 5607152851341809171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_20
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 35
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ceb6f7d6e8430bd80800000000000000
+      internalID: -8237025932133569556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_21
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 15
+        width: 14
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b37f4ab47dbbf9e20800000000000000
+      internalID: 3359610380403144507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_22
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 31
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 773e9681eea3d8fa0800000000000000
+      internalID: -5796912351069740169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_23
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 15
+        width: 14
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5eae912dcfb44b60800000000000000
+      internalID: 7729513748227862106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_24
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 18
+        width: 16
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e34000ed405ea52b0800000000000000
+      internalID: -5594907777987247042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_25
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 33
+        width: 29
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18e20da8e3c150d50800000000000000
+      internalID: 6702794675353300609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_26
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 19
+        width: 15
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 676c44e287b2f9180800000000000000
+      internalID: -9106512126347524490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_27
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 34
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ec4598d32e7f6610800000000000000
+      internalID: 1616649483671915750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_28
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 31
+        width: 28
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a438c2353dcfb820800000000000000
+      internalID: 2936291110437794984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_29
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 31
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8eec0cd5be113000800000000000000
+      internalID: 13826040288571019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_30
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 33
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39e7a8666cf8e28e0800000000000000
+      internalID: -1716276325694931309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_31
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 35
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a57811081e3270c30800000000000000
+      internalID: 4325465418535896922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_32
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 31
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb3964184f4b73f10800000000000000
+      internalID: 2249465501128758204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_33
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 18
+        width: 17
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8ed68bf7eb9b8090800000000000000
+      internalID: -8031154089825476978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_34
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 2
+        width: 15
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f3eb59b4d4b074f0800000000000000
+      internalID: -832967105327668234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_35
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 19
+        width: 18
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a06a407d0cbb8dd50800000000000000
+      internalID: 6762361277412320778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_36
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 18
+        width: 18
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a57bf759220ea880800000000000000
+      internalID: -8597932262010686040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_37
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 2
+        width: 28
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68b290258ae974c30800000000000000
+      internalID: 4343614811390159750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_38
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 19
+        width: 18
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b720a6f1d8c4fca0800000000000000
+      internalID: -5983937200757135435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_39
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 15
+        width: 27
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 227dc4006316ea740800000000000000
+      internalID: 5165172707201701666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_40
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 18
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b9cc80060ff662c0800000000000000
+      internalID: -4438579981482931789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_41
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 2
+        width: 16
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc0043c59dbcb0560800000000000000
+      internalID: 7281137356989792460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_42
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 3
+        width: 15
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6739d02f174b123a0800000000000000
+      internalID: -6691869169810566282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_43
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 18
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7be5cba3f1f95da0800000000000000
+      internalID: -5955463003359548547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_44
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 1
+        width: 16
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce661c9920f6d0c70800000000000000
+      internalID: 8938922892360509164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_45
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 17
+        width: 28
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfd73b743061cbbc0800000000000000
+      internalID: -3766110985044918787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_46
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 3
+        width: 16
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1c754689d2ab2200800000000000000
+      internalID: 156397667218717725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_47
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad3401a81201913e0800000000000000
+      internalID: -2082615616445856806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_48
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 2
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f99037cc2e18dd350800000000000000
+      internalID: 6043129086093756831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_49
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 0
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25788e64c67482270800000000000000
+      internalID: 8225903249763895122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_50
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 0
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 149176af68f1e0420800000000000000
+      internalID: 2598048699626494273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_51
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 0
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f43408b00e1c478c0800000000000000
+      internalID: -4002361000815738033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_52
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 2
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 559c0da34695a3560800000000000000
+      internalID: 7294240833498302805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_53
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 0
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 557e02ddbf53384b0800000000000000
+      internalID: -5439444569070442667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_54
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 0
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d6de4799922f8660800000000000000
+      internalID: 7390163556602140369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_55
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 0
+        width: 28
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ce653a892bfeff30800000000000000
+      internalID: 4611399224304955078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_56
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 0
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b938fe59048af7d20800000000000000
+      internalID: 3278524049095885723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Deco Final NORMAL MAPS_57
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 0
+        width: 28
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e93eda2b7ddb6e4c0800000000000000
+      internalID: -4258507663518866530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Deco Final NORMAL MAPS_0: 7197300487513608021
+      Deco Final NORMAL MAPS_1: 5476442485170334097
+      Deco Final NORMAL MAPS_10: 2772313331401079772
+      Deco Final NORMAL MAPS_11: -3920820796877165138
+      Deco Final NORMAL MAPS_12: 6466537279270064853
+      Deco Final NORMAL MAPS_13: 3421648707583167749
+      Deco Final NORMAL MAPS_14: 17325799133323416
+      Deco Final NORMAL MAPS_15: 4755757618759956660
+      Deco Final NORMAL MAPS_16: -800703371629518655
+      Deco Final NORMAL MAPS_17: 371351951631611739
+      Deco Final NORMAL MAPS_18: -4703427057842405905
+      Deco Final NORMAL MAPS_19: 5607152851341809171
+      Deco Final NORMAL MAPS_2: -8155448763751646719
+      Deco Final NORMAL MAPS_20: -8237025932133569556
+      Deco Final NORMAL MAPS_21: 3359610380403144507
+      Deco Final NORMAL MAPS_22: -5796912351069740169
+      Deco Final NORMAL MAPS_23: 7729513748227862106
+      Deco Final NORMAL MAPS_24: -5594907777987247042
+      Deco Final NORMAL MAPS_25: 6702794675353300609
+      Deco Final NORMAL MAPS_26: -9106512126347524490
+      Deco Final NORMAL MAPS_27: 1616649483671915750
+      Deco Final NORMAL MAPS_28: 2936291110437794984
+      Deco Final NORMAL MAPS_29: 13826040288571019
+      Deco Final NORMAL MAPS_3: -1959957239685931987
+      Deco Final NORMAL MAPS_30: -1716276325694931309
+      Deco Final NORMAL MAPS_31: 4325465418535896922
+      Deco Final NORMAL MAPS_32: 2249465501128758204
+      Deco Final NORMAL MAPS_33: -8031154089825476978
+      Deco Final NORMAL MAPS_34: -832967105327668234
+      Deco Final NORMAL MAPS_35: 6762361277412320778
+      Deco Final NORMAL MAPS_36: -8597932262010686040
+      Deco Final NORMAL MAPS_37: 4343614811390159750
+      Deco Final NORMAL MAPS_38: -5983937200757135435
+      Deco Final NORMAL MAPS_39: 5165172707201701666
+      Deco Final NORMAL MAPS_4: 3435637241449736672
+      Deco Final NORMAL MAPS_40: -4438579981482931789
+      Deco Final NORMAL MAPS_41: 7281137356989792460
+      Deco Final NORMAL MAPS_42: -6691869169810566282
+      Deco Final NORMAL MAPS_43: -5955463003359548547
+      Deco Final NORMAL MAPS_44: 8938922892360509164
+      Deco Final NORMAL MAPS_45: -3766110985044918787
+      Deco Final NORMAL MAPS_46: 156397667218717725
+      Deco Final NORMAL MAPS_47: -2082615616445856806
+      Deco Final NORMAL MAPS_48: 6043129086093756831
+      Deco Final NORMAL MAPS_49: 8225903249763895122
+      Deco Final NORMAL MAPS_5: -2570117093944772110
+      Deco Final NORMAL MAPS_50: 2598048699626494273
+      Deco Final NORMAL MAPS_51: -4002361000815738033
+      Deco Final NORMAL MAPS_52: 7294240833498302805
+      Deco Final NORMAL MAPS_53: -5439444569070442667
+      Deco Final NORMAL MAPS_54: 7390163556602140369
+      Deco Final NORMAL MAPS_55: 4611399224304955078
+      Deco Final NORMAL MAPS_56: 3278524049095885723
+      Deco Final NORMAL MAPS_57: -4258507663518866530
+      Deco Final NORMAL MAPS_6: 3892167949583358469
+      Deco Final NORMAL MAPS_7: -3815630267015861287
+      Deco Final NORMAL MAPS_8: 278636989112162536
+      Deco Final NORMAL MAPS_9: 4140299390121593022
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
