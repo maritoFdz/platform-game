@@ -37,3 +37,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   minDustFallVelocity: 15
+  shakeVelocity: 20
+  strongShakeVelocity: 25
+  minShakeVelocity: 7

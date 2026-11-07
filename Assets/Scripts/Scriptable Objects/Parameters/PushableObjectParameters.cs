@@ -22,4 +22,7 @@ public class PushableObjectParameters : ScriptableObject
     public LayerMask crushablesLayer;
     public LayerMask pushersLayer;
     public float minDustFallVelocity;
+    public float shakeVelocity;
+    public float strongShakeVelocity;
+    public float minShakeVelocity;
 }

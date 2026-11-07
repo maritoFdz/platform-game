@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using Unity.Cinemachine;
 using UnityEngine;
 using static RaycastLayout;
 
@@ -11,6 +12,9 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
     [SerializeField] private Transform visual;
     [SerializeField] private PushableObjectParameters parameters;
     [SerializeField] private GameObject dustVFXPrefab;
+    [SerializeField] private CinemachineImpulseSource impulseSource;
+    [SerializeField] private CameraShakeParameters shakeParameters;
+    [SerializeField] private CameraShakeParameters strongShakeParameters;
 
     private Vector3 initialPos;
     private float rotationAngle;
@@ -221,7 +225,16 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
         {
             rotationAngle = 0f;
             if (Mathf.Abs(velocity.y) >= parameters.minDustFallVelocity)
+            {
                 SpawnDust(0f);
+            }
+            if (CameraManager.instance != null)
+            {
+                if (Mathf.Abs(velocity.y) >= parameters.strongShakeVelocity)
+                    CameraManager.instance.ShakaCameraWithParameters(strongShakeParameters, impulseSource);
+                else if (Mathf.Abs(velocity.y) >= parameters.minShakeVelocity)
+                    CameraManager.instance.ShakaCameraWithParameters(shakeParameters, impulseSource, Mathf.Clamp01(Mathf.Abs(velocity.y) / parameters.shakeVelocity));
+            }
             velocity.y = 0f;
             currentState = State.Ground;
         }

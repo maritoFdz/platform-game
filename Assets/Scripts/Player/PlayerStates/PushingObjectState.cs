@@ -13,6 +13,8 @@ public class PushingObjectState : IPlayerState
         player.velocity.x = 0f;
         player.velocityXSmoothing = 0f;
         target = player.GetPushableObject(pushDirection);
+        AudioManager.instance.Play(AudioName.Movement);
+        AudioManager.instance.Play(AudioName.Push);
         if (target && target.IsGrounded)
             target.SetAsTargetOf(player);
         else
@@ -28,6 +30,8 @@ public class PushingObjectState : IPlayerState
                 target.SetAsTargetOf(null);
                 target = null;
             }
+            AudioManager.instance.StopPlaying(AudioName.Movement);
+            AudioManager.instance.StopPlaying(AudioName.Push);
             player.SwitchState(player.autoMoveState);
             return;
         }
@@ -39,6 +43,8 @@ public class PushingObjectState : IPlayerState
                 target.SetAsTargetOf(null);
                 target = null;
             }
+            AudioManager.instance.StopPlaying(AudioName.Movement);
+            AudioManager.instance.StopPlaying(AudioName.Push);
             player.SwitchState(player.walkingState);
             return;
         }
@@ -52,6 +58,8 @@ public class PushingObjectState : IPlayerState
             }
             player.StopWalkingAnimation();
             player.ForceJumpingAnimation();
+            AudioManager.instance.StopPlaying(AudioName.Movement);
+            AudioManager.instance.StopPlaying(AudioName.Push);
             player.SwitchState(player.jumpingState);
             return;
         }

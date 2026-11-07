@@ -14,7 +14,8 @@ public enum AudioName {
     SplashLoud,
     SplashOut,
     SplashWeak,
-    Split
+    Split,
+    Push
 }
 
 [Serializable]

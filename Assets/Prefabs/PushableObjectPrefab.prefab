@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5834582367808066848}
   - component: {fileID: 4519556003513909041}
   - component: {fileID: 1374196415271796426}
+  - component: {fileID: 6646650893606179721}
   m_Layer: 8
   m_Name: PushableObjectPrefab
   m_TagString: Untagged
@@ -98,6 +99,9 @@ MonoBehaviour:
   visual: {fileID: 3593771343611036994}
   parameters: {fileID: 11400000, guid: 6f2dcb0d0cda05345be7ea98f0d83fe8, type: 2}
   dustVFXPrefab: {fileID: 2038591599289137643, guid: f35c61e585ac3c8488553477462f07f6, type: 3}
+  impulseSource: {fileID: 6646650893606179721}
+  shakeParameters: {fileID: 11400000, guid: 6e6e32df68e677846ae1a3a1bfbff4fa, type: 2}
+  strongShakeParameters: {fileID: 0}
 --- !u!114 &4519556003513909041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +173,59 @@ MonoBehaviour:
     - rid: 6363164107148099888
       type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
       data: 
+--- !u!114 &6646650893606179721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3244923679187426421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 3
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.4
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1 &5137650691159739337
 GameObject:
   m_ObjectHideFlags: 0
