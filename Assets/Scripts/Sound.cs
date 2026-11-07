@@ -15,7 +15,10 @@ public enum AudioName {
     SplashOut,
     SplashWeak,
     Split,
-    Push
+    Push,
+    HeavyPushableFall,
+    MidPushableFall,
+    SoftPushableFall
 }
 
 [Serializable]

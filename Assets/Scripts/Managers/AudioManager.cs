@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 public class AudioManager : MonoBehaviour
 {
@@ -50,6 +52,8 @@ public class AudioManager : MonoBehaviour
             if (randomize) sound.audioSource.pitch = Random.Range(sound.minPitch, sound.maxPitch);
             else sound.audioSource.pitch = sound.defaultPitch;
             sound.audioSource.Play();
+            if (sound.loops && randomize)
+                StartCoroutine(RandomPitchLoopCo(sound));
         }
     }
 
@@ -64,6 +68,17 @@ public class AudioManager : MonoBehaviour
         if (soundDictionary.TryGetValue(name, out Sound sound))
         {
             sound.audioSource.Stop();
+        }
+    }
+
+    public IEnumerator RandomPitchLoopCo(Sound sound)
+    {
+        while (sound.audioSource.isPlaying)
+        {
+            yield return new WaitForSeconds(sound.clip.length / Mathf.Abs(sound.audioSource.pitch));
+
+            if (sound.audioSource.isPlaying)
+                sound.audioSource.pitch = Random.Range(sound.minPitch, sound.maxPitch);
         }
     }
 }

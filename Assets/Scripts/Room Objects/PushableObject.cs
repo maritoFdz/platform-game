@@ -162,6 +162,7 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
 
         if (supportRatio <= 0f && !controller.colDetails.onMovingPlatform)
         {
+            if (AudioManager.instance != null) AudioManager.instance.StopPlaying(AudioName.Push);
             currentState = State.Falling;
 
             if (playerPushing != null)
@@ -224,17 +225,25 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
         if (controller.colDetails.below)
         {
             rotationAngle = 0f;
+            AudioName fallAudio = AudioName.SoftPushableFall;
             if (Mathf.Abs(velocity.y) >= parameters.minDustFallVelocity)
             {
+                fallAudio = AudioName.MidPushableFall;
                 SpawnDust(0f);
             }
             if (CameraManager.instance != null)
             {
                 if (Mathf.Abs(velocity.y) >= parameters.strongShakeVelocity)
+                {
                     CameraManager.instance.ShakaCameraWithParameters(strongShakeParameters, impulseSource);
+                    fallAudio = AudioName.HeavyPushableFall;
+                }
                 else if (Mathf.Abs(velocity.y) >= parameters.minShakeVelocity)
+                {
                     CameraManager.instance.ShakaCameraWithParameters(shakeParameters, impulseSource, Mathf.Clamp01(Mathf.Abs(velocity.y) / parameters.shakeVelocity));
+                }
             }
+            if (AudioManager.instance != null) AudioManager.instance.Play(fallAudio);
             velocity.y = 0f;
             currentState = State.Ground;
         }
@@ -297,6 +306,7 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
 
     public void ResetEntity()
     {
+        if (AudioManager.instance != null) AudioManager.instance.StopPlaying(AudioName.Push);
         transform.position = initialPos;
         velocity = Vector2.zero;
         velocityXSmoothing = 0f;

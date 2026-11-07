@@ -18,7 +18,10 @@ public class PushingObjectState : IPlayerState
         if (target && target.IsGrounded)
             target.SetAsTargetOf(player);
         else
+        {
+            AudioManager.instance.StopPlaying(AudioName.Push);
             player.SwitchState(player.idleState);
+        }
     }
 
     public void UpdateState(Player player)
@@ -56,10 +59,10 @@ public class PushingObjectState : IPlayerState
                 target.SetAsTargetOf(null);
                 target = null;
             }
-            player.StopWalkingAnimation();
-            player.ForceJumpingAnimation();
             AudioManager.instance.StopPlaying(AudioName.Movement);
             AudioManager.instance.StopPlaying(AudioName.Push);
+            player.StopWalkingAnimation();
+            player.ForceJumpingAnimation();
             player.SwitchState(player.jumpingState);
             return;
         }
