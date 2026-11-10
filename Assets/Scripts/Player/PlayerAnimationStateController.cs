@@ -29,6 +29,9 @@ public class PlayerAnimationStateController : MonoBehaviour
     [SerializeField] private GameObject snowflakesParticles;
     [SerializeField] private float snowflakesFrequency;
 
+    [Header("Ice Glow Settings")]
+    [SerializeField] private Material glowMaterial;
+
     public Coroutine colorRoutine;
     private float normalFreezeAmount;
     private float snowflakesCounter;
@@ -349,5 +352,26 @@ public class PlayerAnimationStateController : MonoBehaviour
     {
         animator.SetBool(anyStateLockedHash, false);
     }
+
+    public void DoDyeEventAnim()
+    {
+        LockAnyStateTransitions();
+    }
+
+    public void DropDyeEventAnim()
+    {
+        EnableAnyStateTransitions();
+    }
+
+    public void FreezeAnimator()
+    {
+        animator.speed = 0f;
+    }
+
+    public void ResumeAnimator()
+    {
+        animator.speed = 1f;
+    }
+
     #endregion
 }

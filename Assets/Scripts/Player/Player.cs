@@ -78,6 +78,7 @@ public class Player : MonoBehaviour, ICrushable
     public SplitingState splitingState = new();
     public ThrowingState throwingState = new();
     public AutoMoveState autoMoveState = new();
+    public DyeEventState dyeEventState = new();
 
     private void Start()
     {
@@ -103,7 +104,7 @@ public class Player : MonoBehaviour, ICrushable
         HandleCounters();
         input = isActive ? playerInput.Player.Move.ReadValue<Vector2>() : new Vector2(0f, 0f);
         targetVelocity = input.x * playerParameters.moveSpeed;
-        currentState.UpdateState(this);
+        currentState?.UpdateState(this);
         tilesController.HandleTilesCollision();
     }
 
@@ -395,6 +396,13 @@ public class Player : MonoBehaviour, ICrushable
     {
         isActive = enable;
         playerLight.gameObject.SetActive(enable);
+        if (enable)
+        {
+            DyeEventManager.DyeEventStart -= HandleDyeEventStart;
+            DyeEventManager.DyeEventStart += HandleDyeEventStart;
+        }
+        else
+            DyeEventManager.DyeEventStart -= HandleDyeEventStart;
     }
 
     public void DisableInput()
@@ -467,9 +475,34 @@ public class Player : MonoBehaviour, ICrushable
         playerLight.color = color;
     }
 
+    private void HandleDyeEventStart()
+    {
+        if (!isActive) return;
+        animationController.FreezeAnimator();
+        SwitchState(dyeEventState);
+        DyeEventManager.DyeEventEnd += HandleDyeEventEnd;
+    }
+
+    private void HandleDyeEventEnd()
+    {
+        DyeEventManager.DyeEventEnd -= HandleDyeEventEnd;
+        animationController.ResumeAnimator();
+        SwitchState(idleState);
+        EnableInput();
+    }
+
     private void OnDestroy()
     {
         SettingsManager.OnPalleteChange -= ChangeLightColor;
+        DyeEventManager.DyeEventStart -= HandleDyeEventStart;
+        DyeEventManager.DyeEventEnd -= HandleDyeEventEnd;
+    }
+
+    public void StopMovementSounds()
+    {
+        AudioManager.instance.StopPlaying(AudioName.Movement);
+        AudioManager.instance.StopPlaying(AudioName.Push);
+        AudioManager.instance.StopPlaying(AudioName.Sliding);
     }
 
     #region Collisions related methods called by states
@@ -649,6 +682,11 @@ public class Player : MonoBehaviour, ICrushable
     public void StopWallSlidingAnimation()
     {
         animationController.StopWallSliding();
+    }
+
+    public void StartDyeAnimation()
+    {
+        animationController.DoDyeEventAnim();
     }
     #endregion
 }

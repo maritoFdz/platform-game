@@ -317,6 +317,7 @@ MonoBehaviour:
   fog: {fileID: 539036240263385402, guid: 9c77e81dd6c31be41878699e8ff710b1, type: 3}
   snowflakesParticles: {fileID: 4739862954428356413, guid: 2758de09d9b4b0a44b2e2cd726826215, type: 3}
   snowflakesFrequency: 1
+  glowMaterial: {fileID: 0}
 --- !u!114 &4292578644105449256
 MonoBehaviour:
   m_ObjectHideFlags: 0
