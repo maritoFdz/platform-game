@@ -11,6 +11,7 @@ public class Dyes : MonoBehaviour
     [SerializeField] private float grabbedEventDuration;
     [SerializeField] private CinemachineImpulseSource impulseSource;
     [SerializeField] private CameraShakeParameters rumbleParameters;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     private bool triggered;
 
@@ -19,6 +20,7 @@ public class Dyes : MonoBehaviour
         if (triggered) return;
         if (!collision.TryGetComponent<Player>(out var player) || !player.IsActive) return;
         triggered = true;
+        if (AudioManager.instance != null) AudioManager.instance.Play(AudioName.GrabbedDye, false);
         DyeEventManager.DyeEventPeak += ApplyPallete;
         DyeEventManager.DyeEventEnd += Finish;
         DyeEventManager.DyeEventAnimation += Rumble;
@@ -27,6 +29,7 @@ public class Dyes : MonoBehaviour
 
     private void ApplyPallete()
     {
+        spriteRenderer.enabled = false; // yo se que esto no va aqui pero basta ya de crear metodos
         if (DataManager.instance != null)
             DataManager.instance.AddUnlockedPallete(palleteUnlocked);
         if (SettingsManager.instance != null)

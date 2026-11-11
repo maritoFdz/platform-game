@@ -16,6 +16,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Material playerIceMaterial;
     [SerializeField] private Material waterMaterial;
     [SerializeField] private Material switchParticleMaterial;
+    [SerializeField] private Material oilsMaterial;
     [SerializeField] private ColorPallete defaultPallete;
     [SerializeField] private float tolerance;
     public ColorPallete[] palletes;
@@ -114,6 +115,14 @@ public class SettingsManager : MonoBehaviour
         waterMaterial.SetColor("_Foam_Color", pallete.color7);
         playerIceMaterial.SetColor("_Ice_Color", pallete.color7);
 
+        oilsMaterial.SetColor("_New1", pallete.color1);
+        oilsMaterial.SetColor("_New2", pallete.color2);
+        oilsMaterial.SetColor("_New3", pallete.color3);
+        oilsMaterial.SetColor("_New4", pallete.color4);
+        oilsMaterial.SetColor("_New5", pallete.color5);
+        oilsMaterial.SetColor("_New6", pallete.color6);
+        oilsMaterial.SetColor("_New7", pallete.color7);
+
         CurrentLightColor = pallete.color7;
         OnPalleteChange?.Invoke(pallete.color7);
 
@@ -164,6 +173,14 @@ public class SettingsManager : MonoBehaviour
         waterMaterial.SetColor("_Foam_Color", defaultPallete.color7);
         palleteMaterial.SetFloat("_Tolerance", tolerance);
         playerIceMaterial.SetColor("_Ice_Color", defaultPallete.color7);
+
+        oilsMaterial.SetColor("_New1", defaultPallete.color1);
+        oilsMaterial.SetColor("_New2", defaultPallete.color2);
+        oilsMaterial.SetColor("_New3", defaultPallete.color3);
+        oilsMaterial.SetColor("_New4", defaultPallete.color4);
+        oilsMaterial.SetColor("_New5", defaultPallete.color5);
+        oilsMaterial.SetColor("_New6", defaultPallete.color6);
+        oilsMaterial.SetColor("_New7", defaultPallete.color7);
 
         CurrentLightColor = defaultPallete.color7;
         OnPalleteChange?.Invoke(defaultPallete.color7);

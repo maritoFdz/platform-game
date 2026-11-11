@@ -65,6 +65,8 @@ public class DyeEventManager : MonoBehaviour
 
         yield return new WaitForSeconds(duration * startPauseRatio);
 
+        if (AudioManager.instance != null) AudioManager.instance.Play(AudioName.Rumble, false);
+        if (AudioManager.instance != null) AudioManager.instance.Play(AudioName.Flash, false);
         DyeEventAnimation?.Invoke(duration * riseRatio); // lo coge el player para la animacion y la camara para el tembleque
         yield return InterpolateFlashCo(0f, 1f, duration * riseRatio, true);
 

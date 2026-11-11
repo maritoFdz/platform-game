@@ -205,3 +205,33 @@ MonoBehaviour:
     loops: 0
     playsOnAwake: 0
     mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
+  - name: 16
+    clip: {fileID: 8300000, guid: 67e785631cd67e54b87172f79626a3ab, type: 3}
+    audioSource: {fileID: 0}
+    volume: 0.7
+    minPitch: 1
+    maxPitch: 1
+    defaultPitch: 1
+    loops: 0
+    playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
+  - name: 17
+    clip: {fileID: 8300000, guid: 041387013b8790c4f80667f185d792db, type: 3}
+    audioSource: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+    defaultPitch: 1
+    loops: 0
+    playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
+  - name: 18
+    clip: {fileID: 8300000, guid: 3309db405f025a646aed66f8e7a3c5cf, type: 3}
+    audioSource: {fileID: 0}
+    volume: 1
+    minPitch: 1
+    maxPitch: 1
+    defaultPitch: 1
+    loops: 0
+    playsOnAwake: 0
+    mixerGroup: {fileID: 24300002, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}

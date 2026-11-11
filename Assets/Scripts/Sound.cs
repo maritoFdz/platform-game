@@ -18,7 +18,10 @@ public enum AudioName {
     Push,
     HeavyPushableFall,
     MidPushableFall,
-    SoftPushableFall
+    SoftPushableFall,
+    GrabbedDye,
+    Flash,
+    Rumble
 }
 
 [Serializable]
