@@ -1,7 +1,6 @@
-using System;
-using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent (typeof(BoxCollider2D))]
 [RequireComponent (typeof(Rigidbody2D))]
@@ -12,14 +11,18 @@ public class Dyes : MonoBehaviour
     [SerializeField] private CinemachineImpulseSource impulseSource;
     [SerializeField] private CameraShakeParameters rumbleParameters;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Light2D dyeLight;
+
+    public static Player Toucher { get; private set; }
 
     private bool triggered;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (triggered) return;
-        if (!collision.TryGetComponent<Player>(out var player) || !player.IsActive) return;
+        if (!collision.TryGetComponent<Player>(out var player)) return;
         triggered = true;
+        Toucher = player;
         if (AudioManager.instance != null) AudioManager.instance.Play(AudioName.GrabbedDye, false);
         DyeEventManager.DyeEventPeak += ApplyPallete;
         DyeEventManager.DyeEventEnd += Finish;
@@ -30,6 +33,7 @@ public class Dyes : MonoBehaviour
     private void ApplyPallete()
     {
         spriteRenderer.enabled = false; // yo se que esto no va aqui pero basta ya de crear metodos
+        dyeLight.gameObject.SetActive(false);
         if (DataManager.instance != null)
             DataManager.instance.AddUnlockedPallete(palleteUnlocked);
         if (SettingsManager.instance != null)
@@ -38,6 +42,7 @@ public class Dyes : MonoBehaviour
 
     private void Finish()
     {
+        Toucher = null;
         Destroy(gameObject);
     }
 

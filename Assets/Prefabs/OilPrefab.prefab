@@ -160,6 +160,7 @@ MonoBehaviour:
   impulseSource: {fileID: 2121895265105044303}
   rumbleParameters: {fileID: 11400000, guid: 9d3c8178093338149a6c4c264f4bb039, type: 2}
   spriteRenderer: {fileID: 4816487847267536399}
+  dyeLight: {fileID: 7516185638848453776}
 --- !u!50 &4279430922214662423
 Rigidbody2D:
   serializedVersion: 5

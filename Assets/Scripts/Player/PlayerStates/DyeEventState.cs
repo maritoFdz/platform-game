@@ -3,6 +3,8 @@ using UnityEngine;
 public class DyeEventState : IPlayerState
 {
     private bool animates;
+    private bool finished;
+
     public void EnterState(Player player)
     {
         player.StopMovementSounds();
@@ -11,8 +13,16 @@ public class DyeEventState : IPlayerState
         player.ActivateLight();
         player.velocity = Vector2.zero;
         animates = false;
-        DyeEventManager.DyeEventAnimation -= Animate;
-        DyeEventManager.DyeEventAnimation += Animate;
+        finished = false;
+
+        DyeEventManager.DyeEventEnd -= Finish;
+        DyeEventManager.DyeEventEnd += Finish;
+
+        if (player.IsDyeToucher)
+        {
+            DyeEventManager.DyeEventAnimation -= Animate;
+            DyeEventManager.DyeEventAnimation += Animate;
+        }
     }
 
     public void UpdateState(Player player)
@@ -23,9 +33,9 @@ public class DyeEventState : IPlayerState
             player.ResumeAnimator();
             player.StartDyeAnimation();
         }
-        if (player.IsActive)
+        if (finished)
         {
-            DyeEventManager.DyeEventAnimation -= Animate;
+            player.ResumeAnimator();
             player.SwitchState(player.idleState);
         }
     }
@@ -33,6 +43,12 @@ public class DyeEventState : IPlayerState
     public void Animate(float time) // de free el tiempo realmente
     {
         animates = true;
+        DyeEventManager.DyeEventAnimation -= Animate;
+    }
+    private void Finish()
+    {
+        finished = true;
+        DyeEventManager.DyeEventEnd -= Finish;
         DyeEventManager.DyeEventAnimation -= Animate;
     }
 }

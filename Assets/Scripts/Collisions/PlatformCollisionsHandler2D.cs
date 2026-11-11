@@ -21,6 +21,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
     private Dictionary<Transform, CollisionsHandler2D> knownPassengers; // to reduce GetComponent<CollisionsHandler2D>() calls
     private Dictionary<Transform, IPlatformCarrier> knownCarriers;
     private HashSet<Transform> knownNonCarriers;
+    private bool paused;
 
     protected override void Awake()
     {
@@ -30,6 +31,12 @@ public class PlatformCollisionsHandler2D : RaycastLayout
         waypoints = new Vector3[relativeWaypoints.Length];
         passengers = new List<PassengerDetails>();
         base.Awake();
+    }
+
+    private void OnEnable()
+    {
+        DyeEventManager.DyeEventStart += Pause;
+        DyeEventManager.DyeEventEnd += Resume;
     }
 
     private void Start()
@@ -47,6 +54,7 @@ public class PlatformCollisionsHandler2D : RaycastLayout
 
     private void Update()
     {
+        if (paused) return;
         UpdateRaycast();
         Vector2 displacement = GetPlatformDisplacement();
         passengers.Clear();
@@ -235,6 +243,23 @@ public class PlatformCollisionsHandler2D : RaycastLayout
             }
         }
     }
+
+    private void OnDisable()
+    {
+        DyeEventManager.DyeEventStart -= Pause;
+        DyeEventManager.DyeEventEnd -= Resume;
+    }
+
+    private void Pause()
+    {
+        paused = true;
+    }
+
+    private void Resume()
+    {
+        paused = false;
+    }
+
 
     private void OnDrawGizmosSelected()
     {

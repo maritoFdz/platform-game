@@ -60,6 +60,8 @@ public class Player : MonoBehaviour, ICrushable
     private bool isDead;
     private bool isPendingCrush;
     private Coroutine crushRoutine;
+    private bool wasActiveOnDye;
+    public bool IsDyeToucher => Dyes.Toucher == this;
 
     private IPlayerState currentState;
     // states instances
@@ -91,6 +93,7 @@ public class Player : MonoBehaviour, ICrushable
         PlayerSwitchManager.instance.Add(this);
         if (SettingsManager.instance !=  null)
             playerLight.color = SettingsManager.instance.CurrentLightColor;
+        DyeEventManager.DyeEventStart += HandleDyeEventStart;
         SettingsManager.OnPalleteChange += ChangeLightColor;
     }
 
@@ -396,13 +399,6 @@ public class Player : MonoBehaviour, ICrushable
     {
         isActive = enable;
         playerLight.gameObject.SetActive(enable);
-        if (enable)
-        {
-            DyeEventManager.DyeEventStart -= HandleDyeEventStart;
-            DyeEventManager.DyeEventStart += HandleDyeEventStart;
-        }
-        else
-            DyeEventManager.DyeEventStart -= HandleDyeEventStart;
     }
 
     public void ActivateLight()
@@ -482,7 +478,8 @@ public class Player : MonoBehaviour, ICrushable
 
     private void HandleDyeEventStart()
     {
-        if (!isActive) return;
+        if (!IsDyeToucher && !isActive) return;
+        wasActiveOnDye = isActive;
         PlayerSwitchManager.instance.DisableAll();
         SwitchState(dyeEventState);
         DyeEventManager.DyeEventEnd += HandleDyeEventEnd;
@@ -492,7 +489,8 @@ public class Player : MonoBehaviour, ICrushable
     {
         DyeEventManager.DyeEventEnd -= HandleDyeEventEnd;
         PlayerSwitchManager.instance.EnableAll();
-        EnableInput();
+        if (wasActiveOnDye) EnableInput();
+        else DisableInput();
     }
 
     private void OnDestroy()
