@@ -405,6 +405,11 @@ public class Player : MonoBehaviour, ICrushable
             DyeEventManager.DyeEventStart -= HandleDyeEventStart;
     }
 
+    public void ActivateLight()
+    {
+        playerLight.gameObject.SetActive(true);
+    }
+
     public void DisableInput()
     {
         SetActiveState(false);
@@ -478,7 +483,7 @@ public class Player : MonoBehaviour, ICrushable
     private void HandleDyeEventStart()
     {
         if (!isActive) return;
-        animationController.FreezeAnimator();
+        PlayerSwitchManager.instance.DisableAll();
         SwitchState(dyeEventState);
         DyeEventManager.DyeEventEnd += HandleDyeEventEnd;
     }
@@ -486,8 +491,7 @@ public class Player : MonoBehaviour, ICrushable
     private void HandleDyeEventEnd()
     {
         DyeEventManager.DyeEventEnd -= HandleDyeEventEnd;
-        animationController.ResumeAnimator();
-        SwitchState(idleState);
+        PlayerSwitchManager.instance.EnableAll();
         EnableInput();
     }
 
@@ -607,6 +611,16 @@ public class Player : MonoBehaviour, ICrushable
     public void FlipSprite(float direction)
     {
         animationController.FlipX(direction < 0);
+    }
+
+    public void FreezeAnimator()
+    {
+        animationController.FreezeAnimator();
+    }
+
+    public void ResumeAnimator()
+    {
+        animationController.ResumeAnimator();
     }
 
     public void PlayIdleAnimation()

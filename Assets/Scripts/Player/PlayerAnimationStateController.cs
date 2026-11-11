@@ -29,9 +29,6 @@ public class PlayerAnimationStateController : MonoBehaviour
     [SerializeField] private GameObject snowflakesParticles;
     [SerializeField] private float snowflakesFrequency;
 
-    [Header("Ice Glow Settings")]
-    [SerializeField] private Material glowMaterial;
-
     public Coroutine colorRoutine;
     private float normalFreezeAmount;
     private float snowflakesCounter;
@@ -52,6 +49,7 @@ public class PlayerAnimationStateController : MonoBehaviour
     private int instantFallHash;
     private int anyStateLockedHash;
     private int doubleJumpHash;
+    private int dyeHash;
 
     private bool idleCancelled;
     private float anyStateLockedCounter;
@@ -70,6 +68,7 @@ public class PlayerAnimationStateController : MonoBehaviour
         instantFallHash = Animator.StringToHash("InstantJumpEnd");
         anyStateLockedHash = Animator.StringToHash("AnyStateLocked");
         doubleJumpHash = Animator.StringToHash("DoubleJump");
+        dyeHash = Animator.StringToHash("StartDyeAnim");
         freezeAmountHash = Shader.PropertyToID("_Freeze_Amount");
     }
 
@@ -355,12 +354,15 @@ public class PlayerAnimationStateController : MonoBehaviour
 
     public void DoDyeEventAnim()
     {
-        LockAnyStateTransitions();
-    }
-
-    public void DropDyeEventAnim()
-    {
-        EnableAnyStateTransitions();
+        animator.ResetTrigger(instantFallHash);
+        animator.ResetTrigger(instantJumpHash);
+        animator.ResetTrigger(startJumpHash);
+        animator.ResetTrigger(doubleJumpHash);
+        animator.ResetTrigger(endJumpHash);
+        animator.ResetTrigger(stickWallHash);
+        animator.ResetTrigger(playIdleHash);
+        animator.SetBool(isFallingHash, false);
+        animator.SetTrigger(dyeHash);
     }
 
     public void FreezeAnimator()

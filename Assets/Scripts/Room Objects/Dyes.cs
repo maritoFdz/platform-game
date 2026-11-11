@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 [RequireComponent (typeof(BoxCollider2D))]
@@ -8,6 +9,8 @@ public class Dyes : MonoBehaviour
 {
     [SerializeField] private ColorPallete palleteUnlocked;
     [SerializeField] private float grabbedEventDuration;
+    [SerializeField] private CinemachineImpulseSource impulseSource;
+    [SerializeField] private CameraShakeParameters rumbleParameters;
 
     private bool triggered;
 
@@ -18,6 +21,7 @@ public class Dyes : MonoBehaviour
         triggered = true;
         DyeEventManager.DyeEventPeak += ApplyPallete;
         DyeEventManager.DyeEventEnd += Finish;
+        DyeEventManager.DyeEventAnimation += Rumble;
         DyeEventManager.instance.StartDyeEvent(player.transform, grabbedEventDuration);
     }
 
@@ -34,9 +38,16 @@ public class Dyes : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void Rumble(float riseTime)
+    {
+        DyeEventManager.DyeEventAnimation -= Rumble;
+        if (CameraManager.instance != null) CameraManager.instance.ShakaCameraWithParameters(rumbleParameters, impulseSource);
+    }
+
     private void OnDestroy()
     {
         DyeEventManager.DyeEventPeak -= ApplyPallete;
         DyeEventManager.DyeEventEnd -= Finish;
+        DyeEventManager.DyeEventAnimation -= Rumble;
     }
 }
