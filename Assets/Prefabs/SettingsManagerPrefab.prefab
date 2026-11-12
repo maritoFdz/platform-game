@@ -52,6 +52,7 @@ MonoBehaviour:
   waterMaterial: {fileID: 2100000, guid: 624a7c64a78ebd74bb079efb43197b9e, type: 2}
   switchParticleMaterial: {fileID: -876546973899608171, guid: 141d4d5581e8fbd44927a9986ed7f63c, type: 3}
   oilsMaterial: {fileID: -876546973899608171, guid: 191252a18a9af564eac1f5128aece601, type: 3}
+  UIMaterial: {fileID: 2100000, guid: 65e9fd7ed2e5e1f4c8b6b74e453184cc, type: 2}
   defaultPallete: {fileID: 11400000, guid: 5d99a75eb1f912041a7ffa169e7b1adb, type: 2}
   tolerance: 0.25
   palletes:

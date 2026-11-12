@@ -297,7 +297,6 @@ public class Player : MonoBehaviour, ICrushable
         ApplyScale();
         if (normalizedScale == playerParameters.minNormalizedScale)
             KillPlayer();
-        
     }
 
     public void Upscale()
@@ -315,6 +314,8 @@ public class Player : MonoBehaviour, ICrushable
 
     private void ApplyScale()
     {
+        if (isActive && UIManager.instance != null)
+            UIManager.instance.SetFill(Mathf.InverseLerp(playerParameters.minNormalizedScale, 1f, normalizedScale));
         transform.localScale = playerParameters.maxScale * normalizedScale;
         Physics2D.SyncTransforms();
         controller.UpdateCollisions(normalizedScale);
@@ -326,7 +327,6 @@ public class Player : MonoBehaviour, ICrushable
         isDead = true;
         if (crushRoutine != null) StopCoroutine(crushRoutine);
         if (doAnim) MakeSplash(0f, false, true, true);
-        // todo animation death event
         animationController.ResetFreezeColor();
         PlayerSwitchManager.instance.Erase(this);
     }
@@ -399,6 +399,8 @@ public class Player : MonoBehaviour, ICrushable
     {
         isActive = enable;
         playerLight.gameObject.SetActive(enable);
+        if (isActive && UIManager.instance != null)
+            UIManager.instance.SetFill(Mathf.InverseLerp(playerParameters.minNormalizedScale, 1f, normalizedScale));
     }
 
     public void ActivateLight()

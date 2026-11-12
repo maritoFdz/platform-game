@@ -17,6 +17,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Material waterMaterial;
     [SerializeField] private Material switchParticleMaterial;
     [SerializeField] private Material oilsMaterial;
+    [SerializeField] private Material UIMaterial;
     [SerializeField] private ColorPallete defaultPallete;
     [SerializeField] private float tolerance;
     public ColorPallete[] palletes;
@@ -123,6 +124,11 @@ public class SettingsManager : MonoBehaviour
         oilsMaterial.SetColor("_New6", pallete.color6);
         oilsMaterial.SetColor("_New7", pallete.color7);
 
+        UIMaterial.SetColor("_EmptyClor", pallete.color1);
+        UIMaterial.SetColor("_LiquidColor", pallete.color5);
+        UIMaterial.SetColor("_SpotsColor", pallete.color6);
+        UIMaterial.SetColor("_PulseColor", pallete.color7);
+
         CurrentLightColor = pallete.color7;
         OnPalleteChange?.Invoke(pallete.color7);
 
@@ -181,6 +187,11 @@ public class SettingsManager : MonoBehaviour
         oilsMaterial.SetColor("_New5", defaultPallete.color5);
         oilsMaterial.SetColor("_New6", defaultPallete.color6);
         oilsMaterial.SetColor("_New7", defaultPallete.color7);
+
+        UIMaterial.SetColor("_EmptyClor", defaultPallete.color1);
+        UIMaterial.SetColor("_LiquidColor", defaultPallete.color5);
+        UIMaterial.SetColor("_SpotsColor", defaultPallete.color6);
+        UIMaterial.SetColor("_PulseColor", defaultPallete.color7);
 
         CurrentLightColor = defaultPallete.color7;
         OnPalleteChange?.Invoke(defaultPallete.color7);

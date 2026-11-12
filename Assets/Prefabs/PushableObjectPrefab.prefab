@@ -100,8 +100,8 @@ MonoBehaviour:
   parameters: {fileID: 11400000, guid: 6f2dcb0d0cda05345be7ea98f0d83fe8, type: 2}
   dustVFXPrefab: {fileID: 2038591599289137643, guid: f35c61e585ac3c8488553477462f07f6, type: 3}
   impulseSource: {fileID: 6646650893606179721}
-  shakeParameters: {fileID: 11400000, guid: 6e6e32df68e677846ae1a3a1bfbff4fa, type: 2}
-  strongShakeParameters: {fileID: 0}
+  shakeParameters: {fileID: 11400000, guid: 2a198e6675e0f78489e654ff0ea00900, type: 2}
+  strongShakeParameters: {fileID: 11400000, guid: 6e6e32df68e677846ae1a3a1bfbff4fa, type: 2}
 --- !u!114 &4519556003513909041
 MonoBehaviour:
   m_ObjectHideFlags: 0
