@@ -83,4 +83,7 @@ public class PlayerParameters : ScriptableObject
     [Range(0f, 1f)] public float minBodyScale;
     [Range(0f, 1f)] public float bodyExponent;
     [Range(0f, 1f)] public float minScaleToSplit;
+
+    [Header("Rumble")]
+    public float rumbleVelocity;
 }

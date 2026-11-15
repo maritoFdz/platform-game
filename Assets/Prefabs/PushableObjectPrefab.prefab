@@ -102,6 +102,8 @@ MonoBehaviour:
   impulseSource: {fileID: 6646650893606179721}
   shakeParameters: {fileID: 11400000, guid: 2a198e6675e0f78489e654ff0ea00900, type: 2}
   strongShakeParameters: {fileID: 11400000, guid: 6e6e32df68e677846ae1a3a1bfbff4fa, type: 2}
+  softtRumbleParameters: {fileID: 11400000, guid: a78075f82ba8c624caa036ee6859a7b9, type: 2}
+  rumbleParameters: {fileID: 11400000, guid: 12c1abc0beba52349a8d8c045f1b5c34, type: 2}
 --- !u!114 &4519556003513909041
 MonoBehaviour:
   m_ObjectHideFlags: 0

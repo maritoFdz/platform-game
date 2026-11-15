@@ -69,3 +69,4 @@ MonoBehaviour:
   minBodyScale: 0.3
   bodyExponent: 0.5
   minScaleToSplit: 0.5
+  rumbleVelocity: 32

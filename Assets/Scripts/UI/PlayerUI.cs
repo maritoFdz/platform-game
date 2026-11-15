@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
-public class UIManager : MonoBehaviour
+public class PlayerUI : MonoBehaviour
 {
-    public static UIManager instance;
+    public static PlayerUI instance;
 
     [SerializeField] private Material UIMaterial;
     [SerializeField] private RawImage UI;

@@ -19,6 +19,7 @@ public class DashingState : IPlayerState
         player.hasDashAir = true;
         freezeBehaviour = false;
         player.ConsumeDash();
+        player.DoRumble();
         dashCounter = 0f;
         player.velocity = Vector2.zero;
         player.velocityXSmoothing = player.velocityYSmoothing = 0f;

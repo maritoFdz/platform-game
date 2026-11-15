@@ -74,6 +74,12 @@ public class FallingState : IPlayerState
                 player.MakeSplash(0f);
             }
             else if (player.velocity.y != 0 && AudioManager.instance != null) AudioManager.instance.Play(AudioName.FallWeak);
+
+            if (player.playerParameters.rumbleVelocity <= Mathf.Abs(player.velocity.y))
+            {
+                player.DoRumble();
+                player.DoCameraShake();
+            }
             player.SwitchState(player.idleState);
         }    
     }

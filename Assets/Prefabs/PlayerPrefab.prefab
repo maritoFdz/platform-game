@@ -317,7 +317,6 @@ MonoBehaviour:
   fog: {fileID: 539036240263385402, guid: 9c77e81dd6c31be41878699e8ff710b1, type: 3}
   snowflakesParticles: {fileID: 4739862954428356413, guid: 2758de09d9b4b0a44b2e2cd726826215, type: 3}
   snowflakesFrequency: 1
-  glowMaterial: {fileID: 0}
 --- !u!114 &4292578644105449256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,6 +386,7 @@ GameObject:
   - component: {fileID: 5044437817793177407}
   - component: {fileID: 6248119225859901008}
   - component: {fileID: 3957637794669289830}
+  - component: {fileID: -5543529950045898611}
   m_Layer: 7
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -492,6 +492,9 @@ MonoBehaviour:
   animationController: {fileID: 8151258842348135349}
   tilesController: {fileID: 3957637794669289830}
   playerParameters: {fileID: 11400000, guid: 0ff9800078ffff54eb73c5d261422404, type: 2}
+  rumbleParameters: {fileID: 11400000, guid: e19be78634a53394291d4e68eba95697, type: 2}
+  shakeParameters: {fileID: 11400000, guid: edfbd0e750b2a5548923c33d8c438402, type: 2}
+  impulseSource: {fileID: -5543529950045898611}
   playerPrefab: {fileID: 6248119225859901008}
   playerLight: {fileID: 2842266936657543835}
   gravityScale: 2
@@ -531,3 +534,56 @@ MonoBehaviour:
     m_Bits: 16
   tilesInteractionParameters: {fileID: 11400000, guid: b4d05e1c236bda340aa37958f5010dad, type: 2}
   currentWater: {fileID: 0}
+--- !u!114 &-5543529950045898611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8260429854782688017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 2
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.2
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 0, y: -1, z: 0}

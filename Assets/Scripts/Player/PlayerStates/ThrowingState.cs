@@ -59,7 +59,10 @@ public class ThrowingState : IPlayerState
             float dir = player.WallLeft() ? -1 : 1;
             player.FlipSprite(dir);
             if (player.playerParameters.splashWallMinVelocity <= Mathf.Abs(player.velocity.x))
+            {
+                player.DoRumble();
                 player.MakeSplash(90f * dir);
+            }
             else AudioManager.instance.Play(AudioName.FallWeak);
             player.StopFallingAnimation();
             player.HandleWallSlidingStateTransition();

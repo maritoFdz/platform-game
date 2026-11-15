@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewCameraShakeParameters", menuName = "Scriptable Objects/Camera Shake Parameters")]
+[CreateAssetMenu(fileName = "New Camera Shake Parameters", menuName = "Scriptable Objects/Camera Shake Parameters")]
 public class CameraShakeParameters : ScriptableObject
 {
     [Header("Impulse Source Settings")]

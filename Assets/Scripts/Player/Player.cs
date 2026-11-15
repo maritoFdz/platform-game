@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.Rendering.Universal;
 using System;
+using Unity.Cinemachine;
 
 [RequireComponent(typeof(CollisionsHandler2D))]
 public class Player : MonoBehaviour, ICrushable
@@ -12,6 +13,9 @@ public class Player : MonoBehaviour, ICrushable
     [SerializeField] private PlayerAnimationStateController animationController;
     [SerializeField] private TilesInteractionHandler tilesController;
     public PlayerParameters playerParameters;
+    [SerializeField] private RumbleParameters rumbleParameters;
+    [SerializeField] private CameraShakeParameters shakeParameters;
+    [SerializeField] private CinemachineImpulseSource impulseSource;
     [SerializeField] private Player playerPrefab;
     [SerializeField] private Light2D playerLight;
 
@@ -315,8 +319,8 @@ public class Player : MonoBehaviour, ICrushable
     private void ApplyScale()
     {
         float fill = Mathf.InverseLerp(playerParameters.minNormalizedScale, 1f, normalizedScale);
-        if (isActive && UIManager.instance != null)
-            UIManager.instance.SetFill(Mathf.InverseLerp(playerParameters.minNormalizedScale, 1f, normalizedScale));
+        if (isActive && PlayerUI.instance != null)
+            PlayerUI.instance.SetFill(Mathf.InverseLerp(playerParameters.minNormalizedScale, 1f, normalizedScale));
         float body = Mathf.Lerp(playerParameters.minBodyScale, 1f, Mathf.Pow(fill, playerParameters.bodyExponent));
         transform.localScale = playerParameters.maxScale * body;
         Physics2D.SyncTransforms();
@@ -330,6 +334,7 @@ public class Player : MonoBehaviour, ICrushable
         if (crushRoutine != null) StopCoroutine(crushRoutine);
         if (doAnim) MakeSplash(0f, false, true, true);
         animationController.ResetFreezeColor();
+        StopContinuousRumble();
         PlayerSwitchManager.instance.Erase(this);
     }
 
@@ -401,8 +406,8 @@ public class Player : MonoBehaviour, ICrushable
     {
         isActive = enable;
         playerLight.gameObject.SetActive(enable);
-        if (isActive && UIManager.instance != null)
-            UIManager.instance.SetFill(Mathf.InverseLerp(playerParameters.minNormalizedScale, 1f, normalizedScale));
+        if (isActive && PlayerUI.instance != null)
+            PlayerUI.instance.SetFill(Mathf.InverseLerp(playerParameters.minNormalizedScale, 1f, normalizedScale));
     }
 
     public void ActivateLight()
@@ -472,6 +477,7 @@ public class Player : MonoBehaviour, ICrushable
         }
         isPendingCrush = false;
         crushRoutine = null;
+        DoRumble();
         KillPlayer();
     }
 
@@ -482,6 +488,7 @@ public class Player : MonoBehaviour, ICrushable
 
     private void HandleDyeEventStart()
     {
+        StopContinuousRumble();
         if (!IsDyeToucher && !isActive) return;
         wasActiveOnDye = isActive;
         PlayerSwitchManager.instance.DisableAll();
@@ -499,6 +506,7 @@ public class Player : MonoBehaviour, ICrushable
 
     private void OnDestroy()
     {
+        StopContinuousRumble();
         SettingsManager.OnPalleteChange -= ChangeLightColor;
         DyeEventManager.DyeEventStart -= HandleDyeEventStart;
         DyeEventManager.DyeEventEnd -= HandleDyeEventEnd;
@@ -703,6 +711,26 @@ public class Player : MonoBehaviour, ICrushable
     public void StartDyeAnimation()
     {
         animationController.DoDyeEventAnim();
+    }
+
+    public void DoCameraShake()
+    {
+        if (isActive && CameraManager.instance != null) CameraManager.instance.ShakaCameraWithParameters(shakeParameters, impulseSource);
+    }
+
+    public void DoRumble()
+    {
+        if (isActive && RumbleManager.instance != null) RumbleManager.instance.Rumble(rumbleParameters);
+    }
+
+    public void DoContinuousRumble()
+    {
+        if (isActive && RumbleManager.instance != null) RumbleManager.instance.RumbleContinuous(rumbleParameters);
+    }
+
+    public void StopContinuousRumble()
+    {
+        if (isActive && RumbleManager.instance != null) RumbleManager.instance.StopContinuous();
     }
     #endregion
 }

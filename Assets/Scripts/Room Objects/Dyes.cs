@@ -9,7 +9,8 @@ public class Dyes : MonoBehaviour
     [SerializeField] private ColorPallete palleteUnlocked;
     [SerializeField] private float grabbedEventDuration;
     [SerializeField] private CinemachineImpulseSource impulseSource;
-    [SerializeField] private CameraShakeParameters rumbleParameters;
+    [SerializeField] private CameraShakeParameters shakeParameters;
+    [SerializeField] private RumbleParameters rumbleParameters;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Light2D dyeLight;
 
@@ -49,7 +50,8 @@ public class Dyes : MonoBehaviour
     private void Rumble(float riseTime)
     {
         DyeEventManager.DyeEventAnimation -= Rumble;
-        if (CameraManager.instance != null) CameraManager.instance.ShakaCameraWithParameters(rumbleParameters, impulseSource);
+        if (CameraManager.instance != null) CameraManager.instance.ShakaCameraWithParameters(shakeParameters, impulseSource);
+        if (RumbleManager.instance != null) RumbleManager.instance.Rumble(rumbleParameters);
     }
 
     private void OnDestroy()

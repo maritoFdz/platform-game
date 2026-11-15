@@ -15,6 +15,8 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
     [SerializeField] private CinemachineImpulseSource impulseSource;
     [SerializeField] private CameraShakeParameters shakeParameters;
     [SerializeField] private CameraShakeParameters strongShakeParameters;
+    [SerializeField] private RumbleParameters softtRumbleParameters;
+    [SerializeField] private RumbleParameters rumbleParameters;
 
     private Vector3 initialPos;
     private float rotationAngle;
@@ -235,11 +237,13 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
                 if (Mathf.Abs(velocity.y) >= parameters.strongShakeVelocity)
                 {
                     CameraManager.instance.ShakaCameraWithParameters(strongShakeParameters, impulseSource);
+                    if (RumbleManager.instance != null) RumbleManager.instance.Rumble(rumbleParameters);
                     fallAudio = AudioName.HeavyPushableFall;
                 }
                 else if (Mathf.Abs(velocity.y) >= parameters.minShakeVelocity)
                 {
                     CameraManager.instance.ShakaCameraWithParameters(shakeParameters, impulseSource, Mathf.Clamp01(Mathf.Abs(velocity.y) / parameters.shakeVelocity));
+                    if (RumbleManager.instance != null) RumbleManager.instance.Rumble(softtRumbleParameters);
                 }
             }
             if (AudioManager.instance != null) AudioManager.instance.Play(fallAudio);
