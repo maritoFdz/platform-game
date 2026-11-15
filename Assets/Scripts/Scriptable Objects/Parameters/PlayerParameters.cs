@@ -56,7 +56,7 @@ public class PlayerParameters : ScriptableObject
     public float splashFallMinVelocity;
     public float splashWallMinVelocity;
     [Range(0f, 1f)] public float scaleReductionPerUnit;
-    [Range(0.1f, 1f)] public float minNormalizedScale;
+    [Range(0f, 1f)] public float minNormalizedScale;
 
     [Header("Swimming Settings")]
     public float floatingForce;
@@ -78,4 +78,9 @@ public class PlayerParameters : ScriptableObject
     [Header("Crushing settings")]
     public float crushThreeshold;
     public float crushPushAway;
+
+    [Header("Body Scale")]
+    [Range(0f, 1f)] public float minBodyScale;
+    [Range(0f, 1f)] public float bodyExponent;
+    [Range(0f, 1f)] public float minScaleToSplit;
 }

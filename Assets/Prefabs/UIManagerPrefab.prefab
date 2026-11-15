@@ -154,6 +154,9 @@ MonoBehaviour:
   startFlashThreeshold: 0.25
   flashWait: 0.1
   flashTime: 0.5
+  darkThreshold: 0.5
+  darkMax: 0.6
+  darkFadeTime: 0.3
 --- !u!1 &8597509985069769703
 GameObject:
   m_ObjectHideFlags: 0

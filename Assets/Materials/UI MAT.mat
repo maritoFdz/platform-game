@@ -43,12 +43,13 @@ Material:
     m_Floats:
     - _BorderWidth: 0.014
     - _ColorMask: 15
-    - _Fill: 0.9977414
+    - _DarkAmount: 0
+    - _Fill: 0.979798
     - _NoiseScale: 0.6
     - _NoiseStrength: 0.05
     - _PixelAmount: 64
     - _PulseAmount: 0
-    - _SpotSize: 3
+    - _SpotSize: 8
     - _SpotSpeed: 0.1
     - _Stencil: 0
     - _StencilComp: 8

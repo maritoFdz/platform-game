@@ -17,7 +17,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float flashWait;
     [SerializeField] private float flashTime;
 
-    private static readonly int FillID = Shader.PropertyToID("_Fill");
+    [Header("Dark fade")]
+    [SerializeField] private float darkThreshold;
+    [SerializeField] private float darkMax;
+    [SerializeField] private float darkFadeTime;
+
+    private static readonly int FillHash = Shader.PropertyToID("_Fill");
+    private int darkHash;
+    private bool isDark;
     private int flashHash;
     private float currentFill;
     private float currentFlash;
@@ -25,6 +32,7 @@ public class UIManager : MonoBehaviour
     private float velocity;
     private Coroutine fadeRoutine;
     private Coroutine flashRoutine;
+    private Coroutine darkRoutine;
 
 
     private void Awake()
@@ -33,11 +41,14 @@ public class UIManager : MonoBehaviour
         else instance = this;
 
         targetFill = 1f;
-        currentFill = UIMaterial.GetFloat(FillID);
+        currentFill = UIMaterial.GetFloat(FillHash);
         flashHash = Shader.PropertyToID("_PulseAmount");
+        darkHash = Shader.PropertyToID("_DarkAmount");
         currentFlash = 0f;
         UIMaterial.SetFloat(flashHash, currentFlash);
         targetFill = currentFill;
+        isDark = currentFill < darkThreshold;
+        UIMaterial.SetFloat(darkHash, isDark ? darkMax : 0f);
     }
 
     private void Start()
@@ -51,6 +62,13 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        if ((currentFill < darkThreshold) != isDark)
+        {
+            isDark = currentFill < darkThreshold;
+            if (darkRoutine != null) StopCoroutine(darkRoutine);
+            darkRoutine = StartCoroutine(DarkFadeCo(isDark ? darkMax : 0f));
+        }
+
         if (currentFill <= startFlashThreeshold)
             flashRoutine ??= StartCoroutine(FlashCo());
         else if (flashRoutine != null)
@@ -66,13 +84,28 @@ public class UIManager : MonoBehaviour
             if (currentFill != targetFill)
             {
                 currentFill = targetFill;
-                UIMaterial.SetFloat(FillID, currentFill);
+                UIMaterial.SetFloat(FillHash, currentFill);
             }
             return;
         }
 
         currentFill = Mathf.SmoothDamp(currentFill, targetFill, ref velocity, actualizeTime, Mathf.Infinity, Time.deltaTime);
-        UIMaterial.SetFloat(FillID, currentFill);
+        UIMaterial.SetFloat(FillHash, currentFill);
+    }
+
+    private IEnumerator DarkFadeCo(float target)
+    {
+        float start = UIMaterial.GetFloat(darkHash);
+        float time = 0f;
+        while (time < darkFadeTime)
+        {
+            time += Time.deltaTime;
+            float currentDark = Mathf.SmoothStep(0f, 1f, time / darkFadeTime);
+            UIMaterial.SetFloat(darkHash, Mathf.Lerp(start, target, currentDark));
+            yield return null;
+        }
+        UIMaterial.SetFloat(darkHash, target);
+        darkRoutine = null;
     }
 
     public IEnumerator FlashCo()

@@ -52,17 +52,20 @@ MonoBehaviour:
   splashFallMinVelocity: 35
   splashWallMinVelocity: 10
   scaleReductionPerUnit: 0.001
-  minNormalizedScale: 0.25
+  minNormalizedScale: 0.01
   floatingForce: 5
   damping: 20
   joinRadius: 1
   splitTrhowTime: 0.25
-  throwInitialVelocity: {x: 30, y: 20}
+  throwInitialVelocity: {x: 15, y: 10}
   accelerationTimeThrow: 1
   throwSpeedFrontMultiplier: 2
-  throwingStateSpeedBackMoveMult: 0
+  throwingStateSpeedBackMoveMult: 7
   checkWallTime: 0.1
   joinSplitCooldown: 0.2
   platformPasteSpeed: 10
   crushThreeshold: 0.25
   crushPushAway: 0.25
+  minBodyScale: 0.3
+  bodyExponent: 0.25
+  minScaleToSplit: 0.5

@@ -46,6 +46,8 @@ public class Player : MonoBehaviour, ICrushable
     public bool IsSplitting => isSplittingHeld && throwCooldownCounter <= 0 || forceSplit;
     public bool IsActive => isActive;
     public bool IsPendingCrush => isPendingCrush;
+    private bool CanSplit => normalizedScale > playerParameters.minScaleToSplit;
+    public bool IsDyeToucher => Dyes.Toucher == this;
 
     private float freezeTime;
     private float jumpBufferCounter;
@@ -61,7 +63,6 @@ public class Player : MonoBehaviour, ICrushable
     private bool isPendingCrush;
     private Coroutine crushRoutine;
     private bool wasActiveOnDye;
-    public bool IsDyeToucher => Dyes.Toucher == this;
 
     private IPlayerState currentState;
     // states instances
@@ -255,7 +256,7 @@ public class Player : MonoBehaviour, ICrushable
 
     private void StartSplit(InputAction.CallbackContext callback)
     {
-        if (IsFrozen || !isActive || !(normalizedScale / 2 > playerParameters.minNormalizedScale)) return;
+        if (IsFrozen || !isActive || !CanSplit) return;
         throwCooldownCounter = playerParameters.splitTrhowTime;
         isSplittingHeld = true;
     }
@@ -274,7 +275,7 @@ public class Player : MonoBehaviour, ICrushable
         if (IsFrozen) return;
         if (!isActive) return;
         joinSplitCooldownCounter = playerParameters.joinSplitCooldown;
-        if (normalizedScale / 2 > playerParameters.minNormalizedScale)
+        if (CanSplit)
         {
             normalizedScale /= 2;
             ApplyScale();
@@ -282,7 +283,6 @@ public class Player : MonoBehaviour, ICrushable
             Player child = Instantiate(playerPrefab, transform.position + new Vector3(0.15f, -(controller.GetColliderHeight() / 2f) * 0.75f, 0), Quaternion.identity);
             child.SetNormalizedScale(normalizedScale);
             if (child.animationController != null) child.animationController.PutInLayerOver(animationController.GetOrderInLayer());
-            child.SetNormalizedScale(normalizedScale);
 
             if (AudioManager.instance != null) AudioManager.instance.Play(AudioName.Split);
         }
@@ -314,11 +314,13 @@ public class Player : MonoBehaviour, ICrushable
 
     private void ApplyScale()
     {
+        float fill = Mathf.InverseLerp(playerParameters.minNormalizedScale, 1f, normalizedScale);
         if (isActive && UIManager.instance != null)
             UIManager.instance.SetFill(Mathf.InverseLerp(playerParameters.minNormalizedScale, 1f, normalizedScale));
-        transform.localScale = playerParameters.maxScale * normalizedScale;
+        float body = Mathf.Lerp(playerParameters.minBodyScale, 1f, Mathf.Pow(fill, playerParameters.bodyExponent));
+        transform.localScale = playerParameters.maxScale * body;
         Physics2D.SyncTransforms();
-        controller.UpdateCollisions(normalizedScale);
+        controller.UpdateCollisions(body);
     }
 
     public void KillPlayer(bool doAnim = true)

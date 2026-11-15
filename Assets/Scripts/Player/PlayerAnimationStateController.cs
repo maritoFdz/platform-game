@@ -87,6 +87,7 @@ public class PlayerAnimationStateController : MonoBehaviour
         SyncMaterialRenderer();
     }
 
+
     private IEnumerator IdleLoop()
     {
         yield return new WaitForSeconds(idleWaitTime);
@@ -99,11 +100,11 @@ public class PlayerAnimationStateController : MonoBehaviour
         spriteRenderer.flipX = isFacingLeft;
     }
 
-    private void SyncMaterialRenderer() // hasta ahora, solo el hielo
+    private void SyncMaterialRenderer()
     {
         if (materialRenderer == null) return;
         bool visible = normalFreezeAmount > 0.001f;
-        materialRenderer.enabled = visible; // opcional, puedes omitir esto y dejar que el alpha 0 baste
+        materialRenderer.enabled = visible;
         if (!HasMaterialsRendering()) return;
         materialRenderer.sprite = spriteRenderer.sprite;
         materialRenderer.flipX = spriteRenderer.flipX;
