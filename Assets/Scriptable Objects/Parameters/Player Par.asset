@@ -67,5 +67,5 @@ MonoBehaviour:
   crushThreeshold: 0.25
   crushPushAway: 0.25
   minBodyScale: 0.3
-  bodyExponent: 0.25
+  bodyExponent: 0.5
   minScaleToSplit: 0.5
