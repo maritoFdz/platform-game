@@ -14,6 +14,8 @@ public class CameraManager : MonoBehaviour
 
     private CinemachineCamera currentCamera;
     private CinemachineImpulseListener currentImpulseListener;
+    private float shakeEndTime;
+    private float currentShakeStrength;
 
     private void Awake()
     {
@@ -56,8 +58,11 @@ public class CameraManager : MonoBehaviour
 
     public void ShakaCameraWithParameters(CameraShakeParameters parameters, CinemachineImpulseSource impulseSource, float multiplier = 1f)
     {
+        if (Time.time < shakeEndTime && parameters.impactForce * multiplier < currentShakeStrength) return;
         SetCameraShakeSettings(parameters, impulseSource, multiplier);
         impulseSource.GenerateImpulseWithForce(parameters.impactForce);
+        currentShakeStrength = parameters.impactForce * multiplier;
+        shakeEndTime = Time.time + Mathf.Max(parameters.impactTime, parameters.listenerDuration) * multiplier * 0.75f;
     }
 
     private void SetCameraShakeSettings(CameraShakeParameters parameters, CinemachineImpulseSource impulseSource, float multiplier)

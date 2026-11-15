@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -9,13 +10,20 @@ public class Door : MonoBehaviour, IResetteable
     [SerializeField] private LayerMask collisionLayer;
     [SerializeField] private LayerMask finalCollisionLayer;
     [SerializeField] private LayerMask crushablesLayer;
+    [SerializeField] private GameObject dustVFXPrefab;
+    [SerializeField] private CinemachineImpulseSource impulseSource;
+    [SerializeField] private CameraShakeParameters shakeParameters;
 
     [Header("Parameters")]
     [SerializeField] private float speed;
+    [SerializeField] private float closeAcceleration;
+    [SerializeField] private float maxCloseSpeed;
+    [SerializeField] private float initialCloseSpeed;
     [SerializeField] private float raycastOffset;
     [SerializeField] private float collisionTolerance;
     [SerializeField] private int rayAmount;
     [SerializeField] private float crushTime;
+    [SerializeField] private float minDustFallVelocity;
 
     private bool isClosing;
     public bool locked;
@@ -27,6 +35,7 @@ public class Door : MonoBehaviour, IResetteable
     private bool isTouchingWall;
     private bool lockX;
     private bool lockY;
+    private float currentCloseSpeed;
     private List<ICrushable> objectsToCrush;
 
     private void Awake()
@@ -73,7 +82,8 @@ public class Door : MonoBehaviour, IResetteable
 
         if (isClosing)
         {
-            float displacement = speed * Time.deltaTime;
+            currentCloseSpeed = dir == Vector2.down ? Mathf.Min(currentCloseSpeed + closeAcceleration * Time.deltaTime, maxCloseSpeed) : speed;
+            float displacement = currentCloseSpeed * Time.deltaTime;
             float minDistance = displacement;
 
             Vector2 baseOrigin = Vector2.zero;
@@ -114,7 +124,16 @@ public class Door : MonoBehaviour, IResetteable
             {
                 transform.position = target;
                 if (isTouchingWall)
+                {
                     locked = true;
+                    if (dir == Vector2.down && currentCloseSpeed >= minDustFallVelocity)
+                    {
+                        if (CameraManager.instance != null)
+                            CameraManager.instance.ShakaCameraWithParameters(shakeParameters, impulseSource, 0.5f);
+                        SpawnDust(0f, new Vector2(transform.position.x, col.bounds.min.y));
+                    }
+                    if (AudioManager.instance != null) AudioManager.instance.Play(AudioName.SoftPushableFall);
+                }
             }
         }
         else
@@ -131,6 +150,10 @@ public class Door : MonoBehaviour, IResetteable
         if (lockX) pos.x = initialPos.x;
         if (lockY) pos.y = initialPos.y;
         transform.position = pos;
+    }
+    private void SpawnDust(float angle, Vector2 position)
+    {
+        Instantiate(dustVFXPrefab, position, Quaternion.Euler(0, 0, angle));
     }
 
     private void LateUpdate()
@@ -162,6 +185,7 @@ public class Door : MonoBehaviour, IResetteable
     {
         isClosing = false;
         locked = false;
+        currentCloseSpeed = 0f;
     }
 
     [ContextMenu("Close Door")]
@@ -169,6 +193,7 @@ public class Door : MonoBehaviour, IResetteable
     {
         isClosing = true;
         locked = false;
+        currentCloseSpeed = initialCloseSpeed;
         Vector2 origin = Vector2.zero;
 
         if (dir == Vector2.down)

@@ -25,7 +25,6 @@ public class PushableObject : MonoBehaviour, IResetteable, IPlatformCarrier
     private State currentState;
     private RaycastHit2D hitNormal;
     private bool hasStoredNormal = false;
-    private Vector3 lastFramePosition;
     private string originalTag;
     private bool startedFrameFalling;
 
