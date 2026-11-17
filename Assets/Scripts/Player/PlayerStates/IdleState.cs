@@ -26,6 +26,7 @@ public class IdleState : IPlayerState
 
         if (player.IsSplitting)
         {
+            player.StopIdleAnimation();
             player.SwitchState(player.splitingState);
             return;
         }

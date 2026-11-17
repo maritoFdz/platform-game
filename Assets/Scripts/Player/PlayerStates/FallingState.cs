@@ -17,8 +17,8 @@ public class FallingState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        if (player.input.x != 0) player.FlipSprite(player.input.x);
         if (freezeBehaviour) return;
+        if (player.input.x != 0) player.FlipSprite(player.input.x);
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeAir);
         if (player.OnWater())
         {

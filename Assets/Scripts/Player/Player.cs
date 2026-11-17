@@ -34,6 +34,7 @@ public class Player : MonoBehaviour, ICrushable
     [HideInInspector] public bool hasDashAir;
     [HideInInspector] public bool hasJumpAir;
     [HideInInspector] public bool forceSplit;
+    [HideInInspector] public bool splitAnimComplete;
     [HideInInspector] public float autoMoveDir;
     [HideInInspector] public float autoMoveSpeed;
     [HideInInspector] public float autoMoveDuration;
@@ -52,6 +53,7 @@ public class Player : MonoBehaviour, ICrushable
     public bool IsPendingCrush => isPendingCrush;
     private bool CanSplit => normalizedScale > playerParameters.minScaleToSplit;
     public bool IsDyeToucher => Dyes.Toucher == this;
+    public bool IsSplitHeld => isSplittingHeld;
 
     private float freezeTime;
     private float jumpBufferCounter;
@@ -263,12 +265,13 @@ public class Player : MonoBehaviour, ICrushable
         if (IsFrozen || !isActive || !CanSplit) return;
         throwCooldownCounter = playerParameters.splitTrhowTime;
         isSplittingHeld = true;
+        splitAnimComplete = false;
     }
 
     private void EndSplit(InputAction.CallbackContext callback)
     {
         if (throwCooldownCounter > 0f)
-            Split();
+            Split(); 
         throwCooldownCounter = 0f;
         isSplittingHeld = false;
         forceSplit = false;
@@ -711,6 +714,16 @@ public class Player : MonoBehaviour, ICrushable
     public void StartDyeAnimation()
     {
         animationController.DoDyeEventAnim();
+    }
+
+    public void StartSplitAnimation()
+    {
+        animationController.StartSplit();
+    }
+
+    public void EndSplitAnimation()
+    {
+        animationController.EndSplit();
     }
 
     public void DoCameraShake()

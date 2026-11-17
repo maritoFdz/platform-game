@@ -49,6 +49,8 @@ public class PlayerAnimationStateController : MonoBehaviour
     private int instantFallHash;
     private int anyStateLockedHash;
     private int doubleJumpHash;
+    private int startSplitHash;
+    private int endSplitHash;
     private int dyeHash;
 
     private bool idleCancelled;
@@ -69,6 +71,8 @@ public class PlayerAnimationStateController : MonoBehaviour
         anyStateLockedHash = Animator.StringToHash("AnyStateLocked");
         doubleJumpHash = Animator.StringToHash("DoubleJump");
         dyeHash = Animator.StringToHash("StartDyeAnim");
+        endSplitHash = Animator.StringToHash("EndSplit");
+        startSplitHash = Animator.StringToHash("StartSplit");
         freezeAmountHash = Shader.PropertyToID("_Freeze_Amount");
     }
 
@@ -86,7 +90,6 @@ public class PlayerAnimationStateController : MonoBehaviour
     {
         SyncMaterialRenderer();
     }
-
 
     private IEnumerator IdleLoop()
     {
@@ -294,6 +297,17 @@ public class PlayerAnimationStateController : MonoBehaviour
         animator.SetBool(isSlidingWallHash, false);
     }
 
+    public void StartSplit()
+    {
+        ResetAll();
+        animator.SetTrigger(startSplitHash);
+    }
+
+    public void EndSplit()
+    {
+        animator.SetTrigger(endSplitHash);
+    }
+
     public void MakeSplash(float angle)
     {
         Instantiate(splashVFXPrefab, player.transform.position, Quaternion.Euler(0, 0, angle));
@@ -333,6 +347,8 @@ public class PlayerAnimationStateController : MonoBehaviour
         animator.ResetTrigger(endJumpHash);
         animator.ResetTrigger(stickWallHash);
         animator.ResetTrigger(playIdleHash);
+        animator.ResetTrigger(startSplitHash);
+        animator.ResetTrigger(endSplitHash);
         animator.SetBool(isFallingHash, false);
     }
 
@@ -380,6 +396,11 @@ public class PlayerAnimationStateController : MonoBehaviour
     public void EnableAnyStateTransitions()
     {
         animator.SetBool(anyStateLockedHash, false);
+    }
+
+    public void ExecuteSplit()
+    {
+        player.splitAnimComplete = true;
     }
     #endregion
 }

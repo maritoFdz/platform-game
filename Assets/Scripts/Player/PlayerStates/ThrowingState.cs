@@ -18,8 +18,8 @@ public class ThrowingState : IPlayerState
 
     public void UpdateState(Player player)
     {
-        if (player.input.x != 0) player.FlipSprite(player.input.x);
         if (freezeBehaviour) return;
+        if (player.input.x != 0) player.FlipSprite(player.input.x);
         if (Mathf.Sign(player.input.x) == Mathf.Sign(direction))
             player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity * player.playerParameters.throwSpeedFrontMultiplier, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeThrow);
         else
@@ -74,6 +74,18 @@ public class ThrowingState : IPlayerState
             player.velocity.x *= 0.1f;
             player.StopFallingAnimation();
             player.ActivateDash();
+            if (player.playerParameters.splashFallMinVelocity <= Mathf.Abs(player.velocity.y))
+            {
+                player.SpawnDust(0f);
+                player.MakeSplash(0f);
+            }
+            else if (player.velocity.y != 0 && AudioManager.instance != null) AudioManager.instance.Play(AudioName.FallWeak);
+
+            if (player.playerParameters.rumbleVelocity <= Mathf.Abs(player.velocity.y))
+            {
+                player.DoRumble();
+                player.DoCameraShake();
+            }
             player.SwitchState(player.idleState);
         }
         else if (player.CollisionLeft() || player.CollisionRight())
