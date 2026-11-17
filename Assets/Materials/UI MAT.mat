@@ -44,7 +44,7 @@ Material:
     - _BorderWidth: 0.014
     - _ColorMask: 15
     - _DarkAmount: 0
-    - _Fill: 0.9515158
+    - _Fill: 0.85050696
     - _NoiseScale: 0.6
     - _NoiseStrength: 0.05
     - _PixelAmount: 64
@@ -64,9 +64,9 @@ Material:
     m_Colors:
     - _BorderColor: {r: 1, g: 1, b: 1, a: 1}
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
-    - _EmptyClor: {r: 0.1254902, g: 0.08235294, b: 0.2, a: 1}
-    - _LiquidColor: {r: 0, g: 0.59607846, b: 0.85882354, a: 1}
-    - _PulseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SpotsColor: {r: 0.047058824, g: 0.9019608, b: 0.9490196, a: 1}
+    - _EmptyClor: {r: 0.047058824, g: 0.07058824, b: 0.09411765, a: 1}
+    - _LiquidColor: {r: 0.22352941, g: 0.654902, b: 0.29803923, a: 1}
+    - _PulseColor: {r: 0.67058825, g: 0.9137255, b: 0.4862745, a: 1}
+    - _SpotsColor: {r: 0.3882353, g: 0.827451, b: 0.2901961, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

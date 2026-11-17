@@ -4,11 +4,13 @@ public class WalkingState : IPlayerState
 {
     private const float gravityMultiplier = 0f;
     private float coyoteCount;
+    private bool onJumpTrans;
     private float idleCount;
 
     public void EnterState(Player player)
     {
         AudioManager.instance.Play(AudioName.Movement);
+        onJumpTrans = false;
         player.hasJumpAir = false;
         player.hasDashAir = false;
         player.PlayWalkingAnimation();
@@ -22,7 +24,7 @@ public class WalkingState : IPlayerState
         player.velocity.x = Mathf.SmoothDamp(player.velocity.x, player.targetVelocity, ref player.velocityXSmoothing, player.playerParameters.accelerationTimeGround); // simulates acceleration
         player.Move(true, false, gravityMultiplier);
 
-        if (player.IsSplitting)
+        if (player.IsSplitting && !onJumpTrans)
         {
             player.SwitchState(player.splitingState);
             return;
@@ -38,6 +40,7 @@ public class WalkingState : IPlayerState
         if (player.JumpPressed)
         {
             AudioManager.instance.StopPlaying(AudioName.Movement);
+            onJumpTrans = true;
             player.ActivateDash();
             player.ConsumeJump();
             player.StopWalkingAnimation();
@@ -98,7 +101,7 @@ public class WalkingState : IPlayerState
             }
         }
 
-        if (player.IsPushing())
+        if (player.IsPushing() && !onJumpTrans)
         {
             AudioManager.instance.StopPlaying(AudioName.Movement);
             player.SwitchState(player.pushingObjectState);

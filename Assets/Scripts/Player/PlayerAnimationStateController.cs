@@ -284,6 +284,7 @@ public class PlayerAnimationStateController : MonoBehaviour
 
     public void PlayWallSliding()
     {
+        ResetAll();
         animator.SetTrigger(stickWallHash);
         animator.SetBool(isSlidingWallHash, true);
     }
@@ -311,6 +312,34 @@ public class PlayerAnimationStateController : MonoBehaviour
     public void PutInLayerOver(int order)
     {
         spriteRenderer.sortingOrder = order + 1;
+    }
+
+    public void FreezeAnimator()
+    {
+        animator.speed = 0f;
+    }
+
+    public void ResumeAnimator()
+    {
+        animator.speed = 1f;
+    }
+
+    public void ResetAll()
+    {
+        animator.ResetTrigger(instantFallHash);
+        animator.ResetTrigger(instantJumpHash);
+        animator.ResetTrigger(startJumpHash);
+        animator.ResetTrigger(doubleJumpHash);
+        animator.ResetTrigger(endJumpHash);
+        animator.ResetTrigger(stickWallHash);
+        animator.ResetTrigger(playIdleHash);
+        animator.SetBool(isFallingHash, false);
+    }
+
+    public void DoDyeEventAnim()
+    {
+        ResetAll();
+        animator.SetTrigger(dyeHash);
     }
 
     #region Animation Clips Events
@@ -352,29 +381,5 @@ public class PlayerAnimationStateController : MonoBehaviour
     {
         animator.SetBool(anyStateLockedHash, false);
     }
-
-    public void DoDyeEventAnim()
-    {
-        animator.ResetTrigger(instantFallHash);
-        animator.ResetTrigger(instantJumpHash);
-        animator.ResetTrigger(startJumpHash);
-        animator.ResetTrigger(doubleJumpHash);
-        animator.ResetTrigger(endJumpHash);
-        animator.ResetTrigger(stickWallHash);
-        animator.ResetTrigger(playIdleHash);
-        animator.SetBool(isFallingHash, false);
-        animator.SetTrigger(dyeHash);
-    }
-
-    public void FreezeAnimator()
-    {
-        animator.speed = 0f;
-    }
-
-    public void ResumeAnimator()
-    {
-        animator.speed = 1f;
-    }
-
     #endregion
 }

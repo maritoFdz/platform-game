@@ -84,7 +84,7 @@ public class DashingState : IPlayerState
             return;
         }
 
-        if ((player.WallLeft() || player.WallRight()) && !player.IsFrozen)
+        if ((player.WallLeft() || player.WallRight()) && !player.IsFrozen && !player.GroundBelow())
         {
             float dir = player.WallLeft() ? -1 : 1;
             player.FlipSprite(dir);
