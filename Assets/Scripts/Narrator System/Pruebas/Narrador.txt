@@ -1,0 +1,5 @@
+id	line
+prueba_01	Está pinchando!!! Ñññ
+prueba_02
+	dale
+ prueba_03	[n] Por favor «pincha» TE LO RUEGOOOO POR FAVOR   RRRRR[nn]»«
