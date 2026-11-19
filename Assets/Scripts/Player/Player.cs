@@ -18,6 +18,7 @@ public class Player : MonoBehaviour, ICrushable
     [SerializeField] private CinemachineImpulseSource impulseSource;
     [SerializeField] private Player playerPrefab;
     [SerializeField] private Light2D playerLight;
+    [SerializeField] private NarrationSystemChannel narratorChannel;
 
     [HideInInspector] public float gravityScale;
     [HideInInspector] public float jumpForce;
@@ -338,6 +339,7 @@ public class Player : MonoBehaviour, ICrushable
         if (doAnim) MakeSplash(0f, false, true, true);
         animationController.ResetFreezeColor();
         StopContinuousRumble();
+        if (narratorChannel != null) narratorChannel.Raise(NarrationEventType.PlayerDeath, "death");
         PlayerSwitchManager.instance.Erase(this);
     }
 

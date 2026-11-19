@@ -17,11 +17,13 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private string nextRoomName;
     [SerializeField] private Door entry;
     [SerializeField] private Light2D[] roomLights;
-    private IResetteable[] resetteables;
+    [SerializeField] private NarrationSet[] narrationSets;
 
     [Header("Parameters")]
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private float respawnWait;
+
+    private IResetteable[] resetteables;
 
     private void Awake()
     {
@@ -39,6 +41,8 @@ public class RoomManager : MonoBehaviour
         SettingsManager.OnPalleteChange += ChangeLightsColor;
         if (SettingsManager.instance != null)
             ChangeLightsColor(SettingsManager.instance.CurrentLightColor);
+        if (NarratorManager.instance != null)
+            NarratorManager.instance.AsignNarrationSet(narrationSets);
     }
 
     private void SetPlayer()

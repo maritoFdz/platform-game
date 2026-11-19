@@ -3,3 +3,8 @@ prueba_01	Está pinchando!!! Ñññ
 prueba_02
 	dale
  prueba_03	[n] Por favor «pincha» TE LO RUEGOOOO POR FAVOR   RRRRR[nn]»«
+muerte_01	te falta?
+muerte_02	pena te tiene que dar asere ñooo
+trigger_01	felicitaciones elden ring saliste del videojuego
+trigger_02	soy como tu tu eres igual
+trigger_03	daaaaale

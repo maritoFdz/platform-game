@@ -497,6 +497,7 @@ MonoBehaviour:
   impulseSource: {fileID: -5543529950045898611}
   playerPrefab: {fileID: 6248119225859901008}
   playerLight: {fileID: 2842266936657543835}
+  narratorChannel: {fileID: 11400000, guid: 5188ce674135fa74e95484ebe74f706f, type: 2}
   gravityScale: 2
   jumpForce: 4
   minJumpForce: 0
@@ -512,6 +513,7 @@ MonoBehaviour:
   hasDashAir: 0
   hasJumpAir: 0
   forceSplit: 0
+  splitAnimComplete: 0
   autoMoveDir: 0
   autoMoveSpeed: 0
   autoMoveDuration: 0
