@@ -15,8 +15,10 @@ public class DataManager : MonoBehaviour
     [HideInInspector] public bool initialized;
     [SerializeField] private string firstRoomName;
     [SerializeField] ColorPallete defaultPallete;
+
     [HideInInspector] public string lastRoomName;
     [HideInInspector] public List<int> unlockedPalletes;
+    [HideInInspector] public StatsData stats;
 
     private void Awake()
     {
@@ -83,25 +85,47 @@ public class DataManager : MonoBehaviour
             GameData data = JsonUtility.FromJson<GameData>(Decrypt(dataText));
             lastRoomName = data.lastRoomName;
             unlockedPalletes = data.unlockedPalletes;
+            stats = data.stats ?? new StatsData(new(), 0f);
         }
         else
         {
             lastRoomName = firstRoomName;
             unlockedPalletes = new List<int> { defaultPallete.palleteId };
-            SaveGameData(new(lastRoomName, unlockedPalletes));
+            stats = new StatsData(new(), 0f);
+            SaveGameData(new(lastRoomName, unlockedPalletes, stats));
         }
     }
 
     public void SaveLastRoom(string room)
     {
         lastRoomName = room;
-        SaveGameData(new(lastRoomName, unlockedPalletes));
+        SaveGameData(new(lastRoomName, unlockedPalletes, stats));
     }
 
     public void AddUnlockedPallete(ColorPallete unlocked)
     {
         unlockedPalletes.Add(unlocked.palleteId);
-        SaveGameData(new(lastRoomName, unlockedPalletes));
+        SaveGameData(new(lastRoomName, unlockedPalletes, stats));
+    }
+    #endregion
+
+    #region Stats Data
+    public void SaveStats(StatsData statsData)
+    {
+        stats = statsData;
+        SaveGameData(new(lastRoomName, unlockedPalletes, stats));
+    }
+
+    public StatsData LoadStats()
+    {
+        return stats;
+    }
+
+    public void ResetStats(bool onlyEventOcurrences)
+    {
+        stats.eventsOcurrences = new Dictionary<EventClassification, int>();
+        if (!onlyEventOcurrences) stats.gameTime = 0f;
+        SaveGameData(new(lastRoomName, unlockedPalletes, stats));
     }
     #endregion
 
@@ -159,5 +183,40 @@ public struct SettingsData
         this.resolution = resolution;
         this.volume = volume;
         this.currentPallete = pallete;
+    }
+}
+
+[Serializable]
+public class StatsData : ISerializationCallbackReceiver
+{
+    public Dictionary<EventClassification, int> eventsOcurrences;
+    public List<EventClassification> keys = new();
+    public List<int> values = new();
+    public float gameTime;
+
+    public StatsData(Dictionary<EventClassification, int> ocurrences, float gameTime)
+    {
+        eventsOcurrences = ocurrences;
+        this.gameTime = gameTime;
+    }
+
+    public void OnAfterDeserialize()
+    {
+        eventsOcurrences = new Dictionary<EventClassification, int>();
+        for (int i = 0; i < Mathf.Min(keys.Count, values.Count); i++)
+            eventsOcurrences.Add(keys[i], values[i]);
+    }
+
+    public void OnBeforeSerialize()
+    {
+        if (eventsOcurrences == null) return;
+        keys.Clear();
+        values.Clear();
+
+        foreach (var kvp in eventsOcurrences)
+        {
+            keys.Add(kvp.Key);
+            values.Add(kvp.Value);
+        }
     }
 }

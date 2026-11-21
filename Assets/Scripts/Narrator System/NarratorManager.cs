@@ -48,7 +48,7 @@ public class NarratorManager : MonoBehaviour
                     id = PickRandomLine(narrationEvent.dialogues_Ids);
                     break;
             }
-            if (DialogueContainer.instance != null)
+            if (DialogueContainer.instance != null && tester != null)
                 tester.TirarDialog(DialogueContainer.instance.GetDialogue(id));
         }
     }
