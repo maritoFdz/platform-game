@@ -5,7 +5,7 @@ public class NarrationSet : ScriptableObject
 {
     public NarrationEvent[] narrationEvents;
 
-    public NarrationEvent GetNarrationEvent(NarrationEventType type, string eventId)
+    public NarrationEvent GetNarrationEvent(EventClassification type, string eventId)
     {
         if (narrationEvents == null || narrationEvents.Length == 0) return null;
 

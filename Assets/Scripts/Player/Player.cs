@@ -19,6 +19,7 @@ public class Player : MonoBehaviour, ICrushable
     [SerializeField] private Player playerPrefab;
     [SerializeField] private Light2D playerLight;
     [SerializeField] private NarrationSystemChannel narratorChannel;
+    [SerializeField] private StatsChannel statsChannel;
 
     [HideInInspector] public float gravityScale;
     [HideInInspector] public float jumpForce;
@@ -208,7 +209,7 @@ public class Player : MonoBehaviour, ICrushable
         if (closestMinion != null)
         {
             Upscale(closestMinion.normalizedScale);
-            closestMinion.KillPlayer(false);
+            closestMinion.KillPlayer(false, false);
         }
     }
 
@@ -331,7 +332,7 @@ public class Player : MonoBehaviour, ICrushable
         controller.UpdateCollisions(body);
     }
 
-    public void KillPlayer(bool doAnim = true)
+    public void KillPlayer(bool doAnim = true, bool countDeath = true)
     {
         if (isDead || !PlayerSwitchManager.instance.IsAdded(this)) return;
         isDead = true;
@@ -339,7 +340,8 @@ public class Player : MonoBehaviour, ICrushable
         if (doAnim) MakeSplash(0f, false, true, true);
         animationController.ResetFreezeColor();
         StopContinuousRumble();
-        if (narratorChannel != null) narratorChannel.Raise(NarrationEventType.PlayerDeath, "death");
+        if (countDeath && statsChannel != null) statsChannel.UpdateStats(EventClassification.PlayerDeath);
+        if (countDeath && narratorChannel != null) narratorChannel.Raise(EventClassification.PlayerDeath, "death");
         PlayerSwitchManager.instance.Erase(this);
     }
 
@@ -522,6 +524,21 @@ public class Player : MonoBehaviour, ICrushable
         AudioManager.instance.StopPlaying(AudioName.Movement);
         AudioManager.instance.StopPlaying(AudioName.Push);
         AudioManager.instance.StopPlaying(AudioName.Sliding);
+    }
+
+    public void NotifyEvent(EventClassification type)
+    {
+        if (statsChannel != null) statsChannel.UpdateStats(type);
+    }
+
+    public void NotifyIdleChange()
+    {
+        if (statsChannel != null) statsChannel.UpdateIdleTime();
+    }
+
+    public void NotifySplittingChange()
+    {
+        if (statsChannel != null) statsChannel.UpdateSplittingTime();
     }
 
     #region Collisions related methods called by states

@@ -13,6 +13,7 @@ public class IdleState : IPlayerState
         player.PlayIdleAnimation();
         AudioManager.instance.StopPlaying(AudioName.Movement);
         player.velocity.y = 0;
+        player.NotifyIdleChange();
     }
 
     public void UpdateState(Player player)
@@ -27,26 +28,26 @@ public class IdleState : IPlayerState
         if (player.IsSplitting)
         {
             player.StopIdleAnimation();
-            player.SwitchState(player.splitingState);
+            SwitchState(player.splitingState, player);
             return;
         }
 
         if (player.pendingAutoMove)
         {
-            player.SwitchState(player.autoMoveState);
+            SwitchState(player.autoMoveState, player);
             return;
         }
 
         if (player.OnWater())
         {
             player.StopFallingAnimation();
-            player.SwitchState(player.swimingState);
+            SwitchState(player.swimingState, player);
             return;
         }
 
         if (player.IsDashing)
         {
-            player.SwitchState(player.dashingState);
+            SwitchState(player.dashingState, player);
             return;
         }
 
@@ -55,6 +56,7 @@ public class IdleState : IPlayerState
             player.ActivateDash();
             player.ConsumeJump();
             player.StopIdleAnimation();
+            player.NotifyIdleChange();
             player.HandleJumpingStateTransition();
             return;
         }
@@ -62,15 +64,15 @@ public class IdleState : IPlayerState
         {
             player.StopIdleAnimation();
             if (player.IsRunning && player.playerParameters.canRun)
-                player.SwitchState(player.runningState);
+                SwitchState(player.runningState, player );
             else
-                player.SwitchState(player.walkingState);
+                SwitchState(player.walkingState, player);
             return;
         }
 
         if (player.IsSliding())
         {
-            player.SwitchState(player.slopeSlidingState);
+            SwitchState(player.slopeSlidingState, player);
             return;
         }
 
@@ -84,9 +86,15 @@ public class IdleState : IPlayerState
             if (coyoteCount <= 0)
             {
                 player.ActivateDash();
-                player.SwitchState(player.fallingState);
+                SwitchState(player.fallingState, player);
                 player.StopIdleAnimation();
             }
         }
+    }
+
+    private void SwitchState(IPlayerState state, Player player)
+    {
+        player.NotifyIdleChange();
+        player.SwitchState(state);
     }
 }

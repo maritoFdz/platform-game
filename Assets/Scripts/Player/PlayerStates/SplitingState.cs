@@ -10,6 +10,7 @@ public class SplitingState : IPlayerState
         player.forceSplit = player.IsSplitHeld;
         player.DoContinuousRumble();
         player.StartSplitAnimation();
+        player.NotifySplittingChange();
     }
 
     public void UpdateState(Player player)
@@ -26,6 +27,7 @@ public class SplitingState : IPlayerState
             player.StopContinuousRumble();
             player.Split();
             player.forceSplit = false;
+            player.NotifySplittingChange();
             player.SwitchState(player.throwingState);
         }
     }

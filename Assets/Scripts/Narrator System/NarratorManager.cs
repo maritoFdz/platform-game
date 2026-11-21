@@ -26,7 +26,7 @@ public class NarratorManager : MonoBehaviour
         this.narrationSets = narrationSets;
     }
 
-    private void Narrate(NarrationEventType type, string eventId)
+    private void Narrate(EventClassification type, string eventId)
     {
         if (narrationSets == null) return;
 

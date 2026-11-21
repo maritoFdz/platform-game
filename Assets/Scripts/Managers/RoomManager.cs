@@ -18,6 +18,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private Door entry;
     [SerializeField] private Light2D[] roomLights;
     [SerializeField] private NarrationSet[] narrationSets;
+    [SerializeField] private StatsChannel statsChannel;
 
     [Header("Parameters")]
     [SerializeField] private Transform spawnPoint;
@@ -55,6 +56,7 @@ public class RoomManager : MonoBehaviour
 
     public void PlayersDead()
     {
+        if (statsChannel != null) statsChannel.UpdateStats(EventClassification.AllPlayersDeath);
         StartCoroutine(RespawnCo());
     }
 
@@ -62,8 +64,9 @@ public class RoomManager : MonoBehaviour
     {
         if (DataManager.instance != null)
             DataManager.instance.SaveLastRoom(nextRoomName);
+        if (statsChannel != null) statsChannel.ResetLocalStats();
         if (SettingsManager.instance != null)
-        SceneManager.LoadScene(nextRoomName);
+            SceneManager.LoadScene(nextRoomName);
     }
 
     public void LockPlayers()

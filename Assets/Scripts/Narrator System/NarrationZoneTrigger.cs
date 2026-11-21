@@ -17,7 +17,7 @@ public class NarrationZoneTrigger : MonoBehaviour
         if (narrationChannel == null) return;
         if (triggerWithPlayer && collision.CompareTag(playerTag) || triggerObject != null && triggerObject == collision)
         {
-            narrationChannel.Raise(NarrationEventType.EnterZone, zoneId);
+            narrationChannel.Raise(EventClassification.EnterZone, zoneId);
         }
     }
 }

@@ -44,7 +44,7 @@ Material:
     - _BorderWidth: 0.014
     - _ColorMask: 15
     - _DarkAmount: 0
-    - _Fill: 0.8989912
+    - _Fill: 0.9979798
     - _NoiseScale: 0.6
     - _NoiseStrength: 0.05
     - _PixelAmount: 64
