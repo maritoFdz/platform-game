@@ -1,10 +1,10 @@
-id	line
-prueba_01	Está pinchando!!! Ñññ
-prueba_02
-	dale
- prueba_03	[n] Por favor «pincha» TE LO RUEGOOOO POR FAVOR   RRRRR[nn]»«
-muerte_01	te falta?
-muerte_02	pena te tiene que dar asere ñooo
-trigger_01	felicitaciones elden ring saliste del videojuego
-trigger_02	soy como tu tu eres igual
-trigger_03	daaaaale
+id	texto
+death_first	Primera muerte. Esto solo acaba de empezar.
+death_g1	Otra vez por el suelo.
+death_g2	Eso no ha sido buena idea.
+death_g3	Te has deshecho un poquito más.
+death_many	Ya vas por unas cuantas muertes.
+death_five	Cinco muertes en esta sala. Cinco.
+death_ten	Diez. Ahora ya es personal.
+death_bad_id	ESTE NO DEBE SALIR NUNCA (id mal escrito)
+death_impossible	ESTE NO DEBE SALIR NUNCA (rango imposible)

@@ -20,7 +20,6 @@ public class DialogueContainer : MonoBehaviour
 
         instance = this;
         if (dialoguesFile != null ) dialogues = DialogueLoader.LoadDialogues(dialoguesFile);
-        DontDestroyOnLoad(gameObject);
     }
 
     public string GetDialogue(string id)
