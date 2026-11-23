@@ -4,7 +4,7 @@ death_g1	Otra vez por el suelo.
 death_g2	Eso no ha sido buena idea.
 death_g3	Te has deshecho un poquito más.
 death_many	Ya vas por unas cuantas muertes.
-death_five	Cinco muertes en esta sala. Cinco.
-death_ten	Diez. Ahora ya es personal.
+death_five	Cinco muertes en esta sala
+death_ten	Aqui estoy metiendo una muela pero asere una PERRA muela porque quiero ver si esta pincha maneja bien los textacos estos del carajo bueno ya me aburri de escribir
 death_bad_id	ESTE NO DEBE SALIR NUNCA (id mal escrito)
 death_impossible	ESTE NO DEBE SALIR NUNCA (rango imposible)

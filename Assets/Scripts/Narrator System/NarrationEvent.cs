@@ -11,6 +11,7 @@ public class NarrationEvent
     public DialogueSelectionType selectionMode;
     public EventClassification type; // yo fui un visionario definitivamente
     public int preference;
+    public int displayPriority;
 
     [Header("Statistics")]
     public bool usesStatistics;

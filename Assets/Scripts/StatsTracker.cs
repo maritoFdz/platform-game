@@ -9,7 +9,9 @@ public enum EventClassification
     CorrectPuzzleStep,
     WrongPuzzleStep,
     PlayerJump,
-    AllPlayersDeath
+    AllPlayersDeath,
+    TooLongIdle,
+    TooLongSplit
 }
 
 public class StatsTracker : MonoBehaviour
@@ -18,15 +20,11 @@ public class StatsTracker : MonoBehaviour
     [SerializeField] private StatsChannel statsChannel;
 
     private float additionalPlayTime;
-    private float idleTime;
-    private float splitTime;
     private StatsData globalStats;
     private Dictionary<EventClassification, int> sessionStats;
 
     public float LastSavePlayTime => additionalPlayTime;
     public float GameTime => globalStats != null ? globalStats.gameTime + additionalPlayTime : 0f;
-    public float IdleTime => idleTime;
-    public float SplitTime => splitTime;
 
     private void Awake()
     {
@@ -47,9 +45,7 @@ public class StatsTracker : MonoBehaviour
 
     private void Update()
     {
-        idleTime += Time.deltaTime;
         additionalPlayTime += Time.deltaTime;
-        splitTime += Time.deltaTime;
     }
 
     public int GetGlobal(EventClassification type) => (globalStats != null) ? (globalStats.eventsOcurrences.TryGetValue(type, out int v) ? v : 0) : 0;
@@ -89,29 +85,15 @@ public class StatsTracker : MonoBehaviour
         DataManager.instance.SaveStats(globalStats);
     }
 
-    private void ResetIdleTime()
-    {
-        idleTime = 0f;
-    }
-
-    private void ResetSplitTime()
-    {
-        splitTime = 0f;
-    }
-
     private void OnEnable()
     {
         statsChannel.OnStatUpdated -= UpdateStat;
         statsChannel.OnLocalStatsReset -= ResetLocalStats;
         statsChannel.OnLocalStatsReset -= SaveStats;
-        statsChannel.OnIdleUpdate -= ResetIdleTime;
-        statsChannel.OnSplitChargeUpdate -= ResetSplitTime;
 
         statsChannel.OnStatUpdated += UpdateStat;
         statsChannel.OnLocalStatsReset += ResetLocalStats;
         statsChannel.OnLocalStatsReset += SaveStats;
-        statsChannel.OnIdleUpdate += ResetIdleTime;
-        statsChannel.OnSplitChargeUpdate += ResetSplitTime;
     }
 
     private void OnDisable()
@@ -119,8 +101,6 @@ public class StatsTracker : MonoBehaviour
         statsChannel.OnStatUpdated -= UpdateStat;
         statsChannel.OnLocalStatsReset -= ResetLocalStats;
         statsChannel.OnLocalStatsReset -= SaveStats;
-        statsChannel.OnIdleUpdate -= ResetIdleTime;
-        statsChannel.OnSplitChargeUpdate -= ResetSplitTime;
     }
 
     private void OnApplicationQuit()

@@ -6,8 +6,7 @@ public class StatsChannel : ScriptableObject
 {
     public event Action<EventClassification> OnStatUpdated;
     public event Action OnLocalStatsReset;
-    public event Action OnIdleUpdate;
-    public event Action OnSplitChargeUpdate;
+    public event Action<EventClassification> OnEventOcurred;
 
     public void UpdateStats(EventClassification stat)
     {
@@ -19,13 +18,8 @@ public class StatsChannel : ScriptableObject
         OnLocalStatsReset?.Invoke();
     }
 
-    public void UpdateIdleTime()
+    public void RaiseEvent(EventClassification eventOcurred)
     {
-        OnIdleUpdate?.Invoke();
-    }
-
-    public void UpdateSplittingTime()
-    {
-        OnSplitChargeUpdate?.Invoke();
+        OnEventOcurred?.Invoke(eventOcurred);
     }
 }

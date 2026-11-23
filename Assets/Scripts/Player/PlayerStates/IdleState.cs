@@ -13,7 +13,6 @@ public class IdleState : IPlayerState
         player.PlayIdleAnimation();
         AudioManager.instance.StopPlaying(AudioName.Movement);
         player.velocity.y = 0;
-        player.NotifyIdleChange();
     }
 
     public void UpdateState(Player player)
@@ -56,7 +55,6 @@ public class IdleState : IPlayerState
             player.ActivateDash();
             player.ConsumeJump();
             player.StopIdleAnimation();
-            player.NotifyIdleChange();
             player.HandleJumpingStateTransition();
             return;
         }
@@ -92,9 +90,8 @@ public class IdleState : IPlayerState
         }
     }
 
-    private void SwitchState(IPlayerState state, Player player)
+    private void SwitchState(IPlayerState state, Player player) // me da pereza volverlo a poner como iba xd
     {
-        player.NotifyIdleChange();
         player.SwitchState(state);
     }
 }

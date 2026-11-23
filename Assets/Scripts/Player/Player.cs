@@ -531,16 +531,6 @@ public class Player : MonoBehaviour, ICrushable
         if (statsChannel != null) statsChannel.UpdateStats(type);
     }
 
-    public void NotifyIdleChange()
-    {
-        if (statsChannel != null) statsChannel.UpdateIdleTime();
-    }
-
-    public void NotifySplittingChange()
-    {
-        if (statsChannel != null) statsChannel.UpdateSplittingTime();
-    }
-
     #region Collisions related methods called by states
     public bool GroundBelow()
     {

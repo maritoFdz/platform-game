@@ -6,7 +6,7 @@ public class NarratorManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private NarrationSystemChannel narrationChannel;
-    [SerializeField] private TesterNarrador tester;
+    [SerializeField] private DialogueDisplayer displayer;
 
     private NarrationSet[] narrationSets;
 
@@ -48,8 +48,8 @@ public class NarratorManager : MonoBehaviour
                     id = PickRandomLine(narrationEvent.dialogues_Ids);
                     break;
             }
-            if (DialogueContainer.instance != null && tester != null)
-                tester.TirarDialog(DialogueContainer.instance.GetDialogue(id));
+            if (DialogueContainer.instance != null && displayer != null)
+                displayer.DisplayDialog(DialogueContainer.instance.GetDialogue(id), narrationEvent.displayPriority);
         }
     }
 
