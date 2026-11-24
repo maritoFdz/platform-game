@@ -6,6 +6,7 @@ public class DialogueDisplayer : MonoBehaviour
 {
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private float displayTime;
+    [SerializeField] private float typeDelay;
 
     private Coroutine dialogueRoutine;
     private int currentDialoguePriority = int.MinValue;
@@ -18,7 +19,11 @@ public class DialogueDisplayer : MonoBehaviour
     public void DisplayDialog(string line, int priority)
     {
         if (currentDialoguePriority > priority) return;
-        if (dialogueText != null) dialogueText.text = line;
+        if (dialogueText != null)
+        {
+            dialogueText.maxVisibleCharacters = 0;
+            dialogueText.text = line;
+        }
         if (dialogueRoutine != null) StopCoroutine(dialogueRoutine);
         currentDialoguePriority = priority;
         dialogueRoutine = StartCoroutine(DisplayTextCo());
@@ -26,9 +31,17 @@ public class DialogueDisplayer : MonoBehaviour
 
     private IEnumerator DisplayTextCo()
     {
-        yield return new WaitForSeconds(displayTime);
-        dialogueRoutine = null;
-        if(dialogueText != null) dialogueText.text = string.Empty;
+        if (dialogueText != null)
+        {
+            while (dialogueText.maxVisibleCharacters < dialogueText.text.Length)
+            {
+                dialogueText.maxVisibleCharacters++;
+                yield return new WaitForSeconds(typeDelay);
+            }
+            yield return new WaitForSeconds(displayTime);
+            dialogueRoutine = null;
+            if (dialogueText != null) dialogueText.text = string.Empty;
+        }
         currentDialoguePriority = int.MinValue;
     }
 }

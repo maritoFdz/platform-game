@@ -1,10 +1,8 @@
 id	texto
-death_first	Primera muerte. Esto solo acaba de empezar.
-death_g1	Otra vez por el suelo.
-death_g2	Eso no ha sido buena idea.
-death_g3	Te has deshecho un poquito más.
-death_many	Ya vas por unas cuantas muertes.
-death_five	Cinco muertes en esta sala
+death_first	temoriste por primera vez broder lol que loco jaja
+death_g1	Fisuh descargao
+death_g2	A mimir
+death_g3	Pal loby gustavo
+death_many	Te has muerto ya par de veces compay avisame si vamos a tener un problema a estas alturas
+death_five	CINCO nananana
 death_ten	Aqui estoy metiendo una muela pero asere una PERRA muela porque quiero ver si esta pincha maneja bien los textacos estos del carajo bueno ya me aburri de escribir
-death_bad_id	ESTE NO DEBE SALIR NUNCA (id mal escrito)
-death_impossible	ESTE NO DEBE SALIR NUNCA (rango imposible)
