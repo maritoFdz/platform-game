@@ -1,8 +1,8 @@
 id	texto
-death_first	te <b><color=#00AA00>moriste</color> por primera</b> <p:1/>vez broder lol que loco jaja
-death_g1	Fisuh <s:2/>descargao
+death_first	te <b><color=#00AA00>moriste</color> por primera</b> vez<p:1/> broder lol que loco jaja
+death_g1	Fisuh <p:1.5/>descargao
 death_g2	A <a:shake>mimir</a:shake>
-death_g3	Pal <a:wave>loby <a:shake>gustavo</a:shake></a:wave>
-death_many	Te has muerto ya <p:0.5/>par de veces <s:0.5/>compay <s:1/>avisame si vamos a tener un problema
-death_five	CINCO <a:Shake>nananana</a:Shake>
-death_ten	Aqui <p:hola/>metiendo <a:saltar>una</a:saltar> muela </a:wave>PERRA <a:wave>sin cierre
+death_g3	Pal <a:wave>loby <p:1/><a:shake>gustavo</a:shake></a:wave>
+death_many	Te has muerto ya par de veces <p:1/>compay <p:2/><s:2.5/>avisame si vamos a tener un problema
+death_five	CINCO <p:1/><a:Shake>nananana</a:Shake>
+death_ten	Aqui <p:1/>estoy metiendo una muela <p:0.5/>pero asere <p:2/>una PERRA muela <s:3/>porque quiero ver si esta pincha maneja bien los textacos estos del carajo <p:0.3/>bueno <p:0.3/>ya <p:0.3/>me aburri <p:3/>de escribir

@@ -111,13 +111,29 @@ public class DialogueDisplayer : MonoBehaviour
 
     private IEnumerator DisplayTextCo()
     {
+        int commandIndex = 0;
+        float speed = 1f;
         if (dialogueText != null)
         {
             while (dialogueText.maxVisibleCharacters < dialogueText.text.Length)
             {
+                while (commandIndex < commands.Count && commands[commandIndex].index <= dialogueText.maxVisibleCharacters)
+                {
+                    switch (commands[commandIndex].type)
+                    {
+                        case TextCommandType.TextSpeedChange:
+                            speed = commands[commandIndex].floatValue;
+                            break;
+                        case TextCommandType.Pause:
+                            yield return new WaitForSeconds(commands[commandIndex].floatValue);
+                            break;
+                    }
+                    commandIndex++;
+                }
                 dialogueText.maxVisibleCharacters++;
-                yield return new WaitForSeconds(typeDelay);
+                yield return new WaitForSeconds(typeDelay / speed);
             }
+
             yield return new WaitForSeconds(displayTime);
             dialogueRoutine = null;
             if (dialogueText != null) dialogueText.text = string.Empty;
