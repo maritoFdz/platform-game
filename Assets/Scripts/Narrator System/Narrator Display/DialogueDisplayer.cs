@@ -13,15 +13,15 @@ public class DialogueDisplayer : MonoBehaviour
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private float displayTime;
     [SerializeField] private float typeDelay;
-    [SerializeField] private float defaultAnimationsValue;
 
     private static readonly Regex tagsRegex = new(@"<(?<name>p|s):(?<par>[^<>/]*)/?>|<(?<close>/)?(?<name>a):(?<par>[^<>/]+)>");
     private static readonly Regex TMPRegex = new(@"<[^>]*>");
     private readonly List<TextCommand> commands = new();
-    private static readonly Dictionary<string, ITextAnimation> animations = new(StringComparer.OrdinalIgnoreCase)
+    private readonly List<TextAnimation> textAnimations = new();
+    private static readonly Dictionary<string, ITextAnimator> animations = new(StringComparer.OrdinalIgnoreCase)
         {
-            { "shake", new ShakeAnimation() },
-            { "wave",  new WaveAnimation() },
+            { "shake", new ShakeAnimator() },
+            { "wave",  new WaveAnimator() },
         };
 
     private Coroutine dialogueRoutine;
@@ -35,12 +35,9 @@ public class DialogueDisplayer : MonoBehaviour
 
     public void DisplayDialog(string line, int priority)
     {
-        if (currentDialoguePriority > priority) return;
-        if (dialogueText != null)
-        {
-            dialogueText.maxVisibleCharacters = 0;
-            dialogueText.text = Parse(line);
-        }
+        if (dialogueText == null || currentDialoguePriority >= priority) return;
+        dialogueText.maxVisibleCharacters = 0;
+        dialogueText.text = Parse(line);
         if (dialogueRoutine != null) StopCoroutine(dialogueRoutine);
         currentDialoguePriority = priority;
         dialogueRoutine = StartCoroutine(DisplayTextCo());
@@ -49,10 +46,11 @@ public class DialogueDisplayer : MonoBehaviour
     private string Parse(string rawText)
     {
         commands.Clear();
+        textAnimations.Clear();
         StringBuilder bbqText = new();
         int lastEnd = 0;
         int visibleCharIndex = 0;
-        HashSet<string> pendAnims = new(StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, (ITextAnimator animator, int start)> pendAnims = new(StringComparer.OrdinalIgnoreCase);
         MatchCollection matches = tagsRegex.Matches(rawText);
         foreach (Match match in matches)
         {
@@ -72,28 +70,22 @@ public class DialogueDisplayer : MonoBehaviour
                     break;
                 case "a":
                     string animationType = match.Groups["par"].Value;
-                    if (!string.IsNullOrEmpty(animationType))
+                    if (!match.Groups["close"].Success)
                     {
-                        if (string.IsNullOrEmpty(match.Groups["close"].Value))
-                        {
-                            if (animations.TryGetValue(animationType, out ITextAnimation animationObj) && !pendAnims.Contains(animationType))
-                            {
-                                commands.Add(new TextCommand(visibleCharIndex, TextCommandType.AnimStart, match.Groups["par"].Value, animationObj));
-                                pendAnims.Add(animationType);
-                            }
-                        }
-                        else if (pendAnims.Contains(animationType))
-                        {
-                            commands.Add(new TextCommand(visibleCharIndex, TextCommandType.AnimEnd, match.Groups["par"].Value));
-                            pendAnims.Remove(animationType);
-                        }
+                        if (animations.TryGetValue(animationType, out ITextAnimator animatorObj) && !pendAnims.ContainsKey(animationType))
+                            pendAnims[animationType] = (animatorObj, visibleCharIndex);
+                    }
+                    else if (pendAnims.TryGetValue(animationType, out var open))
+                    {
+                        textAnimations.Add(new TextAnimation { startIndex = open.start, endIndex = visibleCharIndex, animator = open.animator });
+                        pendAnims.Remove(animationType);
                     }
                     break;
             }
         }
         bbqText.Append(rawText[lastEnd..]);
         visibleCharIndex += rawText.Length - lastEnd;
-        foreach (string anim in pendAnims) commands.Add(new TextCommand(visibleCharIndex, TextCommandType.AnimEnd, anim));
+        foreach (var (animator, start) in pendAnims.Values) textAnimations.Add(new TextAnimation { startIndex = start, endIndex = visibleCharIndex, animator = animator });
 
         return bbqText.ToString();
     }
@@ -111,66 +103,86 @@ public class DialogueDisplayer : MonoBehaviour
 
     private IEnumerator DisplayTextCo()
     {
-        int commandIndex = 0;
-        float speed = 1f;
-        if (dialogueText != null)
+        dialogueText.ForceMeshUpdate();
+        int commandIndex = 0, visibleIndex = 0;
+        float speed = 1f, nextCharTime = Time.unscaledTime, endTime = -1f;
+        while (true)
         {
-            while (dialogueText.maxVisibleCharacters < dialogueText.text.Length)
+            float currentTime = Time.unscaledTime;
+            while (visibleIndex < dialogueText.textInfo.characterCount && currentTime >= nextCharTime)
             {
-                while (commandIndex < commands.Count && commands[commandIndex].index <= dialogueText.maxVisibleCharacters)
+                while (commandIndex < commands.Count && commands[commandIndex].index <= visibleIndex)
                 {
                     switch (commands[commandIndex].type)
                     {
                         case TextCommandType.TextSpeedChange:
-                            speed = commands[commandIndex].floatValue;
+                            speed = commands[commandIndex].value;
                             break;
                         case TextCommandType.Pause:
-                            yield return new WaitForSeconds(commands[commandIndex].floatValue);
+                            nextCharTime = currentTime + commands[commandIndex].value;
                             break;
                     }
                     commandIndex++;
                 }
-                dialogueText.maxVisibleCharacters++;
-                yield return new WaitForSeconds(typeDelay / speed);
+                if (currentTime < nextCharTime) break;
+                visibleIndex++;
+                nextCharTime += typeDelay / speed;
+            }
+            dialogueText.maxVisibleCharacters = visibleIndex;
+
+            if (textAnimations.Count > 0)
+            {
+                dialogueText.ForceMeshUpdate();
+                ApplyAnimations(visibleIndex, currentTime);
+            }
+            if (visibleIndex >= dialogueText.textInfo.characterCount)
+            {
+                if (endTime < 0f) endTime = currentTime + displayTime;
+                else if (currentTime >= endTime) break;
             }
 
-            yield return new WaitForSeconds(displayTime);
-            dialogueRoutine = null;
-            if (dialogueText != null) dialogueText.text = string.Empty;
+            yield return null;
         }
+
+        dialogueRoutine = null;
+        dialogueText.text = string.Empty;
         currentDialoguePriority = int.MinValue;
+    }
+
+    private void ApplyAnimations(int visibleIndex, float currentTime)
+    {
+        TMP_VertexDataUpdateFlags flags = TMP_VertexDataUpdateFlags.None;
+        foreach (TextAnimation anim in textAnimations)
+        {
+            anim.animator.Animate(dialogueText, anim.startIndex, Mathf.Min(anim.endIndex, visibleIndex), currentTime);
+            flags |= anim.animator.Flags;
+        }
+        dialogueText.UpdateVertexData(flags);
     }
 
     private enum TextCommandType
     {
         Pause,
-        TextSpeedChange,
-        AnimStart,
-        AnimEnd
+        TextSpeedChange
     }
 
     private struct TextCommand
     {
         public int index;
         public TextCommandType type;
-        public float floatValue;
-        public string stringValue;
-        public ITextAnimation animation;
-        public TextCommand(int index, TextCommandType type, float floatValue)
+        public float value;
+        public TextCommand(int index, TextCommandType type, float value)
         {
             this.index = index;
             this.type = type;
-            this.floatValue = floatValue;
-            stringValue = null;
-            animation = null;
+            this.value = value;
         }
-        public TextCommand(int index, TextCommandType type, string stringValue, ITextAnimation animation = null, float floatValue = 1f) // por si me da por agregar otro parametro con la fuerza del efecto
-        {
-            this.index = index;
-            this.type = type;
-            this.floatValue = floatValue;
-            this.stringValue = stringValue;
-            this.animation = animation;
-        }
+    }
+
+    private struct TextAnimation
+    {
+        public int startIndex;
+        public int endIndex;
+        public ITextAnimator animator;
     }
 }
