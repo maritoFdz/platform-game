@@ -1,8 +1,8 @@
 id	texto
-death_first	temoriste por primera vez broder lol que loco jaja
-death_g1	Fisuh descargao
-death_g2	A mimir
-death_g3	Pal loby gustavo
-death_many	Te has muerto ya par de veces compay avisame si vamos a tener un problema a estas alturas
-death_five	CINCO nananana
-death_ten	Aqui estoy metiendo una muela pero asere una PERRA muela porque quiero ver si esta pincha maneja bien los textacos estos del carajo bueno ya me aburri de escribir
+death_first	te <b><color=#00AA00>moriste</color> por primera</b> <p:1/>vez broder lol que loco jaja
+death_g1	Fisuh <s:2/>descargao
+death_g2	A <a:shake>mimir</a:shake>
+death_g3	Pal <a:wave>loby <a:shake>gustavo</a:shake></a:wave>
+death_many	Te has muerto ya <p:0.5/>par de veces <s:0.5/>compay <s:1/>avisame si vamos a tener un problema
+death_five	CINCO <a:Shake>nananana</a:Shake>
+death_ten	Aqui <p:hola/>metiendo <a:saltar>una</a:saltar> muela </a:wave>PERRA <a:wave>sin cierre

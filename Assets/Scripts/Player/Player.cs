@@ -342,6 +342,8 @@ public class Player : MonoBehaviour, ICrushable
         StopContinuousRumble();
         if (countDeath && statsChannel != null) statsChannel.UpdateStats(EventClassification.PlayerDeath);
         if (countDeath && narratorChannel != null) narratorChannel.Raise(EventClassification.PlayerDeath, "death");
+        if (isActive && PlayerUI.instance != null)
+            PlayerUI.instance.SetFill(0f);
         PlayerSwitchManager.instance.Erase(this);
     }
 
