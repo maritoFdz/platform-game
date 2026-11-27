@@ -10,9 +10,16 @@ using UnityEngine;
 
 public class DialogueDisplayer : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private TMP_Text dialogueText;
+    [SerializeField] private DialogueVoicer voicer;
+
+    [Header("Text Settings")]
     [SerializeField] private float displayTime;
     [SerializeField] private float typeDelay;
+
+    [Header("Voice Settings")]
+    [SerializeField] private float mumbleFrequency;
 
     private static readonly Regex tagsRegex = new(@"<(?<name>p|s):(?<par>[^<>/]*)/?>|<(?<close>/)?(?<name>a):(?<par>[^<>/]+)>");
     private static readonly Regex TMPRegex = new(@"<[^>]*>");
@@ -109,6 +116,7 @@ public class DialogueDisplayer : MonoBehaviour
         while (true)
         {
             float currentTime = Time.unscaledTime;
+            int previousVisible = visibleIndex;
             while (visibleIndex < dialogueText.textInfo.characterCount && currentTime >= nextCharTime)
             {
                 while (commandIndex < commands.Count && commands[commandIndex].index <= visibleIndex)
@@ -128,6 +136,7 @@ public class DialogueDisplayer : MonoBehaviour
                 visibleIndex++;
                 nextCharTime += typeDelay / speed;
             }
+            if (visibleIndex > previousVisible && voicer != null) voicer.PlayMumble();
             dialogueText.maxVisibleCharacters = visibleIndex;
 
             if (textAnimations.Count > 0)

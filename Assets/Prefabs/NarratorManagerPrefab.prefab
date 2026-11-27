@@ -160,6 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7218922862179985417}
   - component: {fileID: 6046888813190045141}
+  - component: {fileID: 7311433835213601219}
   m_Layer: 0
   m_Name: DialogueDisplayer
   m_TagString: Untagged
@@ -196,8 +197,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TesterNarrador
   dialogueText: {fileID: 8523471864239117697}
+  voicer: {fileID: 7311433835213601219}
   displayTime: 5
   typeDelay: 0.025
+  mumbleFrequency: 0
+--- !u!114 &7311433835213601219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891532423508316382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd2f1032aa6d74041a58f918f536699f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueVoicer
+  voiceSounds:
+  - name: 19
+    clip: {fileID: 8300000, guid: fe8b3ed6bf05ed3439b48fb3f71cd460, type: 3}
+    audioSource: {fileID: 0}
+    volume: 1
+    minPitch: 1
+    maxPitch: 1
+    defaultPitch: 1
+    loops: 0
+    playsOnAwake: 0
+    mixerGroup: {fileID: -9019241885918505666, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
 --- !u!1 &4356502699452911161
 GameObject:
   m_ObjectHideFlags: 0

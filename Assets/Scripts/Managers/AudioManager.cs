@@ -80,4 +80,23 @@ public class AudioManager : MonoBehaviour
                 sound.audioSource.pitch = Random.Range(sound.minPitch, sound.maxPitch);
         }
     }
+
+    public void PlaySound(Sound sound)
+    {
+        if (sound == null) return;
+        if (sound.audioSource == null) SetupSource(sound); // cachea el sonidio
+        if (!sound.audioSource.isPlaying)
+            sound.audioSource.Play();
+    }
+
+    private void SetupSource(Sound sound)
+    {
+        sound.audioSource = audioContainer.gameObject.AddComponent<AudioSource>();
+        sound.audioSource.outputAudioMixerGroup = sound.mixerGroup;
+        sound.audioSource.playOnAwake = sound.playsOnAwake;
+        sound.audioSource.loop = sound.loops;
+        sound.audioSource.clip = sound.clip;
+        sound.audioSource.volume = sound.volume;
+        sound.audioSource.pitch = sound.minPitch;
+    }
 }
