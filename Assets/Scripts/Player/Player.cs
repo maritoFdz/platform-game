@@ -336,6 +336,7 @@ public class Player : MonoBehaviour, ICrushable
     {
         if (isDead || !PlayerSwitchManager.instance.IsAdded(this)) return;
         isDead = true;
+        StopMovementSounds();
         if (crushRoutine != null) StopCoroutine(crushRoutine);
         if (doAnim) MakeSplash(0f, false, true, true);
         animationController.ResetFreezeColor();

@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class DialogueDisplayer : MonoBehaviour
@@ -13,10 +14,13 @@ public class DialogueDisplayer : MonoBehaviour
     [Header("References")]
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private DialogueVoicer voicer;
+    [SerializeField] private Image backgroundImage;
+    [SerializeField] private Material backgroundMaterial;
 
     [Header("Text Settings")]
     [SerializeField] private float displayTime;
     [SerializeField] private float typeDelay;
+    [SerializeField] private float backgroundFadeTime;
 
     [Header("Voice Settings")]
     [SerializeField, Min(1)] private float mumbleFrequency;
@@ -30,19 +34,24 @@ public class DialogueDisplayer : MonoBehaviour
             { "shake", new ShakeAnimator() },
             { "wave",  new WaveAnimator() },
         };
+    private static readonly int VisibleID = Shader.PropertyToID("_Visible");
 
     private Coroutine dialogueRoutine;
+    private Coroutine backgroundFadeRoutine;
     private int currentDialoguePriority = int.MinValue;
 
 
     private void Start()
     {
         if (dialogueText != null) dialogueText.text = string.Empty;
+        if (backgroundImage != null && backgroundMaterial != null)
+            backgroundMaterial.SetFloat(VisibleID, 0f);
     }
 
     public void DisplayDialog(string line, int priority)
     {
         if (dialogueText == null || currentDialoguePriority >= priority) return;
+        FadeBackground(1f);
         dialogueText.maxVisibleCharacters = 0;
         dialogueText.text = Parse(line);
         if (dialogueRoutine != null) StopCoroutine(dialogueRoutine);
@@ -160,6 +169,7 @@ public class DialogueDisplayer : MonoBehaviour
         dialogueRoutine = null;
         dialogueText.text = string.Empty;
         currentDialoguePriority = int.MinValue;
+        FadeBackground(0f);
     }
 
     private void ApplyAnimations(int visibleIndex, float currentTime)
@@ -171,6 +181,27 @@ public class DialogueDisplayer : MonoBehaviour
             flags |= anim.animator.Flags;
         }
         dialogueText.UpdateVertexData(flags);
+    }
+
+    private void FadeBackground(float target)
+    {
+        if (backgroundMaterial == null) return;
+        if (backgroundFadeRoutine != null) StopCoroutine(backgroundFadeRoutine);
+        backgroundFadeRoutine = StartCoroutine(FadeBackgroundCo(target));
+    }
+
+    private IEnumerator FadeBackgroundCo(float target)
+    {
+        float start = backgroundMaterial.GetFloat(VisibleID);
+        float time = 0f;
+        while (time < backgroundFadeTime)
+        {
+            time += Time.unscaledDeltaTime;
+            backgroundMaterial.SetFloat(VisibleID, Mathf.Lerp(start, target, time / backgroundFadeTime));
+            yield return null;
+        }
+        backgroundMaterial.SetFloat(VisibleID, target);
+        backgroundFadeRoutine = null;
     }
 
     private enum TextCommandType
