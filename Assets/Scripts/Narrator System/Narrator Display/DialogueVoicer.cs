@@ -3,20 +3,20 @@ using UnityEngine;
 
 public class DialogueVoicer : MonoBehaviour
 {
-    [SerializeField] private Sound[] voiceSounds;
-    private Dictionary<AudioName, Sound> voiceSoundDictionary;
+    [SerializeField] private Sound[] mumbleSounds;
 
-    private void Awake()
+    public void PlayMumble(char current)
     {
-        voiceSoundDictionary = new Dictionary<AudioName, Sound>();
-        foreach (Sound sound in voiceSounds)
-            voiceSoundDictionary.TryAdd(sound.name, sound);
-    }
-
-    public void PlayMumble()
-    {
-        if (AudioManager.instance == null || voiceSounds == null || voiceSounds.Length == 0) return;
-        Sound sound = voiceSounds[Random.Range(0, voiceSounds.Length)];
-        AudioManager.instance.PlaySound(sound);
+        if (AudioManager.instance == null || mumbleSounds == null || mumbleSounds.Length == 0) return;
+        current = char.ToLowerInvariant(current);
+        int hash = current.GetHashCode();
+        Sound sound = mumbleSounds[Mathf.Abs(hash % mumbleSounds.Length)];
+        int minPitchInt = (int)(sound.minPitch * 100);
+        int maxPitchInt = (int)(sound.maxPitch * 100);
+        int pitchRange = maxPitchInt - minPitchInt;
+        float pitch;
+        if (pitchRange != 0) pitch = (Mathf.Abs((hash % pitchRange)) + minPitchInt) / 100f;
+        else pitch = sound.minPitch;
+        AudioManager.instance.PlaySound(sound, pitch);
     }
 }

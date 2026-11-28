@@ -19,7 +19,7 @@ public class DialogueDisplayer : MonoBehaviour
     [SerializeField] private float typeDelay;
 
     [Header("Voice Settings")]
-    [SerializeField] private float mumbleFrequency;
+    [SerializeField, Min(1)] private float mumbleFrequency;
 
     private static readonly Regex tagsRegex = new(@"<(?<name>p|s):(?<par>[^<>/]*)/?>|<(?<close>/)?(?<name>a):(?<par>[^<>/]+)>");
     private static readonly Regex TMPRegex = new(@"<[^>]*>");
@@ -111,12 +111,11 @@ public class DialogueDisplayer : MonoBehaviour
     private IEnumerator DisplayTextCo()
     {
         dialogueText.ForceMeshUpdate();
-        int commandIndex = 0, visibleIndex = 0;
+        int commandIndex = 0, visibleIndex = 0, nonSpaces = 0;
         float speed = 1f, nextCharTime = Time.unscaledTime, endTime = -1f;
         while (true)
         {
             float currentTime = Time.unscaledTime;
-            int previousVisible = visibleIndex;
             while (visibleIndex < dialogueText.textInfo.characterCount && currentTime >= nextCharTime)
             {
                 while (commandIndex < commands.Count && commands[commandIndex].index <= visibleIndex)
@@ -134,9 +133,14 @@ public class DialogueDisplayer : MonoBehaviour
                 }
                 if (currentTime < nextCharTime) break;
                 visibleIndex++;
+                char revealed = dialogueText.textInfo.characterInfo[visibleIndex - 1].character;
+                if (!char.IsWhiteSpace(revealed))
+                {
+                    nonSpaces++;
+                    if (voicer != null && (nonSpaces - 1) % mumbleFrequency == 0) voicer.PlayMumble(revealed);
+                }
                 nextCharTime += typeDelay / speed;
             }
-            if (visibleIndex > previousVisible && voicer != null) voicer.PlayMumble();
             dialogueText.maxVisibleCharacters = visibleIndex;
 
             if (textAnimations.Count > 0)

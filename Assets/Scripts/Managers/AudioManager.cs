@@ -81,12 +81,12 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySound(Sound sound)
+    public void PlaySound(Sound sound, float pitch)
     {
         if (sound == null) return;
-        if (sound.audioSource == null) SetupSource(sound); // cachea el sonidio
-        if (!sound.audioSource.isPlaying)
-            sound.audioSource.Play();
+        if (sound.audioSource == null) SetupSource(sound); // cachea el sonido
+        sound.audioSource.pitch = pitch;
+        sound.audioSource.Play();
     }
 
     private void SetupSource(Sound sound)
@@ -97,6 +97,6 @@ public class AudioManager : MonoBehaviour
         sound.audioSource.loop = sound.loops;
         sound.audioSource.clip = sound.clip;
         sound.audioSource.volume = sound.volume;
-        sound.audioSource.pitch = sound.minPitch;
+        sound.audioSource.pitch = sound.audioSource.pitch;
     }
 }

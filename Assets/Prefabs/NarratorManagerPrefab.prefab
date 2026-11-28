@@ -198,9 +198,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TesterNarrador
   dialogueText: {fileID: 8523471864239117697}
   voicer: {fileID: 7311433835213601219}
-  displayTime: 5
+  displayTime: 3
   typeDelay: 0.025
-  mumbleFrequency: 0
+  mumbleFrequency: 3
 --- !u!114 &7311433835213601219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,13 +213,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2f1032aa6d74041a58f918f536699f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueVoicer
-  voiceSounds:
+  mumbleSounds:
   - name: 19
-    clip: {fileID: 8300000, guid: fe8b3ed6bf05ed3439b48fb3f71cd460, type: 3}
+    clip: {fileID: 8300000, guid: 2eb6a35fae4dc4846a257a59f63c50ef, type: 3}
     audioSource: {fileID: 0}
-    volume: 1
+    volume: 0.6
     minPitch: 1
-    maxPitch: 1
+    maxPitch: 1.5
+    defaultPitch: 1
+    loops: 0
+    playsOnAwake: 0
+    mixerGroup: {fileID: -9019241885918505666, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
+  - name: 19
+    clip: {fileID: 8300000, guid: d2367e63305bb8e43b1edb43b0eeb87c, type: 3}
+    audioSource: {fileID: 0}
+    volume: 0.6
+    minPitch: 1
+    maxPitch: 1.5
+    defaultPitch: 1
+    loops: 0
+    playsOnAwake: 0
+    mixerGroup: {fileID: -9019241885918505666, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
+  - name: 19
+    clip: {fileID: 8300000, guid: 66c033982367b224dad578037068ecc0, type: 3}
+    audioSource: {fileID: 0}
+    volume: 0.6
+    minPitch: 1
+    maxPitch: 1.5
+    defaultPitch: 1
+    loops: 0
+    playsOnAwake: 0
+    mixerGroup: {fileID: -9019241885918505666, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
+  - name: 19
+    clip: {fileID: 8300000, guid: 4e931c69f9e7d9e4db5f6050b73525a9, type: 3}
+    audioSource: {fileID: 0}
+    volume: 0.6
+    minPitch: 1
+    maxPitch: 1.5
+    defaultPitch: 1
+    loops: 0
+    playsOnAwake: 0
+    mixerGroup: {fileID: -9019241885918505666, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
+  - name: 19
+    clip: {fileID: 8300000, guid: 4e931c69f9e7d9e4db5f6050b73525a9, type: 3}
+    audioSource: {fileID: 0}
+    volume: 0.6
+    minPitch: 1
+    maxPitch: 1.5
+    defaultPitch: 1
+    loops: 0
+    playsOnAwake: 0
+    mixerGroup: {fileID: -9019241885918505666, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
+  - name: 19
+    clip: {fileID: 8300000, guid: 3d6148af839c6914fab7aa927d6eff44, type: 3}
+    audioSource: {fileID: 0}
+    volume: 0.6
+    minPitch: 1
+    maxPitch: 1.5
+    defaultPitch: 1
+    loops: 0
+    playsOnAwake: 0
+    mixerGroup: {fileID: -9019241885918505666, guid: dddeb7928bbc38e47a59f9adccd6b131, type: 2}
+  - name: 19
+    clip: {fileID: 8300000, guid: 3d6148af839c6914fab7aa927d6eff44, type: 3}
+    audioSource: {fileID: 0}
+    volume: 0.6
+    minPitch: 1
+    maxPitch: 1.5
     defaultPitch: 1
     loops: 0
     playsOnAwake: 0

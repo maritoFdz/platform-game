@@ -3,6 +3,6 @@ death_first	te <a:wave><a:shake><b><color=#00AA00>moriste</color></a:shake></a:w
 death_g1	Fisuh <p:1.5/>descargao <s:0.3/>lentooo <s:1/>normal <s:4/>y ahora rapidisimo
 death_g2	A <a:shake>mimir</a:shake> zzz
 death_g3	Pal <a:wave>loby <p:1/><a:shake>gustavo</a:shake> y mas wave</a:wave> fin
-death_many	Te has muerto ya par de veces <p:1/>compay <p:2/><s:2.5/>avisame si vamos a <a:wave>tener un problema
+death_many	Te has muerto ya par de veces <p:1/>compay <p:2/><s:2/>avisame si vamos a <a:wave>tener un problema
 death_five	CINCO <p:1/><a:Shake>nananana</a:shake> <a:WAVE>olaaaa</a:Wave> fin
 death_ten	Aqui <p:1/>estoy metiendo una muela <p:0.5/>pero asere <p:2/>una <a:shake>PERRA</a:shake> muela <s:3/>porque quiero ver si <a:foo>esta</a:foo> pincha <p:abc/>maneja bien </a:wave>los textacos <a:wave><b>estos</b> del carajo</a:wave> <p:0.3/>bueno <p:0.3/>ya <p:0.3/>me aburri <p:3/>de escribir
